@@ -45,7 +45,7 @@ uint32_t windowFlags = 0;
 SDL_SysWMinfo wmInfo;
 
 static void ShowCursor() {if (!gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
-static void HideCursor() {if (gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
+static void HideCursor() {if (gbCursorDisplayed) {SDL_ShowCursor(SDL_DISABLE); gbCursorDisplayed = 0;}}
 
 //D2Gfx.0x6FA74450 (#10023)
 int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolution)

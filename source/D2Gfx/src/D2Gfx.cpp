@@ -43,7 +43,7 @@ constexpr D2GfxHelperStrc gpGfxHelpers =
 //D2Gfx.0x6FA73750 (#10000)
 int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, DisplayType nDisplayType, int32_t bWindowed)
 {
-	uint32_t sdlInitFlags = SDL_INIT_VIDEO;
+	uint32_t sdlInitFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
 	const int sdlInitReturn = SDL_Init(sdlInitFlags);
 	if (sdlInitReturn != 0)
     {
