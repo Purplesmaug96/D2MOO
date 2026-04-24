@@ -1,8 +1,12 @@
 #include "Window.h"
 
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_mouse.h>
-#include <SDL2/SDL_video.h>
+// Causes issue if not forced off
+#define SDL_haptic_h_
+#pragma warning(push)
+#pragma warning( disable : 4820 )
+
+#pragma pack(push, 1)
+
 #include <algorithm>
 
 #include <cstddef>
@@ -13,10 +17,15 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_syswm.h>
+#include <SDL2/SDL_hidapi.h>
 
 #include "CmnSubtile.h"
 #include "DisplayType.h"
 #include "D2Gfx.h"
+
+#pragma pack(pop, 1)
+
+#pragma warning(pop)
 
 extern DisplayType gnDisplayType;
 
@@ -226,9 +235,10 @@ void __stdcall WINDOW_ShowCursor(int32_t bShow)
     {
         ShowCursor();
     }
-    else
-    {
-        HideCursor();
+	else
+	{
+		HideCursor();
+	}
 }
 
 //D2Gfx.0x6FA74A80 (#10028)

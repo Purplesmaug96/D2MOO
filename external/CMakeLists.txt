@@ -4,6 +4,11 @@
 set(CMAKE_CXX_CLANG_TIDY "")
 set(CMAKE_FOLDER external)
 
+# SDL2
+set(SDL_SHARED OFF CACHE BOOL "" FORCE)
+set(SDL_STATIC ON CACHE BOOL "" FORCE)
+add_subdirectory(sdl2 EXCLUDE_FROM_ALL)
+
 set(BUILD_SHARED_LIBS_BACKUP ${BUILD_SHARED_LIBS})
 set(BUILD_SHARED_LIBS OFF) # Build external libs as static libs (or their default settings) for now 
   

@@ -23,7 +23,7 @@ include(cmake/D2MOO.D2SE.cmake)           # Used to generate D2SE .ini files
 #####################
 
 set(D2MOO_ORDINALS_VERSION "1.10f" CACHE STRING "Name of the version to be used for ordinals and patches")
-option(ENABLE_D2DETOURS_EMBEDDED_PATCHES "Build the DLL with builtin patching using D2.Detours" ON)
+option(ENABLE_D2DETOURS_EMBEDDED_PATCHES "Build the DLL with builtin patching using D2.Detours" OFF)
 if(D2MOO_IS_ROOT_PROJECT) # Let parent project decide wether to use its own patches or not
 	set(D2DETOURS_EMBEDDED_PATCHES_DIR "${EMBEDDED_PATCHES_DIR_PREFIX}D2.Detours.patches" CACHE PATH "The directory to your D2.Detours embedded patches. Defaults to the root D2.Detours.patches directory")
 	if(NOT DEFINED BUILD_SHARED_LIBS AND D2MOO_ORDINALS_VERSION VERSION_LESS "1.14" )
@@ -95,8 +95,6 @@ endif()
 if(${D2MOO_INSTALL})
   include(InstallRequiredSystemLibraries) # Tell CMake that the `install` target needs to install required system libraries (eg: Windows SDK)
   include(GNUInstallDirs)
-  
-  install(TARGETS D2.DetoursLauncher D2.Detours)
   
   set(D2MOO_TARGETS_TO_INSTALL D2Common D2Game D2Debugger)
   install(TARGETS ${D2MOO_TARGETS_TO_INSTALL}
