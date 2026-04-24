@@ -1,5 +1,6 @@
 #include "D2Gfx.h"
 
+#include <SDL2/SDL.h>
 #include <algorithm>
 
 #include <Fog.h>
@@ -42,6 +43,15 @@ constexpr D2GfxHelperStrc gpGfxHelpers =
 //D2Gfx.0x6FA73750 (#10000)
 int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, DisplayType nDisplayType, int32_t bWindowed)
 {
+	uint32_t sdlInitFlags = SDL_INIT_VIDEO;
+	const int sdlInitReturn = SDL_Init(sdlInitFlags);
+	if (sdlInitReturn != 0)
+    {
+        static char szLocalBuffer[256];
+		static char errBuf[256];
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to initialize SDL!\nFlags: %u\nReturn code: %u\nSDL Error: %s\n", sdlInitFlags, sdlInitReturn, SDL_GetErrorMsg(errBuf, 256)), __FILE__, __LINE__);
+		exit(-1);
+    }
     gpfWndProc = pfWndProc;
     ghInstance = hInstance;
 
