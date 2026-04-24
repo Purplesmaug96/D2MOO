@@ -1,18 +1,24 @@
 #include "Window.h"
 
+#include <SDL2/SDL_events.h>
+#include <SDL2/SDL_mouse.h>
+#include <SDL2/SDL_video.h>
 #include <algorithm>
 
+#include <cstddef>
 #include <shellapi.h>
+#include <wingdi.h>
 
 #include <Fog.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_syswm.h>
 
 #include "CmnSubtile.h"
 #include "DisplayType.h"
 #include "D2Gfx.h"
 
-
 extern DisplayType gnDisplayType;
-
 
 HWND ghWnd;
 int32_t gbIsWindowed;
@@ -25,6 +31,12 @@ int32_t gbPaused_6FA8D84C;
 int32_t gbWindowState_6FA8D850;
 HINSTANCE ghInstance;
 
+SDL_Window* window = NULL;
+uint32_t windowFlags = 0;
+SDL_SysWMinfo wmInfo;
+
+static void ShowCursor() {if (!gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
+static void HideCursor() {if (gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
 
 //D2Gfx.0x6FA74450 (#10023)
 int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolution)
@@ -36,128 +48,82 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
     }
 
     D2_ASSERT(gpGraphicsInterface);
-    D2_ASSERT(!ghWnd);
 
     gbIsWindowed = bWindowed;
     gnResolutionMode = nResolution;
 
-    RECT rect = {};
+    int32_t nWidth = 0;
+    int32_t nHeight = 0;
 
     switch (nResolution)
     {
-    case D2GAMERES_640x480:
-        rect.right = 640;
-        rect.bottom = 480;
-        break;
+		case D2GAMERES_640x480:
+			nWidth = 640;
+			nHeight = 480;
+			break;
 
-    case D2GAMERES_800x600:
-    case NUM_GAME_RESOLUTIONS:
-        rect.right = 800;
-        rect.bottom = 600;
-        break;
+		case D2GAMERES_800x600:
+		case NUM_GAME_RESOLUTIONS:
+			nWidth = 800;
+			nHeight = 600;
+			break;
 
-    case D2GAMERES_1344x700:
-        rect.right = 1344;
-        rect.bottom = 700;
-        break;
+		case D2GAMERES_1344x700:
+			nWidth = 1344;
+			nHeight = 700;
+			break;
 
-    default:
-        static char szLocalBuffer[256];
-        FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Unknown resolution %d", nResolution), __FILE__, __LINE__);
-        exit(-1);
+		default:
+			static char szLocalBuffer[256];
+			FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Unknown resolution %d", nResolution), __FILE__, __LINE__);
+			exit(-1);
     }
 
     //dword_6FA8D740 = Rect.bottom;
 
-    uint32_t dwStyle = 0;
-    if (bWindowed == 1)
-    {
-        dwStyle = WS_CAPTION;
-    }
-    else if (gnDisplayType == DISPLAYTYPE_OPENGL)
-    {
-        dwStyle = WS_POPUP | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_SYSMENU;
-    }
-    else
-    {
-        dwStyle = WS_POPUP | WS_SYSMENU;
-    }
+	windowFlags = SDL_WINDOW_SHOWN;
+	if (!bWindowed) {
+		windowFlags |= SDL_WINDOW_FULLSCREEN;
+	}
 
-    AdjustWindowRectEx(&rect, dwStyle, 0, WS_EX_APPWINDOW);
-
-    int32_t nWidth = rect.right - rect.left;
-    int32_t nHeight = rect.bottom - rect.top;
-    
-    //dword_6FA8D740 = nHeight - dword_6FA8D740;
-
-    int32_t nX = 0;
-    int32_t nY = 0;
-
-    if (gbIsWindowed == 1)
+	window = SDL_CreateWindow("Diablo II", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, nWidth, nHeight, windowFlags);
+	if (window == NULL)
     {
-        RECT desktopRect = {};
-        GetClientRect(GetDesktopWindow(), &desktopRect);
-
-        nX = std::max((desktopRect.right - nWidth) / 2, 0l);
-        nY = std::max((desktopRect.bottom - nHeight)  / 2, 0l);
-    }
-    else if (gnDisplayType == DISPLAYTYPE_GLIDE)
-    {
-        nWidth = std::max(GetSystemMetrics(0), 800);
-        nHeight = std::max(GetSystemMetrics(1), 600);
+        static char szLocalBuffer[256];
+		static char errBuf[256];
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to open window!\nFlags: %u\nSDL Error: %s\n", windowFlags, SDL_GetErrorMsg(errBuf, 256)), __FILE__, __LINE__);
+		exit(-1);
     }
 
-    if (GetSystemMetrics(0) < 800)
+	SDL_VERSION(&wmInfo.version);
+	SDL_GetWindowWMInfo(window, &wmInfo);
+	ghWnd = wmInfo.info.win.window;
+
+	if (ghWnd == NULL)
     {
-        DEVMODEA deviceMode = {};
-        deviceMode.dmSize = sizeof(DEVMODEA);
-        deviceMode.dmBitsPerPel = 8;
-        deviceMode.dmPelsWidth = 800;
-        deviceMode.dmPelsHeight = 600;
-        deviceMode.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
-        ChangeDisplaySettingsA(&deviceMode, 0);
+        static char szLocalBuffer[256];
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
+		exit(-1);
     }
 
-    ghWnd = CreateWindowExA(WS_EX_APPWINDOW | WS_EX_TOPMOST, "Diablo II", "Diablo II", dwStyle, nX, nY, nWidth, nHeight, nullptr, nullptr, ghInstance, nullptr);
-    if (!ghWnd)
-    {
-        //if (!sub_6FA750A7(GetLastError()))
-        //    return 0;
-        //__debugbreak();
-        //dword_6FA8D854 = 0;
-        return 0;
-    }
-
-    ShowWindow(ghWnd, 1);
-    UpdateWindow(ghWnd);
-    SetFocus(ghWnd);
     GdiSetBatchLimit(1u);
 
-    if (gbCursorDisplayed)
-    {
-        while (ShowCursor(0) >= 0);
-        gbCursorDisplayed = 0;
-    }
+    // if (gbCursorDisplayed)
+    // {
+    //     while (ShowCursor(0) >= 0);
+    //     gbCursorDisplayed = 0;
+    // }
+	HideCursor();
 
     if (gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode))
     {
         D2GFX_SetContrastAndGamma_6FA710C0();
-        SetWindowPos(ghWnd, HWND_NOTOPMOST, 0, 0, nWidth, nHeight, SWP_NOMOVE);
         return 1;
     }
 
     gbNoWindowCreated_6FA8D848 = 1;
-    if (!gbCursorDisplayed)
-    {
-        while (ShowCursor(1) < 0);
-        gbCursorDisplayed = 1;
-    }
 
-    if (ghWnd)
-    {
-        DestroyWindow(ghWnd);
-        ghWnd = nullptr;
-    }
+    WINDOW_Destroy();
 
     return 0;
 }
@@ -167,11 +133,7 @@ int32_t __stdcall WINDOW_Destroy()
 {
     D2_ASSERT(gpGraphicsInterface);
 
-    if (!gbCursorDisplayed)
-    {
-        while (ShowCursor(1) < 0);
-        gbCursorDisplayed = 1;
-    }
+    ShowCursor();
 
     int32_t bWindowDestroyed = 1;
     if (!gpGraphicsInterface->pfCloseSurface())
@@ -179,13 +141,9 @@ int32_t __stdcall WINDOW_Destroy()
         bWindowDestroyed = 0;
     }
 
-    if (ghWnd)
+    if (window != NULL)
     {
-        if (!DestroyWindow(ghWnd))
-        {
-            bWindowDestroyed = 0;
-        }
-        ghWnd = nullptr;
+        SDL_DestroyWindow(window);
     }
 
     ChangeDisplaySettingsA(nullptr, 0);
@@ -221,14 +179,14 @@ int32_t __stdcall WINDOW_GetState()
     gbWindowState_6FA8D850 = bPaused;
     if (bPaused)
     {
-        ShowWindow(ghWnd, SW_MINIMIZE);
+        SDL_RaiseWindow(window);
         WINDOW_ShowAll();
-        while (ShowCursor(1) < 0);
+        ShowCursor();
     }
     else
     {
         WINDOW_UpdatePlacement();
-        while (ShowCursor(0) >= 0);
+        HideCursor();
     }
 
     gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
@@ -266,20 +224,11 @@ void __stdcall WINDOW_ShowCursor(int32_t bShow)
 
     if (bShow)
     {
-        if (gbCursorDisplayed)
-        {
-            while (ShowCursor(0) >= 0);
-            gbCursorDisplayed = 0;
-        }
+        ShowCursor();
     }
     else
     {
-        if (!gbCursorDisplayed)
-        {
-            while (ShowCursor(1) < 0);
-            gbCursorDisplayed = 1;
-        }
-    }
+        HideCursor();
 }
 
 //D2Gfx.0x6FA74A80 (#10028)
@@ -314,45 +263,36 @@ int32_t __stdcall WINDOW_Resize(D2GameResolutionMode nResolution, int32_t bForce
 
     gnResolutionMode = nResolution;
 
+	int32_t nWidth = 0;
+    int32_t nHeight = 0;
+
     if (gbIsWindowed == 1)
     {
-        RECT Rect = {};
+		switch (nResolution)
+		{
+			case D2GAMERES_640x480:
+				nWidth = 640;
+				nHeight = 480;
+				break;
 
-        switch (nResolution)
-        {
-        case 0:
-            Rect.right = 640;
-            Rect.bottom = 480;
-            break;
+			case D2GAMERES_800x600:
+			case NUM_GAME_RESOLUTIONS:
+				nWidth = 800;
+				nHeight = 600;
+				break;
 
-        case 1:
-        case 2:
-            Rect.right = 800;
-            Rect.bottom = 600;
-            break;
+			case D2GAMERES_1344x700:
+				nWidth = 1344;
+				nHeight = 700;
+				break;
 
-        case 3:
-            Rect.right = 1344;
-            Rect.bottom = 700;
-            break;
+			default:
+				static char szLocalBuffer[256];
+				FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Unknown resolution %d", nResolution), __FILE__, __LINE__);
+				exit(-1);
+		}
 
-        default:
-            //FOG_DisplayHalt(Fog_10018(&unk_6FA8D748, "Unknown resolution %d", nResolution), __FILE__, __LINE__);
-            exit(-1);
-        }
-
-        //dword_6FA8D740 = Rect.bottom;
-
-        AdjustWindowRectEx(&Rect, WS_CAPTION, 0, WS_EX_APPWINDOW);
-
-        const int32_t nWidth = Rect.right - Rect.left;
-        const int32_t nHeight = Rect.bottom - Rect.top;
-        //dword_6FA8D740 = nHeight - dword_6FA8D740;
-
-        RECT ClientRect = {};
-        GetClientRect(GetDesktopWindow(), &ClientRect);
-
-        SetWindowPos(ghWnd, HWND_NOTOPMOST, 0, 0, nWidth, nHeight, SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOMOVE);
+        SDL_SetWindowSize(window, nWidth, nHeight);
     }
 
     const int32_t bResult = gpGraphicsInterface->pfChangeRes(ghWnd, nResolution);
@@ -384,14 +324,14 @@ void __stdcall WINDOW_EndCutScene(D2GameResolutionMode nResolution)
         gbWindowState_6FA8D850 = gbPaused_6FA8D84C;
         if (gbPaused_6FA8D84C)
         {
-            ShowWindow(ghWnd, 6);
+            SDL_RaiseWindow(window);
             WINDOW_ShowAll();
-            while (ShowCursor(1) < 0);
+            ShowCursor();
         }
         else
         {
             WINDOW_UpdatePlacement();
-            while (ShowCursor(0) >= 0);
+            HideCursor();
         }
 
         gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
@@ -484,7 +424,7 @@ void __stdcall WINDOW_UpdatePlacement()
         {
             pWindowPlacement->windowPlacement.length = sizeof(WINDOWPLACEMENT);
             GetWindowPlacement(pWindowPlacement->hWnd, &pWindowPlacement->windowPlacement);
-            ShowWindow(pWindowPlacement->hWnd, SW_HIDE);
+            SDL_HideWindow(window);
         }
     }
 }
