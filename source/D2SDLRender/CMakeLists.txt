@@ -1,7 +1,7 @@
 
 D2MOO_prepare_targets(D2SDLRender)
 
-target_link_libraries(${D2SDLRenderImplName} PUBLIC SDL2::SDL2-static)
+target_link_libraries(${D2SDLRenderImplName} PUBLIC SDL2::SDL2-static D2Gfx D2CommonDefinitions)
 
 target_sources(${D2SDLRenderImplName}
   PRIVATE
