@@ -9,6 +9,7 @@
 #include "Cutscene.h"
 #include "Surface.h"
 #include "Perspective.h"
+#include "Options.h"
 
 D2GraphicsInterfaceStrc* Interface;
 
@@ -45,7 +46,7 @@ bool D2SDLRender_Init() {
 	Interface->pfChangeRes = &D2SDLRender_ChangeRes;
 	Interface->pfGetBackBuffer = &D2SDLRender_GetBackBuffer;
 	Interface->pfActivateWindow = &D2SDLRender_ActivateWindow;
-	Interface->pfSetOption = NULL;
+	Interface->pfSetOption = &D2SDLRender_SetOption;
 	Interface->pfPlayCutscene = &D2SDLRender_PlayCutscene;
 	Interface->pfOpenSmackCutscene = &D2SDLRender_OpenSmackCutscene;
 	Interface->pfCheckCutScene = &D2SDLRender_CheckCutScene;
@@ -54,9 +55,9 @@ bool D2SDLRender_Init() {
 	Interface->pfCloseSmacker = &D2SDLRender_CloseSmacker;
 	Interface->pfGetCacheResults = NULL;
 	Interface->pfGetDimensions = NULL;
-	Interface->pfSetGlobalScale = NULL;
-	Interface->pfSetGamma = NULL;
-	Interface->pfGammaCanBeControlled = NULL;
+	Interface->pfSetGlobalScale = &D2SDLRender_SetGlobalScale;
+	Interface->pfSetGamma = &D2SDLRender_SetGamma;
+	Interface->pfGammaCanBeControlled = &D2SDLRender_GammaCanBeControlled;
 	Interface->pfUpdatePerspective = &D2SDLRender_UpdatePerspective;
 	Interface->pfPerspectiveTransform = &D2SDLRender_PerspectiveTransform;
 	Interface->pfPerspectiveTransformScale = &D2SDLRender_PerspectiveTransformScale;

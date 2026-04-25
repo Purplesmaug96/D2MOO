@@ -1,0 +1,14 @@
+#pragma once
+
+#include <windows.h>
+
+#include "D2Gfx.h"
+
+#include "D2SDLRender.h"
+
+BOOL __fastcall D2SDLRender_SetOption(int32_t nOption, int32_t nValue);
+
+void __fastcall D2SDLRender_SetGlobalScale(int32_t nScaleFactor);
+
+BOOL __fastcall D2SDLRender_SetGamma(int32_t nGamma);
+int32_t __fastcall D2SDLRender_GammaCanBeControlled();
