@@ -16,6 +16,7 @@
 D2GraphicsInterfaceStrc* Interface;
 SDL_Window* window;
 SDL_Renderer* renderer;
+uint32_t rendererFlags;
 
 BOOL __fastcall D2SDLRender_pfInit(D2GfxSettingsStrc* pSettings, const D2GfxHelperStrc* pHelpers) {
 	FUNC_LOG_ARGS("D2SDLRender_pfInit", "pSettings: %p, pHelpers: %p", pSettings, pHelpers);

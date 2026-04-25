@@ -12,6 +12,7 @@
 extern D2GraphicsInterfaceStrc Interface;
 extern SDL_Window* window;
 extern SDL_Renderer* renderer;
+extern uint32_t rendererFlags;
 #endif
 
 // 
