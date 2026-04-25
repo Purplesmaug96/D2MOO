@@ -11,6 +11,7 @@
 #include "Perspective.h"
 #include "Options.h"
 #include "Utils.h"
+#include "Draw.h"
 
 D2GraphicsInterfaceStrc* Interface;
 
@@ -36,9 +37,9 @@ bool D2SDLRender_Init() {
 	Interface->pfCreateSurface = &D2SDLRender_CreateSurface;
 	Interface->pfCloseSurface = &D2SDLRender_CloseSurface;
 	Interface->pfPauseSurface = &D2SDLRender_PauseSurface;
-	Interface->pfStartDraw = NULL;
-	Interface->pfEndDraw = NULL;
-	Interface->pfBlit = NULL;
+	Interface->pfStartDraw = &D2SDLRender_StartDraw;
+	Interface->pfEndDraw = &D2SDLRender_EndDraw;
+	Interface->pfBlit = &D2SDLRender_Blit;
 	Interface->pfChangeRes = &D2SDLRender_ChangeRes;
 	Interface->pfGetBackBuffer = &D2SDLRender_GetBackBuffer;
 	Interface->pfActivateWindow = &D2SDLRender_ActivateWindow;
@@ -58,31 +59,31 @@ bool D2SDLRender_Init() {
 	Interface->pfPerspectiveTransform = &D2SDLRender_PerspectiveTransform;
 	Interface->pfPerspectiveTransformScale = &D2SDLRender_PerspectiveTransformScale;
 	Interface->pfPerspectiveClearScale = &D2SDLRender_PerspectiveClearScale;
-	Interface->pfSetPalette = NULL;
-	Interface->pfSetPaletteTables = NULL;
-	Interface->pfSetAmbientColor = NULL;
-	Interface->pfFloorTileDraw = NULL;
-	Interface->pfCelFlatSpriteDraw = NULL;
-	Interface->pfCelDraw = NULL;
-	Interface->pfCelDrawColor = NULL;
-	Interface->pfCelDrawEx = NULL;
-	Interface->pfCelDrawShadow = NULL;
-	Interface->pfCelDrawHilight = NULL;
-	Interface->pfCelDrawClipped = NULL;
-	Interface->pfTileDrawLit = NULL;
-	Interface->pfTileDrawTrans = NULL;
-	Interface->pfShadowTileDraw = NULL;
+	Interface->pfSetPalette = &D2SDLRender_SetPalette;
+	Interface->pfSetPaletteTables = &D2SDLRender_SetPaletteTables;
+	Interface->pfSetAmbientColor = &D2SDLRender_SetAmbientColor;
+	Interface->pfFloorTileDraw = &D2SDLRender_FloorTileDraw;
+	Interface->pfCelFlatSpriteDraw = &D2SDLRender_CelFlatSpriteDraw;
+	Interface->pfCelDraw = &D2SDLRender_CelDraw;
+	Interface->pfCelDrawColor = &D2SDLRender_CelDrawColor;
+	Interface->pfCelDrawEx = &D2SDLRender_CelDrawEx;
+	Interface->pfCelDrawShadow = &D2SDLRender_CelDrawShadow;
+	Interface->pfCelDrawHilight = &D2SDLRender_CelDrawHilight;
+	Interface->pfCelDrawClipped = &D2SDLRender_CelDrawClipped;
+	Interface->pfTileDrawLit = &D2SDLRender_TileDrawLit;
+	Interface->pfTileDrawTrans = &D2SDLRender_TileDrawTrans;
+	Interface->pfShadowTileDraw = &D2SDLRender_ShadowTileDraw;
 	Interface->pfUtilDiamond = &D2SDLRender_UtilDiamond;
 	Interface->pfUtilRect = &D2SDLRender_UtilRect;
 	Interface->pfUtilFilledRect = &D2SDLRender_UtilFilledRect;
 	Interface->pfUtilPoint = &D2SDLRender_UtilPoint;
-	Interface->pfDrawBox = NULL;
-	Interface->pfDrawBoxAlpha = NULL;
-	Interface->pfDrawLine = NULL;
-	Interface->pfClearScreen = NULL;
+	Interface->pfDrawBox = &D2SDLRender_DrawBox;
+	Interface->pfDrawBoxAlpha = &D2SDLRender_DrawBoxAlpha;
+	Interface->pfDrawLine = &D2SDLRender_DrawLine;
+	Interface->pfClearScreen = &D2SDLRender_ClearScreen;
 	Interface->pfOutputString = NULL;
-	Interface->pfDebugDraw = NULL;
-	Interface->pfDebugFillBackBuffer = NULL;
+	Interface->pfDebugDraw = &D2SDLRender_DebugDraw;
+	Interface->pfDebugFillBackBuffer = &D2SDLRender_DebugFillBackBuffer;
 	Interface->pfClearCaches = &D2SDLRender_ClearCaches;
 	return TRUE;
 }
