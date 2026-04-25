@@ -18,8 +18,9 @@ BOOL __fastcall D2SDLRender_SetOption(int32_t nOption, int32_t nValue) {
 	if (nOption >= D2SDLRENDER_OPTIONS_SIZE) {
 		sprintf(errBuf, "nOption (%d) exeeded options[] size (%u).", nOption, D2SDLRENDER_OPTIONS_SIZE-1);
 		FUNC_ERR("D2SDLRender_SetOption", errBuf);
+		return FALSE;
 	}
-	return FALSE;
+	return TRUE;
 }
 
 void __fastcall D2SDLRender_SetGlobalScale(int32_t nScaleFactor) {
