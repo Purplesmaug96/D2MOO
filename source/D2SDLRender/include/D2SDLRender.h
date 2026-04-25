@@ -86,14 +86,15 @@ static inline void _FUNC_ERR(const char* func, const char* errBuf, const char* f
 
 static inline void _FUNC_ASSERT(const char* condBuf, const char* file, const int line) {
 	char dstBuf[512];
-	sprintf(dstBuf, "D2SDLRender: Assertion triggered!\n%s %s:%d:\n%s\n", condBuf, func, file, line);
+	sprintf(dstBuf, "D2SDLRender: Assertion triggered at %s:%d:\n%s\n", file, line, condBuf);
 	printf("%s", dstBuf);
 	fflush(stdout);
 	MessageBoxA(NULL, dstBuf, "D2SDLRender: Assertion triggered", MB_OK);
+	exit(1);
 }
 
 #define FUNC_ASSERT(cond) \
-    do { if (!(cond)) _FUNC_ASSERT(cond, #cond, __FILE__, __LINE__); } while (0)
+    do { if (!(cond)) _FUNC_ASSERT(#cond, __FILE__, __LINE__); } while (0)
 
 
 bool D2SDLRender_Init();
