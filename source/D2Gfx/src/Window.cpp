@@ -43,6 +43,8 @@ HINSTANCE ghInstance;
 SDL_Window* window = NULL;
 uint32_t windowFlags = 0;
 SDL_SysWMinfo wmInfo;
+WNDPROC g_oldProc;
+extern WNDPROC gpfWndProc;
 
 static void ShowCursor() {if (!gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
 static void HideCursor() {if (gbCursorDisplayed) {SDL_ShowCursor(SDL_DISABLE); gbCursorDisplayed = 0;}}
@@ -114,6 +116,8 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
 		exit(-1);
     }
+
+	g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
 
     GdiSetBatchLimit(1u);
 
