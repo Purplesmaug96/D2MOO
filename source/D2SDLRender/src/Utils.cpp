@@ -6,9 +6,10 @@
 
 #include "Utils.h"
 
+// No idea what this is supposed to do, but returning TRUE gets it to keep running, so.
 BOOL __fastcall D2SDLRender_Detect(HINSTANCE hInst) {
-	FUNC_STUB_ARGS("D2SDLRender_Detect", "hInst: %p", hInst);
-	return FALSE;
+	FUNC_LOG_ARGS("D2SDLRender_Detect", "hInst: %p", hInst);
+	return TRUE;
 }
 
 void* __fastcall D2SDLRender_GetCacheResults() {
