@@ -74,4 +74,14 @@ static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {
 	fflush(stdout);
 }
 
+static inline void _FUNC_ERR(const char* func, const char* errBuf, const char* file, const int line) {
+	char dstBuf[512];
+	sprintf(dstBuf, "D2SDLRender: Error in function '%s', %s:%d:\n%s\n", func, file, line, errBuf);
+	printf("%s", dstBuf);
+	fflush(stdout);
+	MessageBoxA(NULL, dstBuf, "D2SDLRender: Error occured", MB_OK);
+}
+
+#define FUNC_ERR(func, errBuf) _FUNC_ERR(func, errBuf, __FILE__, __LINE__)
+
 bool D2SDLRender_Init();
