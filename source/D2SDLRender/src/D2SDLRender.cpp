@@ -14,6 +14,8 @@
 #include "Draw.h"
 
 D2GraphicsInterfaceStrc* Interface;
+SDL_Window window;
+SDL_Renderer renderer;
 
 BOOL __fastcall D2SDLRender_pfInit(D2GfxSettingsStrc* pSettings, const D2GfxHelperStrc* pHelpers) {
 	FUNC_STUB_ARGS("D2SDLRender_pfInit", "pSettings: %p, pHelpers: %p", pSettings, pHelpers);

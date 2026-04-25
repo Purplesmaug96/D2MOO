@@ -3,11 +3,15 @@
 #include <cstddef>
 #include <cstdio>
 
+#include <SDL2/SDL.h>
+
 #include "D2Gfx.h"
 
 
 #ifndef _D2SDLRENDER_CPP
 extern D2GraphicsInterfaceStrc Interface;
+extern SDL_Window window;
+extern SDL_Renderer renderer;
 #endif
 
 #define FUNC_STUB_USE_MSGBOX
@@ -48,6 +52,8 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 	printf("D2SDLRender: Stubbed function '%s' called, args: %s\n", func, argsBuf);
 }
 
+#endif
+
 static inline void FUNC_LOG(const char* func) {
 	printf("D2SDLRender: Logged function '%s' called\n", func);
 }
@@ -60,8 +66,6 @@ static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {
 	va_end(ap);
 	printf("D2SDLRender: Logged function '%s' called, args: %s\n", func, argsBuf);
 }
-
-#endif
 
 bool D2SDLRender_Init();
 
