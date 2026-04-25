@@ -13,6 +13,9 @@ extern int32_t options[D2SDLRENDER_OPTIONS_SIZE];
 
 extern int32_t nGlobalScaleFactor;
 extern int32_t nGlobalGamma;
+
+extern uint16_t nResW;
+extern uint16_t nResH;
 #endif
 
 BOOL __fastcall D2SDLRender_SetOption(int32_t nOption, int32_t nValue);

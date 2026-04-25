@@ -12,6 +12,9 @@ int32_t options[D2SDLRENDER_OPTIONS_SIZE];
 int32_t nGlobalScaleFactor;
 int32_t nGlobalGamma;
 
+uint16_t nResW;
+uint16_t nResH;
+
 BOOL __fastcall D2SDLRender_SetOption(int32_t nOption, int32_t nValue) {
 	FUNC_LOG_ARGS("D2SDLRender_SetOption", "nOption: %d, nValue: %d", nOption, nValue);
 	char errBuf[256];

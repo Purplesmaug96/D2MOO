@@ -6,6 +6,34 @@
 #include "D2SDLRender.h"
 
 #include "Surface.h"
+#include "Options.h"
+
+static void GetResFromResMode(uint16_t* w, uint16_t* h, D2GameResolutionMode nResolutionMode) {
+	FUNC_LOG_ARGS("GetResFromResMode", "w: %p, h: %p, nResolutionMode: %d", w, h, nResolutionMode);
+	switch (nResolutionMode)
+	{
+		case D2GAMERES_640x480:
+			*w = 640;
+			*h = 480;
+			break;
+
+		case D2GAMERES_800x600:
+		case NUM_GAME_RESOLUTIONS:
+			*w = 800;
+			*h = 600;
+			break;
+
+		case D2GAMERES_1344x700:
+			*w = 1344;
+			*h = 700;
+			break;
+
+		default:
+			static char szLocalBuffer[256];
+			sprintf(szLocalBuffer, "Unknown resolution %d", nResolutionMode);
+			FUNC_ERR("GetResFromResMode", szLocalBuffer);
+	}
+}
 
 BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionMode nResolutionMode) {
 	FUNC_LOG_ARGS("D2SDLRender_CreateSurface", "pWindow: %p, nResolutionMode: %d", pWindow, nResolutionMode);
@@ -17,6 +45,8 @@ BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionM
 
 	rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 	renderer = SDL_CreateRenderer(window, 0, rendererFlags);
+
+	GetResFromResMode(&nResW, &nResH, nResolutionMode);
 
 	return TRUE;
 }
@@ -36,8 +66,9 @@ void __fastcall D2SDLRender_PauseSurface(SDL_Window* pWindow, D2GameResolutionMo
 }
 
 BOOL __fastcall D2SDLRender_ChangeRes(SDL_Window* pWindow, D2GameResolutionMode bForceResize) {
-	FUNC_STUB_ARGS("D2SDLRender_ChangeRes", "pWindow: %p, bForceResize: %d", pWindow, bForceResize);
-	return FALSE;
+	FUNC_LOG_ARGS("D2SDLRender_ChangeRes", "pWindow: %p, bForceResize: %d", pWindow, bForceResize);
+	GetResFromResMode(&nResW, &nResH, bForceResize);
+	return TRUE;
 }
 
 BOOL __fastcall D2SDLRender_GetBackBuffer(uint8_t* pBuffer) {
