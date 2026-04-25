@@ -8,8 +8,9 @@
 #include "Surface.h"
 
 BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionMode nResolutionMode) {
-	FUNC_LOG_ARGS("D2SDLRender_CreateSurface", "window: %p, nResolutionMode: %d", window, nResolutionMode);
+	FUNC_LOG_ARGS("D2SDLRender_CreateSurface", "pWindow: %p, nResolutionMode: %d", pWindow, nResolutionMode);
 
+	FUNC_ASSERT(window == NULL);
 	window = pWindow;
 	FUNC_ASSERT(window != NULL);
 	FUNC_ASSERT(renderer == NULL);

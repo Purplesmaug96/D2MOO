@@ -128,13 +128,14 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
     // }
 	HideCursor();
 
-	#ifdef D2_GLIDE_AS_SDLRENDERER
+	#ifndef D2_GLIDE_AS_SDLRENDERER
 	BOOL createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
 	#else
+	BOOL createSurfaceSucceeded;
 	if (gnDisplayType == DISPLAYTYPE_GLIDE)
-		BOOL createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(window, gnResolutionMode);
+		createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface((HWND)(void*)window, gnResolutionMode);
 	else
-		BOOL createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
+		createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
 	#endif
 	
     if (createSurfaceSucceeded)
@@ -211,11 +212,11 @@ int32_t __stdcall WINDOW_GetState()
         HideCursor();
     }
 
-	#ifdef D2_GLIDE_AS_SDLRENDERER
+	#ifndef D2_GLIDE_AS_SDLRENDERER
 	gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 	#else
 	if (gnDisplayType == DISPLAYTYPE_GLIDE)
-		gpGraphicsInterface->pfPauseSurface(window, gnResolutionMode, gbWindowState_6FA8D850);
+		gpGraphicsInterface->pfPauseSurface((HWND)(void*)window, gnResolutionMode, gbWindowState_6FA8D850);
 	else
 		gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 	#endif
@@ -325,13 +326,14 @@ int32_t __stdcall WINDOW_Resize(D2GameResolutionMode nResolution, int32_t bForce
         SDL_SetWindowSize(window, nWidth, nHeight);
     }
 
-	#ifdef D2_GLIDE_AS_SDLRENDERER
+	#ifndef D2_GLIDE_AS_SDLRENDERER
 	const int32_t bResult = gpGraphicsInterface->pfChangeRes(ghWnd, nResolution);
 	#else
+	int32_t bResult;
 	if (gnDisplayType == DISPLAYTYPE_GLIDE)
-		const int32_t bResult = gpGraphicsInterface->pfChangeRes(window, nResolution);
+		bResult = gpGraphicsInterface->pfChangeRes((HWND)(void*)window, nResolution);
 	else
-		const int32_t bResult = gpGraphicsInterface->pfChangeRes(ghWnd, nResolution);
+		bResult = gpGraphicsInterface->pfChangeRes(ghWnd, nResolution);
 	#endif
     D2GFX_SetContrastAndGamma_6FA710C0();
     return bResult;
@@ -371,11 +373,11 @@ void __stdcall WINDOW_EndCutScene(D2GameResolutionMode nResolution)
             HideCursor();
         }
 
-		#ifdef D2_GLIDE_AS_SDLRENDERER
+		#ifndef D2_GLIDE_AS_SDLRENDERER
 		gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 		#else
 		if (gnDisplayType == DISPLAYTYPE_GLIDE)
-			gpGraphicsInterface->pfPauseSurface(window, gnResolutionMode, gbWindowState_6FA8D850);
+			gpGraphicsInterface->pfPauseSurface((HWND)(void*)window, gnResolutionMode, gbWindowState_6FA8D850);
 		else
 			gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 		#endif
