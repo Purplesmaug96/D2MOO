@@ -14,7 +14,8 @@ extern SDL_Window* window;
 extern SDL_Renderer* renderer;
 #endif
 
-#define FUNC_STUB_USE_MSGBOX
+// 
+// #define FUNC_STUB_USE_MSGBOX
 
 #ifdef FUNC_STUB_USE_MSGBOX
 
