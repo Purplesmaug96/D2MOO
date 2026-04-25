@@ -92,6 +92,8 @@ static inline void _FUNC_ASSERT(const char* condBuf, const char* file, const int
 	MessageBoxA(NULL, dstBuf, "D2SDLRender: Assertion triggered", MB_OK);
 }
 
-#define FUNC_ASSERT(cond, condBuf) if (!cond) {_FUNC_ASSERT(cond, condBuf, __FILE__, __LINE__)}
+#define FUNC_ASSERT(cond) \
+    do { if (!(cond)) _FUNC_ASSERT(cond, #cond, __FILE__, __LINE__); } while (0)
+
 
 bool D2SDLRender_Init();
