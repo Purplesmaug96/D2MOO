@@ -7,6 +7,7 @@ target_sources(${D2SDLRenderImplName}
   PRIVATE
 	src/D2SDLRender.cpp
 	src/Cutscene.cpp
+	src/Surface.cpp
 )
 
 D2MOO_target_source_group(D2SDLRender)

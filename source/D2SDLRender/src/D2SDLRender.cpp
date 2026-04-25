@@ -7,6 +7,7 @@
 #include "D2SDLRender.h"
 
 #include "Cutscene.h"
+#include "Surface.h"
 
 D2GraphicsInterfaceStrc* Interface;
 
@@ -18,9 +19,9 @@ bool D2SDLRender_Init() {
 	Interface->pfDetect = NULL;
 	Interface->pfInit = NULL;
 	Interface->pfClose = NULL;
-	Interface->pfCreateSurface = NULL;
-	Interface->pfCloseSurface = NULL;
-	Interface->pfPauseSurface = NULL;
+	Interface->pfCreateSurface = &D2SDLRender_CreateSurface;
+	Interface->pfCloseSurface = &D2SDLRender_CloseSurface;
+	Interface->pfPauseSurface = &D2SDLRender_PauseSurface;
 	Interface->pfStartDraw = NULL;
 	Interface->pfEndDraw = NULL;
 	Interface->pfBlit = NULL;
