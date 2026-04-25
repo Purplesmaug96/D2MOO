@@ -8,6 +8,7 @@ target_sources(${D2SDLRenderImplName}
 	src/D2SDLRender.cpp
 	src/Cutscene.cpp
 	src/Surface.cpp
+	src/Perspective.cpp
 )
 
 D2MOO_target_source_group(D2SDLRender)

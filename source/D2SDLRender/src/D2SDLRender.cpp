@@ -8,6 +8,7 @@
 
 #include "Cutscene.h"
 #include "Surface.h"
+#include "Perspective.h"
 
 D2GraphicsInterfaceStrc* Interface;
 
@@ -56,10 +57,10 @@ bool D2SDLRender_Init() {
 	Interface->pfSetGlobalScale = NULL;
 	Interface->pfSetGamma = NULL;
 	Interface->pfGammaCanBeControlled = NULL;
-	Interface->pfUpdatePerspective = NULL;
-	Interface->pfPerspectiveTransform = NULL;
-	Interface->pfPerspectiveTransformScale = NULL;
-	Interface->pfPerspectiveClearScale = NULL;
+	Interface->pfUpdatePerspective = &D2SDLRender_UpdatePerspective;
+	Interface->pfPerspectiveTransform = &D2SDLRender_PerspectiveTransform;
+	Interface->pfPerspectiveTransformScale = &D2SDLRender_PerspectiveTransformScale;
+	Interface->pfPerspectiveClearScale = &D2SDLRender_PerspectiveClearScale;
 	Interface->pfSetPalette = NULL;
 	Interface->pfSetPaletteTables = NULL;
 	Interface->pfSetAmbientColor = NULL;
