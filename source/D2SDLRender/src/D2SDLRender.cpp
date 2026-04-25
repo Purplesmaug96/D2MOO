@@ -10,13 +10,9 @@
 #include "Surface.h"
 #include "Perspective.h"
 #include "Options.h"
+#include "Utils.h"
 
 D2GraphicsInterfaceStrc* Interface;
-
-BOOL __fastcall D2SDLRender_Detect(HINSTANCE hInst) {
-	FUNC_STUB_ARGS("D2SDLRender_Detect", "hInst: %p", hInst);
-	return FALSE;
-}
 
 BOOL __fastcall D2SDLRender_pfInit(D2GfxSettingsStrc* pSettings, const D2GfxHelperStrc* pHelpers) {
 	FUNC_STUB_ARGS("D2SDLRender_pfInit", "pSettings: %p, pHelpers: %p", pSettings, pHelpers);
@@ -53,8 +49,8 @@ bool D2SDLRender_Init() {
 	Interface->pfDecodeSmacker = &D2SDLRender_DecodeSmacker;
 	Interface->pfPlaySmacker = &D2SDLRender_PlaySmacker;
 	Interface->pfCloseSmacker = &D2SDLRender_CloseSmacker;
-	Interface->pfGetCacheResults = NULL;
-	Interface->pfGetDimensions = NULL;
+	Interface->pfGetCacheResults = &D2SDLRender_GetCacheResults;
+	Interface->pfGetDimensions = &D2SDLRender_GetDimensions;
 	Interface->pfSetGlobalScale = &D2SDLRender_SetGlobalScale;
 	Interface->pfSetGamma = &D2SDLRender_SetGamma;
 	Interface->pfGammaCanBeControlled = &D2SDLRender_GammaCanBeControlled;
@@ -76,10 +72,10 @@ bool D2SDLRender_Init() {
 	Interface->pfTileDrawLit = NULL;
 	Interface->pfTileDrawTrans = NULL;
 	Interface->pfShadowTileDraw = NULL;
-	Interface->pfUtilDiamond = NULL;
-	Interface->pfUtilRect = NULL;
-	Interface->pfUtilFilledRect = NULL;
-	Interface->pfUtilPoint = NULL;
+	Interface->pfUtilDiamond = &D2SDLRender_UtilDiamond;
+	Interface->pfUtilRect = &D2SDLRender_UtilRect;
+	Interface->pfUtilFilledRect = &D2SDLRender_UtilFilledRect;
+	Interface->pfUtilPoint = &D2SDLRender_UtilPoint;
 	Interface->pfDrawBox = NULL;
 	Interface->pfDrawBoxAlpha = NULL;
 	Interface->pfDrawLine = NULL;
@@ -87,7 +83,7 @@ bool D2SDLRender_Init() {
 	Interface->pfOutputString = NULL;
 	Interface->pfDebugDraw = NULL;
 	Interface->pfDebugFillBackBuffer = NULL;
-	Interface->pfClearCaches = NULL;
+	Interface->pfClearCaches = &D2SDLRender_ClearCaches;
 	return TRUE;
 }
 
