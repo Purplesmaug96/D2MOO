@@ -10,8 +10,8 @@
 
 #ifndef _D2SDLRENDER_CPP
 extern D2GraphicsInterfaceStrc Interface;
-extern SDL_Window window;
-extern SDL_Renderer renderer;
+extern SDL_Window* window;
+extern SDL_Renderer* renderer;
 #endif
 
 #define FUNC_STUB_USE_MSGBOX
@@ -22,6 +22,7 @@ static inline void FUNC_STUB(const char* func) {
 	char dstBuf[512];
 	sprintf(dstBuf, "D2SDLRender: Stubbed function '%s' called\n", func);
 	printf("%s", dstBuf);
+	fflush(stdout);
 	MessageBoxA(NULL, dstBuf, "D2SDLRender: Stubbed function called", MB_OK);
 }
 
@@ -34,6 +35,7 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 	char dstBuf[512];
 	sprintf(dstBuf, "D2SDLRender: Stubbed function '%s', args: %s called\n", func, argsBuf);
 	printf("%s", dstBuf);
+	fflush(stdout);
 	MessageBoxA(NULL, dstBuf, "D2SDLRender: Stubbed function called", MB_OK);
 }
 
@@ -41,6 +43,7 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 
 static inline void FUNC_STUB(const char* func) {
 	printf("D2SDLRender: Stubbed function '%s' called\n", func);
+	fflush(stdout);
 }
 
 static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
@@ -50,12 +53,14 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 	vsnprintf(argsBuf, sizeof argsBuf, fmt, ap);
 	va_end(ap);
 	printf("D2SDLRender: Stubbed function '%s' called, args: %s\n", func, argsBuf);
+	fflush(stdout);
 }
 
 #endif
 
 static inline void FUNC_LOG(const char* func) {
 	printf("D2SDLRender: Logged function '%s' called\n", func);
+	fflush(stdout);
 }
 
 static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {
@@ -65,8 +70,7 @@ static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {
 	vsnprintf(argsBuf, sizeof argsBuf, fmt, ap);
 	va_end(ap);
 	printf("D2SDLRender: Logged function '%s' called, args: %s\n", func, argsBuf);
+	fflush(stdout);
 }
 
 bool D2SDLRender_Init();
-
-D2GraphicsInterfaceStrc* D2SDLRender_GetGraphicsInterface();
