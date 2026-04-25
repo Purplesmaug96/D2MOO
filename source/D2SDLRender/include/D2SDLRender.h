@@ -10,6 +10,31 @@
 extern D2GraphicsInterfaceStrc Interface;
 #endif
 
+#define FUNC_STUB_USE_MSGBOX
+
+#ifdef FUNC_STUB_USE_MSGBOX
+
+static inline void FUNC_STUB(const char* func) {
+	char dstBuf[512];
+	sprintf(dstBuf, "D2SDLRender: Stubbed function '%s' called\n", func);
+	printf("%s", dstBuf);
+	MessageBoxA(NULL, dstBuf, "D2SDLRender: Stubbed function called", MB_OK);
+}
+
+static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
+	char argsBuf[256];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(argsBuf, sizeof argsBuf, fmt, ap);
+	va_end(ap);
+	char dstBuf[512];
+	sprintf(dstBuf, "D2SDLRender: Stubbed function '%s', args: %s called\n", func, argsBuf);
+	printf("%s", dstBuf);
+	MessageBoxA(NULL, dstBuf, "D2SDLRender: Stubbed function called", MB_OK);
+}
+
+#else
+
 static inline void FUNC_STUB(const char* func) {
 	printf("D2SDLRender: Stubbed function '%s' called\n", func);
 }
@@ -22,6 +47,8 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 	va_end(ap);
 	printf("D2SDLRender: Stubbed function '%s', args: %s called\n", func, argsBuf);
 }
+
+#endif
 
 bool D2SDLRender_Init();
 

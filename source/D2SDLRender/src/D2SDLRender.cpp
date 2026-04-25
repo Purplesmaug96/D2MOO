@@ -11,14 +11,30 @@
 
 D2GraphicsInterfaceStrc* Interface;
 
+BOOL __fastcall D2SDLRender_Detect(HINSTANCE hInst) {
+	FUNC_STUB_ARGS("D2SDLRender_Detect", "hInst: %p", hInst);
+	return FALSE;
+}
+
+BOOL __fastcall D2SDLRender_pfInit(D2GfxSettingsStrc* pSettings, const D2GfxHelperStrc* pHelpers) {
+	FUNC_STUB_ARGS("D2SDLRender_pfInit", "pSettings: %p, pHelpers: %p", pSettings, pHelpers);
+	return FALSE;
+}
+
+BOOL __fastcall D2SDLRender_pfClose() {
+	FUNC_STUB("D2SDLRender_pfClose");
+	return FALSE;
+}
+
 bool D2SDLRender_Init() {
+	FUNC_STUB("D2SDLRender_Init");
 	Interface = (D2GraphicsInterfaceStrc*)malloc(sizeof(D2GraphicsInterfaceStrc));
 	assert(Interface != NULL);
 
 	// Function assignments
-	Interface->pfDetect = NULL;
-	Interface->pfInit = NULL;
-	Interface->pfClose = NULL;
+	Interface->pfDetect = &D2SDLRender_Detect;
+	Interface->pfInit = &D2SDLRender_pfInit;
+	Interface->pfClose = &D2SDLRender_pfClose;
 	Interface->pfCreateSurface = &D2SDLRender_CreateSurface;
 	Interface->pfCloseSurface = &D2SDLRender_CloseSurface;
 	Interface->pfPauseSurface = &D2SDLRender_PauseSurface;
