@@ -97,6 +97,10 @@ void __fastcall D2SDLRender_ClearScreen(int32_t bPartial) {
 	FUNC_STUB_ARGS("D2SDLRender_ClearScreen", "bPartial: %d", bPartial);
 }
 
+void __fastcall D2SDLRender_OutputString(int32_t nPosX, int32_t nPosY, const char* szFormat, va_list va) {
+	FUNC_STUB_ARGS("D2SDLRender_OutputString", "nPosX: %, nPosY: %d, szFormat: %s, va: %p", nPosX, nPosY, szFormat, va);
+}
+
 void __fastcall D2SDLRender_DebugDraw(uint32_t* pLight, uint32_t* pPlayerLight, int32_t nPosX, int32_t nPosY) {
 	FUNC_STUB_ARGS("D2SDLRender_DebugDraw", "pLight: %p, pPlayerLight: %p, nPosX: %d, nPosY: %d", pLight, pPlayerLight, nPosX, nPosY);
 }

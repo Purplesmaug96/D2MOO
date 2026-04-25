@@ -33,5 +33,7 @@ void __fastcall D2SDLRender_DrawLine(int32_t nXStart, int32_t nYStart, int32_t n
 
 void __fastcall D2SDLRender_ClearScreen(int32_t bPartial);
 
+void __fastcall D2SDLRender_OutputString(int32_t nPosX, int32_t nPosY, const char* szFormat, va_list va);
+
 void __fastcall D2SDLRender_DebugDraw(uint32_t* pLight, uint32_t* pPlayerLight, int32_t nPosX, int32_t nPosY); // Related to lightmap debugging. Called from an unused stub in D2Client ?
 void __fastcall D2SDLRender_DebugFillBackBuffer(int32_t nPosX, int32_t nPosY);

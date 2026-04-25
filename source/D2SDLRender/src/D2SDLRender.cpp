@@ -81,7 +81,7 @@ bool D2SDLRender_Init() {
 	Interface->pfDrawBoxAlpha = &D2SDLRender_DrawBoxAlpha;
 	Interface->pfDrawLine = &D2SDLRender_DrawLine;
 	Interface->pfClearScreen = &D2SDLRender_ClearScreen;
-	Interface->pfOutputString = NULL;
+	Interface->pfOutputString = &D2SDLRender_OutputString;
 	Interface->pfDebugDraw = &D2SDLRender_DebugDraw;
 	Interface->pfDebugFillBackBuffer = &D2SDLRender_DebugFillBackBuffer;
 	Interface->pfClearCaches = &D2SDLRender_ClearCaches;
