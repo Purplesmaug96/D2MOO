@@ -8,6 +8,7 @@
 #include "DrawMode.h"
 #include <DisplayType.h>
 
+#define D2_GLIDE_AS_SDLRENDERER
 
 #pragma pack(push, 1)
 struct D2PaletteTableStrc

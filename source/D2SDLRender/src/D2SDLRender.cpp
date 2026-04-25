@@ -34,13 +34,13 @@ bool D2SDLRender_Init() {
 	Interface->pfDetect = &D2SDLRender_Detect;
 	Interface->pfInit = &D2SDLRender_pfInit;
 	Interface->pfClose = &D2SDLRender_pfClose;
-	Interface->pfCreateSurface = &D2SDLRender_CreateSurface;
-	Interface->pfCloseSurface = &D2SDLRender_CloseSurface;
-	Interface->pfPauseSurface = &D2SDLRender_PauseSurface;
+	Interface->pfCreateSurface = (BOOL(__fastcall*)(HWND, D2GameResolutionMode))(&D2SDLRender_CreateSurface);
+	Interface->pfCloseSurface = (BOOL(__fastcall*)())(&D2SDLRender_CloseSurface);
+	Interface->pfPauseSurface = (void(__fastcall*)(HWND, D2GameResolutionMode, int32_t))(&D2SDLRender_PauseSurface);
 	Interface->pfStartDraw = &D2SDLRender_StartDraw;
 	Interface->pfEndDraw = &D2SDLRender_EndDraw;
 	Interface->pfBlit = &D2SDLRender_Blit;
-	Interface->pfChangeRes = &D2SDLRender_ChangeRes;
+	Interface->pfChangeRes = (BOOL(__fastcall*)(HWND, D2GameResolutionMode))(&D2SDLRender_ChangeRes);
 	Interface->pfGetBackBuffer = &D2SDLRender_GetBackBuffer;
 	Interface->pfActivateWindow = &D2SDLRender_ActivateWindow;
 	Interface->pfSetOption = &D2SDLRender_SetOption;

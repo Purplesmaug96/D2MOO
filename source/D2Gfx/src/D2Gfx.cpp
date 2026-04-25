@@ -9,12 +9,10 @@
 #include "DisplayType.h"
 #include "Window.h"
 
-
 extern int32_t gbIsWindowed;
 extern D2GameResolutionMode gnResolutionMode;
 extern int32_t gbNoWindowCreated_6FA8D848;
 extern HINSTANCE ghInstance;
-
 
 constexpr const char* gszDriverDllNames[NUMBER_OF_DISPLAYTYPES] = { "", "D2Gdi.dll", "", "D2DDraw.dll", "D2Glide.dll", "D2OpenGL.dll", "D2Direct3D.dll", "D2Rave.dll" };
 
