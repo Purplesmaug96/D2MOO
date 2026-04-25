@@ -16,7 +16,7 @@ BOOL __fastcall D2SDLRender_SetOption(int32_t nOption, int32_t nValue) {
 	FUNC_LOG_ARGS("D2SDLRender_SetOption", "nOption: %d, nValue: %d", nOption, nValue);
 	char errBuf[256];
 	if (nOption >= D2SDLRENDER_OPTIONS_SIZE) {
-		sprintf(errBuf, "nOption (%d) exeeded options[] size (%u).", nOption, D2SDLRENDER_OPTIONS_SIZE);
+		sprintf(errBuf, "nOption (%d) exeeded options[] size (%u).", nOption, D2SDLRENDER_OPTIONS_SIZE-1);
 		FUNC_ERR("D2SDLRender_SetOption", errBuf);
 	}
 	return FALSE;
