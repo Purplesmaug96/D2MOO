@@ -10,3 +10,7 @@
 BOOL __fastcall D2SDLRender_CreateSurface(HWND hWnd, D2GameResolutionMode nResolutionMode);
 BOOL __fastcall D2SDLRender_CloseSurface();
 void __fastcall D2SDLRender_PauseSurface(HWND hWnd, D2GameResolutionMode nResolutionMode, int32_t nWindowState);
+
+BOOL __fastcall D2SDLRender_ChangeRes(HWND hWnd, D2GameResolutionMode bForceResize);
+BOOL __fastcall D2SDLRender_GetBackBuffer(uint8_t* pBuffer);
+BOOL __fastcall D2SDLRender_ActivateWindow();

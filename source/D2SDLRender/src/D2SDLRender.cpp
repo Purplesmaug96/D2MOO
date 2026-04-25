@@ -25,9 +25,9 @@ bool D2SDLRender_Init() {
 	Interface->pfStartDraw = NULL;
 	Interface->pfEndDraw = NULL;
 	Interface->pfBlit = NULL;
-	Interface->pfChangeRes = NULL;
-	Interface->pfGetBackBuffer = NULL;
-	Interface->pfActivateWindow = NULL;
+	Interface->pfChangeRes = &D2SDLRender_ChangeRes;
+	Interface->pfGetBackBuffer = &D2SDLRender_GetBackBuffer;
+	Interface->pfActivateWindow = &D2SDLRender_ActivateWindow;
 	Interface->pfSetOption = NULL;
 	Interface->pfPlayCutscene = &D2SDLRender_PlayCutscene;
 	Interface->pfOpenSmackCutscene = &D2SDLRender_OpenSmackCutscene;
