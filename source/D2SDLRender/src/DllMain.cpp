@@ -3,5 +3,15 @@
 
 BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved)
 {
-	return D2SDLRender_Init();
+	switch (dwReason)
+	{
+		case DLL_PROCESS_ATTACH:
+			return D2SDLRender_Init();
+			break;
+
+		default:
+			return FALSE;
+			break;
+	}
+	
 }
