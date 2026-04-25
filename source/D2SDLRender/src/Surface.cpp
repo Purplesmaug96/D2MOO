@@ -16,7 +16,7 @@ BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionM
 	FUNC_ASSERT(renderer == NULL);
 
 	rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
-	renderer = SDL_CreateRenderer(window, -1, rendererFlags);
+	renderer = SDL_CreateRenderer(window, 0, rendererFlags);
 
 	return TRUE;
 }
@@ -32,11 +32,11 @@ BOOL __fastcall D2SDLRender_CloseSurface() {
 }
 
 void __fastcall D2SDLRender_PauseSurface(SDL_Window* pWindow, D2GameResolutionMode nResolutionMode, int32_t nWindowState) {
-	FUNC_STUB_ARGS("D2SDLRender_PauseSurface", "window: %p, nResolutionMode: %d, nWindowState: %d", window, nResolutionMode, nWindowState);
+	FUNC_STUB_ARGS("D2SDLRender_PauseSurface", "pWindow: %p, nResolutionMode: %d, nWindowState: %d", pWindow, nResolutionMode, nWindowState);
 }
 
 BOOL __fastcall D2SDLRender_ChangeRes(SDL_Window* pWindow, D2GameResolutionMode bForceResize) {
-	FUNC_STUB_ARGS("D2SDLRender_ChangeRes", "window: %p, bForceResize: %d", window, bForceResize);
+	FUNC_STUB_ARGS("D2SDLRender_ChangeRes", "pWindow: %p, bForceResize: %d", pWindow, bForceResize);
 	return FALSE;
 }
 
