@@ -6,6 +6,7 @@ target_link_libraries(${D2SDLRenderImplName} PUBLIC SDL2::SDL2-static D2Gfx D2Co
 target_sources(${D2SDLRenderImplName}
   PRIVATE
 	src/D2SDLRender.cpp
+	src/Cutscene.cpp
 )
 
 D2MOO_target_source_group(D2SDLRender)

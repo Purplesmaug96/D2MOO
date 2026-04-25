@@ -6,6 +6,8 @@
 #define _D2SDLRENDER_CPP
 #include "D2SDLRender.h"
 
+#include "Cutscene.h"
+
 D2GraphicsInterfaceStrc* Interface;
 
 bool D2SDLRender_Init() {
@@ -26,12 +28,12 @@ bool D2SDLRender_Init() {
 	Interface->pfGetBackBuffer = NULL;
 	Interface->pfActivateWindow = NULL;
 	Interface->pfSetOption = NULL;
-	Interface->pfPlayCutscene = NULL;
-	Interface->pfOpenSmackCutscene = NULL;
-	Interface->pfCheckCutScene = NULL;
-	Interface->pfDecodeSmacker = NULL;
-	Interface->pfPlaySmacker = NULL;
-	Interface->pfCloseSmacker = NULL;
+	Interface->pfPlayCutscene = &D2SDLRender_PlayCutscene;
+	Interface->pfOpenSmackCutscene = &D2SDLRender_OpenSmackCutscene;
+	Interface->pfCheckCutScene = &D2SDLRender_CheckCutScene;
+	Interface->pfDecodeSmacker = &D2SDLRender_DecodeSmacker;
+	Interface->pfPlaySmacker = &D2SDLRender_PlaySmacker;
+	Interface->pfCloseSmacker = &D2SDLRender_CloseSmacker;
 	Interface->pfGetCacheResults = NULL;
 	Interface->pfGetDimensions = NULL;
 	Interface->pfSetGlobalScale = NULL;
