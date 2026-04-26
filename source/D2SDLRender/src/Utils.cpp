@@ -5,6 +5,7 @@
 #include "D2SDLRender.h"
 
 #include "Utils.h"
+#include "Options.h"
 
 // No idea what this is supposed to do, but returning TRUE gets it to keep running, so.
 BOOL __fastcall D2SDLRender_Detect(HINSTANCE hInst) {
@@ -18,8 +19,10 @@ void* __fastcall D2SDLRender_GetCacheResults() {
 }
 
 BOOL __fastcall D2SDLRender_GetDimensions(int32_t* pWidth, int32_t* pHeight) {
-	FUNC_STUB_ARGS("D2SDLRender_GetDimensions", "pWidth: %p, pHeight: %p", pWidth, pHeight);
-	return FALSE;
+	FUNC_LOG_ARGS("D2SDLRender_GetDimensions", "pWidth: %p, pHeight: %p", pWidth, pHeight);
+	*pWidth = nResW;
+	*pHeight = nResH;
+	return TRUE;
 }
 
 void __fastcall D2SDLRender_UtilDiamond(RECT* pRect, uint8_t nPaletteIndex) {
