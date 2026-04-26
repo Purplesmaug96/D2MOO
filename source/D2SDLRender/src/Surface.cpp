@@ -7,6 +7,7 @@
 
 #include "Surface.h"
 #include "Options.h"
+#include "Draw.h"
 
 static void GetResFromResMode(uint16_t* w, uint16_t* h, D2GameResolutionMode nResolutionMode) {
 	FUNC_LOG_ARGS("GetResFromResMode", "w: %p, h: %p, nResolutionMode: %d", w, h, nResolutionMode);
@@ -38,7 +39,6 @@ static void GetResFromResMode(uint16_t* w, uint16_t* h, D2GameResolutionMode nRe
 BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionMode nResolutionMode) {
 	FUNC_LOG_ARGS("D2SDLRender_CreateSurface", "pWindow: %p, nResolutionMode: %d", pWindow, nResolutionMode);
 
-	FUNC_ASSERT(window == NULL);
 	window = pWindow;
 	FUNC_ASSERT(window != NULL);
 	FUNC_ASSERT(renderer == NULL);
@@ -48,6 +48,9 @@ BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionM
 	FUNC_ASSERT(renderer != NULL);
 
 	GetResFromResMode(&nResW, &nResH, nResolutionMode);
+
+	screenTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET, nResW, nResH);
+	FUNC_ASSERT(screenTexture != NULL);
 
 	return TRUE;
 }
@@ -68,6 +71,9 @@ void __fastcall D2SDLRender_PauseSurface(SDL_Window* pWindow, D2GameResolutionMo
 
 BOOL __fastcall D2SDLRender_ChangeRes(SDL_Window* pWindow, D2GameResolutionMode bForceResize) {
 	FUNC_LOG_ARGS("D2SDLRender_ChangeRes", "pWindow: %p, bForceResize: %d", pWindow, bForceResize);
+	FUNC_ASSERT(screenTexture != NULL);
+	SDL_DestroyTexture(screenTexture);
+	screenTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET, nResW, nResH);
 	GetResFromResMode(&nResW, &nResH, bForceResize);
 	return TRUE;
 }

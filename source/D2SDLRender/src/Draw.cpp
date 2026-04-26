@@ -4,16 +4,27 @@
 
 #include "D2SDLRender.h"
 
+#define _DRAW_CPP
 #include "Draw.h"
 
+SDL_Texture* screenTexture;
+
 BOOL __fastcall D2SDLRender_StartDraw(int32_t bClear, uint8_t nRed, uint8_t nGreen, uint8_t nBlue) {
-	FUNC_STUB_ARGS("D2SDLRender_StartDraw", "bClear: %d, nRed: %u, nGreen: %u, nBlue: %b", bClear, nRed, nGreen, nBlue);
-	return FALSE;
+	FUNC_LOG_ARGS("D2SDLRender_StartDraw", "bClear: %d, nRed: %u, nGreen: %u, nBlue: %b", bClear, nRed, nGreen, nBlue);
+	FUNC_ASSERT(screenTexture != NULL);
+	SDL_SetRenderTarget(renderer, screenTexture);
+	SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+	SDL_RenderClear(renderer);
+	return TRUE;
 }
 
 BOOL __fastcall D2SDLRender_EndDraw() {
-	FUNC_STUB("D2SDLRender_EndDraw");
-	return FALSE;
+	FUNC_LOG("D2SDLRender_EndDraw");
+	FUNC_ASSERT(screenTexture != NULL);
+	SDL_SetRenderTarget(renderer, NULL);
+	SDL_RenderCopy(renderer, screenTexture, NULL, NULL);
+	SDL_RenderPresent(renderer);
+	return TRUE;
 }
 
 BOOL __fastcall D2SDLRender_Blit() {

@@ -2,9 +2,15 @@
 
 #include <windows.h>
 
+#include <SDL2/SDL.h>
+
 #include "D2Gfx.h"
 
 #include "D2SDLRender.h"
+
+#ifndef _DRAW_CPP
+extern SDL_Texture* screenTexture;
+#endif
 
 BOOL __fastcall D2SDLRender_StartDraw(int32_t bClear, uint8_t nRed, uint8_t nGreen, uint8_t nBlue);
 BOOL __fastcall D2SDLRender_EndDraw();
