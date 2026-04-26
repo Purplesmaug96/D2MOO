@@ -98,7 +98,7 @@ void __fastcall D2SDLRender_CelDrawColor(D2GfxDataStrc* pData, int32_t nPosX, in
 	// Doesn't seem to actually work if done by nFrame...
 	D2GfxCellStrc* pCell = &pData->pCellFile->pGfxCells[/*pData->nFrame % pData->pCellFile->nFrames*/0];
 	uint32_t nWidth = pCell->dwWidth - pCell->nXOffset;
-	uint8_t nHeight = pCell->dwHeight - pCell->nYOffset;
+	uint32_t nHeight = pCell->dwHeight - pCell->nYOffset;
 	
 	// printf("nPosX: %d, nPosY: %d, nWidth: %d, nHeight: %d, nFrame: %d, nFrames: %d\n", nPosX, nPosY, nWidth, nHeight, pData->nFrame, pData->pCellFile->nFrames);
 
