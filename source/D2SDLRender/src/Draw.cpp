@@ -51,6 +51,34 @@ void __fastcall D2SDLRender_SetAmbientColor(uint8_t nRed, uint8_t nGreen, uint8_
 	nAmbientBlue = nBlue;
 }
 
+
+void RenderSquare(SDL_Texture* tex, float nStartPosX, float nStartPosY, float nEndPosX, float nEndPosY, uint8_t nRed, uint8_t nGreen, uint8_t nBlue) {
+	SDL_Vertex verts[4];
+
+	verts[0].position.x = nStartPosX;
+	verts[0].position.y = nStartPosY;
+
+	verts[1].position.x = nEndPosX;
+	verts[1].position.y = nStartPosY;
+
+	verts[2].position.x = nStartPosX;
+	verts[2].position.y = nEndPosY;
+
+	verts[3].position.x = nEndPosX;
+	verts[3].position.y = nEndPosY;
+
+	for (int i = 0; i < 4; i++) {
+		verts[i].color.r = nRed;
+		verts[i].color.g = nGreen;
+		verts[i].color.b = nBlue;
+		verts[i].color.a = 255;
+	}
+
+	int indices[6] = { 0, 1, 2, 1, 3, 2 };
+	SDL_RenderGeometry(renderer, tex, verts, 4, indices, 6);
+}
+
+
 int32_t __fastcall D2SDLRender_FloorTileDraw(D2TileLibraryEntryStrc* pTile, D2GfxLightExStrc* pLight, int32_t nPosX, int32_t nPosY, int32_t nWorldXpos, int32_t nWorldYpos, uint8_t nAlpha, int32_t nScreenPanels, void* pTileData) {
 	FUNC_STUB_ARGS("D2SDLRender_FloorTileDraw", "pTile: %p, pLight: %p, nPosX: %d, nPosY: %d, nWorldXpos: %d, nWorldYpos: %d, nAlpha: %u, nScreenPanels: %d, pTileData: %p", pTile, pLight, nPosX, nPosY, nWorldXpos, nWorldYpos, nAlpha, nScreenPanels, pTileData);
 	return 0;
@@ -66,6 +94,7 @@ void __fastcall D2SDLRender_CelDraw(D2GfxDataStrc* pData, int32_t nPosX, int32_t
 
 void __fastcall D2SDLRender_CelDrawColor(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, uint32_t dwGamma, DrawMode eDrawMode, int32_t nGlobalPaletteShift) {
 	FUNC_STUB_ARGS("D2SDLRender_CelDrawColor", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, nGlobalPaletteShift: %d", pData, nPosX, nPosY, dwGamma, eDrawMode, nGlobalPaletteShift);
+	RenderSquare(NULL, nPosX, nPosY, nPosX + 10, nPosY + 10, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDrawEx(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, int32_t nSkipLines, int32_t nDrawLines, DrawMode eDrawMode) {
