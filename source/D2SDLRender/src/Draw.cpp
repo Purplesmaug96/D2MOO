@@ -93,8 +93,16 @@ void __fastcall D2SDLRender_CelDraw(D2GfxDataStrc* pData, int32_t nPosX, int32_t
 }
 
 void __fastcall D2SDLRender_CelDrawColor(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, uint32_t dwGamma, DrawMode eDrawMode, int32_t nGlobalPaletteShift) {
-	FUNC_STUB_ARGS("D2SDLRender_CelDrawColor", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, nGlobalPaletteShift: %d", pData, nPosX, nPosY, dwGamma, eDrawMode, nGlobalPaletteShift);
-	RenderSquare(NULL, nPosX, nPosY, nPosX + 10, nPosY + 10, 255, 0, 255);
+	FUNC_LOG_ARGS("D2SDLRender_CelDrawColor", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, nGlobalPaletteShift: %d", pData, nPosX, nPosY, dwGamma, eDrawMode, nGlobalPaletteShift);
+
+	// Doesn't seem to actually work if done by nFrame...
+	D2GfxCellStrc* pCell = &pData->pCellFile->pGfxCells[/*pData->nFrame % pData->pCellFile->nFrames*/0];
+	uint32_t nWidth = pCell->dwWidth - pCell->nXOffset;
+	uint8_t nHeight = pCell->dwHeight - pCell->nYOffset;
+	
+	// printf("nPosX: %d, nPosY: %d, nWidth: %d, nHeight: %d, nFrame: %d, nFrames: %d\n", nPosX, nPosY, nWidth, nHeight, pData->nFrame, pData->pCellFile->nFrames);
+
+	RenderSquare(NULL, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDrawEx(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, int32_t nSkipLines, int32_t nDrawLines, DrawMode eDrawMode) {
