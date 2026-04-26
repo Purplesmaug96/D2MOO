@@ -43,8 +43,9 @@ BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionM
 	FUNC_ASSERT(window != NULL);
 	FUNC_ASSERT(renderer == NULL);
 
-	rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+	rendererFlags = SDL_RENDERER_PRESENTVSYNC;
 	renderer = SDL_CreateRenderer(window, 0, rendererFlags);
+	FUNC_ASSERT(renderer != NULL);
 
 	GetResFromResMode(&nResW, &nResH, nResolutionMode);
 

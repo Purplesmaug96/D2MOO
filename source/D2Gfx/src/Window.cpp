@@ -92,6 +92,18 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 
     //dword_6FA8D740 = Rect.bottom;
 
+	printf("Initializing SDL from WINDOW_Create\n");
+	fflush(stdout);
+	uint32_t sdlInitFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
+	const int sdlInitReturn = SDL_Init(sdlInitFlags);
+	if (sdlInitReturn != 0)
+	{
+		static char szLocalBuffer[256];
+		static char errBuf[256];
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to initialize SDL!\nFlags: %u\nReturn code: %u\nSDL Error: %s\n", sdlInitFlags, sdlInitReturn, SDL_GetErrorMsg(errBuf, 256)), __FILE__, __LINE__);
+		exit(-1);
+	}
+
 	windowFlags = SDL_WINDOW_SHOWN;
 	if (!bWindowed) {
 		windowFlags |= SDL_WINDOW_FULLSCREEN;
@@ -105,21 +117,6 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to open window!\nFlags: %u\nSDL Error: %s\n", windowFlags, SDL_GetErrorMsg(errBuf, 256)), __FILE__, __LINE__);
 		exit(-1);
     }
-
-	SDL_VERSION(&wmInfo.version);
-	SDL_GetWindowWMInfo(window, &wmInfo);
-	ghWnd = wmInfo.info.win.window;
-
-	if (ghWnd == NULL)
-    {
-        static char szLocalBuffer[256];
-		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
-		exit(-1);
-    }
-
-	g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
-
-    GdiSetBatchLimit(1u);
 
     // if (gbCursorDisplayed)
     // {
@@ -140,6 +137,18 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 	
     if (createSurfaceSucceeded)
     {
+		SDL_VERSION(&wmInfo.version);
+		SDL_GetWindowWMInfo(window, &wmInfo);
+		ghWnd = wmInfo.info.win.window;
+
+		if (ghWnd == NULL)
+		{
+			static char szLocalBuffer[256];
+			FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
+			exit(-1);
+		}
+		GdiSetBatchLimit(1u);
+		g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
         D2GFX_SetContrastAndGamma_6FA710C0();
         return 1;
     }
