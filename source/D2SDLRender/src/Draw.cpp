@@ -9,11 +9,15 @@
 
 SDL_Texture* screenTexture;
 
+uint8_t nAmbientRed = 0;
+uint8_t nAmbientGreen = 0;
+uint8_t nAmbientBlue = 0;
+
 BOOL __fastcall D2SDLRender_StartDraw(int32_t bClear, uint8_t nRed, uint8_t nGreen, uint8_t nBlue) {
 	FUNC_LOG_ARGS("D2SDLRender_StartDraw", "bClear: %d, nRed: %u, nGreen: %u, nBlue: %b", bClear, nRed, nGreen, nBlue);
 	FUNC_ASSERT(screenTexture != NULL);
 	SDL_SetRenderTarget(renderer, screenTexture);
-	SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+	SDL_SetRenderDrawColor(renderer, nAmbientRed, nAmbientGreen, nAmbientBlue, 255);
 	SDL_RenderClear(renderer);
 	return TRUE;
 }
@@ -41,7 +45,10 @@ void __fastcall D2SDLRender_SetPaletteTables(D2PaletteTableStrc* pPaletteTables)
 }
 
 void __fastcall D2SDLRender_SetAmbientColor(uint8_t nRed, uint8_t nGreen, uint8_t nBlue) {
-	FUNC_STUB_ARGS("D2SDLRender_SetAmbientColor", "nRed: %u, nGreen: %u, nBlue: %u", nRed, nGreen, nBlue);
+	FUNC_LOG_ARGS("D2SDLRender_SetAmbientColor", "nRed: %u, nGreen: %u, nBlue: %u", nRed, nGreen, nBlue);
+	nAmbientRed = nRed;
+	nAmbientGreen = nGreen;
+	nAmbientBlue = nBlue;
 }
 
 int32_t __fastcall D2SDLRender_FloorTileDraw(D2TileLibraryEntryStrc* pTile, D2GfxLightExStrc* pLight, int32_t nPosX, int32_t nPosY, int32_t nWorldXpos, int32_t nWorldYpos, uint8_t nAlpha, int32_t nScreenPanels, void* pTileData) {
