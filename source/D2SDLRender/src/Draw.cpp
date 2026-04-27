@@ -78,6 +78,16 @@ void RenderSquare(SDL_Texture* tex, float nStartPosX, float nStartPosY, float nE
 	SDL_RenderGeometry(renderer, tex, verts, 4, indices, 6);
 }
 
+static SDL_Texture* GetTexFromCel(D2CellFileStrc* pCellFile, uint32_t* nWidth, uint32_t* nHeight) {
+	// Doesn't seem to actually work if done by nFrame...
+	D2GfxCellStrc* pCell = &pCellFile->pGfxCells[/*pData->nFrame % pData->pCellFile->nFrames*/0];
+
+	*nWidth = pCell->dwWidth - pCell->nXOffset;
+	*nHeight = pCell->dwHeight - pCell->nYOffset;
+
+	return NULL;
+}
+
 
 int32_t __fastcall D2SDLRender_FloorTileDraw(D2TileLibraryEntryStrc* pTile, D2GfxLightExStrc* pLight, int32_t nPosX, int32_t nPosY, int32_t nWorldXpos, int32_t nWorldYpos, uint8_t nAlpha, int32_t nScreenPanels, void* pTileData) {
 	FUNC_STUB_ARGS("D2SDLRender_FloorTileDraw", "pTile: %p, pLight: %p, nPosX: %d, nPosY: %d, nWorldXpos: %d, nWorldYpos: %d, nAlpha: %u, nScreenPanels: %d, pTileData: %p", pTile, pLight, nPosX, nPosY, nWorldXpos, nWorldYpos, nAlpha, nScreenPanels, pTileData);
@@ -85,45 +95,66 @@ int32_t __fastcall D2SDLRender_FloorTileDraw(D2TileLibraryEntryStrc* pTile, D2Gf
 }
 
 void __fastcall D2SDLRender_CelFlatSpriteDraw(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, uint32_t dwGamma, DrawMode eDrawMode, int32_t nScreenMode, uint8_t* pPalette) {
-	FUNC_STUB_ARGS("D2SDLRender_CelFlatSpriteDraw", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, nScreenMode: %d, pPalette: %p", pData, nPosX, nPosY, dwGamma, eDrawMode, nScreenMode, pPalette);
+	FUNC_LOGSEMI_ARGS("D2SDLRender_CelFlatSpriteDraw", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, nScreenMode: %d, pPalette: %p", pData, nPosX, nPosY, dwGamma, eDrawMode, nScreenMode, pPalette);
+
+	uint32_t nWidth, nHeight;
+	SDL_Texture* tex = GetTexFromCel(pData->pCellFile, &nWidth, &nHeight);
+
+	RenderSquare(tex, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDraw(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, uint32_t dwGamma, DrawMode eDrawMode, uint8_t* pPalette) {
-	FUNC_STUB_ARGS("D2SDLRender_CelDraw", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, pPalette: %p", pData, nPosX, nPosY, dwGamma, eDrawMode, pPalette);
+	FUNC_LOGSEMI_ARGS("D2SDLRender_CelDraw", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, pPalette: %p", pData, nPosX, nPosY, dwGamma, eDrawMode, pPalette);
+
+	uint32_t nWidth, nHeight;
+	SDL_Texture* tex = GetTexFromCel(pData->pCellFile, &nWidth, &nHeight);
+
+	RenderSquare(tex, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDrawColor(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, uint32_t dwGamma, DrawMode eDrawMode, int32_t nGlobalPaletteShift) {
-	FUNC_LOG_ARGS("D2SDLRender_CelDrawColor", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, nGlobalPaletteShift: %d", pData, nPosX, nPosY, dwGamma, eDrawMode, nGlobalPaletteShift);
+	FUNC_LOGSEMI_ARGS("D2SDLRender_CelDrawColor", "pData: %p, nPosX: %d, nPosY: %d, dwGamma: %u, eDrawMode: %d, nGlobalPaletteShift: %d", pData, nPosX, nPosY, dwGamma, eDrawMode, nGlobalPaletteShift);
 
-	// Doesn't seem to actually work if done by nFrame...
-	D2GfxCellStrc* pCell = &pData->pCellFile->pGfxCells[/*pData->nFrame % pData->pCellFile->nFrames*/0];
-	uint32_t nWidth = pCell->dwWidth - pCell->nXOffset;
-	uint32_t nHeight = pCell->dwHeight - pCell->nYOffset;
+	uint32_t nWidth, nHeight;
+	SDL_Texture* tex = GetTexFromCel(pData->pCellFile, &nWidth, &nHeight);
 
-	uint32_t Width = pCell->dwWidth;
-	uint32_t Height = pCell->dwHeight;
-	
-	// printf("Width: %d, Height: %d, dwLength: %d\n", nWidth, nHeight, pCell->dwLength);
-
-	// printf("nPosX: %d, nPosY: %d, nWidth: %d, nHeight: %d, nFrame: %d, nFrames: %d\n", nPosX, nPosY, nWidth, nHeight, pData->nFrame, pData->pCellFile->nFrames);
-
-	RenderSquare(NULL, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
+	RenderSquare(tex, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDrawEx(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, int32_t nSkipLines, int32_t nDrawLines, DrawMode eDrawMode) {
-	FUNC_STUB_ARGS("D2SDLRender_CelDrawEx", "pData: %p, nPosX: %d, nPosY: %d, nSkipLines: %d, nDrawLines: %d, eDrawMode: %d", pData, nPosX, nPosY, nSkipLines, nDrawLines, eDrawMode);
+	FUNC_LOGSEMI_ARGS("D2SDLRender_CelDrawEx", "pData: %p, nPosX: %d, nPosY: %d, nSkipLines: %d, nDrawLines: %d, eDrawMode: %d", pData, nPosX, nPosY, nSkipLines, nDrawLines, eDrawMode);
+
+	uint32_t nWidth, nHeight;
+	SDL_Texture* tex = GetTexFromCel(pData->pCellFile, &nWidth, &nHeight);
+
+	RenderSquare(tex, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDrawShadow(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY) {
-	FUNC_STUB_ARGS("D2SDLRender_CelDrawShadow", "pData: %p, nPosX: %d, nPosY: %d", pData, nPosX, nPosY);
+	FUNC_LOGSEMI_ARGS("D2SDLRender_CelDrawShadow", "pData: %p, nPosX: %d, nPosY: %d", pData, nPosX, nPosY);
+
+	uint32_t nWidth, nHeight;
+	SDL_Texture* tex = GetTexFromCel(pData->pCellFile, &nWidth, &nHeight);
+
+	RenderSquare(tex, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDrawHilight(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, uint8_t nPaletteIndex) {
-	FUNC_STUB_ARGS("D2SDLRender_CelDrawHilight", "pData: %p, nPosX: %d, nPosY: %d, nPaletteIndex: %u");
+	FUNC_LOGSEMI_ARGS("D2SDLRender_CelDrawHilight", "pData: %p, nPosX: %d, nPosY: %d, nPaletteIndex: %u");
+
+	uint32_t nWidth, nHeight;
+	SDL_Texture* tex = GetTexFromCel(pData->pCellFile, &nWidth, &nHeight);
+
+	RenderSquare(tex, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 void __fastcall D2SDLRender_CelDrawClipped(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY, void* pCropRect, DrawMode eDrawMode) {
-	FUNC_STUB_ARGS("D2SDLRender_CelDrawClipped", "pData: %p, nPosX: %d, nPosY: %d, pCropRect: %p, eDrawMode: %d", pData, nPosX, nPosY, pCropRect, eDrawMode);
+	FUNC_LOGSEMI_ARGS("D2SDLRender_CelDrawClipped", "pData: %p, nPosX: %d, nPosY: %d, pCropRect: %p, eDrawMode: %d", pData, nPosX, nPosY, pCropRect, eDrawMode);
+
+	uint32_t nWidth, nHeight;
+	SDL_Texture* tex = GetTexFromCel(pData->pCellFile, &nWidth, &nHeight);
+
+	RenderSquare(tex, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
 }
 
 int32_t __fastcall D2SDLRender_TileDrawLit(D2TileLibraryEntryStrc* pTile, int32_t nPosX, int32_t nPosY, D2GfxLightStrc* pLight, int32_t nScreenPanels) {

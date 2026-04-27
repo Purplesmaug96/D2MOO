@@ -75,6 +75,21 @@ static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {
 	fflush(stdout);
 }
 
+static inline void FUNC_LOGSEMI(const char* func) {
+	printf("D2SDLRender: Logged  and semi-implemented function '%s' called\n", func);
+	fflush(stdout);
+}
+
+static inline void FUNC_LOGSEMI_ARGS(const char* func, const char* fmt, ...) {
+	char argsBuf[256];
+	va_list ap;
+	va_start(ap, fmt);
+	vsnprintf(argsBuf, sizeof argsBuf, fmt, ap);
+	va_end(ap);
+	printf("D2SDLRender: Logged and semi-implemented function '%s' called, args: %s\n", func, argsBuf);
+	fflush(stdout);
+}
+
 static inline void _FUNC_ERR(const char* func, const char* errBuf, const char* file, const int line) {
 	char dstBuf[512];
 	sprintf(dstBuf, "D2SDLRender: Error in function '%s', %s:%d:\n%s\n", func, file, line, errBuf);
