@@ -1,4 +1,7 @@
 #include <windows.h>
+#include <malloc.h>
+
+typedef unsigned int uint;
 
 #include <SDL_image.h>
 
@@ -91,42 +94,46 @@ void RenderSquare(SDL_Texture* tex, float nStartPosX, float nStartPosY, float nE
 	SDL_RenderGeometry(renderer, tex, verts, 4, indices, 6);
 }
 
-SDL_Texture* imgtex = NULL;
+#define CEL_TEXTURE_POOL_SIZE 1024
 
-SDL_Texture* load_texture(SDL_Renderer* renderer, const char* file) {
-	if (!renderer || !file) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "load_texture: invalid args");
+SDL_Texture* cel_textures[CEL_TEXTURE_POOL_SIZE] = {NULL};
+
+uint32_t wang_32bit_mix(uint32_t a) {
+	a = (a ^ 61) ^ (a >> 16);
+	a = a + (a << 3);
+	a = a ^ (a >> 4);
+	a = a * 0x27d4eb2d;
+	a = a ^ (a >> 15);
+	return a;
+}
+
+SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell, uint32_t nWidth, uint32_t nHeight) {
+	SDL_Texture* tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
+		SDL_TEXTUREACCESS_STATIC, nWidth, nHeight);
+	if (!tex) return NULL;
+
+	size_t len = (size_t)nWidth * (size_t)nHeight;
+	uint8_t* pixels = (uint8_t*)malloc(len * 4); // 4 bytes per pixel (R8 G8 B8 A8)
+	if (!pixels) { SDL_DestroyTexture(tex); return NULL; }
+
+	for (size_t i = 0; i < len; ++i) {
+		size_t base = i * 4;
+		pixels[base + 0] = (uint8_t)i;    // R
+		pixels[base + 1] = (uint8_t)i;    // G
+		pixels[base + 2] = (uint8_t)i;    // B
+		pixels[base + 3] = 255;           // A
+	}
+
+	int pitch = (int)(nWidth * 4);
+	if (SDL_UpdateTexture(tex, NULL, pixels, pitch) != 0) {
+		free(pixels);
+		SDL_DestroyTexture(tex);
 		return NULL;
 	}
 
-	// Initialize SDL_image for PNG/JPG/etc. (safe to call multiple times)
-	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-	if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init failed: %s", IMG_GetError());
-		// still try, because BMP via SDL_LoadBMP doesn't need IMG_Init
-	}
-
-	// Let SDL_image try to load (supports PNG, JPG, GIF, BMP, etc.)
-	SDL_Surface* surf = IMG_Load(file);
-	if (!surf) {
-		// Fallback: try SDL_LoadBMP for BMP-only fallback (rare if IMG_Load failed)
-		surf = SDL_LoadBMP(file);
-		if (!surf) {
-			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to load image '%s': %s", file, IMG_GetError());
-			return NULL;
-		}
-	}
-
-	// Convert surface to texture
-	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
-	if (!tex) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "CreateTextureFromSurface failed: %s", SDL_GetError());
-	}
-
-	SDL_FreeSurface(surf);
+	free(pixels);
 	return tex;
 }
-
 static SDL_Texture* GetTexFromCel(D2CellFileStrc* pCellFile, uint32_t* nWidth, uint32_t* nHeight) {
 	// Doesn't seem to actually work if done by nFrame...
 	D2GfxCellStrc* pCell = &pCellFile->pGfxCells[/*pData->nFrame % pData->pCellFile->nFrames*/0];
@@ -134,10 +141,14 @@ static SDL_Texture* GetTexFromCel(D2CellFileStrc* pCellFile, uint32_t* nWidth, u
 	*nWidth = pCell->dwWidth - pCell->nXOffset;
 	*nHeight = pCell->dwHeight - pCell->nYOffset;
 
-	if (imgtex == NULL) {imgtex = load_texture(renderer, "img.jpg");}
-	if (imgtex == NULL) {char errBuf[256]; SDL_GetErrorMsg(errBuf, 256); printf("SDL_Error: %s\n", errBuf);}
+	uintptr_t ptrval = (uintptr_t)pCell;
+	uint32_t key = wang_32bit_mix((uint32_t)(ptrval ^ (ptrval >> 32))) % CEL_TEXTURE_POOL_SIZE;
 
-	return imgtex;
+	if (cel_textures[key]) return cel_textures[key];
+
+	SDL_Texture* tex = LoadTextureFromCel(pCell, *nWidth, *nHeight);
+	if (tex) cel_textures[key] = tex;
+	return tex;
 }
 
 
