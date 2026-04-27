@@ -12,6 +12,9 @@ target_sources(${D2SDLRenderImplName}
 	src/Options.cpp
 	src/Utils.cpp
 	src/Draw.cpp
+	src/Texture.cpp
+	src/Cell.cpp
+	src/Tile.cpp
 )
 
 D2MOO_target_source_group(D2SDLRender)

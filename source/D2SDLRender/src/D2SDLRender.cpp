@@ -12,6 +12,9 @@
 #include "Options.h"
 #include "Utils.h"
 #include "Draw.h"
+#include "Texture.h"
+#include "Cell.h"
+#include "Tile.h"
 
 D2GraphicsInterfaceStrc* Interface;
 SDL_Window* window;
