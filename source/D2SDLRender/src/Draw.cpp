@@ -99,7 +99,12 @@ void __fastcall D2SDLRender_CelDrawColor(D2GfxDataStrc* pData, int32_t nPosX, in
 	D2GfxCellStrc* pCell = &pData->pCellFile->pGfxCells[/*pData->nFrame % pData->pCellFile->nFrames*/0];
 	uint32_t nWidth = pCell->dwWidth - pCell->nXOffset;
 	uint32_t nHeight = pCell->dwHeight - pCell->nYOffset;
+
+	uint32_t Width = pCell->dwWidth;
+	uint32_t Height = pCell->dwHeight;
 	
+	// printf("Width: %d, Height: %d, dwLength: %d\n", nWidth, nHeight, pCell->dwLength);
+
 	// printf("nPosX: %d, nPosY: %d, nWidth: %d, nHeight: %d, nFrame: %d, nFrames: %d\n", nPosX, nPosY, nWidth, nHeight, pData->nFrame, pData->pCellFile->nFrames);
 
 	RenderSquare(NULL, nPosX, nPosY, nPosX + nWidth, nPosY + nHeight, 255, 0, 255);
