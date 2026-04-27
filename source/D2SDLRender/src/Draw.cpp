@@ -1,5 +1,7 @@
 #include <windows.h>
 
+#include <SDL_image.h>
+
 #include "D2Gfx.h"
 
 #include "D2SDLRender.h"
@@ -67,6 +69,17 @@ void RenderSquare(SDL_Texture* tex, float nStartPosX, float nStartPosY, float nE
 	verts[3].position.x = nEndPosX;
 	verts[3].position.y = nEndPosY;
 
+	if (tex != NULL) {
+		verts[0].tex_coord.x = 0.0f;
+		verts[0].tex_coord.y = 0.0f;
+		verts[1].tex_coord.x = 1.0f;
+		verts[1].tex_coord.y = 0.0f;
+		verts[2].tex_coord.x = 0.0f;
+		verts[2].tex_coord.y = 1.0f;
+		verts[3].tex_coord.x = 1.0f;
+		verts[3].tex_coord.y = 1.0f;
+	}
+
 	for (int i = 0; i < 4; i++) {
 		verts[i].color.r = nRed;
 		verts[i].color.g = nGreen;
@@ -78,6 +91,42 @@ void RenderSquare(SDL_Texture* tex, float nStartPosX, float nStartPosY, float nE
 	SDL_RenderGeometry(renderer, tex, verts, 4, indices, 6);
 }
 
+SDL_Texture* imgtex = NULL;
+
+SDL_Texture* load_texture(SDL_Renderer* renderer, const char* file) {
+	if (!renderer || !file) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "load_texture: invalid args");
+		return NULL;
+	}
+
+	// Initialize SDL_image for PNG/JPG/etc. (safe to call multiple times)
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+	if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "IMG_Init failed: %s", IMG_GetError());
+		// still try, because BMP via SDL_LoadBMP doesn't need IMG_Init
+	}
+
+	// Let SDL_image try to load (supports PNG, JPG, GIF, BMP, etc.)
+	SDL_Surface* surf = IMG_Load(file);
+	if (!surf) {
+		// Fallback: try SDL_LoadBMP for BMP-only fallback (rare if IMG_Load failed)
+		surf = SDL_LoadBMP(file);
+		if (!surf) {
+			SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Failed to load image '%s': %s", file, IMG_GetError());
+			return NULL;
+		}
+	}
+
+	// Convert surface to texture
+	SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
+	if (!tex) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "CreateTextureFromSurface failed: %s", SDL_GetError());
+	}
+
+	SDL_FreeSurface(surf);
+	return tex;
+}
+
 static SDL_Texture* GetTexFromCel(D2CellFileStrc* pCellFile, uint32_t* nWidth, uint32_t* nHeight) {
 	// Doesn't seem to actually work if done by nFrame...
 	D2GfxCellStrc* pCell = &pCellFile->pGfxCells[/*pData->nFrame % pData->pCellFile->nFrames*/0];
@@ -85,7 +134,10 @@ static SDL_Texture* GetTexFromCel(D2CellFileStrc* pCellFile, uint32_t* nWidth, u
 	*nWidth = pCell->dwWidth - pCell->nXOffset;
 	*nHeight = pCell->dwHeight - pCell->nYOffset;
 
-	return NULL;
+	if (imgtex == NULL) {imgtex = load_texture(renderer, "img.jpg");}
+	if (imgtex == NULL) {char errBuf[256]; SDL_GetErrorMsg(errBuf, 256); printf("SDL_Error: %s\n", errBuf);}
+
+	return imgtex;
 }
 
 
