@@ -9,12 +9,17 @@
 
 #include "D2Gfx.h"
 
+LPPALETTEENTRY gPalette = NULL;
+D2PaletteTableStrc* gPaletteTables = NULL;
+
 void __fastcall D2SDLRender_SetPalette(LPPALETTEENTRY pPalette) {
-	FUNC_STUB_ARGS("D2SDLRender_SetPalette", "pPalette: %p", pPalette);
+	FUNC_LOG_ARGS("D2SDLRender_SetPalette", "pPalette: %p", pPalette);
+	gPalette = pPalette;
 }
 
 void __fastcall D2SDLRender_SetPaletteTables(D2PaletteTableStrc* pPaletteTables) {
 	FUNC_STUB_ARGS("D2SDLRender_SetPaletteTables", "pPaletteTables: %p", pPaletteTables);
+	gPaletteTables = pPaletteTables;
 }
 
 SDL_Texture* cel_textures[CEL_TEXTURE_POOL_SIZE] = {NULL};

@@ -6,7 +6,12 @@
 
 #ifndef _TEXTURE_CPP
 extern SDL_Texture* cel_textures[CEL_TEXTURE_POOL_SIZE];
+
+extern LPPALETTEENTRY gPalette;
+extern D2PaletteTableStrc* gPaletteTables;
 #endif
+
+#define PALETTE_SIZE 256
 
 void __fastcall D2SDLRender_SetPalette(LPPALETTEENTRY pPalette);
 void __fastcall D2SDLRender_SetPaletteTables(D2PaletteTableStrc* pPaletteTables);
