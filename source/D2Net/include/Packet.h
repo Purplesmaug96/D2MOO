@@ -5,6 +5,7 @@
 
 constexpr uint32_t MAX_MSG_SIZE = 516;
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2PacketStrc
@@ -21,3 +22,5 @@ struct D2PacketBufferStrc
 	uint32_t nUsedBytes;
 };
 #pragma pack(pop)
+
+}

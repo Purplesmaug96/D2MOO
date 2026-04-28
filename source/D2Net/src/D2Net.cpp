@@ -4,6 +4,7 @@
 
 #include <Fog.h>
 
+extern "C" {
 
 #pragma warning (disable: 28159)
 
@@ -60,4 +61,6 @@ int32_t __fastcall NET_FreePacketList(CRITICAL_SECTION* pCriticalSection, D2Pack
 
 	D2_UNLOCK(pCriticalSection);
 	return 1;
+}
+
 }
