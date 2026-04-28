@@ -10,6 +10,8 @@
 #include "DisplayType.h"
 #include "Window.h"
 
+extern "C" {
+
 extern int32_t gbIsWindowed;
 extern D2GameResolutionMode gnResolutionMode;
 extern int32_t gbNoWindowCreated_6FA8D848;
@@ -446,4 +448,6 @@ void __cdecl D2GFX_OutputString(int32_t nXPos, int32_t nYPos, const char* szForm
 void __stdcall D2GFX_DebugDraw(uint32_t* pLight, uint32_t* pPlayerLight, int32_t nXPos, int32_t nYPos)
 {
     return gpGraphicsInterface->pfDebugDraw(pLight, pPlayerLight, nXPos, nYPos);
+}
+
 }

@@ -10,6 +10,7 @@
 #include "DisplayType.h"
 #include "D2Gfx.h"
 
+extern "C" {
 
 extern int32_t gnViewMatrixAdjust_6FA8D254;
 extern DisplayType gnDisplayType;
@@ -207,13 +208,13 @@ void __fastcall sub_6FA71970(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, i
     uint8_t* v8 = a1;
     uint8_t* v9 = a2;
     uint8_t* v10 = (uint8_t*)((char*)byte_6FA85220 + 32 * ((a5 >> a8) + 32 * (a3 >> a8)));
-    
+
     while (a7)
     {
         const uint8_t v11 = v8[0];
         const uint8_t v12 = v8[1];
         v8 += 2;
-        
+
         if (v11 || v12)
         {
             uint8_t* v13 = &v9[v11];
@@ -1367,4 +1368,6 @@ void __fastcall D2GFX_FloorTileDraw_6FA73410(D2TileLibraryEntryStrc* pTileLibrar
 //        a5 = v14[9].nIntensity;
 //        goto LABEL_22;
 //    }
+}
+
 }

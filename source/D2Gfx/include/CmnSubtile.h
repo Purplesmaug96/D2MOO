@@ -4,6 +4,7 @@
 
 #include <Windows.h>
 
+extern "C" {
 
 struct D2TileLibraryEntryStrc;
 struct D2GfxLightExStrc;
@@ -47,7 +48,7 @@ int32_t __fastcall D2GFX_SetContrastAndGamma_6FA710C0();
 void __fastcall sub_6FA71130(uint8_t* a1, uint8_t* a2, uint8_t* a3);
 
 //D2Gfx.0x6FA71340) --------------------------------------------------------
-void __fastcall sub_6FA71340(int32_t a1, int32_t a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6);
+void __fastcall sub_6FA71340(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6);
 
 //D2Gfx.0x6FA71720
 void __fastcall sub_6FA71720(uint8_t* a1, uint8_t* a2, uint8_t* a3, int32_t a4);
@@ -93,3 +94,5 @@ void __fastcall sub_6FA73270(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3,
 
 //D2Gfx.0x6FA73410) --------------------------------------------------------
 void __fastcall D2GFX_FloorTileDraw_6FA73410(D2TileLibraryEntryStrc* pTileLibraryEntry, int32_t nX, int32_t nY, D2GfxLightExStrc* pLightEx);
+
+}

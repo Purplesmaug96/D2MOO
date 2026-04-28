@@ -5,6 +5,7 @@
 #include <D2Constants.h>
 #include <Windows.h>
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WindowPlacementStrc
@@ -55,3 +56,5 @@ D2GFX_DLL_DECL void __stdcall WINDOW_CloseSmacker(void* pContext);
 D2GFX_DLL_DECL void __stdcall WINDOW_UpdatePlacement();
 //D2Gfx.0x6FA74FA0 (#10040)
 D2GFX_DLL_DECL void __stdcall WINDOW_ShowAll();
+
+}

@@ -7,6 +7,7 @@
 #include "DisplayType.h"
 #include "D2Gfx.h"
 
+extern "C" {
 
 int32_t gnChangedScaleFactor;
 int32_t gnScaleFactor;
@@ -109,4 +110,6 @@ void __stdcall SCALE_SetDefaultFactorPerspectiveFactor()
     D2_ASSERT(gGfxSettings.bPerspectiveEnabled);
 
     return gpGraphicsInterface->pfPerspectiveClearScale();
+}
+
 }

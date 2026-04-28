@@ -7,7 +7,7 @@
 
 struct D2GfxDataStrc;
 
-
+extern "C" {
 
 //D2Gfx.0x6FA74270 (#10071)
 D2GFX_DLL_DECL void __stdcall TEXTURE_CelFlatSpriteDraw(D2GfxDataStrc* pData, int32_t nXPos, int32_t nYPos, uint32_t dwGamma, DrawMode eDrawMode, int32_t nScreenMode, uint8_t* pPalette);
@@ -25,3 +25,5 @@ D2GFX_DLL_DECL void __stdcall TEXTURE_CelDrawShadow(D2GfxDataStrc* pData, int32_
 D2GFX_DLL_DECL void __stdcall TEXTURE_CelDrawHilight(D2GfxDataStrc* pData, int32_t nXPos, int32_t nYPos, uint8_t nPaletteIndex);
 //D2Gfx.0x6FA743A0 (#10078)
 D2GFX_DLL_DECL void __stdcall TEXTURE_DebugFillBackBuffer(int32_t nXPos, int32_t nYPos);
+
+}

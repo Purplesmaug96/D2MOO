@@ -10,6 +10,8 @@
 
 #define D2_GLIDE_AS_SDLRENDERER
 
+extern "C" {
+
 #pragma pack(push, 1)
 struct D2PaletteTableStrc
 {
@@ -287,3 +289,5 @@ D2GFX_DLL_DECL void __stdcall D2GFX_SetAmbientColor(uint8_t nRed, uint8_t nGreen
 D2GFX_DLL_DECL void __cdecl D2GFX_OutputString(int32_t nXPos, int32_t nYPos, const char* szFormat, ...);
 //D2Gfx.0x6FA73F10 (#10070)
 D2GFX_DLL_DECL void __stdcall D2GFX_DebugDraw(uint32_t* pLight, uint32_t* pPlayerLight, int32_t nXPos, int32_t nYPos);
+
+}

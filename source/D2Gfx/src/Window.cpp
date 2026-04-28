@@ -24,6 +24,8 @@
 #include "DisplayType.h"
 #include "D2Gfx.h"
 
+extern "C" {
+
 #pragma pack(pop, 1)
 
 #pragma warning(pop)
@@ -47,8 +49,8 @@ SDL_SysWMinfo wmInfo;
 WNDPROC g_oldProc;
 extern WNDPROC gpfWndProc;
 
-static void ShowCursor() {if (!gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
-static void HideCursor() {if (gbCursorDisplayed) {SDL_ShowCursor(SDL_DISABLE); gbCursorDisplayed = 0;}}
+static void SDLShowCursor() {if (!gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
+static void SDLHideCursor() {if (gbCursorDisplayed) {SDL_ShowCursor(SDL_DISABLE); gbCursorDisplayed = 0;}}
 
 //D2Gfx.0x6FA74450 (#10023)
 int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolution)
@@ -124,7 +126,7 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
     //     while (ShowCursor(0) >= 0);
     //     gbCursorDisplayed = 0;
     // }
-	HideCursor();
+	SDLHideCursor();
 
 	#ifndef D2_GLIDE_AS_SDLRENDERER
 	BOOL createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
@@ -135,7 +137,7 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 	else
 		createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
 	#endif
-	
+
     if (createSurfaceSucceeded)
     {
 		SDL_VERSION(&wmInfo.version);
@@ -166,7 +168,7 @@ int32_t __stdcall WINDOW_Destroy()
 {
     D2_ASSERT(gpGraphicsInterface);
 
-    ShowCursor();
+    SDLShowCursor();
 
     int32_t bWindowDestroyed = 1;
     if (!gpGraphicsInterface->pfCloseSurface())
@@ -214,12 +216,12 @@ int32_t __stdcall WINDOW_GetState()
     {
         SDL_RaiseWindow(window);
         WINDOW_ShowAll();
-        ShowCursor();
+        SDLShowCursor();
     }
     else
     {
         WINDOW_UpdatePlacement();
-        HideCursor();
+        SDLHideCursor();
     }
 
 	#ifndef D2_GLIDE_AS_SDLRENDERER
@@ -264,11 +266,11 @@ void __stdcall WINDOW_ShowCursor(int32_t bShow)
 
     if (bShow)
     {
-        ShowCursor();
+        SDLShowCursor();
     }
 	else
 	{
-		HideCursor();
+		SDLHideCursor();
 	}
 }
 
@@ -375,12 +377,12 @@ void __stdcall WINDOW_EndCutScene(D2GameResolutionMode nResolution)
         {
             SDL_RaiseWindow(window);
             WINDOW_ShowAll();
-            ShowCursor();
+            SDLShowCursor();
         }
         else
         {
             WINDOW_UpdatePlacement();
-            HideCursor();
+            SDLHideCursor();
         }
 
 		#ifndef D2_GLIDE_AS_SDLRENDERER
@@ -502,4 +504,6 @@ void __stdcall WINDOW_ShowAll()
             ShowWindow(pWindowPlacement->hWnd, pWindowPlacement->windowPlacement.showCmd);
         }
     }
+}
+
 }

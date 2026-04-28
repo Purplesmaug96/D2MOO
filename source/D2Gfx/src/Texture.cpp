@@ -2,6 +2,7 @@
 
 #include "D2Gfx.h"
 
+extern "C" {
 
 //D2Gfx.0x6FA74270 (#10071)
 void __stdcall TEXTURE_CelFlatSpriteDraw(D2GfxDataStrc* pData, int32_t nXPos, int32_t nYPos, uint32_t dwGamma, DrawMode eDrawMode, int32_t nScreenMode, uint8_t* pPalette)
@@ -52,4 +53,6 @@ void __stdcall TEXTURE_CelDrawHilight(D2GfxDataStrc* pData, int32_t nXPos, int32
 void __stdcall TEXTURE_DebugFillBackBuffer(int32_t nXPos, int32_t nYPos)
 {
     return gpGraphicsInterface->pfDebugFillBackBuffer(nXPos, nYPos);
+}
+
 }

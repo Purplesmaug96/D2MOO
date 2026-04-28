@@ -2,6 +2,7 @@
 
 #include <cstdint>
 
+extern "C" {
 
 //D2Gfx.0x6FA73F30 (#10059)
 void __stdcall SCALE_UpdateFactor();
@@ -23,3 +24,5 @@ void __stdcall SCALE_AdjustPerspectivePosition(int32_t nXPos, int32_t nYPos, int
 void __stdcall SCALE_ScalePerspectivePosition(int32_t nXPos, int32_t nYPos, int32_t nAngle, int32_t* pXAdjust, int32_t* pYAdjust, int32_t bOrder);
 //D2Gfx.0x6FA74200 (#10068)
 void __stdcall SCALE_SetDefaultFactorPerspectiveFactor();
+
+}
