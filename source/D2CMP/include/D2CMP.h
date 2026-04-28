@@ -11,7 +11,7 @@ constexpr int D2CMPImageBase = 0x6FDF0000;
 
 #pragma pack(1)
 
-enum D2TileMaterialFlags : uint16_t 
+enum D2TileMaterialFlags : uint16_t
 {
 	TILE_FLAGS_OTHER = 0x1,
 	TILE_FLAGS_WATER = 0x2,
@@ -115,9 +115,9 @@ struct D2TileLibraryHashRefStrc
 
 struct D2TileLibraryHashNodeStrc
 {
-	int32_t nStyle;							//0x00 aka nIndex;								
-	int32_t nSequence;						//0x04 aka nSequence;							
-	int32_t nType;							//0x08 aka nOrientation;						
+	int32_t nStyle;							//0x00 aka nIndex;
+	int32_t nSequence;						//0x04 aka nSequence;
+	int32_t nType;							//0x08 aka nOrientation;
 	D2TileLibraryHashRefStrc* pRef;			//0x0C
 	D2TileLibraryHashNodeStrc* pPrev;		//0x10
 };
@@ -157,6 +157,7 @@ inline bool TileTypeIsAWallWithDoor(int32_t nTileType)
 	return nTileType == TILETYPE_WALL_RIGHT_DOOR || nTileType == TILETYPE_WALL_LEFT_DOOR;
 }
 
+extern "C" {
 
 D2FUNC_DLL(D2CMP, GetNearestPaletteIndex, int, __stdcall, (PALETTEENTRY* pPalette, int nPaletteSize, int nRed, int nGreen, int nBlue), 0xAB20)									//D2Cmp.#10004
 D2FUNC_DLL(D2CMP, CelFileNormalize, void, __stdcall, (D2CellFileStrc* pFile, D2CellFileStrc** ppOutFile, const char* szFile, int nLine, int nSpecVersion, int nUnused), 0x1EA0)		//D2Cmp.#10024
@@ -183,3 +184,5 @@ D2FUNC_DLL(D2CMP, 10088_GetTiles, int, __stdcall, (D2TileLibraryHashStrc** ppTil
 D2FUNC_DLL(D2CMP, MixPalette, uint8_t*, __stdcall, (uint8_t nTrans, int nColor), 0xB760)																				//D2Cmp.#10098
 D2FUNC_DLL(D2CMP, SpriteFreeAsyncLoads, void, __stdcall, (), 0xE000)																									//D2Cmp.#10099
 D2FUNC_DLL(D2CMP, TileFreeAsyncLoads, void, __stdcall, (), 0xE860)																										//D2Cmp.#10102
+
+}

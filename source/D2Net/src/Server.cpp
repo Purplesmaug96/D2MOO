@@ -11,6 +11,7 @@
 #include "Client.h"
 #include "D2Net.h"
 
+extern "C" {
 
 QServer* gpServer;
 int32_t gnLocalClientGameGuid_6FC0B26C;
@@ -949,4 +950,6 @@ int32_t __stdcall D2NET_10028_Return()
 int32_t __stdcall D2NET_10029_Return(int32_t nUnused)
 {
 	return FOG_10183_Return(gpServer, nUnused);
+}
+
 }

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "D2CommonDefinitions.h"
+
+extern "C" {
+
 #pragma pack(1)
 
 struct D2HoverTextStrc
@@ -32,3 +35,5 @@ D2COMMON_DLL_DECL void __stdcall CHAT_SetUsedInHoverMsg(D2HoverTextStrc* pHoverM
 D2COMMON_DLL_DECL uint8_t __stdcall CHAT_GetLangIdFromHoverMsg(D2HoverTextStrc* pHoverMsg);
 //D2Common.0x6FDC3D10 (#10900)
 D2COMMON_DLL_DECL void __stdcall CHAT_SetLangIdInHoverMsg(D2HoverTextStrc* pHoverMsg, uint8_t nLangId);
+
+}

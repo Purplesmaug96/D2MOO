@@ -5,6 +5,8 @@
 #include "D2Net.h"
 #include "Packet.h"
 
+extern "C" {
+
 //D2Net.0x6FC01000 (#10017)
 D2NET_DLL_DECL int32_t __stdcall D2NET_10017();
 //D2Net.0x6FC01040
@@ -29,3 +31,5 @@ D2NET_DLL_DECL int32_t __stdcall CLIENT_Send(int32_t nUnused, const uint8_t* pBu
 void __fastcall CLIENT_ReadPacketFromBuffer(D2PacketBufferStrc* pBuffer, int32_t nBufferSize);
 //D2Net.0x6FC019A0 (#10013)
 D2NET_DLL_DECL void __stdcall CLIENT_GetLocalIpAddressString(char* szBuffer);
+
+}

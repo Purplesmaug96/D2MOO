@@ -13,6 +13,7 @@
 #pragma warning (disable: 6387)
 #pragma warning (disable: 28159)
 
+extern "C" {
 
 CRITICAL_SECTION gCriticalSection;
 D2PacketStrc* gpSystemPacketList;
@@ -108,7 +109,7 @@ int32_t __stdcall D2NET_10025()
 
 	ghClientThread = CreateThread(nullptr, 0, CLIENT_ThreadProc, nullptr, 0, &gdwThreadId);
 	SetThreadPriority(ghClientThread, 1);
-	
+
 	SetThreadDescription(ghClientThread, L"D2ClientThread"); // D2Moo only
 	return 2;
 }
@@ -520,4 +521,6 @@ void __stdcall CLIENT_GetLocalIpAddressString(char* szBuffer)
 	const char* szLocalIpAddress = inet_ntoa(sa.sin_addr); // NOLINT
 
 	SStrCopy(szBuffer, szLocalIpAddress, INT_MAX);
+}
+
 }

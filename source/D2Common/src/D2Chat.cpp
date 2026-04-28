@@ -5,6 +5,8 @@
 #include <D2StrTable.h>
 #include <Fog.h>
 
+extern "C" {
+
 //D2Common.0x6FDC3BF0 (#10892)
 D2HoverTextStrc* __stdcall CHAT_AllocHoverMsg(void* pMemPool, const char* szText, int nTimeout)
 {
@@ -28,7 +30,7 @@ D2HoverTextStrc* __stdcall CHAT_AllocHoverMsg(void* pMemPool, const char* szText
 	}
 
 	pHoverMsg = D2_CALLOC_STRC_POOL(pMemPool, D2HoverTextStrc);
-	
+
 	pHoverMsg->dwDisplayTime = 8 * nLength + 125;
 	pHoverMsg->dwExpireTime = 8 * nLength + 125 + nTimeout;
 	pHoverMsg->nLangId = STRTABLE_GetLanguage();
@@ -103,4 +105,6 @@ uint8_t __stdcall CHAT_GetLangIdFromHoverMsg(D2HoverTextStrc* pHoverMsg)
 void __stdcall CHAT_SetLangIdInHoverMsg(D2HoverTextStrc* pHoverMsg, uint8_t nLangId)
 {
 	pHoverMsg->nLangId = nLangId;
+}
+
 }
