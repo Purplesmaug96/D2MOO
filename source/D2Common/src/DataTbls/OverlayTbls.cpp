@@ -1,5 +1,6 @@
 #include "D2DataTbls.h"
 
+extern "C" {
 
 //D2Common.0x6FD720A0
 void __fastcall DATATBLS_LoadOverlayTxt(HD2ARCHIVE hArchive)
@@ -57,7 +58,7 @@ uint32_t __stdcall DATATBLS_GetFramesFromOverlayTxt(int nOverlayId)
 	{
 		return pOverlayTxt->dwFrames;
 	}
-	
+
 	return 0;
 }
 
@@ -172,4 +173,6 @@ D2OverlayTxt* __fastcall DATATBLS_GetOverlayTxtRecord(int nOverlay)
 	}
 
 	return NULL;
+}
+
 }

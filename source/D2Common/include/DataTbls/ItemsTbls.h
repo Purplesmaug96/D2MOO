@@ -1,7 +1,9 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <Archive.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -172,7 +174,7 @@ struct D2ItemRatioTxt
 	int32_t dwNormalDivisor;				//0x3C
 	uint16_t wVersion;						//0x40
 	uint8_t nUber;							//0x42
-	uint8_t nClassSpecific;					//0x43 
+	uint8_t nClassSpecific;					//0x43
 };
 
 enum D2C_StatOp {
@@ -722,3 +724,4 @@ D2COMMON_DLL_DECL void __stdcall DATATBLS_AddOrChangeRunesTxtRecord(int nRecordI
 //D2Common.0x6FD5EAA0 (#10620)
 D2COMMON_DLL_DECL D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId);
 
+}

@@ -7,6 +7,8 @@
 #include <Units/Units.h>
 #include <D2Monsters.h>
 
+extern "C" {
+
 //Inlined in some functions
 uint32_t __fastcall DATATBLS_StringToCode(char* szText)
 {
@@ -918,7 +920,7 @@ void __fastcall DATATBLS_UpdateTreasureClassProbabilities(D2TCExShortStrc* pTCEx
 		if (nProbDiff != nProbability)
 		{
 			pTCExShort->nClassic += (nProbability - nProbDiff);
-	
+
 			for (int i = nRecordId + 1; i < pTCExShort->nTypes; ++i)
 			{
 				pTCExShort->pInfo[i].nClassic += (nProbability - nProbDiff);
@@ -997,7 +999,7 @@ D2TCExShortStrc* __stdcall DATATBLS_GetTreasureClassExRecordFromIdAndLevel(uint1
 
 		return pTCExRecord;
 	}
-	
+
 	return NULL;
 }
 
@@ -2566,7 +2568,7 @@ D2MonPresetTxt* __stdcall DATATBLS_GetMonPresetTxtActSection(int nAct, int* pRec
 			*pRecordCount = sgptDataTables->nMonPresetTxtActRecordCounts[nAct];
 			return sgptDataTables->pMonPresetTxtActSections[nAct];
 		}
-		
+
 		*pRecordCount = 0;
 	}
 
@@ -2986,4 +2988,6 @@ void __fastcall DATATBLS_UnloadSomeMonsterTxts()
 		sgptDataTables->pUniqueAppellationTxt = NULL;
 		sgptDataTables->nUniqueAppellationTxtRecordCount = 0;
 	}
+}
+
 }

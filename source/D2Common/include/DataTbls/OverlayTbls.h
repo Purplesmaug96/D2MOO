@@ -1,6 +1,8 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -71,3 +73,5 @@ D2COMMON_DLL_DECL uint32_t __stdcall DATATBLS_Get1OfNFromOverlayTxt(int nOverlay
 D2COMMON_DLL_DECL int __stdcall DATATBLS_GetDirFromOverlayTxt(int nOverlayId);
 //Inlined at various places
 D2OverlayTxt* __fastcall DATATBLS_GetOverlayTxtRecord(int nOverlay);
+
+}

@@ -4,7 +4,7 @@
 #include "D2Skills.h"
 #include "Units/Units.h"
 
-
+extern "C" {
 
 //D2Common.0x6FD729C0
 void __fastcall DATATBLS_LoadPlrType_ModeTxt(HD2ARCHIVE hArchive)
@@ -269,4 +269,6 @@ D2ArmTypeTxt* __stdcall DATATBLS_GetArmTypeTxtRecord(int nId)
 {
 	D2_ASSERT(&sgptDataTables->pArmTypeTxt[nId]);
 	return &sgptDataTables->pArmTypeTxt[nId];
+}
+
 }

@@ -25,6 +25,8 @@
 #include <D2Math.h>
 #include <limits>
 
+extern "C" {
+
 //D2Common.0x6FDBD520 (#10457)
 uint8_t __stdcall UNITS_GetDirection(D2UnitStrc* pUnit)
 {
@@ -232,7 +234,7 @@ int __stdcall UNITS_GetUnitSizeX(D2UnitStrc* pUnit)
 			return COLLISION_UNIT_SIZE_NONE;
 		}
 	}
-	
+
 	return COLLISION_UNIT_SIZE_NONE;
 }
 
@@ -1091,7 +1093,7 @@ void __stdcall UNITS_StopSequence(D2UnitStrc* pUnit)
 		}
 
 		pUnit->nSeqCurrentFramePrecise += pUnit->wAnimSpeed;
-		
+
 		while (pUnit->nSeqCurrentFramePrecise >= pUnit->dwFrameCountPrecise)
 		{
 			const int32_t nFrameCount = (pUnit->dwFrameCountPrecise >> 8);
@@ -1649,8 +1651,8 @@ BOOL UNITS_CanAnimModeUseVelocityModifier(int nUnitType, int nAnimMode, D2UnitSt
 	default:
 		return FALSE;
 
-	}  
-	
+	}
+
 	if (pAnimModeModulators->bCanUseVelocityModifier)
 	{
 		return TRUE;
@@ -1766,7 +1768,7 @@ void __stdcall UNITS_SetAnimationSpeed(D2UnitStrc* pUnit, int nSpeed)
 int __stdcall UNITS_IsAtEndOfFrameCycle(D2UnitStrc* pUnit)
 {
 	D2_ASSERT(pUnit);
-	
+
 	if (pUnit->pAnimSeq)
 	{
 		return (int)pUnit->dwFrameCountPrecise <= 0;
@@ -2005,7 +2007,7 @@ int __stdcall UNITS_GetNewDirection(D2UnitStrc* pUnit)
 	nY = D2COMMON_10176_PathGetFirstPointY(pUnit->pDynamicPath);
 
 	if (nX != pCoords.nX || nY != pCoords.nY)
-	{		
+	{
 		return PATH_ComputeDirection(pCoords.nX, pCoords.nY, nX, nY);
 	}
 	else
@@ -2579,7 +2581,7 @@ D2UnitStrc* __stdcall D2Common_10434(D2UnitStrc* pUnit, BOOL a2)
 	case 1:
 		pWeapon = INVENTORY_GetCompositItem(pUnit->pInventory, COMPOSIT_LEFTHAND);
 		break;
-	
+
 	case 2:
 		pWeapon = INVENTORY_GetCompositItem(pUnit->pInventory, COMPOSIT_RIGHTHAND);
 		pHandItem = INVENTORY_GetCompositItem(pUnit->pInventory, COMPOSIT_LEFTHAND);
@@ -2679,7 +2681,7 @@ int __stdcall UNITS_GetFrameBonus(D2UnitStrc* pUnit)
 		{   0,  0,  0,  0,  0,  0,  0}, // WEAPONCLASS_HT1
 		{   0,  0,  0,  0,  0,  0,  0}  // WEAPONCLASS_HT2
 	};
-	
+
 	int nClassId = -1;
 	int nType = UNIT_TYPES_COUNT;
 	int nMode = 0;
@@ -2688,7 +2690,7 @@ int __stdcall UNITS_GetFrameBonus(D2UnitStrc* pUnit)
 		nClassId = pUnit->dwClassId;
 		nType = pUnit->dwUnitType;
 		nMode = pUnit->dwAnimMode;
-	}		
+	}
 
 	D2COMMON_11013_ConvertMode(pUnit, &nType, &nClassId, &nMode, __FILE__, __LINE__);
 
@@ -2744,7 +2746,7 @@ int __stdcall UNITS_GetMeleeRange(D2UnitStrc* pUnit)
 		if (INVENTORY_GetEquippedWeapon(pUnit->pInventory, &pUnit, &nBodyLoc, &bIsLeftHandItem))
 		{
 			return ITEMS_GetMeleeRange(pUnit);
-		}		
+		}
 	}
 	else if (pUnit->dwUnitType == UNIT_MONSTER)
 	{
@@ -3860,7 +3862,7 @@ unsigned int __stdcall UNITS_GetDistanceToCoordinates(D2UnitStrc* pUnit, int nX,
 	{
 		nDistanceX = 0;
 	}
-	
+
 	if (nDistanceY < 0)
 	{
 		nDistanceY = 0;
@@ -4093,4 +4095,6 @@ void __fastcall UNITS_SetInteractData(D2UnitStrc* pUnit, int nSkillId, int nUnit
 		pUnit->pPlayerData->unk0xA8[44] = nUnitType;
 		pUnit->pPlayerData->unk0xA8[45] = nUnitGUID;
 	}
+}
+
 }

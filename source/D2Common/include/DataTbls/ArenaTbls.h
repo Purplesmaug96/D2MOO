@@ -1,7 +1,9 @@
-#pragma once 
+#pragma once
 
 #include <D2Common.h>
 #include <D2BasicTypes.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -73,4 +75,4 @@ D2COMMON_DLL_DECL D2CharTemplateTxt* __fastcall DATATBLS_GetCharTemplateTxtRecor
 //D2Common.0x6FD48810 (#10666)
 D2COMMON_DLL_DECL int __fastcall DATATBLS_GetClassFromCharTemplateTxtRecord(int nTemplate, int nLevel);
 
-
+}

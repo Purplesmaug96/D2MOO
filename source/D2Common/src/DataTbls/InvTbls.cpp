@@ -1,6 +1,8 @@
 #include <DataTbls/InvTbls.h>
 #include <D2DataTbls.h>
 
+extern "C" {
+
 //D2Common.0x6FD542D0
 void __fastcall DATATBLS_LoadInventoryTxt(HD2ARCHIVE hArchive)
 {
@@ -137,4 +139,6 @@ void __stdcall DATATBLS_GetInventoryComponentGrid(int nInventoryTxtId, int bHigh
 	D2_ASSERT(ptBodyStats);
 
 	memcpy(pInvCompGrid, ptBodyStats, sizeof(D2InvCompGridStrc));
+}
+
 }

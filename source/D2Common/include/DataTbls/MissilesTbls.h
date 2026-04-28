@@ -1,6 +1,8 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -177,3 +179,4 @@ D2COMMON_DLL_DECL int __stdcall DATATBLS_GetMissileVelocityFromMissilesTxt(int n
 //Inlined at various places
 D2MissilesTxt* __fastcall DATATBLS_GetMissilesTxtRecord(int nMissileId);
 
+}

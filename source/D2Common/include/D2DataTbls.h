@@ -26,6 +26,8 @@
 #include "DataTbls/TransformTbls.h"
 #include <D2Seed.h>
 
+extern "C" {
+
 #pragma pack(1)
 
 struct D2BodyLocsTxt
@@ -460,7 +462,7 @@ struct D2DataTablesStrc
 	uint32_t unk0xCD4;									//0xCD4
 
 	D2ItemDataTbl pItemDataTables;						//0xCD8
-	uint16_t* pIndexOldToCurrent;						//0xCF8	
+	uint16_t* pIndexOldToCurrent;						//0xCF8
 	D2GemDataTbl pGemDataTables;						//0xCFC
 	D2LowQualityItemDataTbl pLowQualityItemDataTables;	//0xD04
 	D2BookDataTbl pBookDataTables;						//0xD0C
@@ -625,4 +627,6 @@ inline D2MonStatsTxt* __fastcall DATATBLS_GetMonStatsTxtRecord(int nMonsterId)
 inline int __fastcall DATATBLS_GetMonStatsTxtRecordCount()
 {
 	return sgptDataTables->nMonStatsTxtRecordCount;
+}
+
 }

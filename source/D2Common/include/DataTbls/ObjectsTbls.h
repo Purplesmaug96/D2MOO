@@ -1,6 +1,8 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -158,3 +160,4 @@ D2COMMON_DLL_DECL int __stdcall DATATBLS_GetShrinesTxtRecordCount();
 //D2Common.0x6FD72080
 void __fastcall DATATBLS_UnloadShrinesTxt();
 
+}

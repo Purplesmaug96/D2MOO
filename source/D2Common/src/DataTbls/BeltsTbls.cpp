@@ -1,5 +1,6 @@
 #include "D2DataTbls.h"
 
+extern "C" {
 
 //D2Common.0x6FD48880
 void __fastcall DATATBLS_LoadBeltsTxt(HD2ARCHIVE hArchive)
@@ -111,4 +112,6 @@ void __stdcall DATATBLS_GetInvRectFromBeltsTxt(int nIndex, int bHigherRes, D2Inv
 	pInvRect->nRight = ptBoxStats->nRight;
 	pInvRect->nTop = ptBoxStats->nTop;
 	pInvRect->nBottom = ptBoxStats->nBottom;
+}
+
 }

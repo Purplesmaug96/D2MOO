@@ -5,6 +5,8 @@
 #include <Calc.h>
 #include <Storm.h>
 
+extern "C" {
+
 //D2Common.0x6FD498D0
 int __fastcall DATATBLS_MapSkillsTxtKeywordToNumber(char* szKey)
 {
@@ -842,7 +844,7 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 	}
 
 	sgptDataTables->nClassSkillList = (short*)D2_CALLOC_POOL(NULL, 7 * sizeof(short) * nHighestClassSkillCount);
-	
+
 	memset(sgptDataTables->nClassSkillCount, 0x00, 7 * sizeof(int));
 
 	sgptDataTables->pPassiveSkills = (uint16_t*)D2_CALLOC_POOL(NULL, sizeof(uint16_t) * sgptDataTables->nPassiveSkills);
@@ -949,4 +951,6 @@ D2SkillDescTxt* __fastcall DATATBLS_GetSkillDescTxtRecord(int nSkillDesc)
 	}
 
 	return NULL;
+}
+
 }

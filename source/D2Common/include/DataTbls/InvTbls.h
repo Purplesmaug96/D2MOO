@@ -1,12 +1,13 @@
-#pragma once 
+#pragma once
 
 #include <D2Common.h>
 #include <D2BasicTypes.h>
 #include <D2Inventory.h>
 #include <Archive.h>
 
-#pragma pack(1)
+extern "C" {
 
+#pragma pack(1)
 
 struct D2InvCompGridStrc
 {
@@ -66,3 +67,5 @@ D2COMMON_DLL_DECL void __stdcall DATATBLS_GetInventoryRect(int nInventoryTxtId, 
 D2COMMON_DLL_DECL void __stdcall DATATBLS_GetInventoryGridInfo(int nInventoryTxtId, int bHigherRes, D2InventoryGridInfoStrc* pInventoryGridInfo);
 //D2Common.0x6FD55030 (#10637)
 D2COMMON_DLL_DECL void __stdcall DATATBLS_GetInventoryComponentGrid(int nInventoryTxtId, int bHigherRes, D2InvCompGridStrc* pInvCompGrid, int nComponent);
+
+}

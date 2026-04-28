@@ -21,6 +21,8 @@ struct D2SkillStrc;
 struct D2GfxDataStrc;
 struct D2GfxLightStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2C_UnitTypes
@@ -219,7 +221,7 @@ struct D2UnitStrc
 #pragma pack()
 
 // Helper function
-inline D2AnimSeqTxt* UNITS_GetAnimSeq(D2UnitStrc* pUnit) { 
+inline D2AnimSeqTxt* UNITS_GetAnimSeq(D2UnitStrc* pUnit) {
 	return (pUnit->dwUnitType == UNIT_PLAYER || pUnit->dwUnitType == UNIT_MONSTER) ? pUnit->pAnimSeq : nullptr;
 }
 
@@ -505,3 +507,5 @@ D2COMMON_DLL_DECL D2UnitStrc* __stdcall D2Common_10406(D2UnitStrc* pUnit, int(__
 D2COMMON_DLL_DECL D2UnitStrc* __stdcall D2Common_10407(D2ActiveRoomStrc* pRoom, int nX, int nY, int(__fastcall* pCallback)(D2UnitStrc*, void*), void* a5, int a6);
 //D2Common.0x6FDC3680 (#10419)
 D2COMMON_DLL_DECL void __fastcall UNITS_SetInteractData(D2UnitStrc* pUnit, int nSkillId, int nUnitType, D2UnitGUID nUnitGUID);
+
+}

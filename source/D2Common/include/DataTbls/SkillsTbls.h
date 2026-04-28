@@ -1,6 +1,8 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -216,7 +218,7 @@ struct D2SkillsTxt
 	uint16_t wCltDoFunc;					//0xF4
 	uint16_t wCltPrgFunc[3];				//0xF6
 	uint16_t wStSound;						//0xFC
-	uint16_t nStSoundClass;					//0x0FE	
+	uint16_t nStSoundClass;					//0x0FE
 	uint16_t wDoSound;						//0x100
 	uint16_t wDoSoundA;						//0x102
 	uint16_t wDoSoundB;						//0x104
@@ -315,3 +317,4 @@ D2SkillsTxt* __fastcall DATATBLS_GetSkillsTxtRecord(int nSkillId);
 //Inlined at various places
 D2SkillDescTxt* __fastcall DATATBLS_GetSkillDescTxtRecord(int nSkillDesc);
 
+}

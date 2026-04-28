@@ -2,6 +2,8 @@
 #include <Calc.h>
 #include <Storm.h>
 
+extern "C" {
+
 //D2Common.0x6FD62EA0
 int __fastcall DATATBLS_MapMissilesTxtKeywordToNumber(char* szKey)
 {
@@ -367,4 +369,6 @@ D2MissilesTxt* __fastcall DATATBLS_GetMissilesTxtRecord(int nMissileId)
 	}
 
 	return NULL;
+}
+
 }

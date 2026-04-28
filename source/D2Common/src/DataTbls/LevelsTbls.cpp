@@ -7,6 +7,7 @@
 #include <D2Lang.h>
 #include <D2CMP.h>
 
+extern "C" {
 
 static const char* gszAutomapLevelNames[] =
 {
@@ -476,7 +477,7 @@ D2LevelDefBin* __fastcall DATATBLS_GetLevelDefRecord(int nLevelId)
 
 //D2Common.0x6FD60DC0
 void __fastcall DATATBLS_LoadLevelTypesTxt(HD2ARCHIVE hArchive)
-{	
+{
 	int nLen = 0;
 	char szFile[60] = {};
 
@@ -695,7 +696,7 @@ D2LvlPrestTxt* __stdcall DATATBLS_GetLvlPrestTxtRecord(int nId)
 	{
 		return &sgptDataTables->pLvlPrestTxt[nId];
 	}
-	
+
 	return NULL;
 }
 
@@ -973,7 +974,7 @@ void __fastcall DATATBLS_AllocGlobalTileLibraryHash()
 	D2_ASSERT(sgptDataTables->pLvlTypesTxt);
 
 	sgptDataTables->ppTileLibraryHash = (D2TileLibraryHashStrc**)D2_CALLOC_POOL(nullptr, sizeof(D2TileLibraryHashStrc*[1024]) * sgptDataTables->nLvlTypesTxtRecordCount);
-	
+
 	ppTileLibraryHash = sgptDataTables->ppTileLibraryHash;
 	for (int i = 0; i < sgptDataTables->nLvlTypesTxtRecordCount; ++i)
 	{
@@ -1169,4 +1170,6 @@ void __fastcall DATATBLS_FreeAutomap()
 		D2_FREE_POOL(nullptr, sgptDataTables->pAutoMap);
 		sgptDataTables->pAutoMap = NULL;
 	}
+}
+
 }

@@ -1,6 +1,8 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -109,3 +111,5 @@ D2COMMON_DLL_DECL D2ObjModeTypeTxt* __stdcall DATATBLS_GetObjModeTypeTxtRecord(i
 D2COMMON_DLL_DECL D2CompositTxt* __stdcall DATATBLS_GetCompositTxtRecord(int nComposit);
 //D2Common.0x6FD73370 (#10650)
 D2COMMON_DLL_DECL D2ArmTypeTxt* __stdcall DATATBLS_GetArmTypeTxtRecord(int nId);
+
+}

@@ -1,8 +1,10 @@
-#pragma once 
+#pragma once
 
 #include <D2Common.h>
 #include <D2BasicTypes.h>
 #include <Archive.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -44,4 +46,4 @@ D2COMMON_DLL_DECL void __stdcall DATATBLS_UnitAnimInfoDebugSet(D2UnitStrc* pUnit
 //D2Common.0x6FD47700 (#10641)
 D2COMMON_DLL_DECL BOOL __stdcall DATATBLS_GetAnimDataInfo(char* szPath, int* pOutLength, int* pOutAnimSpeed, int* pOutFirstFrameTagged);
 
-
+}

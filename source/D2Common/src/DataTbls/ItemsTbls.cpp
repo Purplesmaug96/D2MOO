@@ -8,6 +8,8 @@
 #include <Calc.h>
 #include <Storm.h>
 
+extern "C" {
+
 //D2Common.0x6FD550E0
 int __fastcall DATATBLS_MapItemsTxtKeywordToNumber(char* szKey)
 {
@@ -416,7 +418,7 @@ D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* p
 	{
 		return &sgptDataTables->pItemDataTables.pItemsTxt[*pItemId];
 	}
-	
+
 	*pItemId = 0;
 	return NULL;
 }
@@ -2053,4 +2055,6 @@ D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId)
 {
 	D2_ASSERT(nRunewordId > 0 || nRunewordId < sgptDataTables->pRuneDataTables.nRunesTxtRecordCount);
 	return &sgptDataTables->pRuneDataTables.pRunesTxt[nRunewordId];
+}
+
 }

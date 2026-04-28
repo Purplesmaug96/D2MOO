@@ -5,6 +5,8 @@
 #include <D2Skills.h>
 #include <D2Composit.h>
 
+extern "C" {
+
 //D2Common.0x6FDDE6A8
 D2AnimSeqTxt gPlayerSequenceHandToHand1[13] =
 {
@@ -1313,7 +1315,7 @@ void __fastcall DATATBLS_LoadMonSeqTxt(HD2ARCHIVE hArchive)
 	{
 		sgptDataTables->nMonSeqTableRecordCount = sgptDataTables->pMonSeqTxt[sgptDataTables->nMonSeqTxtRecordCount - 1].wSequence + 1;
 		sgptDataTables->pMonSeqTable = (D2AnimSeqRecordStrc*)D2_CALLOC_POOL(NULL, sizeof(D2AnimSeqRecordStrc) * sgptDataTables->nMonSeqTableRecordCount);
-		
+
 		for (int i = 0; i < sgptDataTables->nMonSeqTxtRecordCount; ++i)
 		{
 			int nSequence = sgptDataTables->pMonSeqTxt[i].wSequence;
@@ -1337,4 +1339,6 @@ D2AnimSeqRecordStrc* __stdcall DATATBLS_GetMonSeqTableRecord(int nSequence)
 	}
 
 	return NULL;
+}
+
 }

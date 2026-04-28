@@ -5,6 +5,8 @@
 
 #include <Archive.h>
 
+extern "C" {
+
 //D2Common.0x6FD473C0
 D2AnimDataTableStrc* __fastcall DATATBLS_LoadAnimDataD2(HD2ARCHIVE hArchive)
 {
@@ -139,4 +141,6 @@ BOOL __stdcall DATATBLS_GetAnimDataInfo(char* szPath, int* pOutLength, int* pOut
 	*pOutAnimSpeed = pDefaultRecord.dwAnimSpeed;
 	*pOutFirstFrameTagged = *pOutLength;
 	return FALSE;
+}
+
 }

@@ -2,6 +2,8 @@
 
 static const int NUM_ARENA_TYPES = 1;
 
+extern "C" {
+
 //D2Common.0x6FD47840
 void __fastcall DATATBLS_LoadArenaTxt(HD2ARCHIVE hArchive)
 {
@@ -169,4 +171,6 @@ D2CharTemplateTxt* __fastcall DATATBLS_GetCharTemplateTxtRecord(int nTemplate, i
 int __fastcall DATATBLS_GetClassFromCharTemplateTxtRecord(int nTemplate, int nLevel)
 {
 	return DATATBLS_GetCharTemplateTxtRecord(nTemplate, nLevel)->nClass;
+}
+
 }

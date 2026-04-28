@@ -4,6 +4,8 @@
 
 #include "D2Items.h"
 
+extern "C" {
+
 // Inlined in both Parsers
 static BOOL DATATBLS_AreStringsEqual(const char* szString1, const char* szString2)
 {
@@ -739,4 +741,6 @@ D2CubeMainTxt* __stdcall DATATBLS_GetCubemainTxtRecord(int nIndex)
 int __fastcall DATATBLS_GetCubemainTxtRecordCount()
 {
 	return sgptDataTables->nCubeMainTxtRecordCount;
+}
+
 }

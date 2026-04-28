@@ -1,9 +1,11 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <D2Monsters.h>
 
 #include "ItemsTbls.h"
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -792,3 +794,5 @@ void __fastcall DATATBLS_LoadSomeMonsterTxts(HD2ARCHIVE hArchive);
 void __fastcall DATATBLS_CreateItemTypeTreasureClasses();
 //D2Common.0x6FD6FBB0
 void __fastcall DATATBLS_UnloadSomeMonsterTxts();
+
+}

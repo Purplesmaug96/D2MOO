@@ -1,7 +1,9 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <D2Inventory.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -45,3 +47,4 @@ D2COMMON_DLL_DECL void __stdcall DATATBLS_GetBeltsTxtRecord(int nIndex, int bHig
 //D2Common.0x6FD49420 (#10639)
 D2COMMON_DLL_DECL void __stdcall DATATBLS_GetInvRectFromBeltsTxt(int nIndex, int bHigherRes, D2InvRectStrc* pInvRect, int nBoxId);
 
+}

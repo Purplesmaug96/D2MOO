@@ -1,9 +1,11 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <Drlg/D2DrlgDrlg.h>
 #include <Drlg/D2DrlgDrlgGrid.h>
 #include <D2Unicode.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -285,3 +287,4 @@ D2COMMON_DLL_DECL int __fastcall DATATBLS_GetAutomapCellId(uint32_t dwAutomapLev
 //D2Common.0x6FD62E70
 void __fastcall DATATBLS_FreeAutomap();
 
+}

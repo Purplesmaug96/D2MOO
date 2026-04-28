@@ -1,6 +1,7 @@
 #include "D2DataTbls.h"
 #include <D2Lang.h>
 
+extern "C" {
 
 //D2Common.0x6FD6FDF0
 void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
@@ -166,7 +167,7 @@ void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
 		{ "AutoMap", TXTFIELD_DWORD, 0, 444, NULL },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
-	
+
 	sgptDataTables->pObjectsTxt = (D2ObjectsTxt*)DATATBLS_CompileTxt(hArchive, "objects", pTbl, &sgptDataTables->nObjectsTxtRecordCount, sizeof(D2ObjectsTxt));
 
 	for (int i = 0; i < sgptDataTables->nObjectsTxtRecordCount; ++i)
@@ -294,4 +295,6 @@ void __fastcall DATATBLS_UnloadShrinesTxt()
 	DATATBLS_UnloadBin(sgptDataTables->pShrinesTxt);
 	sgptDataTables->pShrinesTxt = NULL;
 	sgptDataTables->nShrinesTxtRecordCount = 0;
+}
+
 }

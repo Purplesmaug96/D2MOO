@@ -1,9 +1,11 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <Archive.h>
 
 struct D2ActiveRoomStrc;
+
+extern "C" {
 
 #pragma pack(1)
 struct D2CollisionFieldStrc
@@ -47,3 +49,4 @@ D2COMMON_DLL_DECL int __stdcall D2Common_11098(D2FieldStrc* pField, int* pX, int
 //D2Common.0x6FD52360 (#11099)
 D2COMMON_DLL_DECL BOOL __stdcall D2Common_11099(D2FieldStrc* pField, D2ActiveRoomStrc* pRoom, int nX, int nY, uint16_t fMask);
 
+}

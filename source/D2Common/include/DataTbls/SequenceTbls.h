@@ -1,7 +1,9 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <D2Composit.h>
+
+extern "C" {
 
 #pragma pack()
 
@@ -55,3 +57,5 @@ D2COMMON_DLL_DECL void __stdcall DATATBLS_GetSequenceEvent(D2AnimSeqTxt* pMonSeq
 void __fastcall DATATBLS_LoadMonSeqTxt(HD2ARCHIVE hArchive);
 //D2Common.0x6FD6F200 (#11262)
 D2COMMON_DLL_DECL D2AnimSeqRecordStrc* __stdcall DATATBLS_GetMonSeqTableRecord(int nSequence);
+
+}

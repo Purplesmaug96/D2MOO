@@ -1,6 +1,8 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -128,3 +130,4 @@ D2COMMON_DLL_DECL D2CubeMainTxt* __stdcall DATATBLS_GetCubemainTxtRecord(int nIn
 //D2Common.0x6FD542C0 (#11233)
 D2COMMON_DLL_DECL int __fastcall DATATBLS_GetCubemainTxtRecordCount();
 
+}
