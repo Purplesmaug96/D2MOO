@@ -3,6 +3,8 @@
 #include "D2CommonDefinitions.h"
 #include <D2Inventory.h>
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2Composits
@@ -70,3 +72,5 @@ D2COMMON_DLL_DECL BOOL __stdcall COMPOSIT_IsArmorComponent(int nComponent);
 D2COMMON_DLL_DECL BOOL __stdcall COMPOSIT_IsWeaponBowOrXBow(D2UnitStrc* pUnit);
 //D2Common.0x6FD472E0 (#10891)
 D2COMMON_DLL_DECL unsigned __stdcall COMPOSIT_GetArmorTypeFromComponent(int nComponent, uint8_t* pArmorComponents);
+
+}

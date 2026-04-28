@@ -5,6 +5,8 @@
 struct D2ActiveRoomStrc;
 struct D2UnitStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2PathConstants {
@@ -413,3 +415,5 @@ D2COMMON_DLL_DECL int __stdcall PATH_ComputeSquaredDistance(int nX1, int nY1, in
 D2COMMON_DLL_DECL void __stdcall PATH_AddCollisionFootprintForOptionalUnit(D2UnitStrc* pUnit);
 //D2Common.0x6FDAA6F0 (#10237)
 D2COMMON_DLL_DECL BOOL __stdcall D2Common_10237(D2UnitStrc* pUnit);
+
+}

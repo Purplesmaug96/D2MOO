@@ -20,6 +20,8 @@
 #include <cmath>
 #include <utility>
 
+extern "C" {
+
 static const D2C_CollisionPattern gaCollisionPatternsFromSize_6FDD1DE4[COLLISION_UNIT_SIZE_COUNT] =
 {
 	COLLISION_PATTERN_NONE,
@@ -42,13 +44,13 @@ static const int gaOffsetsForSnappingToCardinalDirection[9][9] =
 
 static const uint32_t dword_6FDD1F88[PATH_NB_DIRECTIONS] =
 {
-	0x00000000, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 
-	0x00000001, 0x00000004, 0x00000004, 0x00000004, 0x00000004, 0x00000004, 0x00000004, 0x00000004, 
-	0x00000004, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 
-	0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 
-	0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 
-	0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 
-	0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC ,0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC, 
+	0x00000000, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 0x00000001,
+	0x00000001, 0x00000004, 0x00000004, 0x00000004, 0x00000004, 0x00000004, 0x00000004, 0x00000004,
+	0x00000004, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008,
+	0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008, 0x00000008,
+	0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8,
+	0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8, 0xFFFFFFF8,
+	0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC ,0xFFFFFFFC, 0xFFFFFFFC, 0xFFFFFFFC,
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
 };
 
@@ -399,7 +401,7 @@ int __stdcall D2Common_10142(D2DynamicPathStrc* pPath, D2UnitStrc* pUnit, int bA
 				tPathInfo.pStartRoom = pPath->pRoom;
 				tPathInfo.pTargetRoom = COLLISION_GetRoomBySubTileCoordinates(tPathInfo.pStartRoom, tPathInfo.tTargetCoord.X, tPathInfo.tTargetCoord.Y);
 
-				if (tPathInfo.pStartRoom && 
+				if (tPathInfo.pStartRoom &&
 #ifdef D2_VERSION_113C
 					tPathInfo.pTargetRoom && // Optimization done in 1.13f
 #endif
@@ -654,7 +656,7 @@ int __stdcall D2Common_11281_CollisionPatternFromSize(D2UnitStrc* pUnit, int nSi
 	{
 		return COLLISION_PATTERN_SMALL_UNIT_PRESENCE;
 	}
-	
+
 	const D2C_CollisionPattern nCollisionPattern = gaCollisionPatternsFromSize_6FDD1DE4[nSize];
 	if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && MONSTERS_CanBeInTown(pUnit))
 	{
@@ -753,8 +755,8 @@ void __stdcall PATH_AllocDynamicPath(void* pMemPool, D2ActiveRoomStrc* pRoom, in
 			else
 			{
 				pDynamicPath->nDistMax = 14;
-				pDynamicPath->nMoveTestCollisionMask = 
-					(pMonStatsTxtRecord && (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_OPENDOORS]) != 0) 
+				pDynamicPath->nMoveTestCollisionMask =
+					(pMonStatsTxtRecord && (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_OPENDOORS]) != 0)
 					? COLLIDE_MASK_MONSTER_THAT_CAN_OPEN_DOORS
 					: COLLIDE_MASK_MONSTER_PATH;
 			}
@@ -772,9 +774,9 @@ void __stdcall PATH_AllocDynamicPath(void* pMemPool, D2ActiveRoomStrc* pRoom, in
 		PATH_AddCollisionFootprintForUnit(pUnit);
 		UNITROOM_AddUnitToRoom(pUnit, pDynamicPath->pRoom);
 	}
-	
+
 	PATH_UpdateClientCoords(pDynamicPath);
-	
+
 	if (bSetFlag)
 	{
 		pDynamicPath->dwFlags |= PATH_UNKNOWN_FLAG_0x00010;
@@ -1314,7 +1316,7 @@ int __stdcall PATH_GetFootprintCollisionMask(D2DynamicPathStrc* pDynamicPath)
 	{
 		return pDynamicPath->nFootprintCollisionMask;
 	}
-	
+
 	// Note: this returns 0xFFFF not 0xFFFFFFFF because D2C_CollisionFlags is 16bits.
 	return COLLIDE_ALL_MASK;
 }
@@ -1676,4 +1678,6 @@ BOOL __stdcall D2Common_10237(D2UnitStrc* pUnit)
 	}
 
 	return FALSE;
+}
+
 }

@@ -2,6 +2,8 @@
 
 #include "D2DataTbls.h"
 
+extern "C" {
+
 static const int gnNumberOfWaypoints = 7 * 8 * sizeof(short);
 
 //D2Common.0x6FDC3D20 (#11153)
@@ -120,4 +122,6 @@ void __stdcall WAYPOINTS_ValidateAndCopyWaypointData(D2WaypointDataStrc* pSource
 	pDestination->nFlags[5] = pSource->nFlags[5];
 	pDestination->nFlags[6] = pSource->nFlags[6];
 	pDestination->nFlags[7] = pSource->nFlags[7];
+}
+
 }

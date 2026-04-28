@@ -12,6 +12,8 @@
 //TODO: Find names
 
 
+extern "C" {
+
 //D2Common.0x6FDCE260
 static const D2CompositStrc stru_6FDCE260[] =
 {
@@ -381,7 +383,7 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 		*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' hth');
 		return ' hth';
 	}
-	
+
 	*pWeaponClassId = 0;
 	return 0;
 }
@@ -481,4 +483,6 @@ unsigned __stdcall COMPOSIT_GetArmorTypeFromComponent(int nComponent, uint8_t* p
 		FOG_DisplayHalt(0, __FILE__, __LINE__);
 		exit(-1);
 	}
+}
+
 }

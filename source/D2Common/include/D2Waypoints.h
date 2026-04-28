@@ -1,6 +1,9 @@
 #pragma once
 
 #include "D2CommonDefinitions.h"
+
+extern "C" {
+
 #pragma pack(1)
 
 struct D2WaypointActTableStrc
@@ -57,3 +60,5 @@ D2COMMON_DLL_DECL void __stdcall WAYPOINTS_FreeWaypointData(void* pMemPool, D2Wa
 D2COMMON_DLL_DECL void __stdcall WAYPOINTS_CopyAndValidateWaypointData(D2WaypointDataStrc* pDestination, D2WaypointDataStrc* pSource);
 //D2Common.0x6FDC4060 (#11151)
 D2COMMON_DLL_DECL void __stdcall WAYPOINTS_ValidateAndCopyWaypointData(D2WaypointDataStrc* pSource, D2WaypointDataStrc* pDestination);
+
+}

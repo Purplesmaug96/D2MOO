@@ -3,6 +3,7 @@
 #include "D2Skills.h"
 #include "D2StatList.h"
 
+extern "C" {
 
 int __stdcall D2COMMON_10016_Return0()
 {
@@ -207,4 +208,6 @@ void __stdcall D2COMMON_11277_Return(int a1)
 void __stdcall D2COMMON_11296_Return(int a1)
 {
 	REMOVE_LATER_Trace("D2COMMON_11296_Return: Useless");
+}
+
 }

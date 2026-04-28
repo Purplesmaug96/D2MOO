@@ -5,6 +5,8 @@
 struct D2StatListStrc;
 struct D2UnitStrc;
 
+extern "C" {
+
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10016_Return0();
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10019_Return(int a1);
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10139_Return();
@@ -43,3 +45,5 @@ D2COMMON_DLL_DECL void __stdcall D2COMMON_11240_Return(int a1, int a2, int a3);
 D2COMMON_DLL_DECL void __stdcall D2COMMON_11241_Return(int a1);
 D2COMMON_DLL_DECL void __stdcall D2COMMON_11277_Return(int a1);
 D2COMMON_DLL_DECL void __stdcall D2COMMON_11296_Return(int a1);
+
+}
