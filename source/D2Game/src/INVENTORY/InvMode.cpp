@@ -1,6 +1,7 @@
 #include "INVENTORY/InvMode.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Items.h>
 #include <D2Inventory.h>

@@ -5,6 +5,14 @@
 
 #include <algorithm>
 
+#if defined(__GNUC__)
+#define __vectorcall __attribute__((vectorcall))   /* only on compilers that support it */
+#else
+#pragma message("__GNUC__ is not defined, defining __vectorcall to nothing")
+#define __vectorcall
+#endif
+
+
 struct D2PathMovStrc
 {
 	int nDirectionIndex;

@@ -1,6 +1,7 @@
 #include "AI/AiThink.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -7884,7 +7885,7 @@ void __fastcall AITHINK_Fn115_SiegeBeast(D2GameStrc* pGame, D2UnitStrc* pUnit, D
 
 		if (sub_6FCF14D0(pUnit, pAiTickParam->pTarget) && AIRollChanceParam(pGame, pUnit, pAiTickParam, SIEGEBEAST_AI_PARAM_CHARGE_CHANCE_PCT))
 		{
-			const int16_t nVel = D2Clamp(AI_GetParamValue(pGame, pAiTickParam, SIEGEBEAST_AI_PARAM_CHARGE_VELOCITY), 0i16, 127i16);
+			const int16_t nVel = D2Clamp(AI_GetParamValue(pGame, pAiTickParam, SIEGEBEAST_AI_PARAM_CHARGE_VELOCITY), (int16_t)0, (int16_t)127);
 
 			AITACTICS_SetVelocity(pUnit, 0, nVel, 0);
 		}
@@ -13978,7 +13979,7 @@ void __fastcall AITHINK_Fn105_ShadowWarrior(D2GameStrc* pGame, D2UnitStrc* pUnit
 		return;
 	}
 
-	const int32_t nParam = D2Clamp(pAiTickParam->pMonstatsTxt->wAiParam[7][2], 1i16, 256i16);
+	const int32_t nParam = D2Clamp(pAiTickParam->pMonstatsTxt->wAiParam[7][2], (int16_t)1, (int16_t)256);
 
 	pAiTickParam->pAiControl->dwAiParam[1] -= 1 + AI_GetParamValue(pGame, pAiTickParam, SHADOWWARRIOR_AI_PARAM_SKILL_DECREMENT);
 
@@ -14162,8 +14163,8 @@ BOOL __fastcall AITHINK_ShadowWarriorCheckUseSkill(D2GameStrc* pGame, D2UnitStrc
 			return FALSE;
 		}
 
-		const int32_t nParam1 = D2Clamp(pAiTickParam->pMonstatsTxt->wAiParam[SHADOWWARRIOR_AI_PARAM_SUMMONING_SKILL_MIN_MAX_TO_USE_SKILL][1], 1i16, 128i16);
-		const int32_t nParam2 = D2Clamp(pAiTickParam->pMonstatsTxt->wAiParam[SHADOWWARRIOR_AI_PARAM_SUMMONING_SKILL_MIN_MAX_TO_USE_SKILL][2], 1i16, 256i16);
+		const int32_t nParam1 = D2Clamp(pAiTickParam->pMonstatsTxt->wAiParam[SHADOWWARRIOR_AI_PARAM_SUMMONING_SKILL_MIN_MAX_TO_USE_SKILL][1], (int16_t)1, (int16_t)128);
+		const int32_t nParam2 = D2Clamp(pAiTickParam->pMonstatsTxt->wAiParam[SHADOWWARRIOR_AI_PARAM_SUMMONING_SKILL_MIN_MAX_TO_USE_SKILL][2], (int16_t)1, (int16_t)256);
 
 		if (pAiTickParam->pAiControl->dwAiParam[1] < nParam1 || pAiTickParam->pAiControl->dwAiParam[1] > 32 * nParam2)
 		{

@@ -942,7 +942,7 @@ void __fastcall MONSTERREGION_InitializeAll(void* pMemPool, D2MonsterRegionStrc*
             pMonsterRegion->dwDungeonLevelEx = pLevelsTxtRecord->wMonLvl[nDifficulty];
         }
 
-        int32_t nNumMonstersToSpawn = std::min(pLevelsTxtRecord->nNumMon, 13ui8);
+        int32_t nNumMonstersToSpawn = std::min(pLevelsTxtRecord->nNumMon, (uint8_t)13);
         int32_t nNumMonstersInSpawnList = pLevelsTxtRecord->nNumNormalMonsters;
         if (nDifficulty > 0)
         {

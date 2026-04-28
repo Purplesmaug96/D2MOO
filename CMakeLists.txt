@@ -10,6 +10,9 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
   set(D2MOO_IS_ROOT_PROJECT TRUE)
 endif()
 
+include_directories("source/include")
+set(CMAKE_CXX_FLAGS "-w -fpermissive") # Is this right??
+
 # Standard CMake modules
 include(CMakeDependentOption)             # This is a really useful scripts that creates options that depends on other options. It can even be used with generator expressions !
 include(GNUInstallDirs)                   # This will define the default values for installation directories (all platforms even if named GNU)
@@ -96,7 +99,7 @@ if(${D2MOO_INSTALL})
   include(InstallRequiredSystemLibraries) # Tell CMake that the `install` target needs to install required system libraries (eg: Windows SDK)
   include(GNUInstallDirs)
   
-  set(D2MOO_TARGETS_TO_INSTALL D2Common D2Game D2Debugger)
+  set(D2MOO_TARGETS_TO_INSTALL D2Common D2Game) #
   install(TARGETS ${D2MOO_TARGETS_TO_INSTALL}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/patch
   )

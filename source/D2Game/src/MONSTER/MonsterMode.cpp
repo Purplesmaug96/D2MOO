@@ -1,6 +1,7 @@
 #include "MONSTER/MonsterMode.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 
@@ -440,7 +441,7 @@ void __fastcall D2GAME_MONSTERMODE_SetVelocityParams_6FC62FC0(D2AiParamStrc* pAi
 
     if (a4)
     {
-        pAiParam->unk0x20 = std::min(a4, 77ui8);
+        pAiParam->unk0x20 = std::min(a4, (uint8_t)77);
     }
 }
 

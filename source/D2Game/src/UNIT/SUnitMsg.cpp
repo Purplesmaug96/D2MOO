@@ -1,6 +1,7 @@
 #include "UNIT/SUnitMsg.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include "D2PacketDef.h"
 

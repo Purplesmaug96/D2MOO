@@ -1,6 +1,7 @@
 #include "UNIT/SUnitDmg.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>

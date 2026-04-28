@@ -1,6 +1,7 @@
 #include "PLAYER/Player.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 

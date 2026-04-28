@@ -1468,7 +1468,7 @@ void __fastcall ACT2Q6_DeleteAllHoradricItemsAndOpenTomb(D2GameStrc* pGame, D2Un
 
 	D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(338);
 
-	const int32_t nRange = (int32_t)((uint64_t)(1717986919i64 * ((int32_t)pMissilesTxtRecord->wRange - 75)) >> 32) >> 3;
+	const int32_t nRange = (int32_t)((uint64_t)((int64_t)1717986919 * ((int32_t)pMissilesTxtRecord->wRange - 75)) >> 32) >> 3;
 	const int32_t nTicks = ((uint32_t)nRange >> 31) + nRange;
 
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A2Q6_DURIEL);

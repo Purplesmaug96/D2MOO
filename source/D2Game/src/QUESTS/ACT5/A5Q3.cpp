@@ -1,6 +1,7 @@
 #include "QUESTS/ACT5/A5Q3.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>

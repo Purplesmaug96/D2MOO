@@ -1,6 +1,7 @@
 #include "OBJECTS/Objects.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 

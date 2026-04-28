@@ -1,6 +1,7 @@
 #include "PLAYER/PlayerStats.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2DataTbls.h>
 #include <D2StatList.h>

@@ -10,7 +10,7 @@
 #pragma warning(disable: 28159)
 
 
-uint32_t dword_6FD4DC40;
+extern uint32_t dword_6FD4DC40;
 
 
 //D2Game.0x6FCBA690

@@ -1,6 +1,7 @@
 #include "MONSTER/MonsterUnique.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -353,7 +354,7 @@ void __fastcall MONSTERUNIQUE_UMod36_Ghostly(D2UnitStrc* pUnit, int32_t nUMod, i
     STATLIST_SetUnitStat(pUnit, STAT_DAMAGERESIST, 80, 0);
     MONSTERUNIQUE_UMod16_Champion(pUnit, nUMod, bUnique);
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
 
@@ -727,7 +728,7 @@ void __fastcall MONSTERUNIQUE_UMod9_FireEnchanted(D2UnitStrc* pUnit, int32_t nUM
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -779,7 +780,7 @@ void __fastcall MONSTERUNIQUE_UMod17_LightningEnchanted(D2UnitStrc* pUnit, int32
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -831,7 +832,7 @@ void __fastcall MONSTERUNIQUE_UMod18_ColdEnchanted(D2UnitStrc* pUnit, int32_t nU
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -885,7 +886,7 @@ void __fastcall MONSTERUNIQUE_UMod23_PoisonEnchanted(D2UnitStrc* pUnit, int32_t 
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -939,7 +940,7 @@ void __fastcall MONSTERUNIQUE_UMod25_ManaSteal(D2UnitStrc* pUnit, int32_t nUMod,
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -1374,7 +1375,7 @@ void __fastcall MONSTERUNIQUE_ApplyElementalDamage(D2GameStrc* pGame, D2UnitStrc
         }
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];

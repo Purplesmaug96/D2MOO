@@ -187,7 +187,7 @@ void __fastcall MONSTER_InitializeStatsAndSkills(D2GameStrc* pGame, D2ActiveRoom
     D2PlayerCountBonusStrc playerCountBonus = {};
     MONSTER_GetPlayerCountBonus(pGame, &playerCountBonus, pRoom, pUnit);
 
-    uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     if (MONSTERS_GetHirelingTypeId(pUnit))
     {
         nDifficulty = 0;

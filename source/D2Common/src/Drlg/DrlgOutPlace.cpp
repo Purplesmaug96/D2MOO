@@ -1831,13 +1831,13 @@ void __fastcall sub_6FD823C0(D2DrlgStrc* pDrlg, D2DrlgLinkStrc* pDrlgLink, int(_
 			pPresetInfo = DRLG_GetLevel(pDrlg, LEVEL_OUTERCLOISTER)->pPreset;
 			if (pLevelLinkData.nRand[0][i] == 1)
 			{
-				v28 = pDrlg->pSeed.nHighSeed + 1791398085i64 * pDrlg->pSeed.nLowSeed;
+				v28 = pDrlg->pSeed.nHighSeed + (int64_t)1791398085 * pDrlg->pSeed.nLowSeed;
 				pDrlg->pSeed.lSeed = v28;
 				pPresetInfo->nDirection = 2 - ((v28 & 1) != 0);
 			}
 			else if (pLevelLinkData.nRand[0][i] == 3)
 			{
-				v28 = 1791398085i64 * pDrlg->pSeed.nLowSeed + pDrlg->pSeed.nHighSeed;
+				v28 = (int64_t)1791398085 * pDrlg->pSeed.nLowSeed + pDrlg->pSeed.nHighSeed;
 				pDrlg->pSeed.lSeed = v28;
 				pPresetInfo->nDirection = ~(uint8_t)v28 & 1;
 			}
@@ -2580,25 +2580,25 @@ void __fastcall sub_6FD83970(D2DrlgCoordStrc* pDrlgCoord, D2JungleStrc* pJungle,
 
 	case 1:
 		nX = -nSizeX;
-		nTemp = (signed int)((0x55555555ui64 * nSizeY >> 32) - nSizeY) >> 1;
+		nTemp = (signed int)(((uint64_t)0x55555555 * nSizeY >> 32) - nSizeY) >> 1;
 		nY = (nTemp >> 31) + nTemp;
 		break;
 
 	case 2:
 		nX = nSizeX;
-		nTemp = (signed int)((0x55555555ui64 * nSizeY >> 32) - nSizeY) >> 1;
+		nTemp = (signed int)(((uint64_t)0x55555555 * nSizeY >> 32) - nSizeY) >> 1;
 		nY = (nTemp >> 31) + nTemp;
 		break;
 
 	case 3:
 		nX = -nSizeX;
-		nTemp = 0xFFFFFFFF55555554ui64 * nSizeY >> 32;
+		nTemp = (uint64_t)0xFFFFFFFF55555554 * nSizeY >> 32;
 		nY = (nTemp >> 31) + nTemp;
 		break;
 
 	case 4:
 		nX = nSizeX;
-		nTemp = 0xFFFFFFFF55555554ui64 * nSizeY >> 32;
+		nTemp = (uint64_t)0xFFFFFFFF55555554 * nSizeY >> 32;
 		nY = (nTemp >> 31) + nTemp;
 		break;
 

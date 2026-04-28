@@ -1,6 +1,7 @@
 #include "OBJECTS/ObjRgn.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2DataTbls.h>
 #include <DataTbls/LevelsTbls.h>

@@ -8,6 +8,7 @@
 #pragma pack(push, 1)
 
 #include <algorithm>
+#include <iterator>
 
 #include <cstddef>
 #include <shellapi.h>

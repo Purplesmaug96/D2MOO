@@ -1,6 +1,7 @@
 #include "SKILLS/SkillBar.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2DataTbls.h>
 #include <DataTbls/SkillsTbls.h>

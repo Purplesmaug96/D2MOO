@@ -1,6 +1,7 @@
 #include "ITEMS/Items.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 
@@ -655,7 +656,7 @@ int32_t __fastcall D2GAME_InitItemStats_6FC4E520(D2GameStrc* pGame, D2UnitStrc**
             STATLIST_SetUnitStat(*ppUnit, STAT_VELOCITYPERCENT, -pItemsTxtRecord->dwSpeed, 0);
             const uint32_t nDurability = (uint32_t)pItemsTxtRecord->nDurability >> 1;
             STATLIST_SetUnitStat(*ppUnit, STAT_DURABILITY, std::min(ITEMS_RollLimitedRandomNumber(&(*ppUnit)->pSeed, nDurability) + nDurability, 255u), 0);
-            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, 255ui8), 0);
+            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, (uint8_t)255), 0);
 
             const int32_t nACValue = pItemsTxtRecord->dwMinAc + ITEMS_RollLimitedRandomNumber(&(*ppUnit)->pSeed, pItemsTxtRecord->dwMaxAc - pItemsTxtRecord->dwMinAc + 1);
             D2_ASSERT(nACValue <= pItemsTxtRecord->dwMaxAc);
@@ -683,7 +684,7 @@ int32_t __fastcall D2GAME_InitItemStats_6FC4E520(D2GameStrc* pGame, D2UnitStrc**
 
             const uint32_t nDurability = (uint32_t)pItemsTxtRecord->nDurability >> 1;
             STATLIST_SetUnitStat(*ppUnit, STAT_DURABILITY, std::min(ITEMS_RollLimitedRandomNumber(&(*ppUnit)->pSeed, nDurability) + nDurability, 255u), 0);
-            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, 255ui8), 0);
+            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, (uint8_t)255), 0);
 
             if (pItemsTxtRecord->nMaxDam)
             {

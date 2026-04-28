@@ -1,6 +1,7 @@
 #include "AI/AiUtil.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Collision.h>
 #include <D2Dungeon.h>

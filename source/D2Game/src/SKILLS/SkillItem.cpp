@@ -3,6 +3,7 @@
 #include <D2BitManip.h>
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Items.h>
 #include <D2Dungeon.h>

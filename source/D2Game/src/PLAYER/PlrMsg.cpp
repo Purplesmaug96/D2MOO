@@ -1,6 +1,7 @@
 #include "PLAYER/PlrMsg.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <Storm.h>

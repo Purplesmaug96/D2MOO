@@ -1,6 +1,7 @@
 #include "UNIT/SUnitProxy.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <D2BitManip.h>

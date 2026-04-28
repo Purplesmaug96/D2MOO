@@ -1,6 +1,7 @@
 #include "CmnSubtile.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Math.h>
 #include <Fog.h>
