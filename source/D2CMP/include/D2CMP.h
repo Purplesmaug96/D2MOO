@@ -9,6 +9,8 @@
 constexpr int D2CMPImageBase = 0x6FDF0000;
 #endif
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2TileMaterialFlags : uint16_t
@@ -156,8 +158,6 @@ inline bool TileTypeIsAWallWithDoor(int32_t nTileType)
 {
 	return nTileType == TILETYPE_WALL_RIGHT_DOOR || nTileType == TILETYPE_WALL_LEFT_DOOR;
 }
-
-extern "C" {
 
 D2FUNC_DLL(D2CMP, GetNearestPaletteIndex, int, __stdcall, (PALETTEENTRY* pPalette, int nPaletteSize, int nRed, int nGreen, int nBlue), 0xAB20)									//D2Cmp.#10004
 D2FUNC_DLL(D2CMP, CelFileNormalize, void, __stdcall, (D2CellFileStrc* pFile, D2CellFileStrc** ppOutFile, const char* szFile, int nLine, int nSpecVersion, int nUnused), 0x1EA0)		//D2Cmp.#10024

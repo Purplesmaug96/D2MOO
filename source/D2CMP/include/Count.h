@@ -28,6 +28,8 @@
 
 #include <windows.h>
 
+extern "C" {
+
 /**
  * Returns the count of consecutive bytes that are equal to the first
  * byte in pSrc, up to nMaxCount bytes. Also sets pbCountEqualsDist if
@@ -67,3 +69,5 @@ int __fastcall CountConsecutive(BYTE bValue, const BYTE* pSrc, const BYTE* pEnd,
  * 1.10: D2CMP.0x6FDF5B70
  */
 int __fastcall CountConsecutiveDiff(const BYTE* pSrc, const BYTE* pEnd, BYTE bValue, int nMaxCount, BOOL* pbCountEqualsDist, BOOL* pbIsRemainingSame);
+
+}

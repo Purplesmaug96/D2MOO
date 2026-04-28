@@ -34,6 +34,8 @@
 
 #include "Fog.h"
 
+extern "C" {
+
 /**
  * 1.00: D2CMP.0x100085D0
  * 1.07 Beta: D2CMPd.0x6FC7DA50
@@ -119,4 +121,6 @@ int __fastcall CountConsecutiveDiff(const BYTE* pSrc, const BYTE* pEnd, BYTE bVa
 	}
 
 	return nCount;
+}
+
 }
