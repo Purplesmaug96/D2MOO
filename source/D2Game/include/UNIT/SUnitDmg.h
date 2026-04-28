@@ -5,6 +5,8 @@
 
 #include <D2DataTbls.h>
 
+extern "C" {
+
 enum D2DamageResultFlags
 {
 	DAMAGERESULTFLAG_SUCCESSFULHIT = 0x00000001,
@@ -228,3 +230,5 @@ void __fastcall SUNITDMG_AddExperienceForHireling(D2GameStrc* pGame, D2UnitStrc*
 void __fastcall SUNITDMG_AddExperience(D2GameStrc* pGame, D2UnitStrc* pUnit, uint32_t nExperienceBonus);
 //D2Game.0x6FCC3510
 void __fastcall SUNITDMG_SetExperienceForTargetLevel(D2GameStrc* pGame, D2UnitStrc* pUnit, uint32_t nTargetLevel);
+
+}

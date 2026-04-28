@@ -2,7 +2,6 @@
 
 #include <Units/Units.h>
 
-
 enum D2C_ClientSystemMessage {
 	D2CLTSYS_NEWGAME = 0x66,
 	D2CLTSYS_JOINGAME = 0x67,
@@ -15,6 +14,8 @@ enum D2C_ClientSystemMessage {
 	D2CLTSYS_REMOVEFROMGAME = 0x6F,
 };
 
+extern "C" {
+
 //D2Game.0x6FC317F0
 int32_t __fastcall CCMD_IsStringZeroTerminated(const char* pData, int32_t nDataSize);
 //D2Game.0x6FC31810
@@ -23,3 +24,5 @@ uint32_t __fastcall CCMD_CanClientJoinGame(int32_t a1, int32_t a2, char* szClien
 void __fastcall CCMD_ProcessClientSystemMessage(void* pData, int32_t nSize);
 //D2Game.0x6FC31C00
 void __fastcall CCMD_ProcessClientMessage(void* pData, int32_t nPacketSize);
+
+}

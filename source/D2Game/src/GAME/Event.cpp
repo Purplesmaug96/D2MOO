@@ -10,6 +10,7 @@
 #include "PLAYER/PlrModes.h"
 #include "UNIT/SUnit.h"
 
+extern "C" {
 
 __forceinline int32_t EVENT_MapUnitTypeToIndex(int32_t nUnitType)
 {
@@ -280,7 +281,7 @@ void __fastcall EVENT_ExecuteObjectEvents(D2GameStrc* pGame, D2EventTimerQueueSt
     EVENT_ExecuteEventsImpl(
         [](D2GameStrc* pGame, D2UnitStrc* pObject, D2C_EventTypes nEventType, int32_t, int32_t) {
             D2GAME_OBJMODE_InvokeEventFunction_6FC75250(pGame, pObject, nEventType);
-        }, pGame, pTimerQueue, pEventTimer, a4 
+        }, pGame, pTimerQueue, pEventTimer, a4
     );
 }
 
@@ -290,7 +291,7 @@ void __fastcall EVENT_ExecuteMissileEvents(D2GameStrc* pGame, D2EventTimerQueueS
     EVENT_ExecuteEventsImpl(
         [](D2GameStrc* pGame, D2UnitStrc* pMissile, D2C_EventTypes nEventType, int32_t, int32_t) {
             MISSMODE_SrvDoHandler(pGame, pMissile, nEventType);
-        }, pGame, pTimerQueue, pEventTimer, a4 
+        }, pGame, pTimerQueue, pEventTimer, a4
     );
 }
 
@@ -302,7 +303,7 @@ void __fastcall EVENT_ExecuteItemEvents(D2GameStrc* pGame, D2EventTimerQueueStrc
             D2GAME_Items_EventsHandler_6FC4A460(pGame, pUnit, nEventType);
         }, pGame, pTimerQueue, pEventTimer, a4
     );
-    
+
 }
 
 //D2Game.0x6FC35170
@@ -532,4 +533,6 @@ void __fastcall sub_6FC35570(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventType
 void __fastcall j_D2GAME_InitTimer_6FC351D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventTypes nEventType, int32_t nExpireFrame, EventTimerCallback pfCallBack, int32_t nSkillId, int32_t nSkillLevel)
 {
     D2GAME_InitTimer_6FC351D0(pGame, pUnit, nEventType, nExpireFrame, pfCallBack, nSkillId, nSkillLevel);
+}
+
 }

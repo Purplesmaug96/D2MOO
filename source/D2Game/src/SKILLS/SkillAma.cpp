@@ -26,6 +26,7 @@
 #include "SKILLS/SkillSor.h"
 #include "SKILLS/Skills.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2SrvDo06Strc
@@ -115,7 +116,7 @@ int32_t __fastcall SKILLS_SrvSt06_PowerStrike_ChargedStrike(D2GameStrc* pGame, D
 
 //D2Game.0x6FCF3280
 int32_t __fastcall SKILLS_SrvSt07_Impale(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel)
-{    
+{
     D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);
     if (!pSkillsTxtRecord)
     {
@@ -666,7 +667,7 @@ int32_t __fastcall SKILLS_SrvDo011_ChargedStrike(D2GameStrc* pGame, D2UnitStrc* 
     {
         return 0;
     }
-    
+
     D2UnitStrc* pTarget = SUNIT_GetTargetUnit(pGame, pUnit);
     if (!pTarget)
     {
@@ -1024,4 +1025,6 @@ int32_t __fastcall SKILLS_SrvDo016_Valkyrie(D2GameStrc* pGame, D2UnitStrc* pUnit
     UNITS_StoreOwner(pPet, pUnit);
     D2GAME_UpdateSummonAI_6FC401F0(pGame, pPet, 0, pUnit->dwNodeIndex);
     return 1;
+}
+
 }

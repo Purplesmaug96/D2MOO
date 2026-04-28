@@ -10,6 +10,8 @@
 #include <OBJECTS/Objects.h>
 #include <OBJECTS/ObjMode.h>
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2QuestStateFlagIds
@@ -202,7 +204,7 @@ struct D2QuestDataStrc						//sizeof 0xF4
 	uint8_t fLastState;						//0x0B - previous quest state
 	uint8_t fState;							//0x0C - main quest state
 	char nInitNo;							//0x0D
-	uint16_t dw0E;							//0x0E 
+	uint16_t dw0E;							//0x0E
 	int32_t nSeqId;							//0x10 - nInitNo
 	uint32_t dwFlags;						//0x14
 	void* pQuestDataEx;						//0x18 - union of 0x29 structs
@@ -409,3 +411,5 @@ int32_t __fastcall QUESTS_LevelWarpCheck(D2GameStrc* pGame, D2UnitStrc* pPlayer,
 D2UnitStrc* __fastcall QUESTS_SpawnMonster(D2GameStrc* pGame, D2UnitStrc* pUnit, D2CoordStrc* pPosition, int32_t nType, int32_t nIndex);
 //D2Game.0x6FC975A0
 void __fastcall QUESTS_MapPresetSpawn(D2GameStrc* pGame, D2UnitStrc* pUnit, D2MapAIStrc* pMapAI);
+
+}

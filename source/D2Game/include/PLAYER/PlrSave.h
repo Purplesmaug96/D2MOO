@@ -3,6 +3,8 @@
 #include <Units/Units.h>
 #include "PlrSave2.h"
 
+extern "C" {
+
 #pragma pack(push, 1)
 struct D2SavedItemStrc
 {
@@ -29,7 +31,6 @@ struct D2SavedItemStrc
 };
 #pragma pack(pop)
 
-
 //D2Game.0x6FC895D0
 void __fastcall D2GAME_10036_PLRSAVE_EnableSaveFileWriting(int32_t bWriteSaveFile);
 //D2Game.0x6FC895E0
@@ -49,7 +50,7 @@ int32_t __fastcall sub_6FC8A0F0(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* p
 //D2Game.0x6FC8A140
 int32_t __fastcall D2GAME_SAVE_CalculateChecksum_6FC8A140(D2SaveHeaderStrc* pSaveHeader, int32_t nSize);
 //D2Game.0x6FC8A1B0
-int32_t __fastcall D2GAME_SAVE_WriteFileOnRealm_6FC8A1B0(D2GameStrc* pGame, D2UnitStrc* pPlayer, const char* szCharName, char* szAccountName, int32_t bInteractsWithPlayer, int32_t a6, int32_t a7, int32_t nRealmId);
+int32_t __fastcall D2GAME_SAVE_WriteFileOnRealm_6FC8A1B0(D2GameStrc* pGame, D2UnitStrc* pPlayer, const char* szCharName, char* szAccountName, int32_t bInteractsWithPlayer, int32_t nCharSaveTransactionToken, int32_t a7, D2ClientInfoStrc* pClientInfo);
 //D2Game.0x6FC8A500
 int32_t __fastcall D2GAME_SAVE_WriteFile_6FC8A500(D2GameStrc* pGame, D2UnitStrc* pPlayer, const char* szName, DWORD dwArg);
 //D2Game.0x6FC8A780
@@ -61,7 +62,7 @@ int32_t __fastcall sub_6FC8ADE0(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* p
 //D2Game.0x6FC8AEC0
 int32_t __fastcall sub_6FC8AEC0(D2GameStrc* pGame, D2ClientStrc* pClient, D2UnitStrc* pUnit, BYTE* pSection, int32_t a5, int32_t a6, int32_t* pSkillCount);
 //D2Game.0x6FC8AF70
-size_t __fastcall sub_6FC8AF70(void* a1, BYTE* a2);
+int32_t __fastcall sub_6FC8AF70(D2SavedItemStrc* pSavedItem, uint8_t* pData);
 //D2Game.0x6FC8B3D0
 int32_t __fastcall sub_6FC8B3D0(D2GameStrc* pGame, D2UnitStrc* pPlayer, BYTE* pSection, uint32_t dwVersion, int32_t nSize, int32_t a6, int32_t* pSize);
 //D2Game.0x6FC8B680
@@ -79,10 +80,12 @@ int32_t __fastcall sub_6FC8BEE0(int16_t nHirelingId, int32_t nLevel);
 //D2Game.0x6FC8C050
 uint32_t __fastcall sub_6FC8C050(D2GameStrc* pGame, int16_t nHirelingId, uint32_t a3);
 //D2Game.0x6FC8C0C0
-int32_t __fastcall D2GAME_SAVE_ProcessSaveFile_6FC8C0C0(D2GameStrc* pGame, D2ClientStrc* pClient, uint8_t* pSaveFile, int32_t nSize, D2UnitStrc** ppPlayer, int32_t nUnused1, int32_t nUnused2, int32_t nUnused3);
+int32_t __fastcall D2GAME_SAVE_ProcessSaveFile_6FC8C0C0(D2GameStrc* pGame, D2ClientStrc* pClient, uint8_t* pSaveFile, int32_t nSize, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg);
 //D2Game.0x6FC8C890
-int32_t __fastcall sub_6FC8C890(D2GameStrc* pGame, D2ClientStrc* pClient, D2UnitStrc** ppPlayer, int32_t a4, int32_t a5, int32_t a6);
+int32_t __fastcall sub_6FC8C890(D2GameStrc* pGame, D2ClientStrc* pClient, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg);
 //D2Game.0x6FC8C9D0
-int32_t __fastcall D2GAME_SAVE_ReadFile_6FC8C9D0(D2GameStrc* pGame, D2ClientStrc* pClient, const char* szName, D2UnitStrc** ppPlayer, DWORD dw1, DWORD dw2, DWORD dw3);
+int32_t __fastcall D2GAME_SAVE_ReadFile_6FC8C9D0(D2GameStrc* pGame, D2ClientStrc* pClient, const char* szName, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg);
 //D2Game.0x6FC8CB40
 int32_t __fastcall D2GAME_SAVE_GetUnitDataFromFile_6FC8CB40(D2GameStrc* pGame, D2ClientStrc* pClient, const char* szName, int32_t a4, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg);
+
+}

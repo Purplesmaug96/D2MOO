@@ -26,6 +26,7 @@
 #include "UNIT/SUnitMsg.h"
 #include "UNIT/SUnitProxy.h"
 
+extern "C" {
 
 //D2Game.0x6FC3BBA0
 void __fastcall LEVEL_UpdateUnitsInAdjacentRooms(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2ClientStrc* pClient)
@@ -159,7 +160,7 @@ void __fastcall LEVEL_AddClient(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2Cl
         }
     }
 
-    D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(pClient, 0); 
+    D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(pClient, 0);
     for (D2UnitStrc* pUnit = pRoom->pUnitFirst; pUnit; pUnit = pUnit->pRoomNext)
     {
         if (pPlayer != pUnit)
@@ -222,7 +223,7 @@ void __fastcall LEVEL_SynchronizeDayNightCycleWithClient(D2GameStrc* pGame, D2Cl
     int32_t nTicks = 0;
     int32_t nEclipse = 0;
     ENVIRONMENT_GetCycleIndex_Ticks_EclipseFromAct(pGame->pAct[nAct], &nCycleIndex, &nTicks, &nEclipse);
-    
+
     D2GSPacketSrv53 packet53 = {};
     packet53.nHeader = 0x53u;
     packet53.unk0x01 = nCycleIndex;
@@ -408,4 +409,6 @@ void __fastcall LEVEL_UpdateQueuedUnitsInAllActs(D2GameStrc* pGame)
     {
         pGame->pArenaCtrl->fFlags &= 0xFFFFFBFF;
     }
+}
+
 }

@@ -87,6 +87,7 @@
 #include "SKILLS/Skills.h"
 #include "UNIT/SUnit.h"
 
+extern "C" {
 
 uint8_t byte_6FD31270;
 
@@ -227,7 +228,7 @@ D2QuestDataStrc* __fastcall QUESTS_GetQuestData(D2GameStrc* pGame, int32_t nId)
 			return pQuestData;
 		}
 	}
-	
+
 	return nullptr;
 }
 
@@ -1095,7 +1096,7 @@ void __fastcall QUESTS_SequenceCycler(D2GameStrc* pGame, D2UnitStrc* pPlayer, in
 					D2_ASSERT(gpQuestInitTable[i].nAct < NUM_ACTS);
 
 					if (!gpQuestInitTable[i].bNoSetState
-						&& (QUESTRECORD_GetQuestState(pQuestFlags, gpQuestInitTable[i].nQuestNo, QFLAG_REWARDGRANTED) 
+						&& (QUESTRECORD_GetQuestState(pQuestFlags, gpQuestInitTable[i].nQuestNo, QFLAG_REWARDGRANTED)
 							|| QUESTRECORD_GetQuestState(pQuestFlags, gpQuestInitTable[i].nQuestNo, QFLAG_COMPLETEDBEFORE)))
 					{
 						D2QuestDataStrc* pQuest = QUESTS_GetQuestData(pGame, gpQuestInitTable[i].nChainNo);
@@ -1252,7 +1253,7 @@ void __fastcall QUESTS_SequenceCycler(D2GameStrc* pGame, D2UnitStrc* pPlayer, in
 	D2GAME_SendPacket0x28_6FC3F2F0(pClient, 0x28u, 6u, 0, pQuestFlags, 0);
 
 	QUESTS_SendCurrentFlags(pGame, pClient);
-	
+
 	D2QuestDataStrc* pQuestData1 = pGame->pQuestControl->pLastQuest;
 	while (pQuestData1 && pQuestData1->nQuestNo != 1)
 	{
@@ -2620,7 +2621,7 @@ int32_t __fastcall QUESTS_PortalCheck(D2GameStrc* pGame, D2CoordStrc* pCoord, in
 	{
 		return ACT2Q6_ActivateTomb(pGame, pCoord, ppRoom);
 	}
-	
+
 	return 0;
 }
 
@@ -2896,4 +2897,6 @@ void __fastcall QUESTS_MapPresetSpawn(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Ma
 	default:
 		break;
 	}
+}
+
 }

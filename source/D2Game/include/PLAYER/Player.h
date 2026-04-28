@@ -3,6 +3,7 @@
 #include <Units/Units.h>
 #include <D2DataTbls.h>
 
+extern "C" {
 
 //D2Game.0x6FC7B550
 void __fastcall PLAYER_Create(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t nPlayerGUID);
@@ -63,3 +64,5 @@ void __fastcall sub_6FC7C900(D2UnitStrc* pAttacker, int32_t a2);
 void __fastcall sub_6FC7CA10(D2UnitStrc* pTarget, int32_t a2);
 //D2Game.0x6FC7CA70
 void __fastcall D2GAME_SetStatOrResetGold_6FC7CA70(D2UnitStrc* pUnit, int32_t nStat, int32_t nValue);
+
+}

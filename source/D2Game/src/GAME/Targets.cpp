@@ -1,5 +1,6 @@
 #include "GAME/Targets.h"
 
+extern "C" {
 
 //D2Game.0x6FC40170
 void __fastcall D2GAME_TARGETS_First_6FC40170(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3)
@@ -201,4 +202,6 @@ void __fastcall D2GAME_TARGETS_Last_6FC40380(D2GameStrc* pGame, D2UnitStrc* pUni
 
     D2_FREE_POOL(pGame->pMemoryPool, pTargetNode);
     pUnit->dwNodeIndex = 11;
+}
+
 }

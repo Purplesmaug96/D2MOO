@@ -7,6 +7,8 @@
 
 struct D2SaveHeaderStrc;
 
+extern "C" {
+
 #pragma pack(1)
 enum D2SystemError
 {
@@ -61,7 +63,7 @@ enum D2ClientSaveFlags
 	CLIENTSAVEFLAG_0x80 = 0x80,
 	CLIENTSAVEFLAG_WEAPON_SWITCH = 0x2000,
 
-	// Encodes completed acts 
+	// Encodes completed acts
 	// => 0 No act completed
 	// => Acts 1-5 Normal (values 1-5), then 1-5 NM (values 6-10), then 1-5 Hell (values 11-15) for Expansion
 	// => Acts 1-4 Normal (values 1-4), then 1-4 NM (values 5-8), then 1-4 Hell  (values 9-12) for Classic
@@ -408,3 +410,5 @@ D2ClientPlayerDataStrc* __fastcall CLIENTS_GetClientPlayerData(D2ClientStrc* pCl
 void __fastcall CLIENTS_NotifyWarpAttempt(D2GameStrc* pGame, D2UnitStrc* pUnit);
 //D2Game.0x6FC347A0
 BOOL __fastcall CLIENTS_ShouldDelayWarpAttempt(D2GameStrc* pGame, D2UnitStrc* pUnit);
+
+}

@@ -2,6 +2,8 @@
 
 #include <Units/Units.h>
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -28,7 +30,7 @@ struct D2ArenaStrc
 struct D2ArenaUnitStrc
 {
     int32_t nScore;								//0x00
-    BOOL bUpdateScore;						    //0x04 
+    BOOL bUpdateScore;						    //0x04
 };
 
 #pragma pack()
@@ -68,3 +70,5 @@ int32_t __fastcall ARENA_Return0();
 uint32_t __fastcall ARENA_ShouldTreatClassIdAsTemplateId(D2GameStrc* pGame);
 //D2Game.0x6FC317C0
 int32_t __fastcall ARENA_GetTemplateType(D2GameStrc* pGame);
+
+}

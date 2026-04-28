@@ -13,6 +13,8 @@
 #include <storm/thread/CCritSect.hpp>
 #pragma warning(pop)
 
+extern "C" {
+
 struct D2ClientInfoStrc;
 struct D2UnitInfoStrc;
 struct D2UnitDescriptionListStrc;
@@ -412,7 +414,7 @@ D2GAME_DLL_DECL void __stdcall GAME_GetStatistics(D2GameStatisticsStrc* pStats);
 //D2Game.0x6FC3AE10 (#10021)
 D2GAME_DLL_DECL void __stdcall GAME_SendMessageToAllClients(int32_t a1, int32_t nPacketParam, const char* szMessage);
 //D2Game.0x6FC3AFB0 (#10022)
-D2GAME_DLL_DECL void __stdcall GAME_SendMessageToGameClients(uint16_t a1, const char* Str2);
+D2GAME_DLL_DECL void __stdcall GAME_SendMessageToGameClients(uint16_t nGameId, char* szMessage);
 using GAME_ForEachIngameClientCallbackPtr = void(__fastcall*)(D2ClientStrc*, void*);
 //D2Game.0x6FC3B0E0
 void __fastcall GAME_ForEachIngameClient(D2GameStrc* pGame, GAME_ForEachIngameClientCallbackPtr pFn, void* pContext);
@@ -459,3 +461,4 @@ void __fastcall D2GameDataTable_TSExplicitList_InplaceNew(void* pMemory);
 //D2Game.0x6FC3BB80
 void __fastcall D2GameDataTable_TSExplicitList_InplaceNew_WithList(void* pMemory, int32_t nUnused, TSExplicitList<D2GameStrc, 0xDDDDDDDD>* pList);
 
+}

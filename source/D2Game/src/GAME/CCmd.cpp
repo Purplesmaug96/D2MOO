@@ -14,6 +14,8 @@
 
 #pragma warning(disable: 28159)
 
+extern "C" {
+
 constexpr int32_t CHARACTER_SAVE_SIZE = 0x2000;
 
 
@@ -69,7 +71,7 @@ uint32_t __fastcall CCMD_CanClientJoinGame(int32_t a1, int32_t a2, char* szClien
         GAME_LeaveGamesCriticalSection(pGame);
         return 6;
     }
-  
+
     for (D2ClientStrc* pClient = pGame->pClientList; pClient; pClient = CLIENTS_GetNext(pClient))
     {
         const char* szName = CLIENTS_GetName(pClient);
@@ -238,4 +240,6 @@ void __fastcall CCMD_ProcessClientMessage(void* pData, int32_t nPacketSize)
     }
 
     GAME_LeaveGamesCriticalSection(pGame);
+}
+
 }

@@ -4,6 +4,7 @@
 
 #include "D2PacketDef.h"
 
+extern "C" {
 
 //D2Game.0x6FC3C640
 int32_t __fastcall sub_6FC3C640(int32_t nClientId, int16_t nGameId, int16_t nClientCount, const char* szGameName);
@@ -283,3 +284,5 @@ void __fastcall D2GAME_PACKETS_SendPacket0xA7_StateOn_6FC3FC20(D2ClientStrc* pCl
 void __fastcall D2GAME_PACKETS_SendPacket0xA9_StateOff_6FC3FC50(D2ClientStrc* pClient, BYTE nUnitType, DWORD dwUnitId, uint16_t nState);
 //D2Game.0x6FC3FC80
 void __fastcall sub_6FC3FC80(D2ClientStrc* pClient, D2UnitStrc* pUnit);
+
+}

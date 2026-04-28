@@ -6,6 +6,7 @@
 #include "GAME/Game.h"
 #include "UNIT/SUnit.h"
 
+extern "C" {
 
 //D2Game.0x6FCCD2E0 (#10025)
 D2UnitStrc* __stdcall DEBUG_GetUnitFromTypeAndGUID(int32_t nUnitType, int32_t nUnitGUID)
@@ -63,4 +64,6 @@ D2ActiveRoomStrc* __stdcall DEBUG_GetRoomBySubtileCoordinates(uint8_t nAct, int3
     D2ActiveRoomStrc* pRoom = DUNGEON_FindRoomBySubtileCoordinates(pGame->pAct[nAct], nX, nY);
     GAME_LeaveGlobalGamesCriticalSection();
     return pRoom;
+}
+
 }

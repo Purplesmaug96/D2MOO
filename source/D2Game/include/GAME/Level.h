@@ -2,6 +2,7 @@
 
 #include <Units/Units.h>
 
+extern "C" {
 
 //D2Game.0x6FC3BBA0
 void __fastcall LEVEL_UpdateUnitsInAdjacentRooms(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2ClientStrc* pClient);
@@ -27,3 +28,5 @@ void __fastcall LEVEL_LoadAct(D2GameStrc* pGame, uint8_t nAct);
 void __fastcall LEVEL_RemoveAllUnits(D2GameStrc* pGame);
 //D2Game.0x6FC3C5B0
 void __fastcall LEVEL_UpdateQueuedUnitsInAllActs(D2GameStrc* pGame);
+
+}

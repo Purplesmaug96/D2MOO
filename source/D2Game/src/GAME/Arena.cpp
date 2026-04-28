@@ -10,6 +10,7 @@
 #pragma warning(disable: 26812)
 #pragma warning(disable: 33010)
 
+extern "C" {
 
 int32_t dword_6FD43FB0;
 
@@ -218,7 +219,7 @@ void __fastcall ARENA_SendScoresToClient(D2GameStrc* pGame, D2ClientStrc* pClien
             D2GAME_PACKETS_SendPacket0x65_6FC3F5E0(pClient, pPlayer->dwUnitId, pArenaUnit->nScore);
         }
     }
-    
+
     D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(pClient, 1);
     if (pClient->dwClientState != CLIENTSTATE_INGAME && pPlayer)
     {
@@ -287,4 +288,6 @@ int32_t __fastcall ARENA_GetTemplateType(D2GameStrc* pGame)
     D2_ASSERT(pArena);
 
     return pArena->nTemplate;
+}
+
 }

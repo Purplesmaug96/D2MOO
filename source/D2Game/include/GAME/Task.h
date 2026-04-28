@@ -2,6 +2,7 @@
 
 #include <Units/Units.h>
 
+extern "C" {
 
 #pragma pack(push, 1)
 
@@ -67,3 +68,5 @@ void __fastcall TASK_LinkList_Remove(D2LinkStrc* pLink);
 void __stdcall D2Game_10034_Return(int a1);
 void __stdcall D2Game_10060_Return();
 void __stdcall D2Game_10061_Return();
+
+}

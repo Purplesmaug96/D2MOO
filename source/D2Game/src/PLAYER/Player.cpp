@@ -37,6 +37,7 @@
 #include "UNIT/SUnitDmg.h"
 #include "UNIT/SUnitNpc.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2RosterIterateStrc
@@ -687,7 +688,7 @@ void __fastcall PLAYER_ApplyDeathPenalty(D2GameStrc* pGame, D2UnitStrc* pDefende
     const int32_t nPenaltyPercentage = std::min(nDefenderLevel, 20);
 
     int32_t nGoldPenalty = nDefenderTotalGold * nPenaltyPercentage / 100;
-    
+
     int32_t bAttackedByAnotherPlayer = 0;
     if (pAttacker && pAttacker != pDefender)
     {
@@ -1026,4 +1027,6 @@ void __fastcall D2GAME_SetStatOrResetGold_6FC7CA70(D2UnitStrc* pUnit, int32_t nS
     }
 
     STATLIST_SetUnitStat(pUnit, nStat, nValue, 0);
+}
+
 }
