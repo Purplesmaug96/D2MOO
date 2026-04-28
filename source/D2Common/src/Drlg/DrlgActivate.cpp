@@ -6,6 +6,8 @@
 #include "Drlg/D2DrlgRoomTile.h"
 #include <DataTbls/LevelsIds.h>
 
+extern "C" {
+
 static int gStatsClientFreedRooms;
 static int gStatsClientAllocatedRooms;
 static int gStatsFreedRooms;
@@ -119,7 +121,7 @@ void __fastcall DRLGACTIVATE_RoomExSetStatus_ClientInSight(D2DrlgRoomStrc* pDrlg
 //D2Common.0x6FD73550
 void __fastcall DRLGACTIVATE_RoomExSetStatus_ClientOutOfSight(D2DrlgRoomStrc* pDrlgRoom)
 {
-	if (pDrlgRoom->dwFlags & DRLGROOMFLAG_TILELIB_LOADED 
+	if (pDrlgRoom->dwFlags & DRLGROOMFLAG_TILELIB_LOADED
 		&& (pDrlgRoom->nType != DRLGTYPE_PRESET || (pDrlgRoom->dwFlags & DRLGROOMFLAG_PRESET_UNITS_ADDED) != 0))
 	{
 
@@ -165,7 +167,7 @@ void __fastcall DRLGACTIVATE_RoomExStatusUnset_Untile(D2DrlgRoomStrc* pDrlgRoom)
 	if (pDrlgRoom->fRoomStatus != ROOMSTATUS_COUNT)
 	{
 		DRLGACTIVATE_RoomExIdentifyRealStatus(pDrlgRoom);
-		
+
 		// We may unload the room if no status is now set
 		if (pDrlgRoom->fRoomStatus == ROOMSTATUS_COUNT)
 		{
@@ -501,4 +503,6 @@ void __fastcall DRLGACTIVATE_ToggleHasPortalFlag(D2DrlgRoomStrc* pDrlgRoom, BOOL
 uint8_t __fastcall DRLGACTIVATE_GetRoomStatusFlags(D2DrlgRoomStrc* pDrlgRoom)
 {
 	return pDrlgRoom->fRoomStatus;
+}
+
 }

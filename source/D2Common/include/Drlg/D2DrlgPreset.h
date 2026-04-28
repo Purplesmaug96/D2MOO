@@ -8,6 +8,8 @@
 
 struct D2LvlPrestTxt;
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2DrlgPresetRoomFlags
@@ -32,7 +34,7 @@ struct D2PresetUnitStrc
 	int32_t nMode;							//0x08
 	int32_t nXpos;							//0x0C
 	int32_t nYpos;							//0x10
-	BOOL bSpawned;							//0x14 
+	BOOL bSpawned;							//0x14
 	D2MapAIStrc* pMapAI;					//0x18
 	D2PresetUnitStrc* pNext;				//0x1C
 };
@@ -162,3 +164,5 @@ int __fastcall DRLGPRESET_MapTileType(int nId);
 
 // D2Common.0x6FDEA700
 extern D2LevelFileListStrc* gpLevelFilesList_6FDEA700;
+
+}

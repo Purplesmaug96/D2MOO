@@ -8,6 +8,8 @@
 #include "Drlg/D2DrlgRoomTile.h"
 #include "D2CMP.h"
 
+extern "C" {
+
 //D2Common.0x6FD76420
 void __fastcall DRLGLOGIC_FreeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom)
 {
@@ -38,7 +40,7 @@ void __fastcall DRLGLOGIC_InitializeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom, D2D
 {
 	int nCellPositions[1024] = {};
 	int nCellFlags[256] = {};
-	
+
 	D2DrlgLogicalRoomInfoStrc* pDrlgCoordList = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2DrlgLogicalRoomInfoStrc);
 	pDrlgRoom->pLogicalRoomInfo = pDrlgCoordList;
 
@@ -138,7 +140,7 @@ void __fastcall DRLGLOGIC_InitializeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom, D2D
 	pDrlgCoordList->nLists = tDRLGLogicUnkStrc.field_18 - nLists + 1;
 
 	pDrlgCoordList->pCoordList = (D2RoomCoordListStrc *)D2_CALLOC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, sizeof(D2RoomCoordListStrc) * pDrlgCoordList->nLists);
-	
+
 	pDrlgRoom->pLevel->nCoordLists += pDrlgCoordList->nLists;
 
 	DRLGLOGIC_AssignCoordListsForGrids(pDrlgRoom, pDrlgCoordList, nLists);
@@ -464,7 +466,7 @@ void __fastcall DRLGLOGIC_AllocCoordLists(D2DrlgRoomStrc* pDrlgRoom)
 	pLogicalRoomInfo->nLists = 1;
 
 	pLogicalRoomInfo->pCoordList = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2RoomCoordListStrc);
-	
+
 	pLogicalRoomInfo->pCoordList->nIndex = pDrlgRoom->pLevel->nCoordLists;
 	pLogicalRoomInfo->pCoordList->pBox[0].nPosY = pDrlgRoom->nTileYPos;
 	pLogicalRoomInfo->pCoordList->pBox[0].nHeight = pDrlgRoom->nTileYPos + pDrlgRoom->nTileHeight;
@@ -509,4 +511,6 @@ D2RoomCoordListStrc* __fastcall DRLGLOGIC_GetRoomCoordList(D2DrlgRoomStrc* pDrlg
 {
 	D2_ASSERT(pDrlgRoom->pLogicalRoomInfo);
 	return pDrlgRoom->pLogicalRoomInfo->pCoordList;
+}
+
 }

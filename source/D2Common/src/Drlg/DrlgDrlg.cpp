@@ -15,6 +15,8 @@
 #include <D2CMP.h>
 #include <DataTbls/LevelsIds.h>
 
+extern "C" {
+
 static_assert(DRLGROOMFLAG_HAS_WARP_0 == (1 << DRLGROOMFLAG_HAS_WARP_FIRST_BIT), "Warp first bit must match of DRLGROOMFLAG_HAS_WARP_0");
 static_assert(DRLGROOMFLAG_SUBSHRINE_ROW1 == (1 << DRLGROOMFLAG_SUBSHRINE_ROWS_FIRST_BIT), "Subshrines first bit must match of DRLGROOMFLAG_SUBSHRINE_ROW1");
 static_assert(DRLGROOMFLAG_HAS_WAYPOINT == (1 << DRLGROOMFLAG_HAS_WAYPOINT_FIRST_BIT), "Waypoint first bit must match of DRLGROOMFLAG_HAS_WAYPOINT");
@@ -50,7 +52,7 @@ D2DrlgStrc* __fastcall DRLG_AllocDrlg(D2DrlgActStrc* pAct, uint8_t nActNo, HD2AR
 		wsprintfA(szPath, "%s\\Tiles\\Act1\\Town\\Floor.dt1", "DATA\\GLOBAL");
 		D2CMP_10087_LoadTileLibrarySlot(pDrlg->pTiles, szPath);
 		break;
-	
+
 	case ACT_II:
 	{
 		unsigned int nStaffLevelOffset = 0;
@@ -424,11 +426,11 @@ D2DrlgLevelStrc* __fastcall DRLG_AllocLevel(D2DrlgStrc* pDrlg, int nLevelId)
 	case DRLGTYPE_MAZE:
 		DRLGMAZE_InitLevelData(pLevel);
 		break;
-	
+
 	case DRLGTYPE_PRESET:
 		DRLGPRESET_InitLevelData(pLevel);
 		break;
-		
+
 	case DRLGTYPE_OUTDOOR:
 		DRLGOUTDOORS_AllocOutdoorInfo(pLevel);
 		break;
@@ -951,4 +953,6 @@ int __fastcall DRLG_IsOnClient(D2DrlgStrc* pDrlg)
 	D2_ASSERT(pDrlg);
 
 	return pDrlg->dwFlags & DRLGFLAG_ONCLIENT;
+}
+
 }

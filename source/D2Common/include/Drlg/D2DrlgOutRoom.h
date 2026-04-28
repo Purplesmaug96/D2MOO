@@ -6,6 +6,8 @@
 struct D2DrlgRoomStrc;
 struct D2DrlgLevelLinkDataStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -42,3 +44,5 @@ BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelCoords(D2DrlgLevelLinkDataStrc* pLe
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelDef(D2DrlgLevelLinkDataStrc* pLevelLinkData);
 //D2Common.0x6FD84010
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByOffsetCoords(D2DrlgLevelLinkDataStrc* pLevelLinkData);
+
+}

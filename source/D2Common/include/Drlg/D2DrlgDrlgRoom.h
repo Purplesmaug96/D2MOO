@@ -10,6 +10,8 @@ struct D2DrlgLevelStrc;
 struct D2DrlgOrthStrc;
 struct D2PresetUnitStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -81,3 +83,5 @@ void __fastcall DRLGROOM_GetRGB_IntensityFromRoomEx(D2DrlgRoomStrc* pDrlgRoom, u
 int* __fastcall DRLGROOM_GetVisArrayFromLevelId(D2DrlgStrc* pDrlg, int nLevelId);
 //D2Common.0x6FD78230
 D2DrlgStrc* __fastcall DRLGROOM_GetDrlgFromRoomEx(D2DrlgRoomStrc* pRoom);
+
+}

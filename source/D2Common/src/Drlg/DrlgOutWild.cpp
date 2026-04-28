@@ -8,6 +8,8 @@
 #include "D2Seed.h"
 #include <DataTbls/LevelsIds.h>
 
+extern "C" {
+
 //D2Common.0x6FD84CA0
 void __fastcall DRLGOUTWILD_GetBridgeCoords(D2DrlgLevelStrc* pLevel, int* pX, int* pY)
 {
@@ -15,7 +17,7 @@ void __fastcall DRLGOUTWILD_GetBridgeCoords(D2DrlgLevelStrc* pLevel, int* pX, in
 
 	for (int nY = 1; nY < pLevel->pOutdoors->nGridWidth - 1; ++nY)
 	{
-		if (DRLGGRID_GetGridEntry(&pLevel->pOutdoors->pGrid[0], nX, nY) == 28 
+		if (DRLGGRID_GetGridEntry(&pLevel->pOutdoors->pGrid[0], nX, nY) == 28
 			&& DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX, nY).nPickedFile == 1)
 		{
 			*pX = nX;
@@ -55,7 +57,7 @@ void __fastcall DRLGOUTWILD_InitAct1OutdoorLevel(D2DrlgLevelStrc* pLevel)
 		{
 			D2DrlgVertexStrc* pNextVertex = pVertex->pNext;
 			if (pVertex->nPosX < pNextVertex->nPosX && pPreviousVertex->nPosY > pVertex->nPosY && !(pVertex->dwFlags & 1)
-				&& !(pPreviousVertex->dwFlags & 1) || pVertex->nPosY > pNextVertex->nPosY 
+				&& !(pPreviousVertex->dwFlags & 1) || pVertex->nPosY > pNextVertex->nPosY
 				&& pPreviousVertex->nPosX > pVertex->nPosX && !(pVertex->dwFlags & 1) && !(pPreviousVertex->dwFlags & 1))
 			{
 				D2DrlgVertexStrc* pFirstVertex = pVertex;
@@ -227,7 +229,7 @@ BOOL __fastcall DRLGOUTWILD_TestSpawnRiver(D2DrlgLevelStrc* pLevel, int nX)
 {
 	for (int nY = 0; nY < pLevel->pOutdoors->nGridHeight; ++nY)
 	{
-		if (DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX, nY).bHasDirection 
+		if (DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX, nY).bHasDirection
 			|| DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX + 1, nY).bHasDirection)
 		{
 			return FALSE;
@@ -310,7 +312,7 @@ void __fastcall DRLGOUTWILD_SpawnRiver(D2DrlgLevelStrc* pLevel, int nX)
 
 			if (DRLGOUTDOORS_TestGridCellSpawnValid(pLevel, nX - 1, nY) && ((pLevel->pOutdoors->dwFlags & OUTDOOR_BRIDGE) != 0 || DRLGOUTDOORS_TestGridCellSpawnValid(pLevel, nX + 2, nY)))
 			{
-				if (DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX    , nY).nPickedFile == 3 && 
+				if (DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX    , nY).nPickedFile == 3 &&
 					DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX + 1, nY).nPickedFile == 3)
 				{
 					DRLGOUTDOORS_SpawnOutdoorLevelPresetEx(pLevel, nX    , nY, LVLPREST_ACT1_BRIDGE, 1, 0);
@@ -393,7 +395,7 @@ void __fastcall DRLGOUTWILD_SpawnTownTransitionsAndCaves(D2DrlgLevelStrc* pLevel
 			}
 			else
 			{
-				while (!DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX    , nY).bHasDirection 
+				while (!DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX    , nY).bHasDirection
 					&& !DRLGOUTDOORS_GetPackedGrid2Info(pLevel->pOutdoors, nX + 1, nY).bHasDirection)
 				{
 					++nY;
@@ -618,4 +620,6 @@ void __fastcall DRLGOUTWILD_SpawnCottage(D2DrlgLevelStrc* pLevel, int nLvlPrestI
 		DRLGOUTDOORS_SpawnRandomOutdoorDS1(pLevel, nLvlPrestId, -1);
 		DRLGOUTDOORS_SpawnRandomOutdoorDS1(pLevel, nLvlPrestId, -1);
 	}
+}
+
 }

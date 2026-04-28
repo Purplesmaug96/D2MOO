@@ -3,6 +3,7 @@
 #include "D2CommonDefinitions.h"
 #include <Drlg/D2DrlgDrlg.h>
 
+extern "C" {
 
 #pragma pack(1)
 
@@ -106,3 +107,5 @@ void __fastcall sub_6FD83970(D2DrlgCoordStrc* pDrlgCoord, D2JungleStrc* pJungle,
 void __fastcall DRLGOUTPLACE_InitOutdoorRoomGrids(D2DrlgRoomStrc* pDrlgRoom);
 //D2Common.0x6FD83C90
 void __fastcall DRLGOUTPLACE_CreateOutdoorRoomEx(D2DrlgLevelStrc* pLevel, int nX, int nY, int nWidth, int nHeight, int dwRoomFlags, int dwOutdoorFlags, int dwOutdoorFlagsEx, int dwDT1Mask);
+
+}

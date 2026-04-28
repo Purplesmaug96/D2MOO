@@ -7,6 +7,8 @@ struct D2ActiveRoomStrc;
 struct D2DrlgRoomStrc;
 struct D2DrlgLevelStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 struct D2MazeLevelIdStrc
@@ -95,3 +97,5 @@ void __fastcall DRLGMAZE_RollAct_1_2_3_BasicPresets(D2DrlgLevelStrc* pLevel);
 void __fastcall DRLGMAZE_RollBasicPresets(D2DrlgLevelStrc* pLevel);
 //D2Common.0x6FD7D3D0
 void __fastcall DRLGMAZE_ResetMazeRecord(D2DrlgLevelStrc* pLevel, BOOL bKeepMazeRecord);
+
+}

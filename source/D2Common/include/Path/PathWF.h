@@ -4,6 +4,8 @@
 #include <D2Seed.h>
 #include "Path.h"
 
+extern "C" {
+
 #pragma pack(1)
 
 #pragma pack()
@@ -17,3 +19,5 @@ int __fastcall PATH_SimplifyToLines(D2PathPointStrc* pOutPathPoints, D2PathPoint
 //1.10f: D2Common.0x6FDAC270
 //1.13C: D2Common.0x6FD68C40
 int __fastcall PATH_ComputePathOrSlideAlongObstacles(D2PathInfoStrc* ptPathInfo);
+
+}

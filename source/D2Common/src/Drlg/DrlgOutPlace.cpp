@@ -23,6 +23,8 @@
 #include <cmath>
 #include <algorithm>
 
+extern "C" {
+
 int dword_6FDEA6FC;
 
 //D2Common.0x6FDCFE40
@@ -229,7 +231,7 @@ struct D2UnkOutPlaceStrc12
 };
 #pragma pack()
 
-uint8_t byte_6FDCFB70[4*4] = { 
+uint8_t byte_6FDCFB70[4*4] = {
 	0, 1, 2, 3,
 	0, 1, 1, 1,
 	3, 2, 1, 2,
@@ -295,7 +297,7 @@ BOOL __fastcall sub_6FD80750(D2DrlgLevelStrc* pLevel, int nVertexId)
 		int v58 = tInitOutPlace.field_4 + tInitOutPlace.field_4 / 2;
 		int v64 = v58 + 35;
 
-		
+
 		D2UnkOutPlaceStrc12* pCurrentOutPlace = nullptr;
 		D2UnkOutPlaceStrc12* pNextOutPlace = tOutPlaceArray;
 
@@ -623,8 +625,8 @@ int __fastcall sub_6FD80C10(int a1, int a2, int a3, int a4, int a5)
 void __fastcall DRLGOUTPLACE_SetBlankBorderGridCells(D2DrlgLevelStrc* pLevel)
 {	const D2CoordStrc aOffsets[4][2] = {
 		{{  0,  0 }, {  1,  1 }},
-		{{  1,  0 }, { -1,  1 }}, 
-		{{  0,  1 }, {  1, -1 }},  
+		{{  1,  0 }, { -1,  1 }},
+		{{  0,  1 }, {  1, -1 }},
 		{{  1,  1 }, { -1, -1 }}
 	};
 
@@ -2057,7 +2059,7 @@ static void DRLG_GenerateJunglesAttachPoints(
 				}
 				pPreset2[tCurrentJungle.nPresetsBlocksX + nPresetOffsetX + nPresetsWidth * (tCurrentJungle.nPresetsBlocksY + nPresetOffsetY)] = 1;
 			}
-			
+
 			nJungleAttachPoints = nJungleIdx != 0;
 
 
@@ -2452,7 +2454,7 @@ D2DrlgLevelStrc* __fastcall DRLG_GenerateJungles(D2DrlgLevelStrc* pLevel)
 			nJungleAttachIdx--;
 			continue;
 		}
-		
+
 		// Link to the jungle we are based on
 		pCurrentJungle->pBasedOnJungle = &tJungles[nBaseOn];
 
@@ -2534,17 +2536,17 @@ D2DrlgLevelStrc* __fastcall DRLG_GenerateJungles(D2DrlgLevelStrc* pLevel)
 		}
 	}
 
-	std::sort(tJungles, tJungles + JUNGLE_MAX_ATTACH, 
-		[](const auto& lhs, const auto& rhs) 
+	std::sort(tJungles, tJungles + JUNGLE_MAX_ATTACH,
+		[](const auto& lhs, const auto& rhs)
 		{ // Order from higher to lower nPosY
-			return lhs.pDrlgCoord.nPosY > rhs.pDrlgCoord.nPosY; 
+			return lhs.pDrlgCoord.nPosY > rhs.pDrlgCoord.nPosY;
 		});
 
 	D2DrlgLevelStrc* pJungleLevel = nullptr;
 	for (int i = 0; i < JUNGLE_MAX_ATTACH; ++i)
 	{
 		pJungleLevel = DRLG_GetLevel(pDrlg, i + LEVEL_SPIDERFOREST);
-	
+
 		pJungleLevel->pJungleDefs = tJungles[i].pJungleDefs;
 		pJungleLevel->nJungleDefs = tJungles[i].nJungleDefs;
 		pJungleLevel->nPosX       = tJungles[i].pDrlgCoord.nPosX;
@@ -2744,4 +2746,6 @@ void __fastcall DRLGOUTPLACE_CreateOutdoorRoomEx(D2DrlgLevelStrc* pLevel, int nX
 	pDrlgRoom->pOutdoor->nSubType = pLevelDefBinRecord->dwSubType;
 	pDrlgRoom->pOutdoor->nSubTheme = pLevelDefBinRecord->dwSubTheme;
 	pDrlgRoom->pOutdoor->nSubThemePicked = DRLGTILESUB_PickSubThemes(pDrlgRoom, pLevelDefBinRecord->dwSubType, pLevelDefBinRecord->dwSubTheme);
+}
+
 }

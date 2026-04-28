@@ -4,6 +4,8 @@
 #include "D2DrlgDrlg.h"
 #include "D2DrlgDrlgGrid.h"
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -21,3 +23,5 @@ void __fastcall DRLGANIM_AllocAnimationTileGrids(D2DrlgRoomStrc* pDrlgRoom, int 
 void __fastcall DRLGANIM_AllocAnimationTileGrid(D2DrlgRoomStrc* pDrlgRoom, int nAnimationSpeed, D2DrlgTileDataStrc* pTiles, int nTiles, D2DrlgGridStrc* pDrlgGrid, int nUnused);
 //D2Common.0x6FD75B00
 void __fastcall DRLGANIM_UpdateFrameInAdjacentRooms(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStrc* pDrlgRoom2);
+
+}

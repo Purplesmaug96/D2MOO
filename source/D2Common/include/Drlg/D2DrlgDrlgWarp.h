@@ -9,6 +9,8 @@ struct D2ActiveRoomStrc;
 struct D2DrlgRoomStrc;
 struct D2UnitStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -34,3 +36,5 @@ int __fastcall DRLGWARP_GetWarpDestinationFromArray(D2DrlgLevelStrc* pLevel, uin
 D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromWarpIdAndDirection(D2DrlgLevelStrc* pLevel, uint8_t nWarpId, char szDirection);
 //D2Common.0x6FD78DF0
 D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromUnit(D2DrlgRoomStrc* pDrlgRoom, D2UnitStrc* pUnit);
+
+}

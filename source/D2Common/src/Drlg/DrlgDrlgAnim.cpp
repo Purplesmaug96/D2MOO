@@ -6,7 +6,7 @@
 #include "Drlg/D2DrlgRoomTile.h"
 #include <D2CMP.h>
 
-
+extern "C" {
 
 //TODO: Variable names
 
@@ -254,5 +254,7 @@ void __fastcall DRLGANIM_UpdateFrameInAdjacentRooms(D2DrlgRoomStrc* pDrlgRoom1, 
 			}
 		}
 	}
+
+}
 
 }

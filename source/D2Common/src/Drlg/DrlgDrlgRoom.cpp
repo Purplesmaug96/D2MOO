@@ -10,6 +10,7 @@
 #include "D2Dungeon.h"
 #include "D2Seed.h"
 
+extern "C" {
 
 //D2Common.0x6FD771C0
 D2DrlgRoomStrc* __fastcall DRLGROOM_AllocRoomEx(D2DrlgLevelStrc* pLevel, int nType)
@@ -99,7 +100,7 @@ void __fastcall DRLGROOM_FreeRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 		DRLGPRESET_FreePresetRoomData(pDrlgRoom);
 	}
 
-	
+
 	for (D2PresetUnitStrc* pPresetUnit = pDrlgRoom->pPresetUnits; pPresetUnit; pPresetUnit = pNextPresetUnit)
 	{
 		pNextPresetUnit = pPresetUnit->pNext;
@@ -202,7 +203,7 @@ void __fastcall DRLGROOM_FreeRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 void __fastcall DRLGROOM_FreeRoomData(void* pMemPool, D2DrlgOrthStrc* pDrlgRoomData)
 {
 	D2DrlgOrthStrc* pNext = NULL;
-	
+
 	for (D2DrlgOrthStrc* pRoomData = pDrlgRoomData; pRoomData; pRoomData = pNext)
 	{
 		pNext = pRoomData->pNext;
@@ -490,7 +491,7 @@ BOOL __fastcall DRLGROOM_CheckLOSDraw(D2DrlgRoomStrc* pDrlgRoom)
 	{
 		return pDrlgRoom->dwFlags & DRLGROOMFLAG_NO_LOS_DRAW;
 	}
-		
+
 	return FALSE;
 }
 
@@ -524,10 +525,10 @@ int __fastcall DRLGROOM_GetWarpDestinationLevel(D2DrlgRoomStrc* pDrlgRoom, int n
 	D2LvlWarpTxt* pLvlWarpTxtRecord = nullptr;
 	D2ActiveRoomStrc* pRoom = DRLGWARP_GetDestinationRoom(pDrlgRoom, nSourceLevel, &nDestinationLevel, &pLvlWarpTxtRecord);
 	D2_ASSERT(pRoom);
-	
+
 	pDrlgRoom = DUNGEON_GetRoomExFromRoom(pRoom);
 	D2_ASSERT(pDrlgRoom);
-	
+
 	D2_ASSERT(pDrlgRoom->pLevel);
 	return pDrlgRoom->pLevel->nLevelId;
 }
@@ -923,4 +924,6 @@ D2DrlgStrc* __fastcall DRLGROOM_GetDrlgFromRoomEx(D2DrlgRoomStrc* pRoom)
 	D2_ASSERT(pRoom->pLevel);
 	D2_ASSERT(pRoom->pLevel->pDrlg);
 	return pRoom->pLevel->pDrlg;
+}
+
 }

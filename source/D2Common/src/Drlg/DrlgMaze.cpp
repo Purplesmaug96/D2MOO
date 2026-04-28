@@ -7,6 +7,8 @@
 #include "D2Seed.h"
 #include <DataTbls/LevelsIds.h>
 
+extern "C" {
+
 // Helper functions
 static bool DRLGMAZE_CheckIfRoomOverlapsOrth(D2DrlgRoomStrc* pNewRoomEx, D2DrlgOrthStrc* pDrlgOrth)
 {
@@ -468,7 +470,7 @@ void __fastcall DRLGMAZE_GenerateLevel(D2DrlgLevelStrc* pLevel)
 	pDrlgRoom->nTileYPos = pLevel->nPosY + (pLevel->nHeight - pDrlgRoom->nTileHeight) / 2;
 
 	DRLGROOM_AddRoomExToLevel(pLevel, pDrlgRoom);
-	
+
 	D2DrlgRoomStrc* pLevelFirstRoomEx = pLevel->pFirstRoomEx;
 
 	switch (pLevel->nLevelType)
@@ -589,7 +591,7 @@ void __fastcall DRLGMAZE_GenerateLevel(D2DrlgLevelStrc* pLevel)
 
 	case LVLTYPE_ACT1_JAIL:
 		DRLGMAZE_InitBasicMazeLayout(pLevel, 2);
-		
+
 		nRooms = pLevel->pMaze->dwRooms[pLevel->pDrlg->nDifficulty];
 
 		if (pLevel->nLevelId == pLevel->pDrlg->nStaffTombLevel)
@@ -1177,7 +1179,7 @@ BOOL __fastcall DRLGMAZE_LinkMazeRooms(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStr
 	default:
 		break;
 	}
-	
+
 	for (D2DrlgOrthStrc* pDrlgOrth = pDrlgRoom2->pDrlgOrth; pDrlgOrth; pDrlgOrth = pDrlgOrth->pNext)
 	{
 		if (!DRLG_CheckNotOverlappingUsingManhattanDistance(&pDrlgRoom1->pDrlgCoord, pDrlgOrth->pBox, 0))
@@ -1397,9 +1399,9 @@ static void PlaceLavaPreset(D2DrlgRoomStrc* pFirstRoomEx, int nSet)
 
 //D2Common.0x6FD7A830
 void __fastcall DRLGMAZE_PlaceAct5LavaPresets(D2DrlgLevelStrc* pLevel)
-{		
+{
 	const int nSet = 2 * (SEED_RollRandomNumber(&pLevel->pFirstRoomEx->pSeed) & 3);
-	
+
 	const int scnLavaCombinations = ARRAY_SIZE(dword_6FDCE850);
 	D2_ASSERT(nSet < (scnLavaCombinations - 1));
 
@@ -1453,7 +1455,7 @@ void __fastcall DRLGMAZE_FillBlankMazeSpaces(D2DrlgLevelStrc* pLevel, int nLevel
 				}
 			}
 		}
-		
+
 		D2_FREE_POOL(pLevel->pDrlg->pMempool, pDrlgRoomArray);
 	}
 }
@@ -1556,7 +1558,7 @@ static int DRLGMAZE_ArcaneSanctuaryDirectionFromRoomIdx(int nBranchDirection, in
 void __fastcall DRLGMAZE_PlaceArcaneSanctuary(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgRoomStrc* pLevelFirstRoomEx = pLevel->pFirstRoomEx;
-	
+
 	const int nRand = SEED_RollRandomNumber(&pLevel->pSeed) & 3;
 
 	static const int nRoomsPerBranch = 15;
@@ -2023,7 +2025,7 @@ void __fastcall DRLGMAZE_PlaceAct2TombStuff(D2DrlgLevelStrc* pLevel)
 	{
 		pMazeLevelIds = &nAct2TombNextIds[nDirection];
 		if (!DRLGMAZE_ReplaceRoomPreset(pLevel, pMazeLevelIds->nLevelPrestId1, pMazeLevelIds->nLevelPrestId2, pMazeLevelIds->nPickedFile, 0))
-		{			
+		{
 			for (D2DrlgRoomStrc* i = pLevel->pFirstRoomEx; i; i = i->pDrlgRoomNext)
 			{
 				if (!DRLGMAZE_HasMapDS1(i) && DRLGMAZE_InitRoomFixedPreset(i, pMazeLevelIds->nDirection, pMazeLevelIds->nLevelPrestId2, pMazeLevelIds->nPickedFile, 1))
@@ -2279,7 +2281,7 @@ void __fastcall DRLGMAZE_PlaceAct3DungeonStuff(D2DrlgLevelStrc* pLevel)
 	int nDirection = 0;
 
 	nDirection = SEED_RollRandomNumber(&pLevel->pSeed) & 3;
-	
+
 	pMazeLevelIds = &nAct3DungeonPrevIds[nDirection];
 	pDrlgRoom = pLevel->pFirstRoomEx;
 	while (pDrlgRoom)
@@ -2296,7 +2298,7 @@ void __fastcall DRLGMAZE_PlaceAct3DungeonStuff(D2DrlgLevelStrc* pLevel)
 	}
 
 	if (!pDrlgRoom)
-	{	
+	{
 		for (D2DrlgRoomStrc* i = pLevel->pFirstRoomEx; i; i = i->pDrlgRoomNext)
 		{
 			if (!DRLGMAZE_HasMapDS1(i))
@@ -2342,7 +2344,7 @@ void __fastcall DRLGMAZE_PlaceAct3DungeonStuff(D2DrlgLevelStrc* pLevel)
 				}
 			}
 
-			
+
 		}
 	}
 }
@@ -2372,7 +2374,7 @@ void __fastcall DRLGMAZE_PlaceAct3SewerStuff(D2DrlgLevelStrc* pLevel)
 	int nDirection = 0;
 
 	nDirection = SEED_RollRandomNumber(&pLevel->pSeed) & 3;
-	
+
 	pMazeLevelIds = &nAct3SewerDrainIds[nDirection];
 	pDrlgRoom = pLevel->pFirstRoomEx;
 	while (pDrlgRoom)
@@ -2540,7 +2542,7 @@ void __fastcall DRLGMAZE_PlaceAct3MephistoStuff(D2DrlgLevelStrc* pLevel)
 
 		v9 = (v14 + 1) % 4;
 	}
-	
+
 	if (pLevel->nLevelId == LEVEL_DURANCEOFHATELEV1)
 	{
 		pMazeLevelIds = &nAct3MephistoNextIds[v9];
@@ -2622,7 +2624,7 @@ void __fastcall DRLGMAZE_PlaceAct5TempleStuff(D2DrlgLevelStrc* pLevel)
 
 			pDrlgRoom = pDrlgRoom->pDrlgRoomNext;
 		}
-		
+
 		if (!pDrlgRoom)
 		{
 			for (D2DrlgRoomStrc* i = pLevel->pFirstRoomEx; i; i = i->pDrlgRoomNext)
@@ -2919,7 +2921,7 @@ void __fastcall DRLGMAZE_PlaceAct4Lava(D2DrlgLevelStrc* pLevel)
 
 		pParentRoom = DRLGMAZE_GetFreeLocationForRoomSouth(pLevel);
 
-		// Add bridge between lava (where the statues are) and chaos sanctum 
+		// Add bridge between lava (where the statues are) and chaos sanctum
 		D2DrlgRoomStrc* pBridgeRoomEx1 = DRLGMAZE_PlaceAdjacentPresetRoom(pParentRoom, ALTDIR_NORTH, FALSE);
 		if (pBridgeRoomEx1)
 		{
@@ -3025,7 +3027,7 @@ void __fastcall DRLGMAZE_PlaceAct5IceStuff(D2DrlgLevelStrc* pLevel)
 
 		pDrlgRoom = pDrlgRoom->pDrlgRoomNext;
 	}
-	
+
 	if (!pDrlgRoom)
 	{
 		DRLGMAZE_AddSpecialPreset(pLevel, pMazeLevelIds->nDirection, pMazeLevelIds->nLevelPrestId2, pMazeLevelIds->nPickedFile);
@@ -3173,7 +3175,7 @@ void __fastcall DRLGMAZE_RollAct_1_2_3_BasicPresets(D2DrlgLevelStrc* pLevel)
 		pOffsets[nIndex2] = nTemp1;
 		pOffsets[nIndex1] = nTemp2;
 	}
-	
+
 	nCounter1 = pLevel->nRooms / 5 + 1;
 	if (nCounter1 <= 2)
 	{
@@ -3185,7 +3187,7 @@ void __fastcall DRLGMAZE_RollAct_1_2_3_BasicPresets(D2DrlgLevelStrc* pLevel)
 	while (nCounter1 && nCounter2)
 	{
 		nLevelPrestId = pOffsets[nIndex] + nBaseLvlPrest;
-		
+
 		for (D2DrlgRoomStrc* pDrlgRoom = pLevel->pFirstRoomEx; pDrlgRoom; pDrlgRoom = pDrlgRoom->pDrlgRoomNext)
 		{
 			if (!DRLGMAZE_HasMapDS1(pDrlgRoom) && pDrlgRoom->pMaze->nLevelPrest == nLevelPrestId)
@@ -3357,4 +3359,6 @@ void __fastcall DRLGMAZE_ResetMazeRecord(D2DrlgLevelStrc* pLevel, BOOL bKeepMaze
 	{
 		pLevel->pMaze = NULL;
 	}
+}
+
 }

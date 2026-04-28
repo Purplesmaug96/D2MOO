@@ -3,6 +3,9 @@
 #include "D2CommonDefinitions.h"
 #include <D2Seed.h>
 #include "Path.h"
+
+extern "C" {
+
 #pragma pack(1)
 
 #pragma pack()
@@ -87,3 +90,5 @@ D2COMMON_DLL_DECL BOOL __stdcall D2Common_10229(D2DynamicPathStrc* pDynamicPath,
 
 //D2Common.0x6FDADA20
 void __fastcall PATH_RecacheRoom(D2DynamicPathStrc* pDynamicPath, D2ActiveRoomStrc* pHintRoom);
+
+}

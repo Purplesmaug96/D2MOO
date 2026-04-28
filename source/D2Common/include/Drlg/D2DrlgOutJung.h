@@ -4,6 +4,8 @@
 
 struct D2DrlgLevelStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 #pragma pack()
@@ -19,3 +21,5 @@ void __fastcall DRLGOUTJUNG_BuildKurastBazaar(D2DrlgLevelStrc* pLevel);
 void __fastcall DRLGOUTJUNG_BuildUpperKurast(D2DrlgLevelStrc* pLevel);
 //D2Common.0x6FD80230
 void __fastcall DRLGOUTJUNG_SpawnRandomPreset(D2DrlgLevelStrc* pLevel, int nLevelPrestId1, int nLevelPrestId2, int a4);
+
+}

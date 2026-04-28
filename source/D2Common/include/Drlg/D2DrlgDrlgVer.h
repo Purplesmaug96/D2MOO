@@ -4,6 +4,8 @@
 
 struct D2DrlgOrthStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 struct D2DrlgCoordStrc
@@ -34,3 +36,5 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 void __fastcall DRLGVER_FreeVertices(void* pMemPool, D2DrlgVertexStrc** ppVertices);
 //D2Common.0x6FD78730
 void __fastcall DRLGVER_GetCoordDiff(D2DrlgVertexStrc* pDrlgVertex, int* pDiffX, int* pDiffY);
+
+}

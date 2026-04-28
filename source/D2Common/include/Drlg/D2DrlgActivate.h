@@ -6,6 +6,8 @@ struct D2ActiveRoomStrc;
 struct D2DrlgRoomStrc;
 struct D2DrlgStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -53,3 +55,5 @@ BOOL __fastcall DRLGACTIVATE_TestRoomCanUnTile(D2DrlgRoomStrc* pDrlgRoom);
 void __fastcall DRLGACTIVATE_ToggleHasPortalFlag(D2DrlgRoomStrc* pDrlgRoom, BOOL bReset);
 //D2Common.0x6FD74110
 uint8_t __fastcall DRLGACTIVATE_GetRoomStatusFlags(D2DrlgRoomStrc* pDrlgRoom);
+
+}

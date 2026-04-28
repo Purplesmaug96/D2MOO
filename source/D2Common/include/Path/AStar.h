@@ -6,6 +6,8 @@
 
 // Note: Very similar to D1's path finding, but using a cache for the open/closed set
 
+extern "C" {
+
 #pragma pack(1)
 
 struct D2PathFoWallNodeStrc					    //sizeof 0x38
@@ -83,3 +85,4 @@ BOOL __fastcall PATH_AStar_EvaluateNeighbor(D2PathInfoStrc* pPathInfo, D2PathFoW
 //D2Common.0x6FDA78A0
 signed int __fastcall PATH_AStar_FlushNodeToDynamicPath(D2PathFoWallNodeStrc* pNode, D2PathInfoStrc* pPathInfo);
 
+}

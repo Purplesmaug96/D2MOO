@@ -5,6 +5,8 @@
 #include "D2DrlgDrlgVer.h"
 #include <Archive.h>
 
+extern "C" {
+
 #pragma pack(1)
 struct D2TileLibraryEntryStrc; // From D2CMP
 struct D2TileLibraryHashStrc; // From D2CMP
@@ -135,16 +137,16 @@ enum D2MapTileFlags
 {
 	MAPTILE_FLAGS_NONE = 0,
 	MAPTILE_UNK_0x1 = 0x000001,
-	MAPTILE_WALL_EXIT = 0x000002, // warps, door exit, 
+	MAPTILE_WALL_EXIT = 0x000002, // warps, door exit,
 	MAPTILE_TREES = 0x000004, // Could also be delimiting an enclosure inside another area. Probably misnamed because not only trees ?
 	MAPTILE_HIDDEN = 0x000008, // used by warps & others // aka skip automap
 	MAPTILE_UNK_0x10 = 0x000010,
 	MAPTILE_HASPRESETUNITS = 0x000020, // used for orientations 8-9; spawn doors & towers etc
 	MAPTILE_UNWALKABLE = 0x000040,
-	MAPTILE_FILL_LOS = 0x000080, // all subtiles will get wall collision; 
+	MAPTILE_FILL_LOS = 0x000080, // all subtiles will get wall collision;
 	MAPTILE_FLOOR_LINKER_PATH = 0x000100, // the floor is near a wp or forms a path within level or to another level
 	MAPTILE_UNK_0x200 = 0x000200, // Reveal hidden ?
-	MAPTILE_PITCH_BLACK = 0x000400, // the lighting changed, R&B=0 
+	MAPTILE_PITCH_BLACK = 0x000400, // the lighting changed, R&B=0
 	MAPTILE_OBJECT_WALL = 0x000800, // wall tile made of crops: barrels / crates / benches / tables (material flag 0x04)
 	MAPTILE_UNK_0x001000 = 0x001000,
 	MAPTILE_LOS = 0x002000,
@@ -619,3 +621,5 @@ D2DrlgWarpStrc* __fastcall DRLG_GetDrlgWarpFromLevelId(D2DrlgStrc* pDrlg, int nL
 void __fastcall DRLG_SetWarpId(D2DrlgWarpStrc* pDrlgWarp, int nVis, int nWarp, int nId);
 //D2Common.0x6FD75450
 int __fastcall DRLG_IsOnClient(D2DrlgStrc* pDrlg);
+
+}

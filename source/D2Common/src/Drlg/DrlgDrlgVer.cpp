@@ -1,6 +1,7 @@
 #include "Drlg/D2DrlgDrlgVer.h"
 #include <Drlg/D2DrlgDrlg.h>
 
+extern "C" {
 
 //D2Common.0x6FD782A0
 D2DrlgVertexStrc* __fastcall DRLGVER_AllocVertex(void* pMemPool, uint8_t nDirection)
@@ -280,4 +281,6 @@ void __fastcall DRLGVER_GetCoordDiff(D2DrlgVertexStrc* pDrlgVertex, int* pDiffX,
 	{
 		*pDiffY = -1;
 	}
+}
+
 }

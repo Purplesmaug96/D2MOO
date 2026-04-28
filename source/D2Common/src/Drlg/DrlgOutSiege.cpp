@@ -12,6 +12,7 @@
 #include <cmath>
 #include <algorithm>
 
+extern "C" {
 
 //TODO: Find member names
 struct D2DrlgOutSiegeInitStrc
@@ -495,3 +496,4 @@ void __fastcall DRLGOUTSIEGE_ConnectBarricadeAndSiege(D2DrlgLevelStrc* pLevel)
 	DRLGOUTDOORS_SpawnOutdoorLevelPresetEx(pLevel, nX, nY - 2, LVLPREST_ACT5_BARRICADE_RAVINE_BORDER_4, -1, 0);
 }
 
+}

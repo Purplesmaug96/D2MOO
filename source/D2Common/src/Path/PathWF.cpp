@@ -12,6 +12,7 @@
 #define __vectorcall
 #endif
 
+extern "C" {
 
 struct D2PathMovStrc
 {
@@ -200,11 +201,11 @@ int __fastcall PATH_FindSubpathWithoutObstacles(D2PathInfoStrc* pInfo, D2PathPoi
 						// This will replace the subpath by a slight variation using the same number of points.
 						// The same number of points implies that we always go in the same major direction.
 						// For example:
-						// 
-						//		the following path    O-------______    
+						//
+						//		the following path    O-------______
 						//                                          ----X
 						//		                              __
-						//		could be replaced by  O-_  _--  -___   
+						//		could be replaced by  O-_  _--  -___
 						//		                         --         ----X
 
 						const int nPointInMajorDirectionWithDistance = nMajorDirectionDistance - 1 + *pSubPathStartIdx;
@@ -257,8 +258,8 @@ int __fastcall PATH_FindSubpathWithoutObstacles(D2PathInfoStrc* pInfo, D2PathPoi
 				pCurPath->pPoints[pCurPath->nPoints] = pCurPath->tTargetCoord;
 				pCurPath->nPoints++;
 				pCurPath->tCurrentCoord = pCurPath->tTargetCoord;
-				
-				
+
+
 				if ((nMaxLength - *nMaxIndex - 1) <= pCurPath->nPoints)
 				{
 					pCurPath->bPathFinished = TRUE;
@@ -397,7 +398,7 @@ static int PATH_BresenhamLine(D2PathPointStrc tStartPoint, D2PathPointStrc tTarg
 		nAbsDiffY = -nAbsDiffY;
 		nStepY = -1;
 	}
-	
+
 	int nbPoints = 0;
 	if (nAbsDiffX == 0 && nAbsDiffY == 0) // Start == Target
 	{
@@ -497,14 +498,14 @@ static int PATH_BresenhamLine(D2PathPointStrc tStartPoint, D2PathPointStrc tTarg
 			} while (nRemainingStepsX != 0);
 		}
 	}
-	
+
 	// Somehow used to mark end of path
 	pOutPoints[nbPoints].X = 0;
 	return nbPoints;
 }
 
 // Author: Araksson
-// D2Common.0x6FDAC270 (1.10f) 
+// D2Common.0x6FDAC270 (1.10f)
 // D2Common.0x6FD68C40 (1.13C)
 int __fastcall PATH_ComputePathOrSlideAlongObstacles(D2PathInfoStrc* ptPathInfo)
 {
@@ -546,3 +547,4 @@ int __fastcall PATH_ComputePathOrSlideAlongObstacles(D2PathInfoStrc* ptPathInfo)
 	return 0;
 }
 
+}

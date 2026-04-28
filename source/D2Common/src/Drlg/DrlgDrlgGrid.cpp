@@ -2,6 +2,7 @@
 #include <Drlg/D2DrlgDrlgGrid.h>
 #include <Drlg/D2DrlgDrlgRoom.h>
 
+extern "C" {
 
 void(__fastcall* gpfFlagOperations[])(int*, int) =
 {
@@ -315,7 +316,7 @@ void __fastcall DRLGGRID_InitializeGridCells(void* pMemPool, D2DrlgGridStrc* pDr
 
 	// nHeight for the row offsets, nHeight + nWidth for the cells
 	pDrlgGrid->pCellsRowOffsets = (int*)D2_CALLOC_POOL(pMemPool, sizeof(int) * nHeight * (nWidth + 1));
-	
+
 	pDrlgGrid->pCellsFlags = &pDrlgGrid->pCellsRowOffsets[nHeight];
 
 	int nRowOffset = 0;
@@ -405,4 +406,6 @@ void __fastcall DRLGGRID_ResetGrid(D2DrlgGridStrc* pDrlgGrid)
 {
 	pDrlgGrid->pCellsFlags = 0;
 	pDrlgGrid->pCellsRowOffsets = 0;
+}
+
 }

@@ -26,6 +26,8 @@
 #include "Drlg/D2DrlgTileSub.h"
 #include "Units/Units.h"
 
+extern "C" {
+
 // D2Common.0x6FDEA700
 D2LevelFileListStrc* gpLevelFilesList_6FDEA700;
 
@@ -138,7 +140,7 @@ void __fastcall DRLGPRESET_ParseDS1File(D2DrlgFileStrc* pDrlgFile, HD2ARCHIVE hA
 
 	int nVersion = pDS1File->nVersion;
 	int32_t* pData = pDS1File->pData;
-	
+
 	int nAct = ACT_I;
 	if (nVersion >= 8)
 	{
@@ -288,7 +290,7 @@ void __fastcall DRLGPRESET_ParseDS1File(D2DrlgFileStrc* pDrlgFile, HD2ARCHIVE hA
 							nUnitType = UNIT_OBJECT;
 							nMode = OBJMODE_NEUTRAL;
 							break;
-						
+
 						case MONSTER_COMPELLINGORB:
 							nUnitId = OBJECT_COMPELLING_ORB;
 							nUnitType = UNIT_OBJECT;
@@ -542,7 +544,7 @@ void __fastcall DRLGPRESET_FreeDrlgFile(D2DrlgFileStrc** ppDrlgFile)
 			}
 			pPrevious = pCurrent;
 		}
-		D2_ASSERTM(pCurrent != nullptr, 
+		D2_ASSERTM(pCurrent != nullptr,
 			"DrlgFile not found in gpLevelFilesList_6FDEA700.\n"
 			"Either DRLGPRESET_FreeDrlgFile was called on an already freed or never allocated dlrg file, or the global pointer was not patched."
 		);
@@ -865,7 +867,7 @@ void __fastcall DRLGPRESET_AddPresetRiverObjects(D2DrlgMapStrc* pDrlgMap, void* 
 
 		DRLGPRESET_AllocateAndAddPresetUnitToMap(nullptr, pMemPool, UNIT_OBJECT, OBJECT_RIVER1, OBJMODE_NEUTRAL, nObjectX     , nObjectY, pDrlgMap, true);
 		DRLGPRESET_AllocateAndAddPresetUnitToMap(nullptr, pMemPool, UNIT_OBJECT, OBJECT_RIVER2, OBJMODE_NEUTRAL, nObjectX +  5, nObjectY, pDrlgMap, true);
-		DRLGPRESET_AllocateAndAddPresetUnitToMap(nullptr, pMemPool, UNIT_OBJECT, OBJECT_RIVER2, OBJMODE_NEUTRAL, nObjectX + 10, nObjectY, pDrlgMap, true);		
+		DRLGPRESET_AllocateAndAddPresetUnitToMap(nullptr, pMemPool, UNIT_OBJECT, OBJECT_RIVER2, OBJMODE_NEUTRAL, nObjectX + 10, nObjectY, pDrlgMap, true);
 		DRLGPRESET_AllocateAndAddPresetUnitToMap(nullptr, pMemPool, UNIT_OBJECT, OBJECT_RIVER2, OBJMODE_NEUTRAL, nObjectX + 15, nObjectY, pDrlgMap, true);
 		DRLGPRESET_AllocateAndAddPresetUnitToMap(nullptr, pMemPool, UNIT_OBJECT, OBJECT_RIVER3, OBJMODE_NEUTRAL, nObjectX + 20, nObjectY, pDrlgMap, true);
 
@@ -1242,7 +1244,7 @@ D2DrlgRoomStrc* __fastcall DRLGPRESET_BuildArea(D2DrlgLevelStrc* pLevel, D2DrlgM
 	if (pDrlgMap->pLvlPrestTxtRecord->dwOutdoors)
 		nFlags |= 0x80000u;
 
-	
+
 	int nCellPos[1024];
 	int nCellFlags[256];
 	D2DrlgGridStrc tDrlgGrid;
@@ -1260,7 +1262,7 @@ D2DrlgRoomStrc* __fastcall DRLGPRESET_BuildArea(D2DrlgLevelStrc* pLevel, D2DrlgM
 		const int nYEnd = pDrlgMap->pDrlgCoord.nPosY + pDrlgMap->pDrlgCoord.nHeight;
 		D2DrlgCoordStrc tDrlgCoord = { 0, 0, 0, 0 };
 		int nGridY = 0;
-		
+
 		for (int nY = pDrlgMap->pDrlgCoord.nPosY; nY < nYEnd; nY += 8)
 		{
 			const int nDeltaToEndY = nYEnd - nY;
@@ -1274,16 +1276,16 @@ D2DrlgRoomStrc* __fastcall DRLGPRESET_BuildArea(D2DrlgLevelStrc* pLevel, D2DrlgM
 				tDrlgCoord.nWidth = nDeltaToEndX;
 				if (nDeltaToEndX >= 8)
 					tDrlgCoord.nWidth = 8;
-				
+
 				tDrlgCoord.nHeight = nDeltaToEndY;
 				if (nDeltaToEndY >= 8)
 					tDrlgCoord.nHeight = 8;
-				
+
 				int nGridFlags = DRLGGRID_GetGridEntry(&tDrlgGrid, nGridX, nGridY);
 
 				if (tDrlgCoord.nWidth && tDrlgCoord.nHeight)
 					pDrlgRoom = DRLGPRESET_InitPresetRoomData(pLevel, pDrlgMap, &tDrlgCoord, pDrlgMap->pLvlPrestTxtRecord->dwDt1Mask, nGridFlags, DRLGPRESETROOMFLAG_NONE, (D2DrlgGridStrc*)(pDrlgMap->bHasInfo ? nGridFlags : 0));
-					
+
 				++nGridX;
 			}
 			++nGridY;
@@ -1847,4 +1849,6 @@ int __fastcall DRLGPRESET_MapTileType(int nId)
 	};
 
 	return nTileTypeMappingTable[nId];
+}
+
 }

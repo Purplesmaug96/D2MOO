@@ -7,6 +7,7 @@
 #include "D2Seed.h"
 #include <DataTbls/LevelsIds.h>
 
+extern "C" {
 
 struct D2DrlgOutDesertInitStrc				// size: 0x10
 {
@@ -319,4 +320,6 @@ void __fastcall DRLGOUTDESR_PlaceFillsInCanyon(D2DrlgLevelStrc* pLevel)
 
 	DRLGOUTDESR_PlacePresetVariants(pLevel, nLevelPrestIds1, ARRAY_SIZE(nLevelPrestIds1), FALSE);
 	DRLGOUTDESR_PlacePresetVariants(pLevel, nLevelPrestIds2, ARRAY_SIZE(nLevelPrestIds2), TRUE);
+}
+
 }

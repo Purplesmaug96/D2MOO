@@ -5,6 +5,8 @@
 #include "D2Dungeon.h"
 #include <cmath>
 
+extern "C" {
+
 //1.10f: D2Common.0x6FDD17E0
 //1.13c: D2Common.0x6FDDB458
 const int gaIdaStar_PointCacheHashMaskX[D2PathFoWallContextStrc::CACHE_SIZE] =
@@ -221,7 +223,7 @@ BOOL __fastcall PATH_AStar_ExploreChildren(D2PathInfoStrc* pPathInfo, D2PathFoWa
 //1.10f: D2Common.0x6FDA7230
 //1.13c: D2Common.0x6FDCAF70
 // Diagonal distance with D=2 and D2=3 (2 to move to an adjacent pixel, 3 in diagonal)
-// http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#diagonal-distance 
+// http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#diagonal-distance
 // Note: This heuristic returns values in the same order as the Euclidian distance to pixel centers
 //       It is both "admissible" and "consistent".
 // Sample return values for the first quadrant:
@@ -462,4 +464,6 @@ signed int __fastcall PATH_AStar_FlushNodeToDynamicPath(D2PathFoWallNodeStrc* pN
 
 	memcpy(pPathInfo->pDynamicPath->PathPoints, &tempPathPoints[D2DynamicPathStrc::MAXPATHLEN - nbPoints], sizeof(D2PathPointStrc) * nbPoints);
 	return nbPoints;
+}
+
 }

@@ -5,6 +5,7 @@
 #include "D2DrlgDrlgGrid.h"
 #include <DataTbls/LevelsTbls.h>
 
+extern "C" {
 
 #pragma pack(1)
 
@@ -83,3 +84,5 @@ void __fastcall DRLGTILESUB_InitializeDrlgFile(HD2ARCHIVE hArchive, D2LvlSubTxt*
 void __fastcall DRLGTILESUB_FreeDrlgFile(D2LvlSubTxt* pLvlSubTxtRecord);
 //D2Common.0x6FD8B7E0
 int __fastcall DRLGTILESUB_PickSubThemes(D2DrlgRoomStrc* pDrlgRoom, int nSubType, int nSubTheme);
+
+}

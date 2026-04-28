@@ -8,6 +8,8 @@
 #include "D2Dungeon.h"
 #include <cmath>
 
+extern "C" {
+
 //1.10f: D2Common.0x6FDD1D60
 //1.13c: D2Common.0x6FDDF508
 static const D2CoordStrc aCoordOffsets[8] =
@@ -77,7 +79,7 @@ int __fastcall PATH_IdaStar_ComputePathWithRooms(D2DrlgCoordsStrc* pRoomCoords, 
     memset(&tContext.aNodesStorage[0], 0, sizeof(tContext.aNodesStorage[0]));
     tContext.nNodesCount = 1;
     tContext.pCurrentNode = &tContext.aNodesStorage[0];
-    
+
     int16_t nMaxFScore;
     int16_t nFScoreCutoff;
     switch (pPathInfo->nPathType)
@@ -225,7 +227,7 @@ D2PathIDAStarNodeStrc* __fastcall PATH_IDAStar_VisitNodes(D2PathIDAStarContextSt
 
         const int nDataIndex = tNeighborCoords.X + pContext->nXOffset + pContext->nStride * (tNeighborCoords.Y + pContext->nYOffset);
         int* pNeighborBestDistanceToStart = &pContext->aCoordData[nDataIndex];
-        
+
         bool bShouldEvaluateNextNeighbor = true;
         bool bMayEvaluateNode = true;
         if (*pNeighborBestDistanceToStart == 0)
@@ -394,4 +396,6 @@ signed int __fastcall PATH_IDAStar_FlushNodeToDynamicPath(D2PathIDAStarNodeStrc*
 
     memcpy(pPathInfo->pDynamicPath->PathPoints, &aTempPathPoints[D2DynamicPathStrc::MAXPATHLEN - nbPoints], sizeof(D2PathPointStrc) * nbPoints);
     return nbPoints;
+}
+
 }

@@ -3,6 +3,9 @@
 #include "D2CommonDefinitions.h"
 #include <D2Seed.h>
 #include "Path.h"
+
+extern "C" {
+
 #pragma pack(1)
 
 #pragma pack()
@@ -56,5 +59,4 @@ D2COMMON_DLL_DECL BOOL __stdcall D2Common_10234(D2DynamicPathStrc* pDynamicPath)
 //1.10f: D2Common.0x6FDAE520 (#10235)
 D2COMMON_DLL_DECL void __stdcall D2Common_10235_PATH_UpdateRiderPath(D2UnitStrc* pRiderUnit, D2UnitStrc* pMountUnit);
 
-
-
+}

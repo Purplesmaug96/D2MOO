@@ -5,6 +5,8 @@
 #include "D2Seed.h"
 #include <DataTbls/LevelsIds.h>
 
+extern "C" {
+
 //TODO: Find names, rename variables + globals
 
 //D2Common.0x6FD7FC20
@@ -95,7 +97,7 @@ void __fastcall DRLGOUTJUNG_BuildLowerKurast(D2DrlgLevelStrc* pLevel)
 	int nHeight = pLevel->nHeight / 8 - 1;
 	int v5 = (pLevel->nWidth / 8 - 1) / 2;
 	int v10 = 0;
-	
+
 	if (pLevel->pDrlg->bJungleInterlink)
 	{
 		v10 = 1;
@@ -230,7 +232,7 @@ void __fastcall DRLGOUTJUNG_SpawnRandomPreset(D2DrlgLevelStrc* pLevel, int nLeve
 	if (v8)
 	{
 		v11 = (int*)D2_ALLOC_POOL(pLevel->pDrlg->pMempool, 8 * v8);
-	
+
 		for (int i = 0; i < v8; ++i)
 		{
 			v12 = i / pLevel->pOutdoors->nGridWidth;
@@ -277,4 +279,6 @@ void __fastcall DRLGOUTJUNG_SpawnRandomPreset(D2DrlgLevelStrc* pLevel, int nLeve
 
 		D2_FREE_POOL(pLevel->pDrlg->pMempool, v11);
 	}
+}
+
 }

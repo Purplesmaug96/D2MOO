@@ -5,6 +5,8 @@
 
 struct D2DrlgLevelStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -30,3 +32,5 @@ void __fastcall DRLGOUTWILD_SpawnTownTransitionsAndCaves(D2DrlgLevelStrc* pLevel
 void __fastcall DRLGOUTWILD_SpawnSpecialPresets(D2DrlgLevelStrc* pLevel);
 //D2Common.0x6FD85920
 void __fastcall DRLGOUTWILD_SpawnCottage(D2DrlgLevelStrc* pLevel, int nLvlPrestId, int a3);
+
+}

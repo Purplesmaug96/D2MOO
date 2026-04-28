@@ -4,10 +4,11 @@
 #include "D2DrlgDrlg.h"
 #include "D2DrlgDrlgGrid.h"
 
+extern "C" {
 
 #pragma pack(1)
 
-enum D2C_OutDoorInfoFlags 
+enum D2C_OutDoorInfoFlags
 {
 	OUTDOOR_FLAG1 = 0x00000001,
 	OUTDOOR_BRIDGE = 0x00000004,
@@ -126,3 +127,5 @@ void __fastcall sub_6FD7F5B0(D2DrlgLevelStrc* pLevel);
 void __fastcall sub_6FD7F810(D2DrlgLevelStrc* pLevel, int nVertexId);
 //D2Common.0x6FD7F9B0
 void __fastcall DRLGOUTDOORS_InitAct4OutdoorLevel(D2DrlgLevelStrc* pLevel);
+
+}

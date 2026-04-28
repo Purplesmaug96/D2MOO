@@ -7,6 +7,7 @@
 #include "Drlg/D2DrlgRoomTile.h"
 #include "D2Seed.h"
 
+extern "C" {
 
 //TODO: Check calls with DrlgGridStrc args
 
@@ -80,7 +81,7 @@ BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelCoords(D2DrlgLevelLinkDataStrc* pLe
 
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosX = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosX - pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nWidth;
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosY = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nHeight - pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nHeight + pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosY - 16;
-	
+
 	return TRUE;
 }
 
@@ -156,6 +157,8 @@ BOOL __fastcall DRLGOUTROOM_LinkLevelsByOffsetCoords(D2DrlgLevelLinkDataStrc* pL
 
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosX = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosX + pOffsetCoords[nIndex].nX;
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosY = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosY + pOffsetCoords[nIndex].nY;
-	
+
 	return TRUE;
+}
+
 }

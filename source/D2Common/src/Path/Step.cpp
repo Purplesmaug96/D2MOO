@@ -8,6 +8,8 @@
 #include "Units/UnitRoom.h"
 #include <utility>
 
+extern "C" {
+
 D2PathPointStrc sgctZeroGameCoord = { 0,0 };
 
 bool COORD_TEST_EQUAL(D2PathPointStrc lhs, D2PathPointStrc rhs) { return lhs == rhs; }
@@ -19,7 +21,7 @@ struct TanToDirectionLutEntryStrc {
 };
 
 //1.00:  D2Common.0x1008AF38
-//1.10f: D2Common.0x6FDD2598 
+//1.10f: D2Common.0x6FDD2598
 TanToDirectionLutEntryStrc lutTanToDirection[] = {
 	{{ 0x0000, 0x1000 } , 0 },
 	{{ 0x0020, 0x0FFF } , 0 },
@@ -803,11 +805,11 @@ void PATH_ResetMovement(D2DynamicPathStrc* pDynamicPath)
 //1.13c: D2Common.0x6FD5DCE0 (#10223)
 BOOL __stdcall D2Common_10232(D2DynamicPathStrc* pPath, D2UnitStrc* pUnit, D2ActiveRoomStrc* pDestRoom, int nTargetX, int nTargetY)
 {
-	D2_ASSERT(pUnit && (pUnit->dwUnitType == UNIT_PLAYER || pUnit->dwUnitType == UNIT_MONSTER)); 
-	
+	D2_ASSERT(pUnit && (pUnit->dwUnitType == UNIT_PLAYER || pUnit->dwUnitType == UNIT_MONSTER));
+
 	if (COLLISION_TrySetUnitCollisionMask(
 		pPath->pRoom, pPath->tGameCoords.wPosX, pPath->tGameCoords.wPosY,
-		pDestRoom, nTargetX, nTargetY, 
+		pDestRoom, nTargetX, nTargetY,
 		pPath->dwCollisionPattern, pPath->nFootprintCollisionMask, pPath->nMoveTestCollisionMask))
 	{
 		return FALSE;
@@ -867,7 +869,7 @@ void __stdcall D2Common_10235_PATH_UpdateRiderPath(D2UnitStrc* pRiderUnit, D2Uni
 
 	if (pRiderPath->pRoom != pMountPath->pRoom)
 	{
-		// Rider is in different room than the mount 
+		// Rider is in different room than the mount
 		pRiderPath->dwFlags |= PATH_UNKNOWN_FLAG_0x00001;
 	}
 
@@ -908,4 +910,6 @@ void __stdcall D2Common_10235_PATH_UpdateRiderPath(D2UnitStrc* pRiderUnit, D2Uni
 
 		PATHMISC_SetRoom(pRiderPath, pRidersUpToDateRoom);
 	}
+}
+
 }

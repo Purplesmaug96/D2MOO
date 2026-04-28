@@ -4,6 +4,8 @@
 #include "Path.h"
 #include "D2Seed.h"
 
+extern "C" {
+
 #pragma pack(1)
 
 enum PATH_IDASTAR_CONSTANTS
@@ -61,3 +63,5 @@ D2PathIDAStarNodeStrc* __fastcall sub_6FDC0840(D2PathIDAStarNodeStrc* pNode, D2P
 //1.10f: Inlined
 //1.13c: D2Common.0x6FDC0650
 signed int __fastcall PATH_IDAStar_FlushNodeToDynamicPath(D2PathIDAStarNodeStrc* pNode, D2PathInfoStrc* pPathInfo);
+
+}

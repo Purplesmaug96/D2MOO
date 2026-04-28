@@ -4,6 +4,8 @@
 
 struct D2DrlgLevelStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -32,3 +34,5 @@ void __fastcall DRLGOUTDESR_PlaceFillsInLostCity(D2DrlgLevelStrc* pLevel);
 void __fastcall DRLGOUTDESR_PlaceTombEntriesInCanyon(D2DrlgLevelStrc* pLevel);
 //D2Common.0x6FD7DBC0
 void __fastcall DRLGOUTDESR_PlaceFillsInCanyon(D2DrlgLevelStrc* pLevel);
+
+}

@@ -13,6 +13,7 @@
 #include "D2Seed.h"
 #include <DataTbls/LevelsIds.h>
 
+extern "C" {
 
 //D2Common.0x6FD8A460
 void __fastcall DRLGTILESUB_AddSecondaryBorder(D2UnkOutdoorStrc* a1)
@@ -432,7 +433,7 @@ void __fastcall sub_6FD8ACE0(void* pMemPool, int nX, int nY, D2UnkOutdoorStrc2* 
 	DUNGEON_GameTileToSubtileCoords(&nX, &nY);
 	DUNGEON_GameTileToSubtileCoords(&nMinX, &nMinY);
 	DUNGEON_GameTileToSubtileCoords(&nMaxX, &nMaxY);
-	
+
 	for (D2PresetUnitStrc* pPresetUnit = pLvlSubTxtRecord->pDrlgFile->pPresetUnit; pPresetUnit; pPresetUnit = pPresetUnit->pNext)
 	{
 		if (pPresetUnit->nXpos > nMinX && pPresetUnit->nXpos < nMinX + nMaxX && pPresetUnit->nYpos > nMinY && pPresetUnit->nYpos < nMinY + nMaxY)
@@ -554,7 +555,7 @@ void __fastcall DRLGTILESUB_DoSubstitutions(D2UnkOutdoorStrc2* pOutdoorLevel, D2
 	{
 		const int substGroupIdx = SEED_RollLimitedRandomNumber(&pOutdoorLevel->pDrlgRoom->pSeed, pLvlSubTxtRecord->pDrlgFile->nSubstGroups);
 		D2DrlgSubstGroupStrc* pSubstGroup = &pLvlSubTxtRecord->pDrlgFile->pSubstGroups[substGroupIdx];
-		
+
 		const int nAvailableSpaceX = pOutdoorLevel->pDrlgRoom->nTileWidth - pSubstGroup->tBox.nWidth;
 		const int nAvailableSpaceY = pOutdoorLevel->pDrlgRoom->nTileHeight - pSubstGroup->tBox.nHeight;
 		if (nAvailableSpaceX > 0 && nAvailableSpaceY > 0)
@@ -611,7 +612,7 @@ void __fastcall DRLGTILESUB_DoSubstitutions(D2UnkOutdoorStrc2* pOutdoorLevel, D2
 			}
 		}
 	}
-	
+
 }
 
 //D2Common.0x6FD8B640
@@ -703,4 +704,6 @@ int __fastcall DRLGTILESUB_PickSubThemes(D2DrlgRoomStrc* pDrlgRoom, int nSubType
 	}
 
 	return 0;
+}
+
 }

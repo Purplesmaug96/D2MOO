@@ -3,6 +3,8 @@
 #include "D2CommonDefinitions.h"
 #include "D2DrlgDrlgVer.h"
 
+extern "C" {
+
 #pragma pack(1)
 
 enum FlagOperation
@@ -71,3 +73,5 @@ void __fastcall DRLGGRID_AssignCellsOffsetsAndFlags(D2DrlgGridStrc* pDrlgGrid, i
 void __fastcall DRLGGRID_FreeGrid(void* pMemPool, D2DrlgGridStrc* pDrlgGrid);
 //D2Common.0x6FD76410
 void __fastcall DRLGGRID_ResetGrid(D2DrlgGridStrc* pDrlgGrid);
+
+}

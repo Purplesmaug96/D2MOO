@@ -2,6 +2,8 @@
 #include <Units/Units.h>
 #include <Fog.h>
 
+extern "C" {
+
 //1.10f: D2Common.0x6FDAB890
 //1.13c: D2Common.0x6FD8E080
 void __fastcall PATHUtil_AdvanceTowardsTarget_6FDAB890(D2DynamicPathStrc* ptPath)
@@ -49,4 +51,6 @@ void __fastcall sub_6FDAB940(D2PathPointStrc* pOutPathPoint, D2DynamicPathStrc* 
 	{
 		PATHUtil_AdvanceTowardsTarget_6FDAB890(ptPath);
 	}
+}
+
 }

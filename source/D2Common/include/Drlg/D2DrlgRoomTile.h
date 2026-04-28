@@ -4,6 +4,8 @@
 #include "D2DrlgDrlg.h"
 #include "D2DrlgDrlgGrid.h"
 
+extern "C" {
+
 #pragma pack(1)
 
 union D2C_PackedTileInformation
@@ -21,7 +23,7 @@ union D2C_PackedTileInformation
 		uint32_t bLayerAbove       : 1; // BIT(7)     wall & floor
 		uint32_t nTileSequence     : 8; // BIT(8-15)  AKA tile subindex
 		uint32_t bFillLOS          : 1; // BIT(16)    all tiles will get wall collision
-		uint32_t bUnwalkable       : 1; // BIT(17) 
+		uint32_t bUnwalkable       : 1; // BIT(17)
 		uint32_t nWallLayer        : 2; // BIT(18-19) code-generated; set when at least Floor2 or Wall2  // (nLayer - 1) << 0x12
 		//uint32_t bOverlappedLayer3 : 1; // BIT(19)    code-generated; set when has more walls, incl' of other orientations than usual; obj, shd, tree, roof, lower
 		uint32_t nTileStyle        : 6; // BIT(20-25) AKA tile index
@@ -30,7 +32,7 @@ union D2C_PackedTileInformation
 		uint32_t bLinkage          : 1; // BIT(28)    near wp, lvl links, paths // will never get hidden
 		uint32_t bObjectWall       : 1; // BIT(29)    wall tiles with props; may be block reverb / other sounds (crates, barrels, tables etc.)
 		uint32_t bUnk0x40000000    : 1; // BIT(30)    Unknown flag
-		uint32_t bHidden           : 1; // BIT(31) 
+		uint32_t bHidden           : 1; // BIT(31)
 	};
 };
 
@@ -96,3 +98,5 @@ void __fastcall DRLGROOMTILE_FreeTileGrid(D2DrlgRoomStrc* pDrlgRoom);
 void __fastcall DRLGROOMTILE_FreeRoom(D2DrlgRoomStrc* pDrlgRoom, BOOL bKeepRoom);
 //D2Common.0x6FD8A380
 void __fastcall DRLGROOMTILE_LoadDT1FilesForRoom(D2DrlgRoomStrc* pDrlgRoom);
+
+}

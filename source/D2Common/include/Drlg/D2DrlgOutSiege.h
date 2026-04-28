@@ -4,6 +4,8 @@
 
 struct D2DrlgLevelStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -31,3 +33,5 @@ void __fastcall DRLGOUTSIEGE_PlaceSpecialPresets(D2DrlgLevelStrc* pLevel);
 void __fastcall DRLGOUTSIEGE_PlacePrisons(D2DrlgLevelStrc* pLevel);
 //D2Common.0x6FD84BB0
 void __fastcall DRLGOUTSIEGE_ConnectBarricadeAndSiege(D2DrlgLevelStrc* pLevel);
+
+}

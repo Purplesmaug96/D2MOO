@@ -27,6 +27,8 @@ struct D2UnkPathStrc2
 	int8_t unk0x02;
 };
 
+extern "C" {
+
 //1.10f: D2Common.0x6FDD2158
 //1.13c: D2Common.0x6FDDC320
 static const D2UnkPathStrc stru_6FDD2158[25] =
@@ -116,7 +118,7 @@ int __fastcall sub_6FDAA720(D2PathInfoStrc* pPathInfo)
 		int nPrevDirection = PATH_DIR_NULL;
 		D2PathPointStrc tLastSegmentEndCoord = pPathInfo->tStartCoord;
 		bool bSegmentEndAlreadyAdded = false;
-		
+
 		D2PathPointStrc tCurCoords = tLastSegmentEndCoord;
 		int nCurDistance;
 		for(nCurDistance = 0;nCurDistance < pPathInfo->nDistMax; nCurDistance++)
@@ -453,14 +455,14 @@ BOOL __fastcall PATH_RayTrace(D2DynamicPathStrc* pDynamicPath, D2PathPointStrc* 
 		}
 		return TRUE;
 	}
-	
+
 	if (nPointsX >= nPointsY)
 	{
 		const int nXIncrement = 2 * (nDeltaX >= 0) - 1;
 		const int nYIncrement = 2 * (nDeltaY >= 0) - 1;
 		if (tStartCoord.X == tTargetPoint.X)
 			return TRUE;
-		
+
 		tCurPoint.X = tStartCoord.X;
 		while (tCurPoint.X != tTargetPoint.X)
 		{
@@ -596,7 +598,7 @@ int __fastcall PATH_Straight_Compute(D2PathInfoStrc* pPathInfo)
 		}
 	}
 
-	
+
 	// If distance is short enough, try to go around obstacles.
 	const int nMaxDist = 18;
 	const int nMaxDistSquared = nMaxDist * nMaxDist;
@@ -692,7 +694,7 @@ signed int __fastcall PATH_ComputePathBlessedHammer_6FDAB3C0(D2DynamicPathStrc* 
 
 	int nAngleRadians_512 = 0;
 	int nDistanceToOrigin = 0;
-	
+
 	// Looks like we keep one additional slot for the last point ?
 	// Could be an error in the original game
 	const int nbPointsToGenerate = D2DynamicPathStrc::MAXPATHLEN - 1;
@@ -949,7 +951,7 @@ int __fastcall PATH_SimplifyToLines_6FDAC170(D2PathPointStrc* pOutPathPoints, D2
 	if (nbTempPoints >= 2)
 	{
 		int nbOutPoints = 0;
-		
+
 		int prevDeltaX = pInputPoints->X - tStartCoord.X;
 		int prevDeltaY = pInputPoints->Y - tStartCoord.Y;
 		int nbPointsInLine = 0;
@@ -1039,7 +1041,7 @@ void __fastcall PATH_ComputeVelocityAndDirectionVectorsToNextPoint(D2DynamicPath
 
 	D2CoordStrc tDirectionVector;
 	int nDirection;
-	PATH_GetDirectionVector( 
+	PATH_GetDirectionVector(
 		&tDirectionVector, &nDirection,
 		dwPrecisionX, dwPrecisionY,
 		nPointFP16X, nPointFP16Y
@@ -1053,10 +1055,10 @@ void __fastcall PATH_ComputeVelocityAndDirectionVectorsToNextPoint(D2DynamicPath
 	pPath->tVelocityVector.nX = (tDirectionVector.nX * pPath->dwVelocity) >> 8;
 	pPath->tVelocityVector.nY = (tDirectionVector.nY * pPath->dwVelocity) >> 8;
 
-	bool nextPosInSamePoint = 
+	bool nextPosInSamePoint =
 		PATH_FromFP16(nPointFP16X) == PATH_FromFP16(dwPrecisionX + pPath->tVelocityVector.nX)
 		&& PATH_FromFP16(nPointFP16Y) == PATH_FromFP16(dwPrecisionY + pPath->tVelocityVector.nY);
-	
+
 	if (bForceDirectionNormalization || nextPosInSamePoint && bNormalizeDirectionIfSamePos)
 	{
 		sub_6FDA9720(pPath, nDirection);
@@ -1325,4 +1327,6 @@ void __fastcall PATH_RecacheRoom(D2DynamicPathStrc* pDynamicPath, D2ActiveRoomSt
 	{
 		pDynamicPath->dwPathPoints = 0;
 	}
+}
+
 }
