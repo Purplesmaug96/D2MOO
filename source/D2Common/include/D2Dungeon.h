@@ -3,6 +3,8 @@
 #include "D2CommonDefinitions.h"
 #include <Drlg/D2DrlgDrlg.h>
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -258,4 +260,6 @@ inline D2ActiveRoomStrc* __fastcall DUNGEON_GetRoomAtPosition(D2ActiveRoomStrc* 
     }
 
     return nullptr;
+}
+
 }

@@ -1,6 +1,8 @@
-#pragma once 
+#pragma once
 
 #include <D2BitManip.h>
+
+extern "C" {
 
 #pragma pack(1)
 
@@ -182,3 +184,5 @@ struct D2PlayerDataStrc
 
 
 #pragma pack()
+
+}

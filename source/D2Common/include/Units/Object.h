@@ -5,6 +5,8 @@ struct D2ShrinesTxt;
 
 #pragma pack(1)
 
+extern "C" {
+
 struct D2ObjectRoomCoordStrc
 {
 	D2ActiveRoomStrc* pRoom;				//0x00
@@ -59,3 +61,5 @@ struct D2ObjectDataStrc
 };
 
 #pragma pack()
+
+}

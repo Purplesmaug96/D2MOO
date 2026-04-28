@@ -5,6 +5,8 @@
 struct D2ActiveRoomStrc;
 struct D2DrlgActStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2EnvironmentPeriodOfDay
@@ -105,3 +107,5 @@ D2COMMON_DLL_DECL void __stdcall ENVIRONMENT_SetNextTimeRate(D2DrlgActStrc* pAct
 D2COMMON_DLL_DECL void __stdcall ENVIRONMENT_TaintedSunBegin(D2DrlgActStrc* pAct);
 //D2Common.0x6FD8E1E0 (#10937)
 D2COMMON_DLL_DECL void __stdcall ENVIRONMENT_TaintedSunEnd(D2DrlgActStrc* pAct);
+
+}

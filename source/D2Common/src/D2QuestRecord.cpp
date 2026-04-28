@@ -2,6 +2,7 @@
 
 #include "D2BitManip.h"
 
+extern "C" {
 
 //D2Common.0x6FDAE800 (#11107)
 BOOL __stdcall QUESTRECORD_GetQuestState(D2BitBufferStrc* pQuestRecord, int nQuest, int nState)
@@ -88,4 +89,6 @@ void __stdcall QUESTRECORD_CopyRecordToBuffer(D2BitBufferStrc* pQuestRecord, uin
 	D2_ASSERT(nBufferSize == (sizeof(uint16_t) * NUM_QUEST_WORDS));
 
 	memcpy(pBuffer, pQuestRecord->pBuffer, sizeof(uint16_t) * NUM_QUEST_WORDS);
+}
+
 }

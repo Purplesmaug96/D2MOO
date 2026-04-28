@@ -3,6 +3,8 @@
 #include <D2CommonDefinitions.h>
 #include <Fog.h>
 
+extern "C" {
+
 //D2Common.0x6FDA5260 (#10916)
 void __stdcall SEED_Return()
 {
@@ -53,4 +55,6 @@ void __fastcall SEED_GetSeeds(D2SeedStrc* pSeed, uint32_t* pLowSeed, uint32_t* p
 uint32_t __fastcall SEED_GetHighSeed(D2SeedStrc* pSeed)
 {
 	return pSeed->nHighSeed;
+}
+
 }

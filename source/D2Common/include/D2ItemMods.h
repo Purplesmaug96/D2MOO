@@ -6,6 +6,8 @@
 
 struct D2StatListStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -176,3 +178,5 @@ int __fastcall sub_6FD98220(int nMin, int nMax, int nUnused, void* pUserData);
 int __fastcall sub_6FD982A0(int nStatId, int a2, int nUnused, void* pUserData);
 //D2Common.0x6FD98300 (#11300)
 D2COMMON_DLL_DECL int __stdcall ITEMMODS_EvaluateItemFormula(D2UnitStrc* pUnit, D2UnitStrc* pItem, unsigned int nCalc);
+
+}

@@ -6,6 +6,8 @@
 struct D2UnitStrc;
 struct D2GameStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2C_ItemStats
@@ -433,7 +435,7 @@ struct D2SLayerStatIdStrc
 	static D2SLayerStatIdStrc FromPackedType(PackedType nPackedValue) {
 		D2SLayerStatIdStrc ls;
 		ls.nPackedValue = nPackedValue;
-		return ls; 
+		return ls;
 	}
 };
 
@@ -696,3 +698,5 @@ D2COMMON_DLL_DECL int __stdcall D2Common_11273(D2UnitStrc* pUnit, int nStatId);
 D2COMMON_DLL_DECL BOOL __stdcall D2Common_11274(D2UnitStrc* pTarget, D2UnitStrc* pUnit);
 //D2Common.0x6FDB9E60 (#11275)
 D2COMMON_DLL_DECL BOOL __stdcall D2Common_11275(D2UnitStrc* pTarget, D2UnitStrc* pUnit);
+
+}

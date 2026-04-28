@@ -7,6 +7,8 @@
 struct D2ActiveRoomStrc;
 struct D2UnitStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 #define UNIT_FIND_ARRAY_SIZE 15
@@ -64,3 +66,5 @@ D2COMMON_DLL_DECL void __stdcall UNITFINDS_FreeUnitFindData(D2UnitFindDataStrc* 
 D2COMMON_DLL_DECL void __stdcall UNITFINDS_FindAllMatchingUnitsInNeighboredRooms(D2UnitFindDataStrc* pUnitFindData);
 //D2Common.0x6FDBCCA0 (#10404)
 D2COMMON_DLL_DECL int __stdcall UNITFINDS_TestUnit(D2UnitStrc* pUnit, D2UnitFindArgStrc* pUnitFindArg);
+
+}

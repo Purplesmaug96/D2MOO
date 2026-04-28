@@ -6,6 +6,8 @@
 struct D2UnitStrc;
 struct D2InventoryGridInfoStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 struct D2InvRectStrc
@@ -354,3 +356,5 @@ BOOL __fastcall INVENTORY_CanItemBePlacedInInventory(D2UnitStrc* pPlayer, D2Unit
 int __fastcall UNITS_GetXPosition(D2UnitStrc* pUnit);
 //D2Common.0x6FD92610
 int __fastcall UNITS_GetYPosition(D2UnitStrc* pUnit);
+
+}

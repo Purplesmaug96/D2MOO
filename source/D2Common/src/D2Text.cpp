@@ -1,6 +1,8 @@
 #include "D2Text.h"
 #include <Fog.h>
 
+extern "C" {
+
 //D2Common.0x6FDC36E0 (#10901)
 D2TextHeaderStrc* __stdcall TEXT_AllocTextHeader(void* pMemPool)
 {
@@ -8,7 +10,7 @@ D2TextHeaderStrc* __stdcall TEXT_AllocTextHeader(void* pMemPool)
 	pTextHeader->pMemPool = pMemPool;
 	pTextHeader->nCount = 0;
 	pTextHeader->pNode = NULL;
-	
+
 	return pTextHeader;
 }
 
@@ -181,7 +183,7 @@ void __stdcall TEXT_CreateMessageListFromTextHeader(D2TextHeaderStrc* pTextHeade
 	memset(pMsgList, 0x00, sizeof(D2MessageListStrc));
 
 	pMsgList->nCount = LOBYTE(pTextHeader->nCount);
-	
+
 	int i = 0;
 	for (D2TextNodeStrc* pNode = pTextHeader->pNode; pNode != nullptr; pNode = pNode->pNext)
 	{
@@ -290,4 +292,6 @@ void __stdcall TEXT_SortTextNodeListByStringId(D2TextHeaderStrc* pTextHeader)
 	}
 
 	D2_FREE_POOL(pTextHeader->pMemPool, pNodeList);
+}
+
 }

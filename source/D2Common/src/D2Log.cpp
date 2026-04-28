@@ -3,6 +3,7 @@
 #include "D2CommonDefinitions.h"
 #include <Fog.h>
 
+extern "C" {
 
 void __cdecl LOG_11100(int a1, int a2, int a3, int a4, const char* szFile, int nLine, const char* szFormat, ...)
 {
@@ -37,4 +38,6 @@ void __cdecl LOG_11105()
 void __cdecl LOG_11106()
 {
 	REMOVE_LATER_Trace("LOG_11106: Useless");
+}
+
 }

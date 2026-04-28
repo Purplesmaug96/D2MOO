@@ -2,6 +2,8 @@
 
 #include <DataTbls/MonsterTbls.h>
 
+extern "C" {
+
 #pragma pack(1)
 struct D2AiControlStrc; // From D2Game
 struct D2AiParamStrc;	// From D2Game
@@ -57,3 +59,5 @@ struct D2MonsterDataStrc
 };
 
 #pragma pack()
+
+}

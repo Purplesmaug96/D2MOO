@@ -3,6 +3,8 @@
 #include <D2BasicTypes.h>
 #include <D2Common.h>
 
+extern "C" {
+
 #pragma pack(1)
 
 struct D2SeedStrc
@@ -66,4 +68,6 @@ inline uint32_t __fastcall SEED_RollLimitedRandomNumber(D2SeedStrc* pSeed, int n
 inline uint32_t SEED_RollPercentage(D2SeedStrc* pSeed)
 {
 	return (SEED_RollRandomNumber(pSeed) % 100);
+}
+
 }

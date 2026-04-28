@@ -6,6 +6,8 @@
 
 #define NUM_QUEST_WORDS 48
 
+extern "C" {
+
 //D2Common.0x6FDAE800 (#11107)
 D2COMMON_DLL_DECL BOOL __stdcall QUESTRECORD_GetQuestState(D2BitBufferStrc* pQuestRecord, int nQuest, int nState);
 //D2Common.0x6FDAE850 (#11108)
@@ -22,3 +24,5 @@ D2COMMON_DLL_DECL void __stdcall QUESTRECORD_FreeRecord(void* pMemPool, D2BitBuf
 D2COMMON_DLL_DECL void __stdcall QUESTRECORD_CopyBufferToRecord(D2BitBufferStrc* pQuestRecord, uint8_t* pBuffer, uint16_t nBufferSize, BOOL bResetStates);
 //D2Common.0x6FDAEA40 (#11114)
 D2COMMON_DLL_DECL void __stdcall QUESTRECORD_CopyRecordToBuffer(D2BitBufferStrc* pQuestRecord, uint8_t* pBuffer, uint16_t nBufferSize, int nUnused);
+
+}

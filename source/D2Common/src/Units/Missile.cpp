@@ -13,6 +13,8 @@
 #include <D2Combat.h>
 #include <Calc.h>
 
+extern "C" {
+
 D2CalcCallbackInfoStrc off_6FDE5A50[] =
 {
 	{ MISSILE_GetMinimum, 2 },
@@ -1544,4 +1546,6 @@ int __stdcall MISSILE_EvaluateMissileFormula(D2UnitStrc* pMissile, D2UnitStrc* p
 	}
 
 	return 0;
+}
+
 }

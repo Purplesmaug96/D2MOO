@@ -16,6 +16,8 @@
 #include "D2Seed.h"
 
 
+extern "C" {
+
 //D2Common.0x6FD8B8A0 (#10038)
 D2DrlgActStrc* __stdcall DUNGEON_AllocAct(uint8_t nAct, uint32_t nInitSeed, BOOL bClient, D2GameStrc* pGame, uint8_t nDifficulty, void* pMemPool, int nTownLevelId, AUTOMAPFN pfAutoMap, TOWNAUTOMAPFN pfTownAutoMap)
 {
@@ -1143,8 +1145,8 @@ void __stdcall DUNGEON_GetPortalLevelArrayFromPortalFlags(void* pMemPool, int nF
 		}
 
 		nCurrentFlag <<= 1;
-	}		
-	
+	}
+
 	if (*pnLevels)
 	{
 		*ppLevels = (int*)D2_ALLOC_POOL(pMemPool, sizeof(int) * *pnLevels);
@@ -1392,4 +1394,6 @@ void __stdcall DUNGEON_GameToClientSubtileDrawPositionCoords(int nX, int nY, int
 	*pY = 8 * (nX + nY);
 	*pX -= 16;
 	*pY += 16;
+}
+
 }

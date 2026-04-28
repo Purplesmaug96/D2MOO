@@ -8,6 +8,8 @@ struct D2UnitStrc;
 struct D2ActiveRoomStrc;
 struct D2MonStatsTxt;
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2InactiveMonsterFlags
@@ -216,3 +218,5 @@ int __fastcall MONSTERS_GetBaseIdFromMonsterId(int nMonsterId);
 int __fastcall MONSTERS_GetClassIdFromMonsterChain(int nMonsterId, int nChainId);
 //D2Common.0x6FDA69C0
 int __fastcall MONSTERS_ValidateMonsterId(int nMonsterId);
+
+}

@@ -8,6 +8,8 @@ struct D2CellFileStrc; // From D2CMP / D2Gfx
 struct D2ActiveRoomStrc;
 struct D2SkillsTxt;
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2C_SkillCastType
@@ -23,7 +25,7 @@ enum D2C_AuraFilters
 	AURAFILTER_FINDPLAYER = 0x01,			//Targets Players Units
 	AURAFILTER_FINDMONSTER = 0x02,			//Targets Monster Units
 	AURAFILTER_FINDUNDEAD = 0x04,			//Targets Undead Monsters Units
-	AURAFILTER_FINDMISSILE = 0x08,			//Targets Missiles Units			
+	AURAFILTER_FINDMISSILE = 0x08,			//Targets Missiles Units
 	AURAFILTER_FINDOBJECT = 0x10,			//Target Objects Units
 	AURAFILTER_FINDITEM = 0x20,				//Targets Items Units
 	AURAFILTER_FINDISATT = 0x80,			//Targets Units with IsAtt (Monstats2)
@@ -375,3 +377,5 @@ D2COMMON_DLL_DECL int __stdcall D2Common_11043(D2UnitStrc* pUnit);
 D2COMMON_DLL_DECL int __stdcall SKILLS_GetConcentrationDamageBonus(D2UnitStrc* pUnit, int nSkillId);
 //D2Common.0x6FDB4260 (#11283)
 D2COMMON_DLL_DECL void __stdcall SKILLS_CalculateKickDamage(D2UnitStrc* pUnit, int* pMinDamage, int* pMaxDamage, int* pDamagePercent);
+
+}

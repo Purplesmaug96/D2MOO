@@ -3,6 +3,8 @@
 #include <D2Inventory.h>
 #include <D2Seed.h>
 
+extern "C" {
+
 #pragma pack(1)
 
 enum D2C_ItemDataConstants
@@ -49,3 +51,5 @@ struct D2ItemDataStrc
 };
 
 #pragma pack()
+
+}

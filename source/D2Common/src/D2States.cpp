@@ -6,6 +6,8 @@
 #include "Units/Units.h"
 #include <D2BitManip.h>
 
+extern "C" {
+
 //Used in some of the following functions
 __forceinline BOOL __fastcall STATES_CheckStateMaskByStateId(int nState, int nStateMask)
 {
@@ -443,4 +445,6 @@ BOOL __stdcall STATES_CheckStateMaskOnUnit(D2UnitStrc* pUnit, int nStateMask)
 	}
 
 	return FALSE;
+}
+
 }

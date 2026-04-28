@@ -5,6 +5,8 @@
 struct D2ActiveRoomStrc;
 struct D2UnitStrc;
 
+extern "C" {
+
 #pragma pack(1)
 
 
@@ -29,3 +31,5 @@ D2COMMON_DLL_DECL void __stdcall UNITROOM_RemoveUnitFromRoom(D2UnitStrc* pUnit);
 D2COMMON_DLL_DECL void __stdcall UNITROOM_RemoveUnitFromUpdateQueue(D2UnitStrc* pUnit);
 //D2Common.0x6FDBD4C0 (#10389)
 D2COMMON_DLL_DECL BOOL __stdcall UNITROOM_IsUnitInRoom(D2ActiveRoomStrc* pRoom, D2UnitStrc* pUnit);
+
+}

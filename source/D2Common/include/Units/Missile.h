@@ -5,6 +5,8 @@
 #include "MissileStream.h"
 #include "Path/Path.h"
 
+extern "C" {
+
 #pragma pack(1)
 //TODO: Redo Header defs when .cpp is done
 
@@ -226,3 +228,5 @@ int __fastcall MISSILE_GetRandomNumberInRange(int nMin, int nMax, int nUnused, v
 int __fastcall MISSILE_GetSpecialParamValueForSkillMissile(int nSkillId, int nParamId, int nUnused, void* pUserData);
 //D2Common.0x6FDBC170 (#11284)
 D2COMMON_DLL_DECL int __stdcall MISSILE_EvaluateMissileFormula(D2UnitStrc* pMissile, D2UnitStrc* pOwner, unsigned int nCalc, int nMissileId, int nLevel);
+
+}

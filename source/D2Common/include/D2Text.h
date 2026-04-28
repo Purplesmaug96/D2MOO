@@ -3,6 +3,8 @@
 #include "D2CommonDefinitions.h"
 #include "D2PacketDef.h"
 
+extern "C" {
+
 #pragma pack(1)
 
 #define MAX_TEXT_LIST_NODES 8
@@ -55,3 +57,5 @@ D2COMMON_DLL_DECL void __stdcall TEXT_CreateMessageListFromTextHeader(D2TextHead
 D2COMMON_DLL_DECL void __stdcall TEXT_CreateTextHeaderFromMessageList(D2TextHeaderStrc* pTextHeader, D2MessageListStrc* pMsgList);
 //D2Common.0x6FDC3A70 (#10911)
 D2COMMON_DLL_DECL void __stdcall TEXT_SortTextNodeListByStringId(D2TextHeaderStrc* pTextHeader);
+
+}

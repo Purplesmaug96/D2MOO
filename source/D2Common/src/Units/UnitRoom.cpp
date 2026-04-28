@@ -5,6 +5,7 @@
 #include "Units/Units.h"
 #include "Path/Path.h"
 
+extern "C" {
 
 //TODO: Find names (used by Path Functions)
 int dword_6FDD2580;
@@ -141,7 +142,7 @@ void __stdcall UNITROOM_UpdatePath(D2UnitStrc* pUnit)
 		pUnit->pDynamicPath->dwClientCoordY = dword_6FDD2584;
 
 		pUnit->pDynamicPath->dwPathPoints = 0;
-		
+
 		if (pUnit->pDynamicPath->pRoom)
 		{
 			pUnit->pDynamicPath->pPreviousRoom = pUnit->pDynamicPath->pRoom;
@@ -317,4 +318,6 @@ BOOL __stdcall UNITROOM_IsUnitInRoom(D2ActiveRoomStrc* pRoom, D2UnitStrc* pUnit)
 	}
 
 	return TRUE;
+}
+
 }

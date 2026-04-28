@@ -7,6 +7,7 @@
 #include "Path/IDAStar.h"
 #include "Units/Units.h"
 
+extern "C" {
 
 //D2Common.0x6FDBC230 (#11213)
 void __stdcall MISSTREAM_AllocMissileStream(D2UnitStrc* pMissile)
@@ -200,4 +201,6 @@ void __stdcall MISSTREAM_Update(D2UnitStrc* a1, D2UnitStrc* pMissile, int a3, in
 			++nIndex;
 		}
 	}
+}
+
 }
