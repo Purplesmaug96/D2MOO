@@ -15,7 +15,7 @@ extern SDL_Renderer* renderer;
 extern uint32_t rendererFlags;
 #endif
 
-// 
+//
 // #define FUNC_STUB_USE_MSGBOX
 
 #ifdef FUNC_STUB_USE_MSGBOX
@@ -111,6 +111,5 @@ static inline void _FUNC_ASSERT(const char* condBuf, const char* file, const int
 
 #define FUNC_ASSERT(cond) \
     do { if (!(cond)) _FUNC_ASSERT(#cond, __FILE__, __LINE__); } while (0)
-
 
 bool D2SDLRender_Init();

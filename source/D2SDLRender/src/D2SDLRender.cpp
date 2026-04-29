@@ -99,6 +99,11 @@ bool D2SDLRender_Init() {
 	return TRUE;
 }
 
+extern "C" {
+
+// Exported to ordinal 10000, then D2Gfx loads by getting the proc address of ord10000.
 D2GraphicsInterfaceStrc* D2SDLRender_GetGraphicsInterface() {
 	return Interface;
+}
+
 }
