@@ -11,6 +11,9 @@ extern "C" {
 constexpr int D2SoundImageBase = 0x6F980000;
 #endif
 
+#undef D2SOUND_DLL_DECL
+#define D2SOUND_DLL_DECL __declspec(dllexport)
+
 #if D2_VERSION_MAJOR >= 1 && D2_VERSION_MINOR >= 13
 D2FUNC_DLL(D2SOUND, OpenSoundSystem, void, __fastcall, (BOOL bExpansion, BOOL bSoundBackground), 0x0000/*TODO*/)	//D2Sound.#10002
 #else
