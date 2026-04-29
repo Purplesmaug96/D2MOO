@@ -77,14 +77,14 @@ constexpr int32_t dword_6FA7E0DC[] =
 
 
 //D2Gfx.0x6FA71000
-void __fastcall D2GFX_InitGouraudCache_6FA71000()
+D2GFX_DLL_DECL void __fastcall D2GFX_InitGouraudCache_6FA71000()
 {
     DGFX_InitGouraudCache_6FA72570();
     gCmnInfo_pBuffer_6FA8144C = nullptr;
 }
 
 //D2Gfx.0x6FA71010
-void __fastcall D2GFX_FillYBufferTable_6FA71010(uint8_t* a1, int32_t a2, int32_t a3, int32_t a4)
+D2GFX_DLL_DECL void __fastcall D2GFX_FillYBufferTable_6FA71010(uint8_t* a1, int32_t a2, int32_t a3, int32_t a4)
 {
     gCmnInfo_pBuffer_6FA8144C = a1;
     dword_6FA81450 = a2;
@@ -105,7 +105,7 @@ void __fastcall D2GFX_FillYBufferTable_6FA71010(uint8_t* a1, int32_t a2, int32_t
 }
 
 //D2Gfx.0x6FA71070
-void __fastcall sub_6FA71070(D2PaletteTableStrc* pPaletteTable)
+D2GFX_DLL_DECL void __fastcall sub_6FA71070(D2PaletteTableStrc* pPaletteTable)
 {
     memcpy(gpPaletteTable_6FA81460, pPaletteTable, sizeof(gpPaletteTable_6FA81460));
     dword_6FA81448 = gpPaletteTable_6FA81460;
@@ -129,7 +129,7 @@ int32_t __fastcall D2GFX_SetContrastAndGamma_6FA710C0()
 }
 
 //D2Gfx.0x6FA71130
-void __fastcall sub_6FA71130(uint8_t* a1, uint8_t* a2, uint8_t* a3)
+D2GFX_DLL_DECL void __fastcall sub_6FA71130(uint8_t* a1, uint8_t* a2, uint8_t* a3)
 {
     // Unrolled in original dll
     for (int i = 0; i < 15; ++i)
@@ -145,7 +145,7 @@ void __fastcall sub_6FA71130(uint8_t* a1, uint8_t* a2, uint8_t* a3)
 }
 
 //D2Gfx.0x6FA71340
-void __fastcall sub_6FA71340(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6)
+D2GFX_DLL_DECL void __fastcall sub_6FA71340(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6)
 {
     uint8_t* v6 = a2;
 
@@ -169,7 +169,7 @@ void __fastcall sub_6FA71340(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, i
 }
 
 //D2Gfx.0x6FA71720
-void __fastcall sub_6FA71720(uint8_t* a1, uint8_t* a2, uint8_t* a3, int32_t a4)
+D2GFX_DLL_DECL void __fastcall sub_6FA71720(uint8_t* a1, uint8_t* a2, uint8_t* a3, int32_t a4)
 {
     // TODO: Names
     uint8_t* v4 = a2;
@@ -202,7 +202,7 @@ void __fastcall sub_6FA71720(uint8_t* a1, uint8_t* a2, uint8_t* a3, int32_t a4)
 }
 
 //D2Gfx.0x6FA71970
-void __fastcall sub_6FA71970(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6, int32_t a7, uint8_t a8)
+D2GFX_DLL_DECL void __fastcall sub_6FA71970(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6, int32_t a7, uint8_t a8)
 {
     // TODO: Names
     uint8_t* v8 = a1;
@@ -242,7 +242,7 @@ void __fastcall sub_6FA71970(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, i
 }
 
 //D2Gfx.0x6FA71D90) --------------------------------------------------------
-void __fastcall sub_6FA71D90(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, uint8_t* a5, int32_t a6)
+D2GFX_DLL_DECL void __fastcall sub_6FA71D90(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, uint8_t* a5, int32_t a6)
 {
     BYTE* v6; // ebp@1
     BYTE* v7; // eax@1
@@ -339,7 +339,7 @@ void __fastcall sub_6FA71D90(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, u
 }
 
 //D2Gfx.0x6FA72090) --------------------------------------------------------
-void __fastcall sub_6FA72090(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, int32_t a5, int32_t a6, int32_t a7, int32_t a8, int32_t a9, uint8_t a10)
+D2GFX_DLL_DECL void __fastcall sub_6FA72090(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, int32_t a5, int32_t a6, int32_t a7, int32_t a8, int32_t a9, uint8_t a10)
 {
     char v10; // cl@1
     BYTE* v11; // ebp@1
@@ -435,7 +435,7 @@ void __fastcall sub_6FA72090(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, i
 }
 
 //D2Gfx.0x6FA72570
-void __fastcall DGFX_InitGouraudCache_6FA72570()
+D2GFX_DLL_DECL void __fastcall DGFX_InitGouraudCache_6FA72570()
 {
     // TODO: Check, Names
     int32_t v1 = 0;
@@ -465,7 +465,7 @@ void __fastcall DGFX_InitGouraudCache_6FA72570()
 }
 
 //D2Gfx.0x6FA72630
-void __fastcall sub_6FA72630(int32_t a1, int32_t a2)
+D2GFX_DLL_DECL void __fastcall sub_6FA72630(int32_t a1, int32_t a2)
 {
     //TODO: Names
     int32_t v2 = 0;
@@ -501,7 +501,7 @@ void __fastcall sub_6FA72630(int32_t a1, int32_t a2)
 }
 
 //D2Gfx.0x6FA72700
-void __fastcall sub_6FA72700()
+D2GFX_DLL_DECL void __fastcall sub_6FA72700()
 {
     int32_t v2 = -32 * dword_6FA81450;
     for (int32_t i = 0; i < std::size(dword_6FA846A8); ++i)
@@ -512,7 +512,7 @@ void __fastcall sub_6FA72700()
 }
 
 //D2Gfx.0x6FA72730) --------------------------------------------------------
-void __fastcall D2GFX_DrawVisTile_6FA72730(uint8_t* a1, int32_t nX, int32_t nY)
+D2GFX_DLL_DECL void __fastcall D2GFX_DrawVisTile_6FA72730(uint8_t* a1, int32_t nX, int32_t nY)
 {
 //    int32_t v3; // eax@1
 //    int32_t v4; // ebp@1
@@ -650,7 +650,7 @@ void __fastcall D2GFX_DrawVisTile_6FA72730(uint8_t* a1, int32_t nX, int32_t nY)
 }
 
 //D2Gfx.0x6FA72900
-void __fastcall sub_6FA72900(uint8_t* a1, int32_t nX, int32_t nY, uint8_t a4)
+D2GFX_DLL_DECL void __fastcall sub_6FA72900(uint8_t* a1, int32_t nX, int32_t nY, uint8_t a4)
 {
     if (nY < dword_6FA8D230 || nY >= dword_6FA8D24C || nX < dword_6FA84688 || nX >= dword_6FA85218)
     {
@@ -672,7 +672,7 @@ void __fastcall sub_6FA72900(uint8_t* a1, int32_t nX, int32_t nY, uint8_t a4)
 }
 
 //D2Gfx.0x6FA729D0
-void __fastcall TILE_TileDrawLit_6FA729D0(uint8_t* a1, int32_t nX, int32_t nY, int32_t* pIntensities)
+D2GFX_DLL_DECL void __fastcall TILE_TileDrawLit_6FA729D0(uint8_t* a1, int32_t nX, int32_t nY, int32_t* pIntensities)
 {
     if (dword_6FA8D250)
     {
@@ -725,7 +725,7 @@ void __fastcall TILE_TileDrawLit_6FA729D0(uint8_t* a1, int32_t nX, int32_t nY, i
 }
 
 //D2Gfx.0x6FA72B80) --------------------------------------------------------
-void __fastcall D2GFX_DrawBlendedVisTile_6FA72B80(int32_t a1, int32_t nX, int32_t nY, uint8_t nAlpha)
+D2GFX_DLL_DECL void __fastcall D2GFX_DrawBlendedVisTile_6FA72B80(int32_t a1, int32_t nX, int32_t nY, uint8_t nAlpha)
 {
 //    LPPALETTEENTRY v4; // eax@2
 //    int32_t v5; // esi@7
@@ -906,7 +906,7 @@ void __fastcall D2GFX_DrawBlendedVisTile_6FA72B80(int32_t a1, int32_t nX, int32_
 }
 
 //D2Gfx.0x6FA72DC0) --------------------------------------------------------
-void __fastcall D2GFX_DrawRoofTile_6FA72DC0(int32_t a1, int32_t nX, int32_t nY, int32_t* pIntensities, uint8_t nAlpha)
+D2GFX_DLL_DECL void __fastcall D2GFX_DrawRoofTile_6FA72DC0(int32_t a1, int32_t nX, int32_t nY, int32_t* pIntensities, uint8_t nAlpha)
 {
 //    LPPALETTEENTRY v5; // eax@2
 //    signed int32_t v6; // edi@7
@@ -1130,7 +1130,7 @@ void __fastcall D2GFX_DrawRoofTile_6FA72DC0(int32_t a1, int32_t nX, int32_t nY, 
 }
 
 //D2Gfx.0x6FA73130
-void __fastcall sub_6FA73130(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3, uint8_t* a4, uint8_t a5)
+D2GFX_DLL_DECL void __fastcall sub_6FA73130(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3, uint8_t* a4, uint8_t a5)
 {
     D2PaletteStrc* pPalette = &stru_6FA81580[(uint32_t)a5 >> 3];
 
@@ -1163,7 +1163,7 @@ void __fastcall sub_6FA73130(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3,
 }
 
 //D2Gfx.0x6FA73270
-void __fastcall sub_6FA73270(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3, uint8_t* a4, int32_t* a5)
+D2GFX_DLL_DECL void __fastcall sub_6FA73270(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3, uint8_t* a4, int32_t* a5)
 {
     // TODO: Names
     const int32_t v7 = a5[3] - a5[0];
@@ -1205,7 +1205,7 @@ void __fastcall sub_6FA73270(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3,
 }
 
 //D2Gfx.0x6FA73410) --------------------------------------------------------
-void __fastcall D2GFX_FloorTileDraw_6FA73410(D2TileLibraryEntryStrc* pTileLibraryEntry, int32_t nX, int32_t nY, D2GfxLightExStrc* pLightEx)
+D2GFX_DLL_DECL void __fastcall D2GFX_FloorTileDraw_6FA73410(D2TileLibraryEntryStrc* pTileLibraryEntry, int32_t nX, int32_t nY, D2GfxLightExStrc* pLightEx)
 {
 //    int32_t v4; // ebx@1
 //    int32_t v5; // edi@1

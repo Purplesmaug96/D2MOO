@@ -8,6 +8,8 @@
 #include "DrawMode.h"
 #include <DisplayType.h>
 
+#include "DllDecl.h"
+
 #define D2_GLIDE_AS_SDLRENDERER
 
 extern "C" {

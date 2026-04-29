@@ -4,6 +4,7 @@
 
 #include "DrawMode.h"
 
+#include "DllDecl.h"
 
 struct D2GfxDataStrc;
 

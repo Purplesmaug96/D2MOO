@@ -5,6 +5,8 @@
 #include <D2Constants.h>
 #include <Windows.h>
 
+#include "DllDecl.h"
+
 extern "C" {
 
 #pragma pack(push, 1)
