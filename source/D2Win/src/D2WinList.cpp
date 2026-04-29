@@ -1,6 +1,7 @@
 #include "D2WinList.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Math.h>
 
@@ -219,7 +220,7 @@ int32_t __fastcall LIST_GetSelectedDataIndex(D2WinListStrc* pList)
 		{
 			return nIndex;
 		}
-		
+
 		++nIndex;
 	}
 
@@ -416,9 +417,9 @@ int32_t __stdcall LIST_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg)
 		}
 	}
 	else if (pMsg->wParam == VK_UP)
-	{	
+	{
 		D2WinListDataStrc* pTemp = pList->pDataList;
-		
+
 		if (pList->pDataList == pList->pSelectedDataEntry)
 		{
 			for (D2WinListDataStrc* pData = pList->pDataList->pNext; pData; pData = pData->pNext)

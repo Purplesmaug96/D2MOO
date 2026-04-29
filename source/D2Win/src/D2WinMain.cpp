@@ -1,6 +1,7 @@
 #include "D2WinMain.h"
 
 #include <algorithm>
+#include <iterator>
 #include <cstdio>
 
 #include <D2CMP.h>
@@ -321,7 +322,7 @@ int __stdcall D2Win_10008(void(__stdcall* pCallback)(DWORD))
 {
 	int nSleepMillis = 0;
 	DWORD dwCounter = 0;
-	
+
 	DWORD dwTickCount = GetTickCount();
 
 	while (dword_6F8BDF78)

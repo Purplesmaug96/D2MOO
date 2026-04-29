@@ -5,6 +5,8 @@
 
 //1.10f Image Base: 0x6F980000
 
+extern "C" {
+
 #ifdef D2_VERSION_110F
 constexpr int D2SoundImageBase = 0x6F980000;
 #endif
@@ -23,3 +25,5 @@ D2FUNC_DLL(D2SOUND, 10065, void, __fastcall, (), 0x49D0)											//D2Sound.#10
 D2FUNC_DLL(D2SOUND, 10066, int, __fastcall, (), 0x2990)												//D2Sound.#10066
 D2FUNC_DLL(D2SOUND, 10069, int, __fastcall, (), 0x2BC0)												//D2Sound.#10069
 D2FUNC_DLL(D2SOUND, 10070, void, __fastcall, (int), 0x2BD0)											//D2Sound.#10070
+
+}

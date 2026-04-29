@@ -1,6 +1,7 @@
 #include "D2WinTextBox.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Math.h>
 
@@ -392,7 +393,7 @@ int32_t __fastcall D2Win_10051(D2WinTextBoxStrc* pTextBox, const Unicode* a2, in
 	}
 
 	D2Win_10127_SetFont(pTextBox->eFont);
-	
+
 	if (pTextBox->dwTextBoxFlags & 0x20)
 	{
 		return D2Win_10051_Helper(pTextBox, v9, a3, a4, a5);
@@ -473,7 +474,7 @@ LABEL_37:
 
 	SMemFree(v49, __FILE__, __LINE__, 0);
 	D2Win_10051(pTextBox, v18, a3, 1, a5);
-	
+
 	if (a5 == 1)
 	{
 		D2Win_10051(pTextBox, v20, a3, 0, 2);
@@ -552,7 +553,7 @@ int32_t __fastcall D2Win_10058_0(D2WinTextBoxStrc* pTextBox, const Unicode* pTex
 	Unicode::strcpy(wszText, pText);
 
 	D2WinTextBoxLineStrc* pLine = pTextBox->pFirstLine;
-	
+
 	for (int32_t i = 0; i < a3; ++i)
 	{
 		if (!pLine)
@@ -560,7 +561,7 @@ int32_t __fastcall D2Win_10058_0(D2WinTextBoxStrc* pTextBox, const Unicode* pTex
 			return 1;
 		}
 
-		pLine = pLine->pNext;	
+		pLine = pLine->pNext;
 	}
 
 	if (pLine)
@@ -772,7 +773,7 @@ void __fastcall D2Win_10060(D2WinTextBoxStrc* pTextBox, int32_t nColumn, int32_t
 	D2_ASSERT(pTextBox);
 	D2_ASSERT(pTextBox->controlHeader.nType == D2WIN_TEXTBOX);
 	D2_ASSERT(nColumn >= 0);
-	
+
 	pTextBox->unk0x7C[nColumn] = a3;
 }
 
@@ -886,7 +887,7 @@ int32_t __fastcall TEXTBOX_Draw(D2WinControlStrc* pControl)
 
 	const int32_t v8 = pTextBox->field_A8 + D2Win_10125();
 	int32_t v49 = pTextBox->controlHeader.nHeight - 2 * pTextBox->field_44;
-	
+
 	const int32_t nBoxWidth = pTextBox->controlHeader.nWidth - 2 * pTextBox->field_40;
 
 	if (pTextBox->dwTextBoxFlags & 0x40)

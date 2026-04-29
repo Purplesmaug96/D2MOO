@@ -1,6 +1,7 @@
 #include "D2WinArchive.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2CMP.h>
 #include <Archive.h>

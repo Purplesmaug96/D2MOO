@@ -1,6 +1,7 @@
 #include "D2WinPalette.h"
 
 #include <algorithm>
+#include <iterator>
 #include <cstdio>
 
 #include "D2CMP.h"
@@ -29,7 +30,7 @@ struct D2PL2FileStrc
 	uint8_t darkBlend[256][256];		//0x5B500
 	uint8_t darkenPalette[256];			//0x6B500
 	uint8_t standardColors[13][3];		//0x6B600
-	uint8_t standardShifts[13][256];	//0x6B627    
+	uint8_t standardShifts[13][256];	//0x6B627
 };
 #pragma pack(pop)
 

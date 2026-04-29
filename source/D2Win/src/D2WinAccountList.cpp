@@ -1,6 +1,7 @@
 #include "D2WinAccountList.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Gfx.h>
 #include <D2Lang.h>

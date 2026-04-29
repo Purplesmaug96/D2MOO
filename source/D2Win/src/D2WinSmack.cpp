@@ -1,6 +1,7 @@
 #include "D2WinSmack.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Gfx.h>
 #include <Fog.h>
