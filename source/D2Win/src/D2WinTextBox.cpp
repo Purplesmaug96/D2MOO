@@ -22,6 +22,7 @@
 #include "D2WinScrollBar.h"
 #include "D2WinTimer.h"
 
+extern "C" {
 
 int32_t dword_6F8BE238;
 extern int32_t dword_6F96A8DC;
@@ -758,13 +759,13 @@ void __fastcall D2Win_10056(D2WinTextBoxStrc* pTextBox, int32_t nNumColumns)
 }
 
 //D2Win.0x6F8B0E60 (#10059)
-void __fastcall D2Win_10059(D2WinTextBoxStrc* pTextBox, int32_t nColumn, int32_t a3)
+void __fastcall D2Win_10059(D2WinTextBoxStrc* pTextBox, int nColumn, Unicode* pColumn)
 {
 	D2_ASSERT(pTextBox);
 	D2_ASSERT(pTextBox->controlHeader.nType == D2WIN_TEXTBOX);
 	D2_ASSERT((nColumn >= 0) && (nColumn < pTextBox->nNumColumns));
 
-	pTextBox->unk0x68[nColumn] = a3;
+	pTextBox->unk0x68[nColumn] = pColumn;
 }
 
 //D2Win.0x6F8B0EE0 (#10060)
@@ -1250,4 +1251,6 @@ int32_t __fastcall D2Win_10203_TEXTBOX(D2WinTextBoxStrc* pTextBox)
 	D2_ASSERT(pTextBox->controlHeader.nType == D2WIN_TEXTBOX);
 
 	return D2Win_10201(pTextBox->pScrollBar);
+}
+
 }

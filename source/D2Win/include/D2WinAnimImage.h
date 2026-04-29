@@ -4,6 +4,7 @@
 
 #include <DrawMode.h>
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2AnimatedImageDescriptor
@@ -45,3 +46,5 @@ int32_t __fastcall ANIMIMAGE_Draw(D2WinControlStrc* pControl);
 int __stdcall ANIMIMAGE_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
 //D2Win.0x6F8A5980
 int32_t __stdcall ANIMIMAGE_SetIsRunning(D2WinAnimImageStrc* pAnimImage, int32_t bIsRunning);
+
+}

@@ -2,6 +2,7 @@
 
 #include "D2WinControlHeader.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinCommandRegisterStrc
@@ -21,3 +22,5 @@ void __fastcall WREGISTER_UnregisterCommand(HWND hWnd, int32_t nType, int32_t nI
 void __fastcall WREGISTER_RegisterCommands(HWND hWnd, D2WinCommandRegisterStrc* pCommandRegister, int32_t nCommands);
 //D2Win.0x6F8B2010
 void __fastcall WREGISTER_UnregisterCommands(HWND hWnd, D2WinCommandRegisterStrc* pCommandRegister, int32_t nCommands);
+
+}

@@ -8,6 +8,7 @@
 #include "D2WinMain.h"
 #include "D2WinPalette.h"
 
+extern "C" {
 
 //D2Win.0x6F8AEED0 (#10091)
 D2WinProgressBarStrc* __fastcall PROGRESSBAR_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight)
@@ -63,4 +64,6 @@ int32_t __fastcall PROGRESSBAR_Draw(D2WinControlStrc* pControl)
 		DRAWMODE_NORMAL
 	);
 	return 1;
+}
+
 }

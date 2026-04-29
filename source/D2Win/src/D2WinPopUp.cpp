@@ -11,6 +11,7 @@
 #include "D2WinMain.h"
 #include "D2WinPalette.h"
 
+extern "C" {
 
 D2WinPopUpStrc* gpPopUp;
 
@@ -159,7 +160,7 @@ int32_t __fastcall POPUP_Draw(D2WinControlStrc* pControl)
 	rect.bottom = pPopUp->controlHeader.nImageY + 5;
 	rect.top = pPopUp->controlHeader.nImageY - pPopUp->controlHeader.nHeight - 5;
 	rect.right = pPopUp->controlHeader.nImageX + pPopUp->controlHeader.nWidth + 5;
-	
+
 	D2GFX_UtilRect(&rect, 0xFFu);
 	D2GFX_DrawBox(rect.left, rect.bottom, rect.right, rect.top, D2Win_10034_MixRGB(0x3Fu, 0x3Fu, 0x3Fu), DRAWMODE_TRANS75);
 	D2Win_10127_SetFont(D2FONT_FONT16);
@@ -176,4 +177,6 @@ int32_t __fastcall POPUP_Draw(D2WinControlStrc* pControl)
 	}
 
 	return 1;
+}
+
 }

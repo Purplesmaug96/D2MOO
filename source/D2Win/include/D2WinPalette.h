@@ -4,6 +4,7 @@
 
 #include <Windows.h>
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2ShadowLightGammaPaletteStrc
@@ -39,3 +40,5 @@ int32_t __stdcall D2Win_10028(const char* pszPalDatFilename, const char* pszPalP
 uint8_t __stdcall D2Win_10034_MixRGB(uint8_t nRed, uint8_t nGreen, uint8_t nBlue);
 //D2Win.0x6F8AEAC0
 void __fastcall D2Win_10178(D2ShadowLightGammaPaletteStrc* pBuffer);
+
+}

@@ -4,6 +4,7 @@
 
 #include "Font.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinAccountListDataStrc
@@ -42,3 +43,5 @@ int __fastcall ACCOUNTLIST_GetTextFromSelectedEntry(D2WinAccountListStrc* pAccou
 int32_t __fastcall ACCOUNTLIST_Draw(D2WinControlStrc* pControl);
 //D2Win.0x6F8A52E0
 int __stdcall ACCOUNTLIST_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
+
+}

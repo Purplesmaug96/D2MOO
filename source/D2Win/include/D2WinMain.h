@@ -12,6 +12,8 @@ struct D2WinControlInitStrc;
 struct D2WinControlStrc;
 struct SMSGHANDLER_PARAMS;
 
+extern "C" {
+
 extern POINT gMousePosition_6F8FE234;
 extern int32_t dword_6F8FE254;
 
@@ -29,11 +31,11 @@ D2WIN_DLL_DECL int __stdcall D2Win_CloseSpriteCache();
 //D2Win.0x6F8ACDD0 (#10003)
 D2WIN_DLL_DECL void __stdcall D2Win_10003();
 //D2Win.0x6F8ACDE0 (#10004)
-D2WIN_DLL_DECL void __stdcall D2Win_10004(BOOL bForceResize);
+D2WIN_DLL_DECL void __stdcall D2Win_10004(D2GameResolutionMode bForceResize);
 //D2Win.0x6F8ACE20 (#10016)
 D2WIN_DLL_DECL int __stdcall D2Win_10016();
 //D2Win.0x6F8ACEC0 (#10005)
-D2WIN_DLL_DECL int __stdcall D2Win_10005(BOOL bForceResize);
+D2WIN_DLL_DECL int __stdcall D2Win_10005(D2GameResolutionMode bForceResize);
 //D2Win.0x6F8ACF20 (#10006)
 D2WIN_DLL_DECL void __stdcall D2Win_10006_ClearDrawCaches();
 //D2Win.0x6F8ACF30 (#10007)
@@ -114,3 +116,5 @@ D2WIN_DLL_DECL signed int __stdcall D2Win_10033(D2WinControlStrc* a1, int a2);
 D2WIN_DLL_DECL int __stdcall CONTROL_GetType(D2WinControlStrc* pControl);
 //D2Win.0x6F8AE540
 D2WinControlStrc* __stdcall sub_6F8AE540();
+
+}

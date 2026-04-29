@@ -15,6 +15,7 @@
 
 #pragma warning (disable : 28159)
 
+extern "C" {
 
 //D2Win.0x6F8A53B0 (#10102)
 D2WinAnimImageStrc* __fastcall ANIMIMAGE_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, D2CellFileStrc* pCellFile, uint32_t nAnimSpeed, int32_t(__stdcall* a7)(SMSGHANDLER_PARAMS*), D2AnimatedImageDescriptor* pDescriptor, DrawMode eDrawMode, void(__stdcall* a10)(SMSGHANDLER_PARAMS*))
@@ -97,7 +98,7 @@ int32_t __fastcall ANIMIMAGE_ShouldMouseInputBeHandled(D2WinControlStrc* pContro
 	D2_ASSERT(pAnimImage->controlHeader.nType == D2WIN_IMAGE);
 
 	D2GfxDataStrc gfxData = {};
-	
+
 	D2CellFileStrc** ppCellFile = pAnimImage->pAnimatedImageDescriptor[pAnimImage->nAnimType].ppCellFile1;
 	if (ppCellFile)
 	{
@@ -109,7 +110,7 @@ int32_t __fastcall ANIMIMAGE_ShouldMouseInputBeHandled(D2WinControlStrc* pContro
 	const int32_t nX = gMousePosition_6F8FE234.x - D2CMP_CelGetOffsetX(pGfxCell);
 	const int32_t nY = gMousePosition_6F8FE234.y - D2CMP_CelGetOffsetY(pGfxCell);
 
-	return nX >= pAnimImage->controlHeader.nImageX && nY >= pAnimImage->controlHeader.nImageY - D2CMP_CelGetHeight(pGfxCell) 
+	return nX >= pAnimImage->controlHeader.nImageX && nY >= pAnimImage->controlHeader.nImageY - D2CMP_CelGetHeight(pGfxCell)
 		&& nX < pAnimImage->controlHeader.nImageX + D2CMP_CelGetWidth(pGfxCell) && nY < pAnimImage->controlHeader.nImageY;
 }
 
@@ -294,4 +295,6 @@ int32_t __stdcall ANIMIMAGE_SetIsRunning(D2WinAnimImageStrc* pAnimImage, int32_t
 
 	pAnimImage->bIsRunning = bIsRunning;
 	return 1;
+}
+
 }

@@ -3,6 +3,8 @@
 #include "D2WinControlHeader.h"
 #include <D2Unicode.h>
 
+extern "C" {
+
 #pragma pack(push, 1)
 struct D2WinPopUpLineStrc
 {
@@ -34,3 +36,5 @@ int __stdcall POPUP_HandleMouseButtonInput(SMSGHANDLER_PARAMS* pMsg);
 int32_t __fastcall POPUP_Initialize(D2WinControlStrc* pControl);
 //D2Win.0x6F8AEDB0
 int32_t __fastcall POPUP_Draw(D2WinControlStrc* pControl);
+
+}

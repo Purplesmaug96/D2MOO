@@ -11,13 +11,14 @@ enum D2EditBoxFlags
 	EDITBOX_PASSWORD = 0x00000001,
 };
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinEditBoxStrc
 {
 	D2WinControlStrc controlHeader;					//0x00
 	int32_t field_40;								//0x40
-	int32_t field_44;								//0x44	
+	int32_t field_44;								//0x44
 	int32_t field_48;								//0x48
 	int32_t field_4C;								//0x4C
 	int32_t field_50;								//0x50
@@ -86,3 +87,5 @@ bool __stdcall D2Win_10078_IsNumber(int32_t nUnused1, int32_t nUnused2, char* sz
 bool __stdcall D2Win_10079_IsLetter(int nUnused1, int nUnused2, char* szChar);
 //D2Win.0x6F8A98A0
 void __fastcall sub_6F8A98A0(D2WinEditBoxStrc* pEditBox);
+
+}

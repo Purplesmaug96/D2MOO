@@ -4,6 +4,7 @@
 
 #include <DrawMode.h>
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinImageClickRectStrc
@@ -57,3 +58,5 @@ int32_t __fastcall IMAGE2_Draw(D2WinControlStrc* pControl);
 int32_t __fastcall IMAGE_Draw(D2WinControlStrc* pControl);
 //D2Win.0x6F8AC170
 int32_t __stdcall IMAGE2_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
+
+}

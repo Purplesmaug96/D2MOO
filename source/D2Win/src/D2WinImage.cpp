@@ -14,6 +14,7 @@
 
 #include "D2WinMain.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2CropRectStrc
@@ -188,7 +189,7 @@ int32_t __fastcall IMAGE_Draw(D2WinControlStrc* pControl)
 	gfxData.nFrame = 0;
 
 	const int32_t v51[4] =
-	{ 
+	{
 		pImage->controlHeader.nImageY - pImage->controlHeader.nHeight,
 		pImage->controlHeader.nImageY - pImage->controlHeader.nHeight + pImage->field_50,
 		pImage->controlHeader.nImageY - pImage->field_50,
@@ -319,4 +320,6 @@ int32_t __stdcall IMAGE2_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 	}
 
 	return 0;
+}
+
 }

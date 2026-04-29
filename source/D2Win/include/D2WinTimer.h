@@ -2,6 +2,7 @@
 
 #include "D2WinControlHeader.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinTimerStrc
@@ -27,3 +28,5 @@ int32_t __fastcall sub_6F8B1C60(D2WinControlStrc* pControl);
 int32_t __fastcall sub_6F8B1CF0(D2WinControlStrc* pControl);
 //D2Win.0x6F8B1D70
 int32_t __stdcall TIMER_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg);
+
+}

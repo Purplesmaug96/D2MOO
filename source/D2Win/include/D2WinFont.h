@@ -9,6 +9,7 @@
 
 struct D2CellFileStrc;
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2CharStrc
@@ -99,7 +100,7 @@ void __fastcall D2Win_10117_DrawText(const Unicode* wszText, int nX, int nY, int
 //D2Win.0x6F8AAD80
 void __fastcall D2Win_10118_DrawBlendedText(const Unicode* wszText, int32_t nX, int32_t nY, int32_t nColor, int32_t bCentered, DrawMode eDrawMode);
 //D2Win.0x6F8AAF80
-void __fastcall D2Win_10126_DrawTextFromCache(Unicode *wszText, int nX, int nY);
+void __fastcall D2Win_10126_DrawTextFromCache(const Unicode* pText, int nX, int nY);
 //D2Win.0x6F8AB080
 void __fastcall D2Win_10132(const Unicode* wszText, int nX, int nY, DWORD dwColor, DrawMode eDrawMode, int nColor);
 //D2Win.0x6F8AB1B0
@@ -125,3 +126,5 @@ DrawFramedTextPtr __stdcall D2Win_10206();
 using GetTextDimensionsPtr = decltype(D2Win_10131_GetTextDimensions)*;
 //D2Win.0x6F8ABA80
 GetTextDimensionsPtr __stdcall D2Win_10207();
+
+}

@@ -8,6 +8,8 @@
 
 struct D2WinScrollBarStrc;
 
+extern "C" {
+
 #pragma pack(push, 1)
 struct D2WinTextBoxLineStrc
 {
@@ -122,3 +124,5 @@ int __fastcall D2Win_10195(D2WinTextBoxStrc* pTextBox, void(__stdcall* a2)(SMSGH
 void __fastcall D2Win_10204(D2WinTextBoxStrc* pTextBox, int a2);
 //D2Win.0x6F8B1B20
 int __fastcall D2Win_10203_TEXTBOX(D2WinTextBoxStrc* pTextBox);
+
+}

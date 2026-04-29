@@ -6,6 +6,8 @@
 #include <D2Gfx.h>
 #include <D2Unicode.h>
 
+extern "C" {
+
 #pragma pack(push, 1)
 struct D2CofDataStrc
 {
@@ -100,10 +102,7 @@ struct D2CompositeUnitStrc
 void __stdcall sub_6F8A4C10();
 void __stdcall D2Win_10157();
 D2CompositeUnitStrc* __stdcall D2Win_10147();
-inline void* D2Win_10148(void*)
-{
-	return nullptr;
-}
+D2CompositeUnitStrc* __stdcall D2Win_10148(D2CompositeUnitStrc* pCompositeUnit);
 inline void sub_6F8A15E0(void*)
 {
 }
@@ -118,3 +117,5 @@ inline void sub_6F8A2070(void*)
 }
 void __stdcall D2Win_10142_CompUnitDestroy(D2CompositeUnitStrc* pCompositeUnit, int a2);
 const char* __stdcall D2Win_10160_GetPlayerTitle(int a1, int a2, BOOL bSoftCore);
+
+}

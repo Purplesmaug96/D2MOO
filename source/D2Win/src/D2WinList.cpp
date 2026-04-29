@@ -21,6 +21,7 @@
 
 #pragma warning (disable : 28159)
 
+extern "C" {
 
 D2CellFileStrc* ghPentagramCellFile;
 uint32_t dword_6F8FE220;
@@ -477,4 +478,6 @@ int32_t __stdcall LIST_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg)
 	}
 
 	return 0;
+}
+
 }

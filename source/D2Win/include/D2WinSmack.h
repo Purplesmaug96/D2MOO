@@ -2,6 +2,7 @@
 
 #include "D2WinControlHeader.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinSmackStrc
@@ -34,3 +35,5 @@ int32_t __fastcall SMACK_Draw(D2WinControlStrc* pControl);
 int __stdcall SMACK_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
 //D2Win.0x6F8AFA90
 void __fastcall D2Win_10208(int a1);
+
+}

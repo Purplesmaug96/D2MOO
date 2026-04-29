@@ -13,6 +13,7 @@
 
 #include "D2WinMain.h"
 
+extern "C" {
 
 char gszSmackFileName[260];
 int gnSmackVersion;
@@ -140,4 +141,6 @@ int32_t __stdcall SMACK_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 void __fastcall D2Win_10208(int32_t a1)
 {
 	dword_6F96A8DC = a1;
+}
+
 }

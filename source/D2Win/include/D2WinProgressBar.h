@@ -2,6 +2,7 @@
 
 #include "D2WinControlHeader.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinProgressBarStrc
@@ -20,3 +21,5 @@ int32_t __fastcall PROGRESSBAR_Destroy(D2WinControlStrc* pControl);
 int32_t __stdcall PROGRESSBAR_SetProgress(D2WinProgressBarStrc* pProgressBar, float fProgress);
 //D2Win.0x6F8AEFB0
 int32_t __fastcall PROGRESSBAR_Draw(D2WinControlStrc* pControl);
+
+}

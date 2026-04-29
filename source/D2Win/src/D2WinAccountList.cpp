@@ -12,6 +12,7 @@
 #include "D2WinFont.h"
 #include "D2WinMain.h"
 
+extern "C" {
 
 //D2Win.0x6F8A4E90 (#10162)
 D2WinAccountListStrc* __fastcall ACCOUNTLIST_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, int32_t a5, void* a6)
@@ -206,4 +207,6 @@ int32_t __stdcall ACCOUNTLIST_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 
 	pAccountList->pSelectedDataEntry = nullptr;
 	return 1;
+}
+
 }

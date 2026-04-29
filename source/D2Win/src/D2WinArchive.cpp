@@ -11,6 +11,7 @@
 #include <D2Gfx.h>
 #include <Window.h>
 
+extern "C" {
 
 D2ArchiveHandleStrc* gpD2MusicMPQ;
 D2ArchiveHandleStrc* gpD2SpeechMPQ;
@@ -282,4 +283,6 @@ void __fastcall ARCHIVE_UnloadExpansionArchives()
 		ARCHIVE_UnloadMPQFile(gpD2XVideoMPQ);
 		gpD2XVideoMPQ = nullptr;
 	}
+}
+
 }

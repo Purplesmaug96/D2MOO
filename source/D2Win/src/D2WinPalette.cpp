@@ -15,6 +15,7 @@
 
 #pragma warning (disable : 28159)
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2PL2FileStrc
@@ -240,4 +241,6 @@ uint8_t __stdcall D2Win_10034_MixRGB(uint8_t nRed, uint8_t nGreen, uint8_t nBlue
 void __fastcall D2Win_10178(D2ShadowLightGammaPaletteStrc* pBuffer)
 {
 	memcpy(pBuffer, &gShadowsLightGammaPalette_6F91E298, sizeof(gShadowsLightGammaPalette_6F91E298));
+}
+
 }

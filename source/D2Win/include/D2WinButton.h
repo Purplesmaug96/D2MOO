@@ -12,6 +12,7 @@ enum ButtonFlags
 	BUTTONFLAG_SKIP_SOUND = 4,
 };
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinButtonStrc
@@ -66,3 +67,5 @@ int __stdcall BUTTON_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
 int __stdcall BUTTON_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg);
 //D2Win.0x6F8A6BB0
 int __stdcall BUTTON_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg);
+
+}

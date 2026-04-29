@@ -15,6 +15,7 @@
 #include "D2WinMain.h"
 #include "D2WinTextBox.h"
 
+extern "C" {
 
 //D2Win.0x6F8AF040 (#10063)
 D2WinScrollBarStrc* __fastcall SCROLLBAR_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, D2CellFileStrc* pCellFile, int32_t(__stdcall* a6)(SMSGHANDLER_PARAMS*))
@@ -315,9 +316,11 @@ int32_t __stdcall SCROLLBAR_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg)
 		pScrollBar->bIsUpperArrowPressed = 0;
 		pScrollBar->bIsLowerArrowPressed = 0;
 		pScrollBar->bIsStepIndicatorDragged = 0;
-		
+
 		return 1;
 	}
 
 	return 0;
+}
+
 }

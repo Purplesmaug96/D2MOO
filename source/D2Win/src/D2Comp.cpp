@@ -15,6 +15,7 @@
 #include "D2WinArchive.h"
 #include "D2WinPalette.h"
 
+extern "C" {
 
 // TODO: Use right one
 struct D2ItemTypesTxt
@@ -3385,4 +3386,6 @@ const char* __stdcall D2Win_10160_GetPlayerTitle(int a1, int a2, BOOL bSoftCore)
 	}
 
 	return byte_6F8FD678;
+}
+
 }

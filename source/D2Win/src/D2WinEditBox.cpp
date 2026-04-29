@@ -19,6 +19,7 @@
 
 #pragma warning (disable : 28159)
 
+extern "C" {
 
 D2WinEditBoxStrc* dword_6F8FD8B0;
 int dword_6F8FD8B4;
@@ -2050,4 +2051,6 @@ void __fastcall sub_6F8A98A0(D2WinEditBoxStrc* pEditBox)
 			--pEditBox->field_50;
 		}
 	}
+}
+
 }

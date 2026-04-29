@@ -5,6 +5,7 @@
 #include <D2Unicode.h>
 #include "Font.h"
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinListDataStrc
@@ -68,3 +69,5 @@ int __stdcall LIST_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
 int __stdcall LIST_HandleCharInput(SMSGHANDLER_PARAMS* pMsg);
 //D2Win.0x6F8ACAE0
 int __stdcall LIST_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg);
+
+}

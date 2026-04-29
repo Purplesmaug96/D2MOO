@@ -7,6 +7,7 @@
 
 #pragma warning (disable : 28159)
 
+extern "C" {
 
 uint32_t gdwTimeoutTickCount;
 
@@ -125,4 +126,6 @@ int32_t __stdcall TIMER_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg)
 	}
 
 	return 1;
+}
+
 }

@@ -3,6 +3,7 @@
 #include <Fog.h>
 #include <Storm.h>
 
+extern "C" {
 
 //D2Win.0x6F8B1DC0 (#10020)
 void __fastcall WREGISTER_RegisterCommand(HWND hWnd, int32_t nType, int32_t nId, void(__stdcall* pCallback)(SMSGHANDLER_PARAMS*))
@@ -88,4 +89,6 @@ void __fastcall WREGISTER_UnregisterCommands(HWND hWnd, D2WinCommandRegisterStrc
 	{
 		WREGISTER_UnregisterCommand(hWnd, pCommandRegister[i].nType, pCommandRegister[i].nId, pCommandRegister[i].pCallback);
 	}
+}
+
 }

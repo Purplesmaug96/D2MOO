@@ -5,6 +5,8 @@
 
 struct D2WinTextBoxStrc;
 
+extern "C" {
+
 #pragma pack(push, 1)
 struct D2WinScrollBarStrc
 {
@@ -47,3 +49,5 @@ int32_t __fastcall SCROLLBAR_Draw(D2WinControlStrc* pControl);
 int __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
 //D2Win.0x6F8AF6B0
 int __stdcall SCROLLBAR_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg);
+
+}

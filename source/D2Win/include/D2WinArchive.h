@@ -7,6 +7,7 @@
 
 struct D2CellFileStrc;
 
+extern "C" {
 
 //D2Win.0x6F8A59C0 (#10039)
 D2WIN_DLL_DECL D2CellFileStrc* __fastcall ARCHIVE_LoadCellFile(const char* szFile, int32_t nType);
@@ -34,3 +35,5 @@ D2WIN_DLL_DECL BOOL __fastcall ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowMessage
 D2WIN_DLL_DECL BOOL __fastcall ARCHIVE_LoadVideoArchives(ARCHIVE_ShowMessageFunctionPtr pfShowMessage, HANDLE hFile, int32_t bExpansion);
 //D2Win.0x6F8A6110 (#10173)
 D2WIN_DLL_DECL void __fastcall ARCHIVE_UnloadExpansionArchives();
+
+}

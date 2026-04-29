@@ -39,6 +39,7 @@
 #pragma warning (disable : 28159)
 #pragma warning (disable : 6262)
 
+extern "C" {
 
 #pragma pack(push, 1)
 struct D2WinControlInitStrc
@@ -1483,4 +1484,6 @@ int __stdcall CONTROL_GetType(D2WinControlStrc* pControl)
 D2WinControlStrc* __stdcall sub_6F8AE540()
 {
 	return dword_6F8FE264;
+}
+
 }
