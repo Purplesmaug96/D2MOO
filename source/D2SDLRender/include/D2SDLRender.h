@@ -15,7 +15,7 @@ extern SDL_Renderer* renderer;
 extern uint32_t rendererFlags;
 #endif
 
-#define FUNC_LOG_STUB_QUIET
+// #define FUNC_LOG_STUB_QUIET
 
 // #define FUNC_STUB_USE_MSGBOX
 

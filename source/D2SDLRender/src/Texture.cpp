@@ -34,20 +34,24 @@ static uint32_t wang_32bit_mix(uint32_t a) {
 }
 
 static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell, uint32_t nWidth, uint32_t nHeight) {
+	if (pCell->pPixels == NULL || gPalette == NULL) return NULL;
+
 	SDL_Texture* tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STATIC, nWidth, nHeight);
 	if (!tex) return NULL;
 
-	size_t len = (size_t)nWidth * (size_t)nHeight;
+	uint32_t len = (uint32_t)nWidth * (uint32_t)nHeight;
 	uint8_t* pixels = (uint8_t*)malloc(len * 4); // 4 bytes per pixel (R8 G8 B8 A8)
 	if (!pixels) {SDL_DestroyTexture(tex); return NULL;}
 
-	for (size_t i = 0; i < len; ++i) {
-		size_t base = i * 4;
-		pixels[base + 0] = (uint8_t)i;    // R
-		pixels[base + 1] = (uint8_t)i;    // G
-		pixels[base + 2] = (uint8_t)i;    // B
-		pixels[base + 3] = 255;           // A
+	for (uint32_t i = 0; i < len; ++i) {
+		uint8_t colorIndex = pCell->pPixels[i];
+		printf("pixel data: %u (%u %u %u)\n", colorIndex, gPalette[colorIndex].peRed, gPalette[colorIndex].peGreen, gPalette[colorIndex].peBlue);
+		uint32_t base = i * 4;
+		pixels[base + 0] = gPalette[colorIndex].peRed;      // R
+		pixels[base + 1] = gPalette[colorIndex].peGreen;    // G
+		pixels[base + 2] = gPalette[colorIndex].peBlue;     // B
+		pixels[base + 3] = 255;                             // A
 	}
 
 	int pitch = (int)(nWidth * 4);
@@ -73,7 +77,7 @@ SDL_Texture* GetTexFromCel(D2CellFileStrc* pCellFile, uint32_t* nWidth, uint32_t
 
 	if (cel_textures[key]) return cel_textures[key];
 
-	SDL_Texture* tex = LoadTextureFromCel(pCell, *nWidth, *nHeight);
+	SDL_Texture* tex = LoadTextureFromCel(pCell, pCell->dwWidth, pCell->dwHeight);
 	if (tex) cel_textures[key] = tex;
 	return tex;
 }
