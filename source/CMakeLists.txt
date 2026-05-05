@@ -11,6 +11,10 @@ add_subdirectory(D2Gfx)
 add_subdirectory(D2Sound)
 add_subdirectory(D2MCPClient)
 add_subdirectory(D2Win)
-add_subdirectory(D2Debugger)
+
+if (WIN32)
+	add_subdirectory(D2Debugger)
+endif()
+
 add_subdirectory(Game)
 add_subdirectory(D2SDLRender)
