@@ -10,11 +10,11 @@ set(SDL_STATIC OFF CACHE BOOL "" FORCE)
 add_subdirectory(sdl2 EXCLUDE_FROM_ALL)
 
 set(BUILD_SHARED_LIBS_BACKUP ${BUILD_SHARED_LIBS})
-set(BUILD_SHARED_LIBS OFF) # Build external libs as static libs (or their default settings) for now 
-  
+set(BUILD_SHARED_LIBS OFF) # Build external libs as static libs (or their default settings) for now
+
 if(ENABLE_D2DETOURS_EMBEDDED_PATCHES)
   add_subdirectory(D2.Detours)
-  
+
   # Look for D2SE first, then Diablo II.
   find_program(D2_EXE NAMES D2SE.exe "Game.exe" "Diablo II.exe"
     HINTS $ENV{D2INSTALL} $ENV{D2SE}
@@ -38,29 +38,31 @@ target_include_directories(doctest SYSTEM
 )
 add_library(doctest::doctest ALIAS doctest)
 
-add_library(imgui
-	#source files
-	imgui/imgui.cpp
-	imgui/imgui_draw.cpp
-	imgui/imgui_demo.cpp
-	imgui/imgui_tables.cpp
-	imgui/imgui_widgets.cpp
-	
-	#headers
-	imgui/imgui.h
-	imgui/imgui_internal.h
-	
-	#backend
-	imgui/backends/imgui_impl_win32.cpp
-	imgui/backends/imgui_impl_win32.h
-	imgui/backends/imgui_impl_dx9.cpp
-	imgui/backends/imgui_impl_dx9.h
-)
-target_include_directories(imgui SYSTEM
-	PUBLIC imgui 
-	PUBLIC imgui/backends/
-)
-add_library(imgui::imgui ALIAS imgui)
+if(WIN32)
+	add_library(imgui
+		#source files
+		imgui/imgui.cpp
+		imgui/imgui_draw.cpp
+		imgui/imgui_demo.cpp
+		imgui/imgui_tables.cpp
+		imgui/imgui_widgets.cpp
+
+		#headers
+		imgui/imgui.h
+		imgui/imgui_internal.h
+
+		#backend
+		imgui/backends/imgui_impl_win32.cpp
+		imgui/backends/imgui_impl_win32.h
+		imgui/backends/imgui_impl_dx9.cpp
+		imgui/backends/imgui_impl_dx9.h
+	)
+	target_include_directories(imgui SYSTEM
+		PUBLIC imgui
+		PUBLIC imgui/backends/
+	)
+	add_library(imgui::imgui ALIAS imgui)
+endif()
 
 # Note: we only use squall for a few headers
 # We may want to use the whole library at some point though.
@@ -68,7 +70,13 @@ add_library(squallstorm
 	squall/storm/thread/CCritSect.cpp
 )
 target_include_directories(squallstorm SYSTEM PUBLIC squall)
-target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_WIN)
+if(WIN32)
+	target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_WIN)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+	target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_LINUX)
+else()
+	target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_MAC)
+endif()
 add_library(squall::Storm ALIAS squallstorm)
 
 #STB for image writing
