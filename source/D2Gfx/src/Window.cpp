@@ -257,6 +257,19 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
     // }
 	HideCursor();
 
+	SDL_VERSION(&wmInfo.version);
+	SDL_GetWindowWMInfo(window, &wmInfo);
+	ghWnd = wmInfo.info.win.window;
+
+	if (ghWnd == NULL)
+	{
+		static char szLocalBuffer[256];
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
+		exit(-1);
+	}
+
+	SDL_AddEventWatch(DispatchSDLToWndProc, NULL); // g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
+
 	#ifndef D2_GLIDE_AS_SDLRENDERER
 	BOOL createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
 	#else
@@ -269,18 +282,6 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 
     if (createSurfaceSucceeded)
     {
-		SDL_VERSION(&wmInfo.version);
-		SDL_GetWindowWMInfo(window, &wmInfo);
-		ghWnd = wmInfo.info.win.window;
-
-		if (ghWnd == NULL)
-		{
-			static char szLocalBuffer[256];
-			FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
-			exit(-1);
-		}
-
-		SDL_AddEventWatch(DispatchSDLToWndProc, NULL); // g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
 
 		GdiSetBatchLimit(1u);
         D2GFX_SetContrastAndGamma_6FA710C0();
