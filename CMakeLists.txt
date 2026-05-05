@@ -29,7 +29,7 @@ if(D2MOO_IS_ROOT_PROJECT) # Let parent project decide wether to use its own patc
 	if(NOT DEFINED BUILD_SHARED_LIBS AND D2MOO_ORDINALS_VERSION VERSION_LESS "1.14" )
 		set(BUILD_SHARED_LIBS ON CACHE BOOL "Should we build shared libraries (.DLLs) instead of static libraries.")
 	endif()
-endif()	
+endif()
 
 option(D2MOO_INSTALL "Should we install the D2MOO targets?" ${D2MOO_IS_ROOT_PROJECT})
 option(D2MOO_WITH_STATIC_TESTS "Enable static tests for struct layouts. Use for original game only, not mods." ON)
@@ -63,6 +63,11 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # 3rd party dependencies
 add_subdirectory(external)
 
+include_directories(source/include)
+if (NOT WIN32)
+	include_directories(source/include/win)
+endif()
+
 add_subdirectory(source)
 
 if(ENABLE_D2DETOURS_EMBEDDED_PATCHES AND D2DETOURS_EMBEDDED_PATCHES_DIR)
@@ -78,7 +83,7 @@ if(D2MOO_BUILD_TESTS)
     set(TEST_RUNNER_PARAMS "--force-colors=true" CACHE STRING "Options to add to our test runners commands")
     # In a real project you most likely want to exclude test folders
     # list(APPEND CUSTOM_COVERAGE_EXCLUDE "/test/")
-    
+
     # You can setup some custom variables and add them to the CTestCustom.cmake.in template to have custom ctest settings
     # For example, you can exclude some directories from the coverage reports such as third-parties and tests
     configure_file(
@@ -95,7 +100,7 @@ endif()
 if(${D2MOO_INSTALL})
   include(InstallRequiredSystemLibraries) # Tell CMake that the `install` target needs to install required system libraries (eg: Windows SDK)
   include(GNUInstallDirs)
-  
+
   set(D2MOO_TARGETS_TO_INSTALL D2Common D2Game D2Debugger)
   install(TARGETS ${D2MOO_TARGETS_TO_INSTALL}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/patch
@@ -106,7 +111,7 @@ if(${D2MOO_INSTALL})
       OPTIONAL
     )
   endforeach()
-  
+
   install(FILES README.md TYPE DOC)
   install(DIRECTORY doc/ TYPE DOC)
 
