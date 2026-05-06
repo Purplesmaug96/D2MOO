@@ -15,6 +15,9 @@ typedef uint32_t DWORD;
 
 #define __declspec(x)
 
+#define TRUE true
+#define FALSE false
+
 typedef void* HANDLE;
 
 typedef HANDLE HWND;
@@ -42,6 +45,13 @@ typedef uint8_t BYTE;
 typedef size_t SIZE_T;
 
 typedef int LCID;
+
+enum {
+	DLL_PROCESS_ATTACH=0,
+	DLL_PROCESS_DETACH,
+	DLL_THREAD_ATTACH,
+	DLL_THREAD_DETACH
+};
 
 static inline void OutputDebugStringA(char* str) {
 	printf("OutputDebugStringA: %s\n", str);
