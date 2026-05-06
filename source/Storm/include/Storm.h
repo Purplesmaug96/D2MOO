@@ -1,6 +1,7 @@
-#pragma once 
+#pragma once
 #include <D2Dll.h>
 #include "StormHandles.h"
+#include "windows.h"
 
 // Version 1.10f:
 // List of Storm.dll exports (base address 6ffb0000)
