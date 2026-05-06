@@ -1,7 +1,8 @@
 #pragma once
 #include <D2Dll.h>
 #include "StormHandles.h"
-#include "windows.h"
+#include <windows.h>
+#include <fileapi.h>
 
 // Version 1.10f:
 // List of Storm.dll exports (base address 6ffb0000)
@@ -32,7 +33,11 @@ D2FUNC_DLL_NP(STORM, SNetCreateGame, BOOL, __stdcall, (char *Source, char *a2, c
 D2FUNC_DLL_NP(STORM, SNetDestroy, BOOL, __cdecl, (), 0x1e3a0);  //Storm.#102
 
 /// Not imported by any .dll
+#ifdef _WIN32
 using SNetEnumProviders_Callback = int(__stdcall*)(DWORD, DWORD, DWORD, DWORD);
+#else
+using SNetEnumProviders_Callback = int(*)(DWORD, DWORD, DWORD, DWORD);
+#endif
 D2FUNC_DLL_NP(STORM, SNetEnumProviders, BOOL, __stdcall, (int mincaps, SNetEnumProviders_Callback pCallback), 0x1ec30);  //Storm.#103
 
 /// Not imported by any .dll
