@@ -18,6 +18,11 @@ typedef uint32_t DWORD;
 #define TRUE true
 #define FALSE false
 
+#define _Acquires_lock_(x)
+#define _Releases_lock_(x)
+
+#define _Curr_ NULL
+
 typedef void* HANDLE;
 
 typedef HANDLE HWND;
@@ -52,6 +57,11 @@ enum {
 	DLL_THREAD_ATTACH,
 	DLL_THREAD_DETACH
 };
+
+typedef struct {} CRITICAL_SECTION;
+
+typedef struct {} SECURITY_ATTRIBUTES;
+typedef SECURITY_ATTRIBUTES LPSECURITY_ATTRIBUTES;
 
 static inline void OutputDebugStringA(char* str) {
 	printf("OutputDebugStringA: %s\n", str);

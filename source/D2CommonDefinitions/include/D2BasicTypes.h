@@ -3,7 +3,9 @@
 #include <cstdint>
 #include <Windows.h>
 
+#ifdef _WIN32
 typedef int32_t BOOL;
+#endif
 
 // We want all of the structures to be packed since they come from reverse engineering
 // This also means that if we use external headers, they should be included before this header.
