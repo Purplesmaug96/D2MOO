@@ -13,9 +13,17 @@ typedef uint32_t DWORD;
 typedef void* HANDLE;
 
 typedef HANDLE HWND;
+typedef HANDLE HRGN;
+typedef HANDLE HMODULE;
+typedef HANDLE HDC; // Device Context
 
 typedef intptr_t LPARAM;
 typedef uintptr_t WPARAM;
+
+typedef void* LPVOID;
+typedef char* LPCSTR;
+
+typedef long LONG;
 
 static inline void OutputDebugStringA(char* str) {
 	printf("OutputDebugStringA: %s\n", str);

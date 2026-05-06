@@ -3,6 +3,7 @@
 #include "StormHandles.h"
 #include <windows.h>
 #include <fileapi.h>
+#include <winuser.h>
 
 // Version 1.10f:
 // List of Storm.dll exports (base address 6ffb0000)
