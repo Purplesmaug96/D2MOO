@@ -50,9 +50,6 @@ extern WNDPROC gpfWndProc;
 static void ShowCursor() {if (!gbCursorDisplayed) {SDL_ShowCursor(SDL_ENABLE); gbCursorDisplayed = 1;}}
 static void HideCursor() {if (gbCursorDisplayed) {SDL_ShowCursor(SDL_DISABLE); gbCursorDisplayed = 0;}}
 
-#include <SDL.h>
-#include <windows.h>
-
 /* Translator is made by AI, but i just wanna get something working, will be replaced with a proper SDL_Event handler later */
 
 // Helper function to map basic SDL keycodes to Win32 Virtual Keys (VK_*)
@@ -87,15 +84,15 @@ int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
     WPARAM wParam = 0;
     LPARAM lParam = 0;
 
-    switch (event.type) {
+    switch (event->type) {
         // --- WINDOW EVENTS ---
         case SDL_WINDOWEVENT:
-            switch (event.window.event) {
+            switch (event->window.event) {
                 case SDL_WINDOWEVENT_RESIZED:
                 case SDL_WINDOWEVENT_SIZE_CHANGED:
                     uMsg = WM_SIZE;
                     // Windows expects width and height in the low/high words of lParam
-                    lParam = MAKELPARAM(event.window.data1, event.window.data2);
+                    lParam = MAKELPARAM(event->window.data1, event->window.data2);
                     wParam = SIZE_RESTORED; // Simplified assumption
                     break;
                 case SDL_WINDOWEVENT_CLOSE:
@@ -113,23 +110,23 @@ int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
         // --- MOUSE MOVEMENT ---
         case SDL_MOUSEMOTION:
             uMsg = WM_MOUSEMOVE;
-            lParam = MAKELPARAM(event.motion.x, event.motion.y);
+            lParam = MAKELPARAM(event->motion.x, event->motion.y);
             // Reconstruct the modifier state for wParam
-            if (event.motion.state & SDL_BUTTON_LMASK) wParam |= MK_LBUTTON;
-            if (event.motion.state & SDL_BUTTON_RMASK) wParam |= MK_RBUTTON;
-            if (event.motion.state & SDL_BUTTON_MMASK) wParam |= MK_MBUTTON;
+            if (event->motion.state & SDL_BUTTON_LMASK) wParam |= MK_LBUTTON;
+            if (event->motion.state & SDL_BUTTON_RMASK) wParam |= MK_RBUTTON;
+            if (event->motion.state & SDL_BUTTON_MMASK) wParam |= MK_MBUTTON;
             break;
 
         // --- MOUSE CLICKS ---
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEBUTTONUP:
-            lParam = MAKELPARAM(event.button.x, event.button.y);
-            if (event.button.button == SDL_BUTTON_LEFT) {
-                uMsg = (event.type == SDL_MOUSEBUTTONDOWN) ? WM_LBUTTONDOWN : WM_LBUTTONUP;
-            } else if (event.button.button == SDL_BUTTON_RIGHT) {
-                uMsg = (event.type == SDL_MOUSEBUTTONDOWN) ? WM_RBUTTONDOWN : WM_RBUTTONUP;
-            } else if (event.button.button == SDL_BUTTON_MIDDLE) {
-                uMsg = (event.type == SDL_MOUSEBUTTONDOWN) ? WM_MBUTTONDOWN : WM_MBUTTONUP;
+            lParam = MAKELPARAM(event->button.x, event->button.y);
+            if (event->button.button == SDL_BUTTON_LEFT) {
+                uMsg = (event->type == SDL_MOUSEBUTTONDOWN) ? WM_LBUTTONDOWN : WM_LBUTTONUP;
+            } else if (event->button.button == SDL_BUTTON_RIGHT) {
+                uMsg = (event->type == SDL_MOUSEBUTTONDOWN) ? WM_RBUTTONDOWN : WM_RBUTTONUP;
+            } else if (event->button.button == SDL_BUTTON_MIDDLE) {
+                uMsg = (event->type == SDL_MOUSEBUTTONDOWN) ? WM_MBUTTONDOWN : WM_MBUTTONUP;
             }
             break;
 
@@ -138,7 +135,7 @@ int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
             uMsg = WM_MOUSEWHEEL;
             // Win32 expects wheel delta in the high-order word of wParam.
             // SDL normalizes scrolling (often 1 or -1). Win32 uses WHEEL_DELTA (120).
-            wParam = MAKEWPARAM(0, event.wheel.y * WHEEL_DELTA);
+            wParam = MAKEWPARAM(0, event->wheel.y * WHEEL_DELTA);
             // Note: Win32 lParam normally contains screen coordinates of the cursor here.
             // SDL doesn't package them in the wheel event, so we pass 0 unless you manually
             // track and inject the last known mouse position.
@@ -147,17 +144,17 @@ int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
         // --- KEYBOARD EVENTS ---
         case SDL_KEYDOWN:
         case SDL_KEYUP:
-            uMsg = (event.type == SDL_KEYDOWN) ? WM_KEYDOWN : WM_KEYUP;
-            wParam = MapSDLKeyToVK(event.key.keysym.sym);
+            uMsg = (event->type == SDL_KEYDOWN) ? WM_KEYDOWN : WM_KEYUP;
+            wParam = MapSDLKeyToVK(event->key.keysym.sym);
 
             // Win32 packs a lot of data into the keyboard lParam (repeat count, scancode, flags)
             lParam = 1; // Repeat count (low 16 bits)
-            lParam |= (event.key.keysym.scancode << 16); // Scan code
+            lParam |= (event->key.keysym.scancode << 16); // Scan code
 
-            if (event.type == SDL_KEYUP) {
+            if (event->type == SDL_KEYUP) {
                 lParam |= (1 << 31); // Transition state flag (1 for keyup)
                 lParam |= (1 << 30); // Previous key state flag (1 if key was down before)
-            } else if (event.key.repeat) {
+            } else if (event->key.repeat) {
                 lParam |= (1 << 30); // Previous state flag is 1 for repeated down events
             }
             break;
@@ -167,7 +164,7 @@ int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
             // SDL_TEXTINPUT roughly correlates to WM_CHAR, which is usually generated
             // by TranslateMessage() in a standard Win32 loop.
             uMsg = WM_CHAR;
-            wParam = (WPARAM)event.text.text[0]; // Naive cast, works for basic ASCII
+            wParam = (WPARAM)event->text.text[0]; // Naive cast, works for basic ASCII
             lParam = 1; // Repeat count
             break;
 
@@ -260,6 +257,19 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
     // }
 	HideCursor();
 
+	SDL_VERSION(&wmInfo.version);
+	SDL_GetWindowWMInfo(window, &wmInfo);
+	ghWnd = wmInfo.info.win.window;
+
+	if (ghWnd == NULL)
+	{
+		static char szLocalBuffer[256];
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
+		exit(-1);
+	}
+
+	SDL_AddEventWatch(DispatchSDLToWndProc, NULL); // g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
+
 	#ifndef D2_GLIDE_AS_SDLRENDERER
 	BOOL createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
 	#else
@@ -272,18 +282,6 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 
     if (createSurfaceSucceeded)
     {
-		SDL_VERSION(&wmInfo.version);
-		SDL_GetWindowWMInfo(window, &wmInfo);
-		ghWnd = wmInfo.info.win.window;
-
-		if (ghWnd == NULL)
-		{
-			static char szLocalBuffer[256];
-			FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
-			exit(-1);
-		}
-
-		SDL_AddEventWatch(DispatchSDLToWndProc, NULL); // g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
 
 		GdiSetBatchLimit(1u);
         D2GFX_SetContrastAndGamma_6FA710C0();

@@ -15,8 +15,11 @@ extern SDL_Renderer* renderer;
 extern uint32_t rendererFlags;
 #endif
 
-// 
+// #define FUNC_LOG_STUB_QUIET
+
 // #define FUNC_STUB_USE_MSGBOX
+
+#ifndef FUNC_LOG_STUB_QUIET
 
 #ifdef FUNC_STUB_USE_MSGBOX
 
@@ -24,7 +27,6 @@ static inline void FUNC_STUB(const char* func) {
 	char dstBuf[512];
 	sprintf(dstBuf, "D2SDLRender: Stubbed function '%s' called\n", func);
 	printf("%s", dstBuf);
-	fflush(stdout);
 	MessageBoxA(NULL, dstBuf, "D2SDLRender: Stubbed function called", MB_OK);
 }
 
@@ -37,7 +39,6 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 	char dstBuf[512];
 	sprintf(dstBuf, "D2SDLRender: Stubbed function '%s', args: %s called\n", func, argsBuf);
 	printf("%s", dstBuf);
-	fflush(stdout);
 	MessageBoxA(NULL, dstBuf, "D2SDLRender: Stubbed function called", MB_OK);
 }
 
@@ -45,7 +46,6 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 
 static inline void FUNC_STUB(const char* func) {
 	printf("D2SDLRender: Stubbed function '%s' called\n", func);
-	fflush(stdout);
 }
 
 static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
@@ -55,7 +55,6 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 	vsnprintf(argsBuf, sizeof argsBuf, fmt, ap);
 	va_end(ap);
 	printf("D2SDLRender: Stubbed function '%s' called, args: %s\n", func, argsBuf);
-	fflush(stdout);
 }
 
 #endif
@@ -89,6 +88,21 @@ static inline void FUNC_LOGSEMI_ARGS(const char* func, const char* fmt, ...) {
 	printf("D2SDLRender: Logged and semi-implemented function '%s' called, args: %s\n", func, argsBuf);
 	fflush(stdout);
 }
+
+#else
+
+static inline void FUNC_STUB(const char* func) {}
+
+static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {}
+
+static inline void FUNC_LOG(const char* func) {}
+
+static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {}
+
+static inline void FUNC_LOGSEMI(const char* func) {}
+static inline void FUNC_LOGSEMI_ARGS(const char* func, const char* fmt, ...) {}
+
+#endif
 
 static inline void _FUNC_ERR(const char* func, const char* errBuf, const char* file, const int line) {
 	char dstBuf[512];
