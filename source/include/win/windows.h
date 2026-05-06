@@ -8,8 +8,11 @@ typedef uint32_t DWORD;
 
 #define __stdcall
 #define __cdecl
+#define __fastcall
 
 typedef void* HANDLE;
+
+typedef HANDLE HWND;
 
 typedef intptr_t LPARAM;
 typedef uintptr_t WPARAM;
