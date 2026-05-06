@@ -45,6 +45,7 @@ typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 
 typedef long LONG;
+typedef unsigned long ULONG;
 typedef uint UINT;
 typedef uint8_t BYTE;
 typedef size_t SIZE_T;
@@ -62,6 +63,24 @@ typedef struct {} CRITICAL_SECTION;
 
 typedef struct {} SECURITY_ATTRIBUTES;
 typedef SECURITY_ATTRIBUTES LPSECURITY_ATTRIBUTES;
+
+// Source - https://stackoverflow.com/a/19472847
+// Posted by Reed Copsey
+// Retrieved 2026-05-06, License - CC BY-SA 3.0
+
+typedef DWORD (__stdcall *LPTHREAD_START_ROUTINE) (LPVOID lpThreadParameter);
+
+typedef struct {
+	DWORD dwOSVersionInfoSize;
+	uint8_t dwPlatformId;
+} OSVERSIONINFOA;
+
+#define VER_PLATFORM_WIN32_NT 0
+static inline BOOL GetVersionExA(OSVERSIONINFOA* verInfo) {
+	verInfo->dwPlatformId = VER_PLATFORM_WIN32_NT;
+	return TRUE;
+}
+
 
 static inline void OutputDebugStringA(char* str) {
 	printf("OutputDebugStringA: %s\n", str);
