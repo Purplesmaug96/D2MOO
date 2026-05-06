@@ -2,8 +2,10 @@
 #include <D2Dll.h>
 #include "StormHandles.h"
 #include <windows.h>
+#include <windef.h>
 #include <fileapi.h>
 #include <winuser.h>
+#include <wingdi.h>
 
 // Version 1.10f:
 // List of Storm.dll exports (base address 6ffb0000)
@@ -231,7 +233,7 @@ D2FUNC_DLL_NP(STORM, SFileCloseFile, BOOL, __stdcall, (HANDLE hFile), 0x14900); 
 D2FUNC_DLL_NP(STORM, SFileDdaBegin, int, __stdcall, (HANDLE hFile, int a2, int a3), 0x14b30);  //Storm.#254
 
 /// Imported by ['D2sound.dll']
-D2FUNC_DLL_NP(STORM, SFileDdaBeginEx, int, __stdcall, (HANDLE hFile, signed int a2, unsigned int a3, unsigned __int32 lDistanceToMove, signed int a5, signed int a6, int a7), 0x14b60);  //Storm.#255
+D2FUNC_DLL_NP(STORM, SFileDdaBeginEx, int, __stdcall, (HANDLE hFile, signed int a2, unsigned int a3, /*unsigned __int32*/ uint32_t lDistanceToMove, signed int a5, signed int a6, int a7), 0x14b60);  //Storm.#255
 
 /// Imported by ['D2sound.dll']
 D2FUNC_DLL_NP(STORM, SFileDdaDestroy, BOOL, __cdecl, (), 0x167f0);  //Storm.#256
