@@ -81,6 +81,8 @@ static inline BOOL GetVersionExA(OSVERSIONINFOA* verInfo) {
 	return TRUE;
 }
 
+#define __debugbreak() printf("__debugbreak\n")
+#define _Analysis_assume_(x)
 
 static inline void OutputDebugStringA(char* str) {
 	printf("OutputDebugStringA: %s\n", str);

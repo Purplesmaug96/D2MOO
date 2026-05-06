@@ -1,4 +1,5 @@
-#include <cstdint>
+#include <stdint.h>
+#include <ctype.h>
 #include <limits>
 
 #include <Calc.h>
@@ -11,7 +12,7 @@ int __fastcall DATATBLS_IntStackPop(Fog64IntStack* pCalcStack)
 	{
 		return 0;
 	}
-	
+
 	return pCalcStack->tData[--pCalcStack->nSize];
 }
 
@@ -137,7 +138,7 @@ static void DATATBLS_EvaluateBinaryOperator(Fog64IntStack* pCalcStack, FOGASTTyp
 		{
 			DATATBLS_IntStackPush(pCalcStack, 0);
 		}
-		else 
+		else
 		{
 			DATATBLS_IntStackPush(pCalcStack, nLeftHandSide / nRightHandSide);
 		}
@@ -241,7 +242,7 @@ int __stdcall DATATBLS_CalcEvaluateExpression(const FOGASTNodeStrc* pExpressionB
 			return DATATBLS_IntStackPop(&tCalcStack);
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -340,7 +341,7 @@ static int GetASTNodeParameterCount(FOGASTType nASTType, int nTokenAssociatedVal
 	}
 }
 
-static const char nCacheExceptionsList[] = { 
+static const char nCacheExceptionsList[] = {
 	23,
 	1,
 	2,
@@ -488,7 +489,7 @@ static const char* DATATBLS_ParseLinkToken(const char* szExpression, FOGExpressi
 		pLinkNameCurCharacter++;
 
 	tLinkNameBuffer[nLinkNameSize] = 0;
-	
+
 	DATATBLS_ResolveConstantLink(tLinkNameBuffer, pCalc, pOutTokenType, pTokenAssociatedValue, pfnLinkParse);
 
 	return pLinkNameCurCharacter;
@@ -562,7 +563,7 @@ static const char* DATATABLS_ParseSubExpression(const char* szExpression, FOGExp
 			return szExpression + 1;
 		}
 	}
-	
+
 	// If we couldn't resolve a function, try constants
 	DATATBLS_ResolveConstantLink(tSubExpressionBuffer, pCalc, pOutTokenType, pTokenAssociatedValue, pfnLinkParse);
 	return szExpression;
@@ -657,7 +658,7 @@ const char* DATATABLS_ParseExpressionToken(const char* szExpression, FOGCalcExpr
 		case '>':
 			if (*(szExpression + 1) == '=')
 			{
-				szExpression++;	
+				szExpression++;
 				*pOutTokenType = TOKEN_GREATER_OR_EQ;
 			}
 			else
@@ -911,7 +912,7 @@ int __stdcall DATATBLS_CompileExpression(const char* szFormulaString, FOGASTNode
 	{
 		const int32_t nEvaluatedValue = DATATBLS_CalcEvaluateExpression(pOutASTBuffer, pASTBufferPos - pOutASTBuffer, 0, 0, 0, 0);
 		pASTBufferPos = DATATBLS_ExpressionBuffer_PushRawConstant(pOutASTBuffer, pOutASTBuffer, nOutASTBufferSize, &tContext, nEvaluatedValue);
-		pASTBufferPos = DATATBLS_Evaluate_HandleNewOp(pASTBufferPos, pOutASTBuffer, nOutASTBufferSize, &tContext, 
+		pASTBufferPos = DATATBLS_Evaluate_HandleNewOp(pASTBufferPos, pOutASTBuffer, nOutASTBufferSize, &tContext,
 			AST_None, 0, 0
 		);
 	}
