@@ -68,6 +68,13 @@ if (NOT WIN32)
 	include_directories(source/include/win)
 endif()
 
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-write-strings -fpermissive")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fpermissive")
+
 add_subdirectory(source)
 
 if(ENABLE_D2DETOURS_EMBEDDED_PATCHES AND D2DETOURS_EMBEDDED_PATCHES_DIR)
