@@ -10,7 +10,7 @@ enum {
 
 uint32_t __winerror_LastError = ERROR_NONE;
 
-static inline void /* Should be DWORD, but not defined here */ SetLastError(uint32_t errorCode) {
+static inline void SetLastError(uint32_t errorCode) {
 	__winerror_LastError = errorCode;
 }
 

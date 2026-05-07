@@ -2,27 +2,41 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
-#include <ws2def.h>
+// #include <ws2def.h>
 
 typedef int SOCKET;
 
 typedef struct {} WSADATA;
 typedef WSADATA* LPWSADATA;
 
-#define AF_INET 0 // address family for IPv4
+#define INVALID_SOCKET 0
 
 enum {
-	SOCK_STREAM=0, // Supports reliable connection-oriented byte stream communication.
-	SOCK_DGRAM, // Supports unreliable connectionless datagram communication.
-	SOCK_RAW // Supports raw access to the transport protocol.
-};
-
-enum {
-	SOCKET_ERROR=0
+	SOCKET_ERROR_NONE=0, // Made up
+	SOCKET_ERROR
 };
 
 int WSAStartup(/*WORD*/ uint16_t wVersionRequired, LPWSADATA lpWSAData) {
 	printf("Stubbed function WSAStartup called\n");
 	return SOCKET_ERROR;
 }
+
+uint32_t __winsock2_WSA_LastError = SOCKET_ERROR_NONE;
+
+static inline void WSASetLastError(uint32_t errorCode) {
+	__winsock2_WSA_LastError = errorCode;
+}
+
+static inline uint32_t /* Should be DWORD, but not defined here */ WSAGetLastError() {
+	return __winsock2_WSA_LastError;
+}
+
+SOCKET socket(int af, int type, int protocol) {
+	printf("Stubbed function socket called\n");
+	return INVALID_SOCKET;
+}
+
