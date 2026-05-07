@@ -2,6 +2,7 @@
 
 #include <D2Dll.h>
 #include <cstdint>
+#include <windows.h>
 
 #pragma pack(1)
 

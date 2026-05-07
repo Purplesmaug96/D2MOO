@@ -74,7 +74,7 @@ void __cdecl Unicode::sprintf(
     while (&format[i_format] != strstr_result
         && format[i_format].ch != L'\0'
         && i_buffer < buffer_size) {
-      
+
       buffer[i_buffer] = format[i_format];
 
       ++i_format;

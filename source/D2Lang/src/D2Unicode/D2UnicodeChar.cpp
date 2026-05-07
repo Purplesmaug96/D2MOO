@@ -24,6 +24,7 @@
 
 #include <D2Unicode.h>
 #include <D2StrTable.h>
+#include <ctype.h>
 
 unsigned short Unicode::_toLowerTable[256] = {
   // C0 Controls
