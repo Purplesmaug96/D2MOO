@@ -1,6 +1,7 @@
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
+#include <winuser.h>
 
 typedef void(__stdcall* FaultAssertHandler)(const char*, unsigned __int32, const char*);
 typedef BOOL(__stdcall* MessageSource)(DWORD dwMessageId, char* buffer, unsigned int iMaxLength);

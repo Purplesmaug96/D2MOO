@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdarg.h>
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -66,6 +67,7 @@ enum {
 };
 
 typedef struct {} CRITICAL_SECTION;
+typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
 
 typedef struct {} SECURITY_ATTRIBUTES;
 typedef SECURITY_ATTRIBUTES LPSECURITY_ATTRIBUTES;
@@ -116,6 +118,10 @@ static inline LPSTR lstrcpyA(LPSTR  lpString1, LPCSTR lpString2) {
 	return strcpy(lpString1, lpString2);
 }
 
+static inline LPSTR lstrcpynA(LPSTR  lpString1, LPCSTR lpString2, int iMaxLength) {
+	return strncpy(lpString1, lpString2, iMaxLength);
+}
+
 static inline LPSTR lstrcatA(LPSTR  lpString1, LPCSTR lpString2) {
 	return strcat(lpString1, lpString2);
 }
@@ -127,4 +133,63 @@ static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD 
 
 static inline void Sleep(DWORD dwMilliseconds) {
 	sleep(dwMilliseconds / 1000);
+}
+
+static inline void InitializeCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
+	printf("Stubbed function InitializeCriticalSection called\n");
+}
+
+static inline void DeleteCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
+	printf("Stubbed function DeleteCriticalSection called\n");
+}
+
+static inline void EnterCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
+	printf("Stubbed function EnterCriticalSection called\n");
+}
+
+static inline void LeaveCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
+	printf("Stubbed function LeaveCriticalSection called\n");
+}
+
+static inline int wsprintfA(char* lpOut, const char* lpFmt, ...) {
+    int result;
+    va_list args;
+
+    va_start(args, lpFmt);
+
+    result = vsprintf(lpOut, lpFmt, args);
+
+    va_end(args);
+
+    return result;
+}
+
+static inline int MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) {
+	printf("Stubbed function MessageBoxA called\n");
+	return 0;
+}
+
+enum {
+	IDABORT=0,
+	IDC_STATIC,
+	IDCANCEL,
+	IDD_ABOUTBOX,
+	IDI_PROJECTNAME,
+	IDI_SMALL,
+	IDIGNORE,
+	IDM_ABOUT,
+	IDM_EXIT,
+	IDNO,
+	IDOK,
+	IDRETRY,
+	IDS_APP_TITLE,
+	IDYES
+};
+
+static inline HANDLE GetCurrentProcess() {
+	return NULL;
+}
+
+static inline BOOL TerminateProcess(HANDLE hProcess, UINT uExitCode) {
+	return FALSE;
 }
