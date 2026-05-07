@@ -8,6 +8,9 @@
 #include "D2Net.h"
 #include "Server.h"
 
+#include <winsock2.h>
+#include <minwindef.h>
+
 
 #pragma warning (disable: 6387)
 #pragma warning (disable: 28159)
@@ -107,7 +110,7 @@ int32_t __stdcall D2NET_10025()
 
 	ghClientThread = CreateThread(nullptr, 0, CLIENT_ThreadProc, nullptr, 0, &gdwThreadId);
 	SetThreadPriority(ghClientThread, 1);
-	
+
 	SetThreadDescription(ghClientThread, L"D2ClientThread"); // D2Moo only
 	return 2;
 }
