@@ -2,6 +2,7 @@
 
 #include <D2Dll.h>
 #include <D2BasicTypes.h>
+#include <wingdi.h>
 
 //1.10f Image base: 0x6FDF0000
 
@@ -11,7 +12,7 @@ constexpr int D2CMPImageBase = 0x6FDF0000;
 
 #pragma pack(1)
 
-enum D2TileMaterialFlags : uint16_t 
+enum D2TileMaterialFlags : uint16_t
 {
 	TILE_FLAGS_OTHER = 0x1,
 	TILE_FLAGS_WATER = 0x2,
@@ -115,9 +116,9 @@ struct D2TileLibraryHashRefStrc
 
 struct D2TileLibraryHashNodeStrc
 {
-	int32_t nStyle;							//0x00 aka nIndex;								
-	int32_t nSequence;						//0x04 aka nSequence;							
-	int32_t nType;							//0x08 aka nOrientation;						
+	int32_t nStyle;							//0x00 aka nIndex;
+	int32_t nSequence;						//0x04 aka nSequence;
+	int32_t nType;							//0x08 aka nOrientation;
 	D2TileLibraryHashRefStrc* pRef;			//0x0C
 	D2TileLibraryHashNodeStrc* pPrev;		//0x10
 };
