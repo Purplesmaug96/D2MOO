@@ -193,3 +193,11 @@ static inline HANDLE GetCurrentProcess() {
 static inline BOOL TerminateProcess(HANDLE hProcess, UINT uExitCode) {
 	return FALSE;
 }
+
+static inline void _lock_file(FILE* file) {
+	printf("Stubbed function _lock_file called\n");
+}
+
+static inline void _unlock_file(FILE* file) {
+	printf("Stubbed function _unlock_file called\n");
+}

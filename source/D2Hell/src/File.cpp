@@ -1,4 +1,5 @@
 #include "File.h"
+#include <stdio.h>
 
 //D2Common.0x6FDC45EE
 //D2Game.0x6FD1D70D
