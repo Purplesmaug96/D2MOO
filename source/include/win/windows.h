@@ -2,7 +2,9 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 typedef bool BOOL;
 typedef uint32_t DWORD;
@@ -23,6 +25,8 @@ typedef uint32_t DWORD;
 
 #define _Curr_ NULL
 
+#define MAX_PATH 256 // Might need to be increased later
+
 typedef void* HANDLE;
 
 typedef HANDLE HWND;
@@ -40,7 +44,7 @@ typedef intptr_t LRESULT;
 typedef void* LPVOID;
 typedef const void* LPCVOID;
 typedef char* LPSTR;
-typedef char* LPCSTR;
+typedef const char* LPCSTR;
 typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 
@@ -49,6 +53,8 @@ typedef unsigned long ULONG;
 typedef uint UINT;
 typedef uint8_t BYTE;
 typedef size_t SIZE_T;
+typedef char CHAR;
+typedef void VOID;
 
 typedef int LCID;
 
@@ -86,4 +92,39 @@ static inline BOOL GetVersionExA(OSVERSIONINFOA* verInfo) {
 
 static inline void OutputDebugStringA(char* str) {
 	printf("OutputDebugStringA: %s\n", str);
+}
+
+static inline DWORD GetLogicalDriveStringsA(DWORD nBufferLength,  LPSTR lpBuffer) {
+	return 0; // Length written
+}
+
+enum {
+	DRIVE_UNKNOWN=0,
+	DRIVE_NO_ROOT_DIR,
+	DRIVE_REMOVABLE,
+	DRIVE_FIXED,
+	DRIVE_REMOTE,
+	DRIVE_CDROM,
+	DRIVE_RAMDISK
+};
+
+static inline UINT GetDriveTypeA(LPCSTR lpRootPathName) {
+	return DRIVE_UNKNOWN;
+}
+
+static inline LPSTR lstrcpyA(LPSTR  lpString1, LPCSTR lpString2) {
+	return strcpy(lpString1, lpString2);
+}
+
+static inline LPSTR lstrcatA(LPSTR  lpString1, LPCSTR lpString2) {
+	return strcat(lpString1, lpString2);
+}
+
+static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD nSize) {
+	strncpy(lpFilename, "GetModuleFileNameA (stubbed)", nSize);
+	return TRUE;
+}
+
+static inline void Sleep(DWORD dwMilliseconds) {
+	sleep(dwMilliseconds / 1000);
 }

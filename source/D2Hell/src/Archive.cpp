@@ -30,7 +30,10 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
+#include <limits.h>
 #include <windows.h>
+#include <winerror.h>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -145,7 +148,7 @@ void __fastcall ARCHIVE_ReadFileToBuffer(HD2ARCHIVE hArchive, HSFILE hFile, void
 
 /**
  * hArchive identifier is confirmed via v1.00 #D2Common.0xFUN_100777f3.
- * 
+ *
  * Static library; may be defined in multiple places than ones listed:
  * 1.00: D2Lang.0x10005029
  * 1.10: D2Lang.0x6FC14708 OR D2Common.0x6FDC4268 OR D2Win.0x6F8B22F8
@@ -155,7 +158,7 @@ void __fastcall ARCHIVE_ReadFileToBuffer(HD2ARCHIVE hArchive, HSFILE hFile, void
 void* __fastcall ARCHIVE_AllocateBufferAndReadFile(HD2ARCHIVE hArchive, const char* szFilePath, size_t* pdwBytesWritten, const char* szSrcPath, int nLine)
 {
 	HSFILE hFile;
-	
+
 	BOOL bOpenFileSucceeded = ARCHIVE_OpenFile(hArchive, szFilePath, &hFile, FALSE);
 	if (!bOpenFileSucceeded)
 	{
@@ -190,12 +193,12 @@ int __fastcall ARCHIVE_FindAndOpenArchiveFromCDRom(LPSTR szOutPath, LPCSTR szFil
 	{
 		return FALSE;
 	}
-	
+
 	while (*szFileName == '\\')
 	{
 		++szFileName;
 	}
-	
+
 	for(const char* pCurrentDriveStr = Buffer; *pCurrentDriveStr != '\0'; pCurrentDriveStr = &pCurrentDriveStr[strlen(pCurrentDriveStr) + 1])
 	{
 		if (GetDriveTypeA(pCurrentDriveStr) == DRIVE_CDROM)
@@ -226,7 +229,7 @@ HSARCHIVE __fastcall ARCHIVE_FindAndOpenArchive(LPSTR szOutPath, LPCSTR szModule
 	{
 		*szOutPath = 0;
 	}
-	
+
 	char* pLastBackslash =  strrchr(szOutPath, '\\');
 	if (pLastBackslash)
 	{
