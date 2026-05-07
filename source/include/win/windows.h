@@ -47,6 +47,8 @@ typedef void* LPVOID;
 typedef const void* LPCVOID;
 typedef char* LPSTR;
 typedef const char* LPCSTR;
+typedef wchar_t* PWSTR;
+typedef const wchar_t* PCWSTR;
 typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 
@@ -71,13 +73,15 @@ typedef struct {} CRITICAL_SECTION;
 typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
 
 typedef struct {} SECURITY_ATTRIBUTES;
-typedef SECURITY_ATTRIBUTES LPSECURITY_ATTRIBUTES;
+typedef SECURITY_ATTRIBUTES* LPSECURITY_ATTRIBUTES;
 
 // Source - https://stackoverflow.com/a/19472847
 // Posted by Reed Copsey
 // Retrieved 2026-05-06, License - CC BY-SA 3.0
 
 typedef DWORD (__stdcall *LPTHREAD_START_ROUTINE) (LPVOID lpThreadParameter);
+
+typedef uint32_t HRESULT;
 
 typedef struct {
 	DWORD dwOSVersionInfoSize;
@@ -347,4 +351,28 @@ static inline char * _i64tow(long long value, char *buffer, int radix) {
 
 static inline char * _ui64tow(unsigned long long value, char *buffer, int radix) {
 	return __windows_itoa(value, buffer, radix);
+}
+
+static inline DWORD WaitForSingleObject(HANDLE hHandle, DWORD dwMilliseconds) {
+	printf("Stubbed function WaitForSingleObject called\n");
+	return 0xffffffff; // WAIT_FAILED
+}
+
+static inline HANDLE CreateThread(LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId) {
+	printf("Stubbed function CreateThread called\n");
+	return NULL;
+}
+
+static inline void ExitThread(DWORD dwExitCode) {
+	exit(dwExitCode);
+}
+
+static inline BOOL SetThreadPriority(HANDLE hThread, int nPriority) {
+	printf("Stubbed function SetThreadPriority called\n");
+	return FALSE;
+}
+
+static inline HRESULT SetThreadDescription(HANDLE hThread, PCWSTR lpThreadDescription) {
+	printf("Stubbed function SetThreadDescription called\n");
+	return 0;
 }
