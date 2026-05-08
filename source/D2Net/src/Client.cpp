@@ -202,9 +202,15 @@ DWORD __stdcall CLIENT_ThreadProc(void* a1)
 
 	while (!dword_6FC0B25C)
 	{
+		#ifdef _WIN32
 		fd_set readfds = {};
 		readfds.fd_array[0] = gClientSocket;
 		readfds.fd_count = 1;
+		#else
+		fd_set readfds;
+		FD_ZERO(&readfds);
+		FD_SET(gClientSocket, &readfds);
+		#endif
 
 		timeval timeout = {};
 		timeout.tv_sec = 0;
