@@ -1,7 +1,11 @@
 
 D2MOO_prepare_targets(D2Net)
 
+if(WIN32)
 target_link_libraries(${D2NetImplName} PRIVATE D2CommonDefinitions Fog Storm ws2_32)
+else()
+target_link_libraries(${D2NetImplName} PRIVATE D2CommonDefinitions Fog Storm)
+endif()
 
 target_sources(${D2NetImplName}
   PRIVATE
