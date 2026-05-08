@@ -36,8 +36,6 @@ static inline uint32_t /* Should be DWORD, but not defined here */ WSAGetLastErr
 	return __winsock2_WSA_LastError;
 }
 
-SOCKET socket(int af, int type, int protocol) {
-	printf("Stubbed function socket called\n");
-	return INVALID_SOCKET;
+static inline int __WSAFDIsSet(SOCKET fd, fd_set *fdsetp) {
+	return FD_ISSET(fd, fdsetp);
 }
-
