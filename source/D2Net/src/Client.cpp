@@ -1,6 +1,8 @@
 #include "Client.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <Fog.h>
 #include <Storm.h>
