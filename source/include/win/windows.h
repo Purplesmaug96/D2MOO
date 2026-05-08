@@ -4,13 +4,12 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdarg.h>
-#include <sys/types.h>
 #include <sys/time.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <assert.h>
 
-typedef bool BOOL;
+typedef int BOOL;
 typedef uint32_t DWORD;
 
 #define __stdcall
@@ -54,9 +53,9 @@ typedef const wchar_t* PCWSTR;
 typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 
-typedef long LONG;
-typedef unsigned long ULONG;
-typedef uint UINT;
+typedef int32_t LONG;
+typedef uint32_t ULONG;
+typedef unsigned int UINT;
 typedef uint8_t BYTE;
 typedef size_t SIZE_T;
 typedef char CHAR;
@@ -139,7 +138,7 @@ static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD 
 }
 
 static inline void Sleep(DWORD dwMilliseconds) {
-	sleep(dwMilliseconds / 1000);
+	sleep(dwMilliseconds / 1000.0f);
 }
 
 static inline void InitializeCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {
@@ -333,6 +332,9 @@ static inline char * _ui64toa(unsigned long long value, char *buffer, int radix)
 	return __windows_itoa(value, buffer, radix);
 }
 
+// This implementation is likely incorrect, will need special handling
+#ifdef __WINDOWS_SHIM_ENABLE_XTOW
+
 // Wide
 
 static inline char * _itow(int value, char *buffer, int radix) {
@@ -354,6 +356,8 @@ static inline char * _i64tow(long long value, char *buffer, int radix) {
 static inline char * _ui64tow(unsigned long long value, char *buffer, int radix) {
 	return __windows_itoa(value, buffer, radix);
 }
+
+#endif
 
 static inline DWORD WaitForSingleObject(HANDLE hHandle, DWORD dwMilliseconds) {
 	printf("Stubbed function WaitForSingleObject called\n");
@@ -382,7 +386,8 @@ static inline HRESULT SetThreadDescription(HANDLE hThread, PCWSTR lpThreadDescri
 static inline DWORD GetTickCount() {
 	timeval tv;
 	gettimeofday(&tv, 0);
-	return (DWORD)(tv.tv_sec * 1000.0f);
+	unsigned int ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000.0f);
+	return ms;
 }
 
 // Source - https://stackoverflow.com/a/1513215
