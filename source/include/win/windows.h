@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <sys/types.h>
+#include <sys/time.h>
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -375,4 +376,10 @@ static inline BOOL SetThreadPriority(HANDLE hThread, int nPriority) {
 static inline HRESULT SetThreadDescription(HANDLE hThread, PCWSTR lpThreadDescription) {
 	printf("Stubbed function SetThreadDescription called\n");
 	return 0;
+}
+
+static inline DWORD GetTickCount() {
+	timeval tv;
+	gettimeofday(&tv, 0);
+	return (DWORD)(tv.tv_sec * 1000.0f);
 }
