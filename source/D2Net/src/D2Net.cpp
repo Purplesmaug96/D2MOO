@@ -4,6 +4,7 @@
 
 #include <Fog.h>
 
+#include "__windows_shim_local_wsa_lasterror.h"
 
 #pragma warning (disable: 28159)
 

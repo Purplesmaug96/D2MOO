@@ -21,12 +21,16 @@ enum {
 	SOCKET_ERROR
 };
 
-int WSAStartup(/*WORD*/ uint16_t wVersionRequired, LPWSADATA lpWSAData) {
+static inline int WSAStartup(/*WORD*/ uint16_t wVersionRequired, LPWSADATA lpWSAData) {
 	printf("Stubbed function WSAStartup called\n");
 	return SOCKET_ERROR;
 }
 
-uint32_t __winsock2_WSA_LastError = SOCKET_ERROR_NONE;
+#ifdef __WINDOWS_SHIM_WSA_LASTERROR_LOCAL
+#include "__windows_shim_local_wsa_lasterror.h"
+#else
+extern uint32_t __winsock2_WSA_LastError;
+#endif
 
 static inline void WSASetLastError(uint32_t errorCode) {
 	__winsock2_WSA_LastError = errorCode;
