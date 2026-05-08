@@ -38,7 +38,7 @@ D2COMMON_DLL_DECL uint32_t  __fastcall SEED_GetHighSeed(D2SeedStrc* pSeed);
 //D2Common.0x6FD78E30 + Inlined at many places
 inline uint64_t __fastcall SEED_RollRandomNumber(D2SeedStrc* pSeed)
 {
-	uint64_t lSeed = pSeed->nHighSeed + 0x6AC690C5i64 * pSeed->nLowSeed;
+	uint64_t lSeed = pSeed->nHighSeed + (int64_t)0x6AC690C5 * pSeed->nLowSeed;
 
 	pSeed->lSeed = lSeed;
 
