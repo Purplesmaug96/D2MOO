@@ -10,7 +10,13 @@ typedef void* HANDLE;
 // Quite possible the wrong place
 typedef HANDLE HWND;
 typedef HANDLE HRGN;
-typedef HANDLE HMODULE;
+
+typedef struct {
+	char* name;
+	void* dlHandle;
+} __windows_shim_struct_HMODULE;
+typedef __windows_shim_struct_HMODULE* HMODULE;
+
 typedef HANDLE HDC; // Device Context
 typedef HANDLE HINSTANCE;
 typedef HANDLE HGDIOBJ;
