@@ -28,13 +28,17 @@ D2HoverTextStrc* __stdcall CHAT_AllocHoverMsg(void* pMemPool, const char* szText
 	}
 
 	pHoverMsg = D2_CALLOC_STRC_POOL(pMemPool, D2HoverTextStrc);
-	
+
 	pHoverMsg->dwDisplayTime = 8 * nLength + 125;
 	pHoverMsg->dwExpireTime = 8 * nLength + 125 + nTimeout;
 	pHoverMsg->nLangId = STRTABLE_GetLanguage();
 	pHoverMsg->bUsed = FALSE;
 
+	#ifdef _WIN32
 	strncpy_s(pHoverMsg->szMsg, szText, nLength + 1);
+	#else
+	strncpy(pHoverMsg->szMsg, szText, nLength + 1);
+	#endif
 	pHoverMsg->szMsg[nLength + 1] = '\0';
 
 	return pHoverMsg;
