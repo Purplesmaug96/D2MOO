@@ -43,13 +43,13 @@ typedef int LCID;
 // Posted by Alex B, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-05-08, License - CC BY-SA 2.5
 
-// static inline int fopen_s(FILE **f, const char *name, const char *mode) {
-//     int ret = 0;
-//     assert(f);
-//     *f = fopen(name, mode);
-//     // Can't be sure about 1-to-1 mapping of errno and MS' errno_t
+static inline int fopen_s(FILE **f, const char *name, const char *mode) {
+    int ret = 0;
+    assert(f);
+    *f = fopen(name, mode);
+    // Can't be sure about 1-to-1 mapping of errno and MS' errno_t
 
-//     // if (!*f)
-//     //     ret = errno;
-//     return ret;
-// }
+    // if (!*f)
+    //     ret = errno;
+    return ret;
+}
