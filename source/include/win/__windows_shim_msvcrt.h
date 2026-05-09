@@ -1,12 +1,16 @@
 #pragma once
 
 #include <stdio.h>
+#include <assert.h>
+#include <string.h>
+#include <stdarg.h>
 
 #define __stdcall
 #define __cdecl
 #define __fastcall
 
 #define __declspec(x)
+#define __forceinline __attribute__((always_inline)) inline
 
 /*
 
@@ -165,4 +169,37 @@ static inline void _lock_file(FILE* file) {
 
 static inline void _unlock_file(FILE* file) {
 	printf("Stubbed function _unlock_file called\n");
+}
+
+// Source - https://stackoverflow.com/a/1513215
+// Posted by Alex B, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-05-08, License - CC BY-SA 2.5
+
+static inline int fopen_s(FILE **f, const char *name, const char *mode) {
+    int ret = 0;
+    assert(f);
+    *f = fopen(name, mode);
+    // Can't be sure about 1-to-1 mapping of errno and MS' errno_t
+
+    // if (!*f)
+    //     ret = errno;
+    return ret;
+}
+
+static inline int strcpy_s(char *dest, size_t dest_size, const char *src) {
+	strncpy(dest, src, dest_size);
+	return 1; // Assumed success return
+}
+
+static inline int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...) {
+    int result;
+    va_list args;
+
+    va_start(args, format);
+
+    result = vsprintf(buffer, format, args);
+
+    va_end(args);
+
+    return result;
 }

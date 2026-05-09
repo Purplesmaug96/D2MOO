@@ -1,3 +1,8 @@
+#include <limits.h>
+#ifndef _WIN32
+#include <__windows_shim_msvcrt.h>
+#endif
+
 #include "D2DataTbls.h"
 
 #include "D2Items.h"
@@ -918,7 +923,7 @@ void __fastcall DATATBLS_UpdateTreasureClassProbabilities(D2TCExShortStrc* pTCEx
 		if (nProbDiff != nProbability)
 		{
 			pTCExShort->nClassic += (nProbability - nProbDiff);
-	
+
 			for (int i = nRecordId + 1; i < pTCExShort->nTypes; ++i)
 			{
 				pTCExShort->pInfo[i].nClassic += (nProbability - nProbDiff);
@@ -997,7 +1002,7 @@ D2TCExShortStrc* __stdcall DATATBLS_GetTreasureClassExRecordFromIdAndLevel(uint1
 
 		return pTCExRecord;
 	}
-	
+
 	return NULL;
 }
 
@@ -2566,7 +2571,7 @@ D2MonPresetTxt* __stdcall DATATBLS_GetMonPresetTxtActSection(int nAct, int* pRec
 			*pRecordCount = sgptDataTables->nMonPresetTxtActRecordCounts[nAct];
 			return sgptDataTables->pMonPresetTxtActSections[nAct];
 		}
-		
+
 		*pRecordCount = 0;
 	}
 
