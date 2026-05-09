@@ -1,8 +1,41 @@
 #pragma once
 
+#include <stdint.h>
+#include <stddef.h>
+
 typedef struct {
 	int left;
 	int top;
 	int right;
 	int bottom;
 } RECT;
+
+typedef int BOOL;
+
+#define TRUE true
+#define FALSE false
+
+typedef intptr_t LPARAM;
+typedef uintptr_t WPARAM;
+typedef intptr_t LRESULT;
+
+typedef uint32_t DWORD;
+
+typedef int32_t LONG;
+typedef uint32_t ULONG;
+typedef unsigned int UINT;
+typedef uint8_t BYTE;
+typedef size_t SIZE_T;
+typedef char CHAR;
+typedef void VOID;
+
+typedef void* LPVOID;
+typedef const void* LPCVOID;
+typedef char* LPSTR;
+typedef const char* LPCSTR;
+typedef wchar_t* PWSTR;
+typedef const wchar_t* PCWSTR;
+typedef DWORD* LPDWORD;
+typedef uint8_t* LPBYTE;
+
+#define MAX_PATH 256 // Might need to be increased later

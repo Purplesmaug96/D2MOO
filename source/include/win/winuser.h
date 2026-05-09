@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stdarg.h>
+#include <stdio.h>
+
 typedef struct {} PAINTSTRUCT;
 
 typedef PAINTSTRUCT* LPPAINTSTRUCT;
@@ -48,3 +51,38 @@ typedef PAINTSTRUCT* LPPAINTSTRUCT;
 #define MB_TOPMOST		0x00040000
 #define MB_RIGHT		0x00080000
 #define MB_RTLREADING		0x00100000
+
+static inline int wsprintfA(char* lpOut, const char* lpFmt, ...) {
+    int result;
+    va_list args;
+
+    va_start(args, lpFmt);
+
+    result = vsprintf(lpOut, lpFmt, args);
+
+    va_end(args);
+
+    return result;
+}
+
+static inline int MessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) {
+	printf("Stubbed function MessageBoxA called\n");
+	return 0;
+}
+
+enum {
+	IDABORT=0,
+	IDC_STATIC,
+	IDCANCEL,
+	IDD_ABOUTBOX,
+	IDI_PROJECTNAME,
+	IDI_SMALL,
+	IDIGNORE,
+	IDM_ABOUT,
+	IDM_EXIT,
+	IDNO,
+	IDOK,
+	IDRETRY,
+	IDS_APP_TITLE,
+	IDYES
+};
