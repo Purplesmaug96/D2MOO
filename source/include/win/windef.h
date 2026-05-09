@@ -20,11 +20,12 @@ typedef uintptr_t WPARAM;
 typedef intptr_t LRESULT;
 
 typedef uint32_t DWORD;
+typedef uint16_t WORD;
+typedef uint8_t BYTE;
 
 typedef int32_t LONG;
 typedef uint32_t ULONG;
 typedef unsigned int UINT;
-typedef uint8_t BYTE;
 typedef size_t SIZE_T;
 typedef char CHAR;
 typedef void VOID;
@@ -39,3 +40,5 @@ typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 
 #define MAX_PATH 256 // Might need to be increased later
+
+typedef int (*FARPROC)();

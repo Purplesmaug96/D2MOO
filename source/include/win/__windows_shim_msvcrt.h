@@ -4,13 +4,20 @@
 #include <assert.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stdint.h>
 
 #define __stdcall
 #define __cdecl
 #define __fastcall
+#define __vectorcall
 
 #define __declspec(x)
 #define __forceinline __attribute__((always_inline)) inline
+
+typedef int64_t __int64;
+typedef int32_t __int32;
+typedef int16_t __int16;
+typedef int8_t __int8;
 
 /*
 
@@ -188,6 +195,11 @@ static inline int fopen_s(FILE **f, const char *name, const char *mode) {
 
 static inline int strcpy_s(char *dest, size_t dest_size, const char *src) {
 	strncpy(dest, src, dest_size);
+	return 1; // Assumed success return
+}
+
+static inline int strncpy_s(char *dest, size_t dest_size, const char *src, size_t count) {
+	strncpy(dest, src, dest_size < count ? dest_size : count);
 	return 1; // Assumed success return
 }
 

@@ -22,3 +22,24 @@ typedef SECURITY_ATTRIBUTES* LPSECURITY_ATTRIBUTES;
 typedef int32_t HRESULT;
 
 typedef DWORD (__stdcall *LPTHREAD_START_ROUTINE) (LPVOID lpThreadParameter);
+
+static long InterlockedIncrement(long volatile *Addend) {
+	*Addend++;
+	return *Addend;
+}
+
+static long long InterlockedIncrement64(long long volatile *Addend) {
+	*Addend++;
+	return *Addend;
+}
+
+static long InterlockedDecrement(long volatile *Addend) {
+	*Addend--;
+	return *Addend;
+}
+
+static long long InterlockedDecrement64(long long volatile *Addend) {
+	*Addend--;
+	return *Addend;
+}
+
