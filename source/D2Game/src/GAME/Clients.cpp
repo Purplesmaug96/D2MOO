@@ -1,6 +1,8 @@
 #include "GAME/Clients.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -133,7 +135,7 @@ static D2ClientStrc* __fastcall CLIENTS_RemoveClientFromListWithId(D2ClientStrc*
 
 // Returns the removed client
 static D2ClientStrc* __fastcall CLIENTS_RemoveClientFromListByName(D2ClientStrc** ppClientListHead, const char* szClientToRemoveName)
-{    
+{
     if (0 == SStrCmpI((*ppClientListHead)->szName, szClientToRemoveName, 16))
     {
         D2ClientStrc* pClientToRemove = *ppClientListHead;
@@ -546,7 +548,7 @@ void __fastcall CLIENTS_FillCharacterPreviewInfo(D2ClientStrc* pClient, D2Charac
         uint8_t aComponentsColors[NUM_COMPONENTS];
         memset(aComponents, 0xFF, sizeof(aComponents));
         INVENTORY_GetItemSaveGfxInfo(pPlayer, aComponents, aComponentsColors);
-        
+
         for (int32_t i = 0; i < 16; ++i)
         {
             if (!aComponentsColors[i])
@@ -567,7 +569,7 @@ void __fastcall CLIENTS_FillCharacterPreviewInfo(D2ClientStrc* pClient, D2Charac
         {
             pCharacterPreviewInfo->nClass = 1;
         }
-        
+
         const uint32_t nPlayerLevel = STATLIST_UnitGetStatValue(pPlayer, STAT_LEVEL, 0);
 
         if (nPlayerLevel != 0 && nPlayerLevel <= 99)
@@ -580,7 +582,7 @@ void __fastcall CLIENTS_FillCharacterPreviewInfo(D2ClientStrc* pClient, D2Charac
         }
 
         const uint32_t nPlayerMode = pPlayer->dwAnimMode;
-        
+
 		D2PackedClientSaveFlags tClientFlags = pClient->tSaveFlags;
         if ((nPlayerMode == PLRMODE_DEAD || nPlayerMode == PLRMODE_DEATH) && pClient->tSaveFlags.bHardcore)
         {
@@ -597,7 +599,7 @@ void __fastcall CLIENTS_FillCharacterPreviewInfo(D2ClientStrc* pClient, D2Charac
         pCharacterPreviewInfo->nGuildEmblemBgColor = pClient->tGuildInfo.nBackgroundColor ? pClient->tGuildInfo.nBackgroundColor : 0xFFu;
         pCharacterPreviewInfo->nGuildEmblemFgColor = pClient->tGuildInfo.nForegroundColor ? pClient->tGuildInfo.nForegroundColor : 0xFFu;
         pCharacterPreviewInfo->nGuildEmblemType    = pClient->tGuildInfo.nEmblemType      ? pClient->tGuildInfo.nEmblemType      : 0xFFu;
-        
+
         pCharacterPreviewInfo->szGuildTag = pClient->tGuildInfo.szGuildTag;
 
         if (!nPlayerLevel || nPlayerLevel > 99u
@@ -729,7 +731,7 @@ void __fastcall CLIENTS_RemoveClientFromGame(D2GameStrc* pGame, int32_t nClientI
     {
         LEVEL_RemoveClientFromAdjacentRooms(pClientRoom, pClientToRemove);
     }
-    
+
     if (D2SaveHeaderStrc* pSaveHeader = pClientToRemove->pSaveHeader)
     {
         D2_FREE_POOL(pClientToRemove->pGame->pMemoryPool, pSaveHeader);
@@ -1039,7 +1041,7 @@ void __fastcall CLIENTS_SetUnitsUpdateList(D2ClientStrc* pClient, D2ClientUnitUp
         pClient->unitUpdate[pClient->nUnitUpdateIndex].nY = CLIENTS_GetUnitY(pCurrent->pUnit);
 
         ++pClient->nUnitUpdateIndex;
-        
+
         pCurrent = &pSort[pCurrent->nNextIndex];
     }
     while (pCurrent->nNextIndex);
@@ -1149,7 +1151,7 @@ void __fastcall CLIENTS_SetActNo(D2ClientStrc* pClient, uint8_t nAct)
 {
     D2_ASSERT(pClient);
     D2_ASSERT(nAct < NUM_ACTS);
-    
+
     pClient->nAct = nAct;
 }
 
@@ -1350,7 +1352,7 @@ void __fastcall CLIENTS_UpdatePing(int32_t nClientId, int32_t a2, int32_t arg_0)
             DWORD nTickCount = GetTickCount();
             uint32_t nPing = nTickCount - a2 - arg_0;
             pClient->aPingHistory[pClient->dwPingsCount % std::size(pClient->aPingHistory)] = nPing;
-            
+
             uint64_t nPingsSum = 0;
             const uint32_t nPingsCount = std::min(++pClient->dwPingsCount, std::size(pClient->aPingHistory));
             for (int32_t i = 0; i < nPingsCount; ++i)
@@ -1367,12 +1369,12 @@ void __fastcall CLIENTS_UpdatePing(int32_t nClientId, int32_t a2, int32_t arg_0)
     else if (gbClientListInitialized_6FD447E8)
     {
         D2_LOCK(&gClientListLock_6FD447D0);
-        
+
         if (D2ClientStrc* pClient = CLIENTS_GetClientFromClientListWithId(gpClientList_6FD43FB8[nClientId], nClientId))
         {
             DWORD nTickCount = GetTickCount();
             uint32_t dwPingsCount = pClient->dwPingsCount;
-            // This means no more updates of the ping after 10 values. 
+            // This means no more updates of the ping after 10 values.
             // But this is actually even worse, because the ping count is incremented twice for those, so we only see the 5 first pings.
             if (dwPingsCount < 10)
             {

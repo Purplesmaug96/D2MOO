@@ -1,6 +1,7 @@
 #include "AI/AiBaal.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Collision.h>
 #include <D2Dungeon.h>
@@ -552,7 +553,7 @@ int32_t __fastcall AIBAAL_GetTargetScore(D2UnitStrc* pUnit, D2UnitStrc* pTarget,
 
 	const int32_t nColdStateWeight = STATES_CheckState(pTarget, STATE_COLD) ? 100 : 0;
 	const int32_t nLifePercentageWeight = (UNITS_GetCurrentLifePercentage(pTarget) >= 20) ? 100 : 0;
-	
+
 	int32_t nLeftSkillLevel = 0;
 	int32_t nLeftSkillAttackRank = 0;
 	D2SkillStrc* pLeftSkill = UNITS_GetLeftSkill(pTarget);

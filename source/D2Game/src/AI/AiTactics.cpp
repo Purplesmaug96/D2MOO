@@ -1,6 +1,7 @@
 #include "AI/AiTactics.h"
 
 #include <algorithm>
+#include <limits.h>
 
 #include <D2BitManip.h>
 #include <D2Math.h>

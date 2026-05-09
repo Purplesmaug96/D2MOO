@@ -1,6 +1,8 @@
 #include "AI/AiUtil.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <D2Collision.h>
 #include <D2Dungeon.h>
@@ -1323,9 +1325,9 @@ void __fastcall AIUTIL_ApplyTerrorCurseState(D2GameStrc* pGame, D2UnitStrc* pUni
 //D2Game.0x6FCF3000
 BOOL __fastcall AIUTIL_CanUnitSwitchAi(D2UnitStrc* pUnit, D2C_AiSpecialState nAiSpecialState)
 {
-	if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER 
+	if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER
 		|| nAiSpecialState > AISPECIALSTATE_INVALID
-		|| STATES_CheckState(pUnit, STATE_UNINTERRUPTABLE) 
+		|| STATES_CheckState(pUnit, STATE_UNINTERRUPTABLE)
 		|| !UNITS_CanSwitchAI(pUnit->dwClassId))
 	{
 		return FALSE;

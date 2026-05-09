@@ -29,6 +29,8 @@
 #define _Acquires_lock_(x)
 #define _Releases_lock_(x)
 
+#define _Requires_lock_held_(x)
+
 #define _Curr_ NULL
 
 typedef int LCID;
