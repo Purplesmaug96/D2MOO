@@ -42,3 +42,8 @@ typedef uint8_t* LPBYTE;
 #define MAX_PATH 256 // Might need to be increased later
 
 typedef int (*FARPROC)();
+
+typedef struct {
+	int32_t x;
+	int32_t y;
+} POINT;

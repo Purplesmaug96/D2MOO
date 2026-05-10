@@ -33,6 +33,10 @@ typedef HANDLE HDC; // Device Context
 typedef HANDLE HINSTANCE;
 typedef HANDLE HGDIOBJ;
 typedef HANDLE HKEY;
+typedef HANDLE HICON;
+typedef HANDLE HCURSOR;
+typedef HANDLE HBRUSH;
+
 
 typedef struct {} SECURITY_ATTRIBUTES;
 typedef SECURITY_ATTRIBUTES* LPSECURITY_ATTRIBUTES;

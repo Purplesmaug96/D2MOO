@@ -91,3 +91,69 @@ enum {
 };
 
 typedef LRESULT (*WNDPROC)(HWND unnamedParam1, UINT unnamedParam2, WPARAM unnamedParam3, LPARAM unnamedParam4);
+
+typedef struct {
+  uint length;
+  uint flags;
+  uint showCmd;
+  POINT ptMinPosition;
+  POINT ptMaxPosition;
+  RECT rcNormalPosition;
+  RECT rcDevice;
+} WINDOWPLACEMENT;
+
+typedef struct {
+  uint style;
+  WNDPROC lpfnWndProc;
+  int cbClsExtra;
+  int cbWndExtra;
+  HINSTANCE hInstance;
+  HICON hIcon;
+  HCURSOR hCursor;
+  HBRUSH hbrBackground;
+  LPCSTR lpszMenuName;
+  LPCSTR lpszClassName;
+} WNDCLASSA;
+
+enum
+{
+    CS_VREDRAW          = 0x0001,
+    CS_HREDRAW          = 0x0002,
+    CS_DBLCLKS          = 0x0008,
+    CS_OWNDC            = 0x0020,
+    CS_CLASSDC          = 0x0040,
+    CS_PARENTDC         = 0x0080,
+    CS_NOCLOSE          = 0x0200,
+    CS_SAVEBITS         = 0x0800,
+    CS_BYTEALIGNWINDOW  = 0x2000,
+    CS_BYTEALIGNCLIENT  = 0x1000,
+    CS_GLOBALCLASS      = 0x4000,
+    CS_DROPSHADOW       = 0x00020000
+};
+
+#define IMAGE_ICON 0
+
+#define LR_DEFAULTCOLOR 0
+
+#define COLOR_WINDOW 0
+
+static inline HANDLE LoadImageA(HINSTANCE hInst, LPCSTR name, UINT type, int cx, int cy, UINT fuLoad) {
+	printf("Stubbed function LoadImageA called\n");
+	return NULL;
+}
+
+static inline HCURSOR LoadCursorA(HINSTANCE hInstance, LPCSTR lpCursorName) {
+	printf("Stubbed function LoadCursorA called\n");
+	return NULL;
+}
+
+static inline /*ATOM*/ BOOL RegisterClassA(const WNDCLASSA *lpWndClass) {
+	printf("Stubbed function RegisterClassA called\n");
+	return FALSE;
+}
+
+static inline BOOL UnregisterClassA(LPCSTR lpClassName, HINSTANCE hInstance) {
+	printf("Stubbed function UnregisterClassA called\n");
+	return FALSE;
+}
+

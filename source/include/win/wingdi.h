@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <winnt.h>
 
 typedef struct {
 	uint8_t peRed;
@@ -11,3 +12,7 @@ typedef struct {
 
 typedef PALETTEENTRY* LPPALETTEENTRY;
 typedef PALETTEENTRY* LPPALETTE;
+
+static inline HGDIOBJ GetStockObject(int i) {
+	return NULL;
+}

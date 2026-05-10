@@ -3,6 +3,9 @@
 #include <SDL2/SDL.h>
 #include <algorithm>
 
+#define __WINDOWS_SHIM_LASTERROR_LOCAL
+#include <errhandlingapi.h>
+
 #include <Fog.h>
 
 #include "CmnSubtile.h"
