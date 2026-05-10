@@ -187,7 +187,7 @@ void __fastcall MONSTER_InitializeStatsAndSkills(D2GameStrc* pGame, D2ActiveRoom
     D2PlayerCountBonusStrc playerCountBonus = {};
     MONSTER_GetPlayerCountBonus(pGame, &playerCountBonus, pRoom, pUnit);
 
-    uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     if (MONSTERS_GetHirelingTypeId(pUnit))
     {
         nDifficulty = 0;
@@ -228,7 +228,7 @@ void __fastcall MONSTER_InitializeStatsAndSkills(D2GameStrc* pGame, D2ActiveRoom
     STATLIST_SetUnitStat(pUnit, STAT_HPREGEN, (nShiftedHp * pMonStatsTxtRecord->dwDamageRegen) >> 12, 0);
 
     MONSTERS_ApplyClassicScaling(pUnit, pGame->bExpansion, pGame->nDifficulty);
-    
+
     D2COMMON_10475_PostStatToStatList(pUnit, STATLIST_AllocStatList(pGame->pMemoryPool, 1u, 0, UNIT_MONSTER, pUnit->dwUnitId), 1);
 
     if (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_INVENTORY])
@@ -262,9 +262,9 @@ void __fastcall MONSTER_InitializeStatsAndSkills(D2GameStrc* pGame, D2ActiveRoom
             }
         }
     }
-    
+
     //D2COMMON_11062_Return(pUnit, playerCountBonus.nMonsterSkillBonus);
-    
+
     if (pMonStats2TxtRecord->dwFlags & gdwBitMasks[MONSTATS2FLAGINDEX_ISATT])
     {
         pUnit->dwFlags |= UNITFLAG_CANBEATTACKED;

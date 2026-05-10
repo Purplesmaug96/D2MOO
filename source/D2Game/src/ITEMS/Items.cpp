@@ -1,6 +1,7 @@
 #include "ITEMS/Items.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 
@@ -92,7 +93,7 @@ int32_t __fastcall ITEMS_CanUniqueItemBeDropped(D2GameStrc* pGame, D2UnitStrc* p
     {
         return 0;
     }
-    
+
     const int32_t nFileIndex = ITEMS_GetFileIndex(pItem);
     D2UniqueItemsTxt* pUniqueItemsTxtRecord = ITEMS_GetUniqueItemsTxtRecord(nFileIndex);
     if (!pUniqueItemsTxtRecord)
@@ -655,7 +656,7 @@ int32_t __fastcall D2GAME_InitItemStats_6FC4E520(D2GameStrc* pGame, D2UnitStrc**
             STATLIST_SetUnitStat(*ppUnit, STAT_VELOCITYPERCENT, -pItemsTxtRecord->dwSpeed, 0);
             const uint32_t nDurability = (uint32_t)pItemsTxtRecord->nDurability >> 1;
             STATLIST_SetUnitStat(*ppUnit, STAT_DURABILITY, std::min(ITEMS_RollLimitedRandomNumber(&(*ppUnit)->pSeed, nDurability) + nDurability, 255u), 0);
-            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, 255ui8), 0);
+            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, (uint8_t)255), 0);
 
             const int32_t nACValue = pItemsTxtRecord->dwMinAc + ITEMS_RollLimitedRandomNumber(&(*ppUnit)->pSeed, pItemsTxtRecord->dwMaxAc - pItemsTxtRecord->dwMinAc + 1);
             D2_ASSERT(nACValue <= pItemsTxtRecord->dwMaxAc);
@@ -683,7 +684,7 @@ int32_t __fastcall D2GAME_InitItemStats_6FC4E520(D2GameStrc* pGame, D2UnitStrc**
 
             const uint32_t nDurability = (uint32_t)pItemsTxtRecord->nDurability >> 1;
             STATLIST_SetUnitStat(*ppUnit, STAT_DURABILITY, std::min(ITEMS_RollLimitedRandomNumber(&(*ppUnit)->pSeed, nDurability) + nDurability, 255u), 0);
-            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, 255ui8), 0);
+            STATLIST_SetUnitStat(*ppUnit, STAT_MAXDURABILITY, std::min(pItemsTxtRecord->nDurability, (uint8_t)255), 0);
 
             if (pItemsTxtRecord->nMaxDam)
             {
@@ -825,7 +826,7 @@ D2UnitStrc* __fastcall sub_6FC4EC10(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, 
 
 //D2Game.0x6FC4ED80
 D2UnitStrc* __fastcall D2GAME_CreateItemEx_6FC4ED80(D2GameStrc* pGame, D2ItemDropStrc* pItemDrop, int32_t bUseSeed)
-{    
+{
     if (!pGame->bExpansion)
     {
         D2ItemsTxt* pItemsTxtRecord = DATATBLS_GetItemsTxtRecord(pItemDrop->nId);
@@ -834,7 +835,7 @@ D2UnitStrc* __fastcall D2GAME_CreateItemEx_6FC4ED80(D2GameStrc* pGame, D2ItemDro
             return nullptr;
         }
     }
-    
+
     D2ItemDataTbl* pItemDataTbl = DATATBLS_GetItemDataTables();
     D2_ASSERT(pItemDataTbl);
 
@@ -1061,7 +1062,7 @@ int32_t __fastcall sub_6FC4F4A0(D2GameStrc* pGame, D2SeedStrc* pSeed, int32_t nL
 
     const int32_t nBaseLayer = nLevelId >> 1;
     const int32_t nDiff = BASE_GOLD_RAND - nLevelId;
-    
+
     int32_t nAdd = nBaseLayer + 10;
     if (nLevelId % 2)
     {
@@ -1225,7 +1226,7 @@ D2UnitStrc* __fastcall D2GAME_DropArmor_6FC4F830(D2GameStrc* pGame, D2ActiveRoom
 
 //D2Game.0x6FC4FA50
 D2UnitStrc* __fastcall D2GAME_DropWeapon_6FC4FA50(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2CoordStrc* pCoords, int32_t a4, int32_t a5, D2UnitStrc* pUnit)
-{    
+{
     int32_t nItemLevel = DATATBLS_GetMonsterLevelInArea(DUNGEON_GetLevelIdFromRoom(pRoom), pGame->nDifficulty, pGame->bExpansion);
     if (nItemLevel > 1)
     { --nItemLevel;
@@ -1337,7 +1338,7 @@ D2UnitStrc* __fastcall sub_6FC4FCA0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, 
         coords1.nX = coords2.nX;
         coords1.nY = coords2.nY;
     }
-    
+
     D2ActiveRoomStrc* pTargetRoom = COLLISION_GetFreeCoordinatesWithField(pRoom, &coords1, &coords2, 1, COLLIDE_MASK_SPAWN, 0x801u, 1);
     if (!pTargetRoom)
     {
@@ -1368,7 +1369,7 @@ D2UnitStrc* __fastcall D2GAME_DropItemAtUnit_6FC4FEC0(D2GameStrc* pGame, D2UnitS
     D2_ASSERT(pGame);
 
     D2SeedStrc* pSeed = &pUnit->pSeed;
-    
+
     int32_t bIsMonster = 0;
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER)
     {
@@ -1444,9 +1445,9 @@ D2UnitStrc* __fastcall D2GAME_DropItemAtUnit_6FC4FEC0(D2GameStrc* pGame, D2UnitS
     itemDrop.nId = nItemId;
     itemDrop.nSpawnType = 3;
     itemDrop.wUnitInitFlags = 1;
-    
+
     D2UnitStrc* pItem = D2GAME_CreateItemEx_6FC4ED80(pGame, &itemDrop, 0);
-    
+
     if (pItemDrop)
     {
         memcpy(pItemDrop, &itemDrop, sizeof(itemDrop));
@@ -1689,7 +1690,7 @@ void __fastcall ITEMS_UpdateDurability(D2GameStrc* pGame, D2UnitStrc* pUnit, D2U
         }
 
         STATLIST_SetUnitStat(pItem, STAT_DURABILITY, nDurability, 0);
-        
+
         D2GAME_PACKETS_SendPacket0x3E_6FC3EC20(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), pItem, 1, STAT_DURABILITY, nDurability, 0);
         return;
     }
@@ -1699,20 +1700,20 @@ void __fastcall ITEMS_UpdateDurability(D2GameStrc* pGame, D2UnitStrc* pUnit, D2U
         sub_6FC4B580(pGame, pUnit, pItem);
         return;
     }
-    
+
     if (ITEMS_GetItemFormat(pItem) < 1u)
     {
         STATLIST_SetUnitStat(pItem, STAT_DURABILITY, 0, 0);
         D2GAME_PACKETS_SendPacket0x3E_6FC3EC20(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), pItem, 1, STAT_DURABILITY, 0, 0);
         return;
     }
-    
+
     const int32_t nQuantity = STATLIST_UnitGetStatValue(pItem, STAT_QUANTITY, 0);
     if (nQuantity <= 1)
     {
         STATLIST_SetUnitStat(pItem, STAT_DURABILITY, 0, 0);
         D2GAME_PACKETS_SendPacket0x3E_6FC3EC20(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), pItem, 1, STAT_DURABILITY, 0, 0);
-        
+
         STATLIST_SetUnitStat(pItem, STAT_QUANTITY, 0, 0);
         D2GAME_PACKETS_SendPacket0x3E_6FC3EC20(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), pItem, 1, STAT_QUANTITY, nQuantity, 0);
 
@@ -1722,7 +1723,7 @@ void __fastcall ITEMS_UpdateDurability(D2GameStrc* pGame, D2UnitStrc* pUnit, D2U
     {
         STATLIST_SetUnitStat(pItem, STAT_QUANTITY, nQuantity - 1, 0);
         D2GAME_PACKETS_SendPacket0x3E_6FC3EC20(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), pItem, 1, STAT_QUANTITY, nQuantity - 1, 0);
-        
+
         const int32_t nMaxDurability = STATLIST_GetMaxDurabilityFromUnit(pItem);
         STATLIST_SetUnitStat(pItem, STAT_DURABILITY, nMaxDurability, 0);
         D2GAME_PACKETS_SendPacket0x3E_6FC3EC20(SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__), pItem, 1, STAT_DURABILITY, nMaxDurability, 0);
@@ -1776,6 +1777,8 @@ void __fastcall ITEMS_FillItemDrop(D2GameStrc* pGame, D2ItemDropStrc* pItemDrop,
     pItemDrop->nItemIndex = ITEMS_GetFileIndex(pItem);
     pItemDrop->bForce = 0;
 
+	#ifdef _WIN32
+
     if (ITEMS_GetItemType(pItem) == ITEMTYPE_PLAYER_BODY_PART)
     {
         strcpy_s(pItemDrop->szName, ITEMS_GetEarName(pItem));
@@ -1785,6 +1788,20 @@ void __fastcall ITEMS_FillItemDrop(D2GameStrc* pGame, D2ItemDropStrc* pItemDrop,
     {
         strcpy_s(pItemDrop->szName, ITEMS_GetEarName(pItem));
     }
+
+	#else
+
+	if (ITEMS_GetItemType(pItem) == ITEMTYPE_PLAYER_BODY_PART)
+    {
+        strcpy(pItemDrop->szName, ITEMS_GetEarName(pItem));
+        pItemDrop->eEarLvl = ITEMS_GetEarLevel(pItem);
+    }
+    else if (ITEMS_CheckItemFlag(pItem, IFLAG_PERSONALIZED, __LINE__, __FILE__))
+    {
+        strcpy(pItemDrop->szName, ITEMS_GetEarName(pItem));
+    }
+
+	#endif
 }
 
 //D2Game.0x6FC509F0
@@ -1795,10 +1812,10 @@ void __fastcall ITEMS_DropGoldPile(D2GameStrc* pGame, D2UnitStrc* pUnit, uint32_
     {
         return;
     }
-    
+
     D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
     uint32_t nRemainingGold = nValue;
-    
+
     uint32_t nDroppedGold = 0;
     while (nDroppedGold < nValue)
     {
@@ -1879,7 +1896,7 @@ void __fastcall ITEMS_DropPlayerEar(D2GameStrc* pGame, D2UnitStrc* pUnit)
     D2CoordStrc unitCoords = {};
 
     UNITS_GetCoords(pUnit, &unitCoords);
-    
+
     D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
     if (D2GAME_GetRoom_6FC52070(pRoom, unitCoords.nX + 2, unitCoords.nY + 3))
     {
@@ -1993,7 +2010,7 @@ D2UnitStrc* __fastcall ITEMS_Duplicate(D2GameStrc* pGame, D2UnitStrc* pItem, D2U
         {
 			// Note: Modifies itemSave.nItemFileIndex
             ITEMS_GetCompactItemDataFromBitstream(pBitstream, nRemainingSize, 1, &itemSave);
-            
+
             D2UnitStrc* pDupedSocketable = sub_6FC4EC10(pGame, 0, pBitstream, nRemainingSize, 1, &itemSave, &nSize, 96);
             if (!pDupedSocketable)
             {
@@ -2073,7 +2090,7 @@ void __fastcall D2GAME_DropTC_6FC51360(D2GameStrc* pGame, D2UnitStrc* pMonster, 
     *pnItemsDropped = 0;
 
     D2_ASSERT(!ppItems || nMaxItems);
-    
+
     if (!ppItems && nMaxItems <= 0)
     {
         nMaxItems = 6;
@@ -2431,7 +2448,7 @@ void __fastcall D2GAME_DropTC_6FC51360(D2GameStrc* pGame, D2UnitStrc* pMonster, 
                                                 }
                                             }
                                         }
-                                        
+
                                         if (!nItemQuality)
                                         {
                                             const int32_t nHighQualityChance = (pItemRatioTxtRecord->dwHiQuality - nLevelDiff / pItemRatioTxtRecord->dwHiQualityDivisor) << 7;
@@ -2723,7 +2740,7 @@ void __fastcall sub_6FC52410(D2UnitStrc* pUnit, D2ItemDropStrc* pItemDrop)
     {
         return;
     }
-    
+
     const int32_t nSkillCount = SKILLS_GetPlayerSkillCount(nClassId);
     if (nSkillCount <= 0)
     {

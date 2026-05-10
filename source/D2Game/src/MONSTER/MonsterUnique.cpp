@@ -1,6 +1,7 @@
 #include "MONSTER/MonsterUnique.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -353,7 +354,7 @@ void __fastcall MONSTERUNIQUE_UMod36_Ghostly(D2UnitStrc* pUnit, int32_t nUMod, i
     STATLIST_SetUnitStat(pUnit, STAT_DAMAGERESIST, 80, 0);
     MONSTERUNIQUE_UMod16_Champion(pUnit, nUMod, bUnique);
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
 
@@ -727,7 +728,7 @@ void __fastcall MONSTERUNIQUE_UMod9_FireEnchanted(D2UnitStrc* pUnit, int32_t nUM
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -779,7 +780,7 @@ void __fastcall MONSTERUNIQUE_UMod17_LightningEnchanted(D2UnitStrc* pUnit, int32
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -831,7 +832,7 @@ void __fastcall MONSTERUNIQUE_UMod18_ColdEnchanted(D2UnitStrc* pUnit, int32_t nU
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -885,7 +886,7 @@ void __fastcall MONSTERUNIQUE_UMod23_PoisonEnchanted(D2UnitStrc* pUnit, int32_t 
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -939,7 +940,7 @@ void __fastcall MONSTERUNIQUE_UMod25_ManaSteal(D2UnitStrc* pUnit, int32_t nUMod,
         return;
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -1374,7 +1375,7 @@ void __fastcall MONSTERUNIQUE_ApplyElementalDamage(D2GameStrc* pGame, D2UnitStrc
         }
     }
 
-    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, 0ui8, 2ui8);
+    const uint8_t nDifficulty = D2Clamp(pGame->nDifficulty, (uint8_t)0, (uint8_t)2);
     const int32_t nGameType = pGame->nGameType || pGame->dwGameType;
     const int32_t nLevel = D2Clamp(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1, sgptDataTables->nMonLvlTxtRecordCount - 1);
     D2MonLvlTxt* pMonLvlTxtRecord = &sgptDataTables->pMonLvlTxt[nLevel];
@@ -2213,7 +2214,7 @@ D2MonsterDataStrc* __fastcall MONSTERUNIQUE_GetMonsterData(D2UnitStrc* pUnit)
     {
         return pUnit->pMonsterData;
     }
-    
+
     return nullptr;
 }
 
@@ -2279,13 +2280,13 @@ BOOL __fastcall sub_6FC6EC10(D2UnitStrc* pUnit, D2MonUModTxt* pMonUModTxtRecord,
         {
 			if (D2MonStatsTxt* pMonStatsTxtRecord = MONSTERMODE_GetMonStatsTxtRecord(pUnit->dwClassId))
 			{
-				if (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_ISMELEE] 
+				if (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_ISMELEE]
 					|| pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_NOMULTISHOT])
 				{
 					return FALSE;
 				}
 			}
-			
+
         }
 
         break;
@@ -2325,7 +2326,7 @@ int32_t __fastcall sub_6FC6EE90(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* a
             if (!a3[i])
             {
                 const uint16_t nUPick = pMonUModTxtRecord->wUPick[pGame->nDifficulty];
-                
+
                 picks[2 * nPickCount] = i;
                 picks[2 * nPickCount + 1] = nUPick;
 
@@ -2361,7 +2362,7 @@ uint32_t __fastcall MONSTERUNIQUE_CheckMonModeFlag(int32_t nMonsterId, int32_t n
     D2MonStats2Txt* pMonStats2TxtRecord = MONSTERREGION_GetMonStats2TxtRecord(nMonsterId);
     if (pMonStats2TxtRecord)
     {
-        
+
         return BITMANIP_GetBitState(pMonStats2TxtRecord->nModeFlags, nFlag);
     }
 
@@ -2636,7 +2637,7 @@ D2UnitStrc* __fastcall D2GAME_SpawnSuperUnique_6FC6F690(D2GameStrc* pGame, D2Act
     {
         return nullptr;
     }
-    
+
     D2SuperUniquesTxt* pSuperUniquesTxtRecord = DATATBLS_GetSuperUniquesTxtRecord(nSuperUnique);
     if (!pSuperUniquesTxtRecord)
     {
@@ -2647,7 +2648,7 @@ D2UnitStrc* __fastcall D2GAME_SpawnSuperUnique_6FC6F690(D2GameStrc* pGame, D2Act
     {
         return nullptr;
     }
-    
+
     D2UnitStrc* pMonster = nullptr;
     if (pSuperUniquesTxtRecord->nAutopos)
     {
@@ -2939,7 +2940,7 @@ D2UnitStrc* __fastcall sub_6FC6FDC0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, 
     {
         sub_6FC6F670(pMonster, pMonUmods[i], 0);
     }
-    
+
     return pMonster;
 }
 

@@ -1,6 +1,8 @@
 #include "OBJECTS/Objects.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <Fog.h>
 
@@ -839,7 +841,7 @@ void __fastcall OBJECTS_InitFunction11_Portal(D2ObjInitFnStrc* pOp)
 {
     const int32_t nLevelId = DUNGEON_GetLevelIdFromRoom(pOp->pRoom);
     const int32_t nTownLevelId = DUNGEON_GetTownLevelIdFromActNo(DRLG_GetActNoFromLevelId(nLevelId));
-    
+
     D2_ASSERT(nTownLevelId <= 255);
 
     pOp->pObject->pObjectData->InteractType = nTownLevelId;
@@ -1007,7 +1009,7 @@ D2UnitStrc* __fastcall OBJECTS_PopulateFn1_CasketJarSarcophagusUrn(D2GameStrc* p
     };
 
     D2ObjectsTxt* pObjectsTxtRecord = DATATBLS_GetObjectsTxtRecord(nObjectId);
-   
+
     D2DrlgCoordsStrc drlgCoords = {};
     DUNGEON_GetRoomCoordinates(pRoom, &drlgCoords);
 
@@ -1175,7 +1177,7 @@ D2UnitStrc* __fastcall OBJECTS_PopulateFn7_RogueOnStick(D2GameStrc* pGame, D2Act
         { 0, 4 },
         { 0, -4 },
     };
-    
+
     constexpr D2CoordStrc stru_6FD2F78C[5] =
     {
         { -8, 0 },
@@ -1184,7 +1186,7 @@ D2UnitStrc* __fastcall OBJECTS_PopulateFn7_RogueOnStick(D2GameStrc* pGame, D2Act
         { 4, 0 },
         { 8, 0 },
     };
-    
+
     constexpr D2CoordStrc stru_6FD2F7B8[5] =
     {
         { 0, -8 },
@@ -1466,7 +1468,7 @@ D2UnitStrc* __fastcall OBJECTS_PopulateFn8_Well(D2GameStrc* pGame, D2ActiveRoomS
             {
                 const int32_t nX = drlgCoords.nSubtileX + ITEMS_RollLimitedRandomNumber(pSeed, drlgCoords.nSubtileWidth - nSizeX - 1);
                 const int32_t nY = drlgCoords.nSubtileY + ITEMS_RollLimitedRandomNumber(pSeed, drlgCoords.nSubtileHeight - nSizeY - 1);
-                if (nX && nY 
+                if (nX && nY
                     && (uint16_t)nX >= drlgCoords.nSubtileX + 1
                     && (uint16_t)nY >= drlgCoords.nSubtileY + 1
                     && (uint16_t)nX < drlgCoords.nSubtileX + drlgCoords.nSubtileWidth - 1
@@ -1740,7 +1742,7 @@ D2UnitStrc* __fastcall OBJECTS_PopulateFn5_Crate(D2GameStrc* pGame, D2ActiveRoom
     {
         -1, -1, -1, 0, 0, 1, 1, 1
     };
-    
+
     D2ObjectsTxt* pObjectsTxtRecord = DATATBLS_GetObjectsTxtRecord(nObjectId);
 
     D2_ASSERT(nDensity <= 128);
@@ -1750,7 +1752,7 @@ D2UnitStrc* __fastcall OBJECTS_PopulateFn5_Crate(D2GameStrc* pGame, D2ActiveRoom
     {
         return nullptr;
     }
-    
+
     D2DrlgCoordsStrc drlgCoords = {};
     DUNGEON_GetRoomCoordinates(pRoom, &drlgCoords);
 
@@ -1800,7 +1802,7 @@ D2UnitStrc* __fastcall OBJECTS_PopulateFn5_Crate(D2GameStrc* pGame, D2ActiveRoom
                         nCount = l;
                     }
 
-                   
+
                     for (int32_t i = 0; !bSpawnObject && i < nCount; ++i)
                     {
                         const int32_t v32 = ITEMS_RollRandomNumber(&pObjectControl->pSeed) & 7;
@@ -1895,9 +1897,9 @@ int32_t __fastcall OBJECTS_SpawnNothing2(D2GameStrc* pGame, D2ActiveRoomStrc* pR
 {
     const uint16_t nXEnd = pDrlgCoords->nSubtileX + std::min(pDrlgCoords->nSubtileWidth, 12);
     const uint16_t nYEnd = pDrlgCoords->nSubtileY + std::min(pDrlgCoords->nSubtileHeight, 12);
-    
+
     int32_t nCounter = 0;
-    
+
     for (uint16_t nX = pDrlgCoords->nSubtileX + 1; nX < nXEnd; nX += 2)
     {
         for (uint16_t nY = pDrlgCoords->nSubtileY + 1; nY < nYEnd; nY += 2)
@@ -1957,12 +1959,12 @@ void __fastcall OBJECTS_SpawnArmorStandOrWeaponRack(D2GameStrc* pGame, D2ActiveR
     if (nRand)
     {
         const uint16_t nX = pDrlgCoords->nSubtileX + 1;
-        
+
         const uint32_t nYEnd = pDrlgCoords->nSubtileHeight + pDrlgCoords->nSubtileY - pObjectsTxtRecord->dwSizeY;
         for (uint16_t nY = pDrlgCoords->nSubtileY + pObjectsTxtRecord->dwSizeY; nY < nYEnd; nY += 2 * pObjectsTxtRecord->dwSizeY)
         {
             if (pDrlgCoords->nSubtileWidth >= (int32_t)(pObjectsTxtRecord->dwSizeX + 2) && pDrlgCoords->nSubtileHeight >= (int32_t)(pObjectsTxtRecord->dwSizeY + 2)
-                && nX > pDrlgCoords->nSubtileX + 1 && nY > pDrlgCoords->nSubtileY + 1 
+                && nX > pDrlgCoords->nSubtileX + 1 && nY > pDrlgCoords->nSubtileY + 1
                 && nX < (int32_t)(pDrlgCoords->nSubtileX - pObjectsTxtRecord->dwSizeX + pDrlgCoords->nSubtileWidth - 2)
                 && nY < (int32_t)(pDrlgCoords->nSubtileY - pObjectsTxtRecord->dwSizeY + pDrlgCoords->nSubtileHeight - 2))
             {
@@ -1978,11 +1980,11 @@ void __fastcall OBJECTS_SpawnArmorStandOrWeaponRack(D2GameStrc* pGame, D2ActiveR
     else
     {
         const uint16_t nY = pDrlgCoords->nSubtileY + 1;
-        
+
         const uint32_t nXEnd = pDrlgCoords->nSubtileX + pDrlgCoords->nSubtileWidth - pObjectsTxtRecord->dwSizeX;
         for (uint16_t nX = pDrlgCoords->nSubtileX + pObjectsTxtRecord->dwSizeX; nX < nXEnd; nX += 2 * pObjectsTxtRecord->dwSizeX)
         {
-            if (pDrlgCoords->nSubtileWidth >= (int32_t)(pObjectsTxtRecord->dwSizeX + 2) && pDrlgCoords->nSubtileHeight >= (int32_t)(pObjectsTxtRecord->dwSizeY + 2) 
+            if (pDrlgCoords->nSubtileWidth >= (int32_t)(pObjectsTxtRecord->dwSizeX + 2) && pDrlgCoords->nSubtileHeight >= (int32_t)(pObjectsTxtRecord->dwSizeY + 2)
                 && nX > pDrlgCoords->nSubtileX + 1 && nY > pDrlgCoords->nSubtileY + 1
                 && nX < (int32_t)(pDrlgCoords->nSubtileX - pObjectsTxtRecord->dwSizeX + pDrlgCoords->nSubtileWidth - 2)
                 && nY < (int32_t)(pDrlgCoords->nSubtileY - pObjectsTxtRecord->dwSizeY + pDrlgCoords->nSubtileHeight - 2))

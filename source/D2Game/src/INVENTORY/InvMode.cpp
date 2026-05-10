@@ -1,6 +1,7 @@
 #include "INVENTORY/InvMode.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Items.h>
 #include <D2Inventory.h>
@@ -254,7 +255,7 @@ void __fastcall D2GAME_ResetSomeItemFlags_6FC415F0(D2GameStrc* pGame, D2UnitStrc
     {
         pItem->dwFlagEx &= ~(UNITFLAGEX_ITEMINIT | UNITFLAGEX_ISVENDORITEM);
     }
-    
+
     for (size_t i = 0; i < std::size(nItemCmdFlags); ++i)
     {
         ITEMS_SetItemCMDFlag(pItem, nItemCmdFlags[i], 0);

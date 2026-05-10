@@ -510,7 +510,7 @@ D2UnitStrc* __fastcall D2GAME_SpawnPresetMonster_6FC66560(D2GameStrc* pGame, D2A
 
         nMonsterId = D2Common_11063(pRoom, nMonsterId);
         D2MonStatsTxt* pMonStatsTxtRecord = MONSTERMODE_GetMonStatsTxtRecord(nMonsterId);
-        
+
         const uint8_t nMaxGrp = pMonStatsTxtRecord->nMaxGrp;
         const uint8_t nMinGrp = pMonStatsTxtRecord->nMinGrp;
         if (nMinGrp && nMaxGrp && nMaxGrp >= nMinGrp)
@@ -637,7 +637,7 @@ void __fastcall D2GAME_PopulateRoom_6FC67190(D2GameStrc* pGame, D2ActiveRoomStrc
     }
 
     int32_t bIncrease = 0;
-    
+
     while (pRoomCoordList)
     {
         if (pRoomCoordList->nIndex && !pRoomCoordList->bNode)
@@ -886,7 +886,7 @@ void __fastcall sub_6FC679F0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom)
     }
 
     const int32_t nMonsterId = dword_6FD2EE44[ITEMS_RollLimitedRandomNumber(&pRoom->pSeed, byte_6FD2EE48[nIndex + 1]) + byte_6FD2EE48[nIndex]];
-    
+
     int32_t nX = 0;
     int32_t nY = 0;
     if (!sub_6FC66260(pGame, pRoom, nullptr, nMonsterId, &nX, &nY, 0))
@@ -942,7 +942,7 @@ void __fastcall MONSTERREGION_InitializeAll(void* pMemPool, D2MonsterRegionStrc*
             pMonsterRegion->dwDungeonLevelEx = pLevelsTxtRecord->wMonLvl[nDifficulty];
         }
 
-        int32_t nNumMonstersToSpawn = std::min(pLevelsTxtRecord->nNumMon, 13ui8);
+        int32_t nNumMonstersToSpawn = std::min(pLevelsTxtRecord->nNumMon, (uint8_t)13);
         int32_t nNumMonstersInSpawnList = pLevelsTxtRecord->nNumNormalMonsters;
         if (nDifficulty > 0)
         {
@@ -1021,7 +1021,7 @@ void __fastcall MONSTERREGION_InitializeAll(void* pMemPool, D2MonsterRegionStrc*
 void __fastcall MONSTERREGION_FreeAll(void* pMemPool, D2MonsterRegionStrc** ppMonsterRegion)
 {
     for (int32_t i = 1; i < sgptDataTables->nLevelsTxtRecordCount; ++i)
-    {        
+    {
         if (ppMonsterRegion[i])
         {
             D2_FREE_POOL(pMemPool, ppMonsterRegion[i]);

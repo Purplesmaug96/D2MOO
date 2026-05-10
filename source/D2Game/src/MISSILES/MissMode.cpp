@@ -1,6 +1,7 @@
 #include "MISSILES/MissMode.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -91,7 +92,7 @@ int32_t __fastcall MISSMODE_UnitFindCallback_CanCollideWithMonster(D2UnitStrc* p
     {
         return 0;
     }
-    
+
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
     {
         return 0;
@@ -145,7 +146,7 @@ int32_t __fastcall MISSMODE_UnitFindCallback_CanCollideWithPlayerOrMonster(D2Uni
     {
         return 0;
     }
-    
+
     if (!pUnit || pUnit->dwUnitType != UNIT_PLAYER && pUnit->dwUnitType != UNIT_MONSTER)
     {
         return 0;
@@ -654,7 +655,7 @@ int32_t __fastcall MISSMODE_HandleMissileCollision(D2GameStrc* pGame, D2UnitStrc
     {
         return MISSMODE_SrvDmgHitHandler(pGame, pMissile, nullptr, 1);
     }
-    
+
     D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(pMissile->dwClassId);
     if (!pMissilesTxtRecord)
     {
@@ -1235,7 +1236,7 @@ int32_t __fastcall MISSMODE_SrvDo15_FrozenOrb(D2GameStrc* pGame, D2UnitStrc* pMi
     {
         30, 29, 29, 28, 27, 26, 24, 23, 21, 19, 16, 14, 11, 8, 5, 2, 0, -2, -5, -8, -11, -14, -16, -19, -21, -23, -24, -26, -27, -28, -29, -29, -30, -29, -29, -28, -27, -26, -24, -23, -21, -19, -16, -14, -11, -8, -5, -2, 0, 2, 5, 8, 11, 14, 16, 19, 21, 23, 24, 26, 27, 28, 29, 29
     };
-    
+
     constexpr int32_t yPositions[] =
     {
         0, 2, 5, 8, 11, 14, 16, 19, 21, 23, 24, 26, 27, 28, 29, 29, 30, 29, 29, 28, 27, 26, 24, 23, 21, 19, 16, 14, 11, 8, 5, 2, 0, -2, -5, -8, -11, -14, -16, -19, -21, -23, -24, -26, -27, -28, -29, -29, -30, -29, -29, -28, -27, -26, -24, -23, -21, -19, -16, -14, -11, -8, -5, -2
@@ -1969,7 +1970,7 @@ int32_t __fastcall MISSMODE_SrvDo34_BaalTauntControl(D2GameStrc* pGame, D2UnitSt
     {
         return 2;
     }
-    
+
     D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(pMissile->dwClassId);
     if (!pMissilesTxtRecord)
     {
@@ -2031,7 +2032,7 @@ int32_t __fastcall MISSMODE_SrvDo35_RoyalStrikeChaosIce(D2GameStrc* pGame, D2Uni
     {
         return 2;
     }
-    
+
     D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(pMissile->dwClassId);
     if (!pMissilesTxtRecord)
     {
@@ -2473,7 +2474,7 @@ int32_t __fastcall MISSMODE_SrvHit10_GuidedArrow_BoneSpirit(D2GameStrc* pGame, D
     {
         return 1;
     }
-    
+
     D2UnitStrc* pOwner = SUNIT_GetOwner(pGame, pMissile);
     if (!pOwner)
     {
@@ -5149,7 +5150,7 @@ int32_t __fastcall MISSMODE_SrvDmgHitHandler(D2GameStrc* pGame, D2UnitStrc* pMis
     {
         D2DamageStrc damage = {};
         MISSMODE_FillDamageParams(pMissile, pUnit, &damage);
-        
+
         const uint16_t nDmgFunc = pMissilesTxtRecord->wSrvDmgFunc;
         if (nDmgFunc > 0 && nDmgFunc < std::size(gpMissileSrvDmgFnTable_6FD2E838))
         {

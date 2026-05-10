@@ -1,6 +1,7 @@
 #include "MONSTER/MonsterMode.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 
@@ -168,13 +169,13 @@ void __fastcall sub_6FC627B0(D2UnitStrc* pUnit, int32_t nMode)
     {
         return;
     }
-    
+
     D2MonStatsTxt* pMonStatsTxtRecord = pUnit->pMonsterData->pMonstatsTxt;
     if (!pMonStatsTxtRecord)
     {
         return;
     }
-    
+
     D2MonSkillInfoStrc monSkillInfo = {};
     sub_6FD14D20(pUnit, nMode, &monSkillInfo);
 
@@ -440,7 +441,7 @@ void __fastcall D2GAME_MONSTERMODE_SetVelocityParams_6FC62FC0(D2AiParamStrc* pAi
 
     if (a4)
     {
-        pAiParam->unk0x20 = std::min(a4, 77ui8);
+        pAiParam->unk0x20 = std::min(a4, (uint8_t)77);
     }
 }
 
@@ -489,7 +490,7 @@ void __fastcall D2GAME_MONSTERMODE_Unk_6FC63040(D2GameStrc* pGame, D2ModeChangeS
 
 //D2Game.0x6FC631B0
 void __fastcall sub_6FC631B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a7, D2ModeChangeStrc* pModeChange)
-{    
+{
     D2_ASSERT(pUnit);
 
     D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
@@ -691,7 +692,7 @@ void __fastcall sub_6FC63680(D2GameStrc* pGame, D2UnitStrc* pUnit)
     {
         return;
     }
-    
+
     int32_t nBaseId = pUnit->dwClassId;
     D2MonStatsTxt* pMonStatsTxtRecord = MONSTERMODE_GetMonStatsTxtRecord(pUnit->dwClassId);
     if (pMonStatsTxtRecord)
@@ -808,7 +809,7 @@ void __fastcall sub_6FC63940(D2GameStrc* pGame, D2UnitStrc* pUnit)
     }
 
     modeChange.pTargetUnit = SUNIT_GetTargetUnit(pGame, pUnit);
-    
+
     D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 
     if (!STATES_CheckState(pUnit, STATE_FREEZE) || SUNIT_IsDead(pUnit))
@@ -826,7 +827,7 @@ void __fastcall sub_6FC63A30(D2GameStrc* pGame, D2UnitStrc* pUnit)
     UNITS_SetUsedSkill(pUnit, nullptr);
 
     D2ModeChangeStrc modeChange = {};
-    
+
     modeChange.unk0x14[1] = 100;
     modeChange.nMode = MONMODE_SKILL1;
     modeChange.pUnit = pUnit;
@@ -873,7 +874,7 @@ int32_t __fastcall sub_6FC63B30(D2GameStrc* pGame, D2ModeChangeStrc* pModeChange
     {
         return 1;
     }
-    
+
     D2MonStatsTxt* pMonStatsTxtRecord = MONSTERMODE_GetMonStatsTxtRecord(pModeChange->pUnit->dwClassId);
     if (!pMonStatsTxtRecord || !(pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_DEATHDMG]))
     {
@@ -897,7 +898,7 @@ int32_t __fastcall sub_6FC63B30(D2GameStrc* pGame, D2ModeChangeStrc* pModeChange
 
                     const int32_t nMaxDamage = MONSTERUNIQUE_CalculatePercentage(monStatsInit.nMaxHP, pDifficultyLevelsTxtRecord->dwMonsterCEDmgPercent, 100);
                     const int32_t nMinDamage = MONSTERUNIQUE_CalculatePercentage(nMaxDamage, 60, 100);
-                    
+
                     D2DamageStrc damage = {};
                     damage.dwPhysDamage = (nMinDamage + ITEMS_RollLimitedRandomNumber(&pModeChange->pUnit->pSeed, nMaxDamage - nMinDamage)) << 7;
                     SUNITDMG_SetMissileDamageFlagsForNearbyUnits(pGame, pMissile, nX, nY, 5, &damage, 0, 0, nullptr, 0x581);
@@ -1364,7 +1365,7 @@ int32_t __fastcall sub_6FC64790(D2GameStrc* pGame, D2UnitStrc* pUnit)
 
                     int32_t nYOffset = 5;
                     int32_t nXOffset = 5;
-                    
+
                     PATH_SetTargetUnit(pUnit->pDynamicPath, nullptr);
 
                     D2SeedStrc seed = {};

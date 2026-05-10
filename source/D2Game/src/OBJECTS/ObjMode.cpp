@@ -1,6 +1,8 @@
 #include "OBJECTS/ObjMode.h"
 
 #include <algorithm>
+#include <iterator>
+
 #include <D2BitManip.h>
 
 #include <D2PacketDef.h>
@@ -801,7 +803,7 @@ int32_t __fastcall OBJECTS_OperateFunction08_Door(D2ObjOperateFnStrc* pOp, int32
     D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pObject);
     D2CoordStrc pCoord = {};
     UNITS_GetCoords(pObject, &pCoord);
-    
+
     const int32_t nSizeX = UNITS_GetUnitSizeX(pObject);
     const int32_t nSizeY = UNITS_GetUnitSizeY(pObject);
     const uint32_t nTickCount = GetTickCount();
@@ -1044,7 +1046,7 @@ int32_t __fastcall OBJECTS_OperateFunction29_SlimeDoor(D2ObjOperateFnStrc* pOp, 
 void __fastcall D2GAME_OBJECTS_TrapHandler8_9_6FC75AC0(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     D2ObjOperateFnStrc op = {};
-    
+
     op.pObject = pUnit;
     op.pObjectregion = OBJRGN_GetObjectControlFromGame(pGame);
     op.pGame = pGame;
@@ -1082,7 +1084,7 @@ void __fastcall D2GAME_OBJECTS_TrapHandler5_7_6FC75BC0(D2GameStrc* pGame, D2Unit
 {
     D2CoordStrc pCoord = {};
     UNITS_GetCoords(pUnit, &pCoord);
-    
+
     D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
     D2UnitStrc* pFireLarge = SUNIT_AllocUnitData(UNIT_OBJECT, OBJECT_FIRE_LARGE, pCoord.nX, pCoord.nY, pGame, pRoom, 1, 1, 0);
     if (pFireLarge)
@@ -1121,7 +1123,7 @@ void __fastcall D2GAME_OBJECTS_TrapHandler1_6FC75C70(D2GameStrc* pGame, D2UnitSt
 
 //D2Game.0x6FC75D00
 void __fastcall D2GAME_OBJECTS_TrapHandler2_6_6FC75D00(D2GameStrc* pGame, D2UnitStrc* pUnit)
-{    
+{
     D2CoordStrc pCoord = {};
     UNITS_GetCoords(pUnit, &pCoord);
 
@@ -1142,7 +1144,7 @@ void __fastcall D2GAME_OBJECTS_TrapHandler3_6FC75D90(D2GameStrc* pGame, D2UnitSt
 {
     D2CoordStrc pCoord = {};
     UNITS_GetCoords(pUnit, &pCoord);
-   
+
     if (!sub_6FC6A090(pGame, UNITS_GetRoom(pUnit), pCoord.nX, pCoord.nY, MONSTER_TRAP_POISONCLOUD, 1, 136))
     {
         D2ActiveRoomStrc* ppRoom = nullptr;
@@ -1157,7 +1159,7 @@ void __fastcall D2GAME_OBJECTS_TrapHandler3_6FC75D90(D2GameStrc* pGame, D2UnitSt
 
 //D2Game.0x6FC75E20
 void __fastcall D2GAME_OBJECTS_TrapHandler4_6FC75E20(D2GameStrc* pGame, D2UnitStrc* pUnit)
-{    
+{
     D2CoordStrc pCoord = {};
     UNITS_GetCoords(pUnit, &pCoord);
 
@@ -1165,7 +1167,7 @@ void __fastcall D2GAME_OBJECTS_TrapHandler4_6FC75E20(D2GameStrc* pGame, D2UnitSt
     {
         D2ActiveRoomStrc* ppRoom = nullptr;
         D2Common_10136(UNITS_GetRoom(pUnit), &pCoord, 0, COLLIDE_MASK_PLACEMENT, &ppRoom);
-        
+
         if (ppRoom)
         {
             D2GAME_SpawnMonster_6FC69F10(pGame, ppRoom, pCoord.nX, pCoord.nY, MONSTER_TRAP_NOVA, 1, 3, 8);
@@ -1203,7 +1205,7 @@ void __fastcall sub_6FC75EB0(D2ObjOperateFnStrc* pOp)
 
         D2GAME_DropItemAtUnit_6FC4FEC0(pOp->pGame, pOp->pObject, 2, &nItemLevel, 0, -1, 1);
         D2GAME_DropItemAtUnit_6FC4FEC0(pOp->pGame, pOp->pObject, 2, &nItemLevel, 0, -1, 1);
-        
+
         if (pObjectsTxtRecord->nMode[1])
         {
             UNITS_ChangeAnimMode(pOp->pObject, 1);
@@ -1737,7 +1739,7 @@ void __fastcall D2GAME_SHRINES_Gem_6FC76910(D2ObjOperateFnStrc* pOp, D2ShrinesTx
     D2_MAYBE_UNUSED(pShrinesTxtRecord);
     D2InventoryStrc* pInventory = pOp->pPlayer->pInventory;
     D2UnitStrc* pGem = INVENTORY_GetBackPackItemByType(pInventory, ITEMTYPE_GEM, 0);
-    
+
     int32_t bBetterGemDropped = 0;
     while (pGem)
     {
@@ -1806,7 +1808,7 @@ int32_t __fastcall sub_6FC76A60(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t 
 {
     D2CoordStrc pCoord = {};
     UNITS_GetCoords(pPlayer, &pCoord);
-   
+
     D2CoordStrc pReturnCoords = {};
     D2ActiveRoomStrc* pRoom = D2GAME_GetFreeSpaceEx_6FC4BF00(UNITS_GetRoom(pPlayer), &pCoord, &pReturnCoords, 1);
     if (pRoom)
@@ -2495,7 +2497,7 @@ int32_t __fastcall OBJECTS_OperateFunction68_EvilUrn(D2ObjOperateFnStrc* pOp, in
         if (ITEMS_RollRandomNumber(&pOp->pObjectregion->pSeed) % 255 <= pObjectsTxtRecord->dwParm[7])
         {
             D2MonsterRegionStrc* pMonsterRegion = pOp->pGame->pMonReg[nLevelId];
-            
+
             for (int32_t i = 0; i < pMonsterRegion->nMonCount; ++i)
             {
                 D2MonRegDataStrc* pMonRegData = &pMonsterRegion->pMonData[i];
@@ -2842,7 +2844,7 @@ int32_t __fastcall OBJECTS_OperateFunction07_ExplodingBarrel(D2ObjOperateFnStrc*
 
         D2ObjOperateFnStrc pNewOp = {};
         memcpy(&pNewOp, pOp, sizeof(pNewOp));
-        
+
         D2CoordStrc pCoord = {};
         UNITS_GetCoords(pObject, &pCoord);
 
@@ -3201,7 +3203,7 @@ int32_t __fastcall OBJECTS_OperateFunction15_Portal(D2ObjOperateFnStrc* pOp, int
                 }
             }
 
-            D2CoordStrc pCoord = {}; 
+            D2CoordStrc pCoord = {};
             D2ActiveRoomStrc* pRoom = nullptr;
             if (pPortalOwner)
             {
@@ -3634,7 +3636,7 @@ void __fastcall sub_6FC79B50(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* p
             OBJMODE_MainObeliskHandler(pGame, pUnit ? pUnit->dwUnitId : -1, pObject->dwUnitId, 0, 2);
             break;
         }
-        case OBJECT_STEEG_STONE:   
+        case OBJECT_STEEG_STONE:
         {
             D2TimerArg2Strc* pArg = UNITS_GetTimerArg(pObject)->unk0x00;
             if (pArg && (!pUnit || SUNIT_GetServerUnit(pGame, UNIT_PLAYER, pArg->nUnitGUID) == pUnit))
@@ -3934,7 +3936,7 @@ D2UnitStrc* __fastcall OBJMODE_DropFromChestTCWithQuality(D2ObjOperateFnStrc* pO
     const int32_t nCurrentMonsterLevel = DATATBLS_GetMonsterLevelInArea(nLevelId, pGame->nDifficulty, pGame->bExpansion);
     const int32_t nMinMonsterLevel = DATATBLS_GetMonsterLevelInArea(nLevelIds[2 * nAct], pGame->nDifficulty, pGame->bExpansion);
     const int32_t nMaxMonsterLevel = DATATBLS_GetMonsterLevelInArea(nLevelIds[2 * nAct + 1], pGame->nDifficulty, pGame->bExpansion);
-    
+
     int32_t nMonsterLevelDiff = nMaxMonsterLevel - nMinMonsterLevel;
     nMonsterLevelDiff = std::abs(nMonsterLevelDiff);
 

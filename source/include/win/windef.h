@@ -12,8 +12,8 @@ typedef struct {
 
 typedef int BOOL;
 
-#define TRUE true
-#define FALSE false
+#define TRUE ((BOOL)(uint32_t)true)
+#define FALSE ((BOOL)(uint32_t)false)
 
 typedef intptr_t LPARAM;
 typedef uintptr_t WPARAM;
