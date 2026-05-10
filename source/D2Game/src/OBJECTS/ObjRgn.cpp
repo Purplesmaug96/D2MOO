@@ -1,6 +1,8 @@
 #include "OBJECTS/ObjRgn.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <D2DataTbls.h>
 #include <DataTbls/LevelsTbls.h>
@@ -277,7 +279,7 @@ int32_t __fastcall OBJRGN_GetTrapMonsterId(D2ObjOperateFnStrc* pOp)
 
     constexpr int32_t nTrapMonsterIds1[] = { MONSTER_ZOMBIE1, MONSTER_MUMMY1 };
     constexpr int32_t nTrapMonsterIds2[] = { MONSTER_SKELETON1, MONSTER_SK_ARCHER1, MONSTER_SKMAGE_POIS1, MONSTER_SKMAGE_COLD1, MONSTER_SKMAGE_FIRE1, MONSTER_SKMAGE_LTNG1 };
-    
+
     const int32_t* pTrapMonsterId = nTrapMonsterIds1;
     if (DRLG_GetActNoFromLevelId(nLevelId) == ACT_II)
     {
@@ -287,7 +289,7 @@ int32_t __fastcall OBJRGN_GetTrapMonsterId(D2ObjOperateFnStrc* pOp)
     D2MonsterRegionStrc* pMonsterRegion = MONSTERREGION_GetMonsterRegionFromLevelId(pOp->pGame->pMonReg, nLevelId);
 
     pObjectRegion->nTrapMonsterId = MONSTER_FLYINGSCIMITAR;
-    
+
     for (int32_t j = 0; j < pMonsterRegion->nMonCount; ++j)
     {
         const int32_t nMonsterId = pMonsterRegion->pMonData[j].nMonHcIdx;

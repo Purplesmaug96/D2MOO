@@ -1,6 +1,7 @@
-#include <ctime>
-
 #include "PLAYER/PlrSave2.h"
+
+#include <time.h>
+#include <limits.h>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -322,7 +323,7 @@ int32_t __fastcall PLRSAVE2_WritePlayerStats(D2GameStrc* pGame, D2UnitStrc* pPla
     {
         D2StatStrc statBuffer[512] = {};
         const int32_t nStats = STATLIST_GetBaseStatsData((D2StatListStrc*)pPlayer->pStatListEx, statBuffer, 512);
-        
+
         for (int32_t i = 0; i < nStats; ++i)
         {
             int32_t nValue = statBuffer[i].nValue;
@@ -468,7 +469,7 @@ int32_t __fastcall PLRSAVE2_WriteIronGolemSection(D2GameStrc* pGame, D2UnitStrc*
     }
 
     *(uint16_t*)*ppSection = 'fk';
-    
+
     D2UnitStrc* pIronGolem = sub_6FC7E8B0(pGame, pPlayer, 3, 1);
 
     D2UnitStrc* pGolemItem = nullptr;
@@ -518,7 +519,7 @@ int32_t __fastcall PLRSAVE2_CreateSaveFile(D2GameStrc* pGame, D2UnitStrc* pPlaye
     }
 
     const uint8_t* pEnd = &pData[nMaxSize];
-    
+
     uint8_t* ppSection = pData;
     if (ppSection + 298 > pEnd)
     {
@@ -535,7 +536,7 @@ int32_t __fastcall PLRSAVE2_CreateSaveFile(D2GameStrc* pGame, D2UnitStrc* pPlaye
     *(uint32_t*)pQuestDataBuffer = '!ooW';
     *(uint32_t*)&pQuestDataBuffer[4] = 6;
     *(uint16_t*)&pQuestDataBuffer[8] = 298;
-    
+
     for (int32_t i = 0; i < 3; ++i)
     {
         QUESTRECORD_CopyRecordToBuffer(pPlayerData->pQuestData[i], &pQuestDataBuffer[10 + 96 * i], 96, 1);
@@ -543,7 +544,7 @@ int32_t __fastcall PLRSAVE2_CreateSaveFile(D2GameStrc* pGame, D2UnitStrc* pPlaye
 
     memcpy(ppSection, pQuestDataBuffer, 298);
     ppSection += 298;
-    
+
     nResult = PLRSAVE2_WriteWaypointData(pGame, pPlayer, &ppSection, pEnd);
     if (nResult)
     {
@@ -703,7 +704,7 @@ int32_t __fastcall PLRSAVE2_CheckPlayerFlags(D2GameStrc* pGame, uint32_t dwFlags
     switch (pGame->nDifficulty)
     {
     case DIFFMODE_NORMAL: break;
-    case DIFFMODE_NIGHTMARE: 
+    case DIFFMODE_NIGHTMARE:
         if ((dwFlags & CLIENTSAVEFLAG_EXPANSION) && nProgression < 5 || nProgression < 4)
         {
             return PLRSAVE2ERROR_NIGHTMARE_NOT_UNLOCKED;
@@ -729,7 +730,7 @@ int32_t __fastcall PLRSAVE2_ReadSaveHeader(D2GameStrc* pGame, D2ClientStrc* pCli
     *ppPlayer = nullptr;
 
     CLIENTS_SetFlags(pClient, 0);
-    
+
     if (*ppSection + sizeof(D2SaveHeaderStrc) > pEnd)
     {
         return PLRSAVE2ERROR_CLIENT_ERROR;
@@ -981,7 +982,7 @@ int32_t __fastcall PLRSAVE2_ReadStatsEx(D2GameStrc* pGame, D2UnitStrc* pUnit, ui
 
     D2BitBufferStrc bitBuffer = {};
     BITMANIP_Initialize(&bitBuffer, pData, pEnd - pData);
-    
+
     for (int32_t nStatId = BITMANIP_Read(&bitBuffer, 9); nStatId < 511; nStatId = BITMANIP_Read(&bitBuffer, 9))
     {
         D2ItemStatCostTxt* pItemStatCostTxtRecord = SKILLS_GetItemStatCostTxtRecord(nStatId);
@@ -1242,12 +1243,12 @@ D2UnitStrc* __fastcall PLRSAVE2_ReadMercData(D2GameStrc* pGame, D2UnitStrc* pPla
 
     int32_t nLevel = 1;
     const int32_t nMaxLevel = DATATBLS_GetMaxLevel(0);
-    
+
     if (STATLIST_UnitGetStatValue(pMerc, STAT_EXPERIENCE, 0) < hirelingData.nExperience)
     {
         STATLIST_SetUnitStat(pMerc, STAT_EXPERIENCE, hirelingData.nExperience, 0);
     }
-    
+
     D2GAME_MERCS_SendStat_6FCC61D0(pMerc, STAT_EXPERIENCE, hirelingData.nExperience);
 
     do
@@ -1264,7 +1265,7 @@ D2UnitStrc* __fastcall PLRSAVE2_ReadMercData(D2GameStrc* pGame, D2UnitStrc* pPla
     while (nLevel <= nMaxLevel && hirelingData.nExperience >= MONSTERS_GetHirelingExpForNextLevel(nLevel, pHirelingTxtRecord->dwExpPerLvl));
 
     MONSTERAI_UpdateMercStatsAndSkills(pGame, pPlayer, pMerc, nLevel);
-    
+
     if (hirelingData.nFlags & UNITFLAG_ISDEAD)
     {
         sub_6FC7D470(pGame, pPlayer, pMerc);
@@ -1272,7 +1273,7 @@ D2UnitStrc* __fastcall PLRSAVE2_ReadMercData(D2GameStrc* pGame, D2UnitStrc* pPla
         SUNIT_SetCombatMode(pGame, pMerc, MONMODE_DEAD);
         MONSTER_DeleteEvents(pGame, pMerc);
     }
-    
+
     if (!pMerc->pInventory)
     {
         INVENTORY_AllocInventory(nullptr, pMerc);
@@ -1288,7 +1289,7 @@ int32_t __fastcall PLRSAVE2_ReadPetSection(D2GameStrc* pGame, D2UnitStrc* pPlaye
     {
         return 0;
     }
-    
+
     uint8_t* pData = *ppSection + 2;
     if (pData > pEnd)
     {
@@ -1504,7 +1505,7 @@ void __fastcall PLRSAVE2_InitializeStats(D2GameStrc* pGame, D2UnitStrc* pUnit, i
             if (pUnit->pInventory)
             {
                 int32_t nCounter = 1;
-                
+
                 for (D2UnitStrc* pItem = INVENTORY_GetFirstItem(pUnit->pInventory); pItem; pItem = INVENTORY_GetNextItem(pItem))
                 {
                     if (nCounter == nItemIndex)

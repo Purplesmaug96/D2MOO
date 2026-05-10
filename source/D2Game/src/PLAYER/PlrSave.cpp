@@ -158,8 +158,12 @@ D2UnitStrc* __fastcall sub_6FC897F0(D2GameStrc* pGame, D2SavedItemStrc* pSavedIt
     itemDrop.pGame = pGame;
     itemDrop.pRoom = 0;
     itemDrop.dwFlags1 = pSavedItem->nItemFlags;
-    
+
+	#ifdef _WIN32
     strcpy_s(itemDrop.szName, pSavedItem->szName);
+	#else
+	strcpy(itemDrop.szName, pSavedItem->szName);
+	#endif
 
     itemDrop.eEarLvl = pSavedItem->nEarLevel;
 
@@ -528,7 +532,7 @@ int32_t __fastcall D2GAME_SAVE_WriteFileOnRealm_6FC8A1B0(D2GameStrc* pGame, D2Un
     *(uint16_t*)pSaveData = nFileSize + 2;
 
     D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__);
-    
+
     const uint32_t nCalculatedChecksum = D2GAME_SAVE_CalculateChecksum_6FC8A140((D2SaveHeaderStrc*)&pSaveData[2], nFileSize);
     if (nCalculatedChecksum == D2GAME_GetSaveChecksumFromClient_6FC33940(pClient))
     {
@@ -701,7 +705,7 @@ int32_t __fastcall D2GAME_SAVE_WriteFile_6FC8A500(D2GameStrc* pGame, D2UnitStrc*
     sprintf(szFileName, "%s%s.d2s", szDirectory, szName);
 
     PLRSAVE2_CreateSaveFile(pGame, pPlayer, pSaveData, &nFileSize, 0x2000u, bInteractsWithPlayer, dwArg);
-    
+
     if (nFileSize <= 0)
     {
         return 1;
@@ -1093,9 +1097,9 @@ int32_t __fastcall sub_6FC8AEC0(D2GameStrc* pGame, D2ClientStrc* pClient, D2Unit
         sub_6FC3DCA0(pClient, pUnit);
 
         *pSkillCount = SKILLS_GetPlayerSkillCount(nClassId) + 2;
-        
+
         sub_6FD14C30(pUnit);
-        
+
         return 0;
     }
 
@@ -1123,7 +1127,7 @@ int32_t __fastcall sub_6FC8AF70(D2SavedItemStrc* pSavedItem, uint8_t* pData)
             pSavedItem->nX = (uint8_t)BITMANIP_Read(&bitBuffer, 5);
             pSavedItem->nY = (uint8_t)BITMANIP_Read(&bitBuffer, 3);
             pSavedItem->nInvPage = BITMANIP_Read(&bitBuffer, 8);
-            
+
             if (ITEMS_CheckIfFlagIsSet(pSavedItem->nItemFlags, IFLAG_ISEAR))
             {
                 pSavedItem->nItemCode = ' rae';
@@ -1166,7 +1170,7 @@ int32_t __fastcall sub_6FC8AF70(D2SavedItemStrc* pSavedItem, uint8_t* pData)
     else
     {
         pSavedItem->nItemFormat = 0;
-        
+
         if (ITEMS_CheckIfFlagIsSet(pSavedItem->nItemFlags, IFLAG_ISEAR))
         {
             pSavedItem->nBodyLoc = BITMANIP_Read(&bitBuffer, 5);
@@ -1430,7 +1434,7 @@ int32_t __fastcall PLRSAVE_ReadItems_6FC8B8A0(D2GameStrc* pGame, D2UnitStrc* pPl
         }
 
         pItemBitstream += nRemainingSize;
-        
+
         int32_t bRemoveItem = 0;
         if (pItem)
         {
@@ -1459,7 +1463,7 @@ int32_t __fastcall PLRSAVE_ReadItems_6FC8B8A0(D2GameStrc* pGame, D2UnitStrc* pPl
         {
             const uint32_t nSocketableBitstreamSize = pSection - pItemBitstream + nSize;
             ITEMS_GetCompactItemDataFromBitstream(pItemBitstream, nSocketableBitstreamSize, 1, &itemSave);
-            
+
             D2UnitStrc* pSocketable = sub_6FC4EC10(pGame, 0, pItemBitstream, nSocketableBitstreamSize, 1, &itemSave, &nRemainingSize, dwVersion);
             if (!pSocketable && nRemainingSize <= 0)
             {
@@ -1467,7 +1471,7 @@ int32_t __fastcall PLRSAVE_ReadItems_6FC8B8A0(D2GameStrc* pGame, D2UnitStrc* pPl
             }
 
             pItemBitstream += nRemainingSize;
-            
+
             if (pParentItem)
             {
                 if (pSocketable)
@@ -1755,7 +1759,7 @@ uint32_t __fastcall sub_6FC8C050(D2GameStrc* pGame, int16_t nHirelingId, uint32_
     {
         return a3;
     }
-    
+
     const uint32_t nExperience = MONSTERS_GetHirelingExpForNextLevel(nLevel, pHirelingTxtRecord->dwExpPerLvl);
     if (nExperience <= a3)
     {
@@ -2246,7 +2250,7 @@ int32_t __fastcall D2GAME_SAVE_ReadFile_6FC8C9D0(D2GameStrc* pGame, D2ClientStrc
     uint8_t saveFile[0x2000] = {};
     const uint32_t nFileSize = FileLockAndRead(saveFile, 1u, 0x2000u, pSaveFile);
     fclose(pSaveFile);
-    
+
     if (!nFileSize)
     {
         return SYSERROR_UNK_14;

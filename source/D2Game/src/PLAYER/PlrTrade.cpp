@@ -1,6 +1,8 @@
 #include "PLAYER/PlrTrade.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <Fog.h>
 #include <Storm.h>
@@ -221,7 +223,7 @@ int32_t __fastcall PLRTRADE_CheckCubeInput(D2GameStrc* pGame, D2InventoryStrc* p
                     {
                         continue;
                     }
-                    
+
                     if (pCubeMainTxt->nOp == 28 && pItemsTxtRecord->nQuest && pItemsTxtRecord->nQuestDiffCheck && STATLIST_UnitGetStatValue(pItem, 356, 0) < pGame->nDifficulty)
                     {
                         continue;
@@ -614,7 +616,7 @@ void __fastcall PLRTRADE_CreateCubeOutputs(D2GameStrc* pGame, D2UnitStrc* pUnit,
             UNITS_ChangeAnimMode(pItem, IMODE_ONCURSOR);
 
             D2UnitStrc* pDupeItem = ITEMS_Duplicate(pGame, pItem, 0, bRemove[nCounter] == 0);
-            
+
             int32_t nDupeClassId = 0;
             switch (nType)
             {
@@ -1281,14 +1283,14 @@ int32_t __fastcall sub_6FC91250(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint16_t
         {
             return 0;
         }
-        
+
         D2ActiveRoomStrc* pPlayerRoom = UNITS_GetRoom(pPlayer);
         if (!pPlayerRoom || !DUNGEON_IsRoomInTown(pPlayerRoom))
         {
             return 0;
         }
-        
-        D2ActiveRoomStrc* pObjectRoom = UNITS_GetRoom(pInteractObject);    
+
+        D2ActiveRoomStrc* pObjectRoom = UNITS_GetRoom(pInteractObject);
         if (!pObjectRoom || !DUNGEON_IsRoomInTown(pObjectRoom))
         {
             return 0;
@@ -1400,7 +1402,7 @@ int32_t __fastcall sub_6FC91250(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint16_t
                 }
 
                 sub_6FC91050(pGame, pPlayer, pInteractPlayer, pPlayerData, pInteractPlayerData, 9u);
-                
+
                 const uint32_t nTickCount = GetTickCount();
                 pInteractPlayerData->dwAcceptTradeTick = nTickCount;
                 pPlayerData->dwAcceptTradeTick = nTickCount;
@@ -1455,11 +1457,19 @@ int32_t __fastcall sub_6FC91250(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint16_t
                     D2GSPacketSrv78 packet78 = {};
 
                     packet78.nHeader = 0x78u;
+					#ifdef _WIN32
                     strcpy_s(packet78.szName, CLIENTS_GetName(SUNIT_GetClientFromPlayer(pInteractPlayer, __FILE__, __LINE__)));
-                    packet78.dwPlayerGUID = pInteractPlayer->dwUnitId;
+					#else
+					strcpy(packet78.szName, CLIENTS_GetName(SUNIT_GetClientFromPlayer(pInteractPlayer, __FILE__, __LINE__)));
+                    #endif
+					packet78.dwPlayerGUID = pInteractPlayer->dwUnitId;
                     sub_6FC3E0D0(SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__), &packet78);
 
+					#ifdef _WIN32
                     strcpy_s(packet78.szName, CLIENTS_GetName(SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__)));
+					#else
+					strcpy(packet78.szName, CLIENTS_GetName(SUNIT_GetClientFromPlayer(pInteractPlayer, __FILE__, __LINE__)));
+					#endif
                     packet78.dwPlayerGUID = pPlayer->dwUnitId;
                     sub_6FC3E0D0(SUNIT_GetClientFromPlayer(pInteractPlayer, __FILE__, __LINE__), &packet78);
                     return 0;
@@ -1503,9 +1513,9 @@ int32_t __fastcall sub_6FC91250(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint16_t
                 {
                     return 0;
                 }
-                
+
                 pPlayerData->dwTradeState = 4;
-                
+
                 if (pInteractPlayerData->dwTradeState != 4)
                 {
                     return 0;
@@ -1690,7 +1700,7 @@ int32_t __fastcall sub_6FC91250(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint16_t
                 {
                     const uint32_t nInventoryGoldLimit = UNITS_GetInventoryGoldLimit(pInteractPlayer);
                     const uint32_t nGold = STATLIST_UnitGetStatValue(pInteractPlayer, STAT_GOLD, 0);
-                    
+
                     uint32_t nAddedGold = nGoldAmount;
                     if (nGold + nGoldAmount > nInventoryGoldLimit)
                     {
@@ -2315,7 +2325,7 @@ void __fastcall sub_6FC92F10(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc*
             D2ClientStrc* pClient1 = SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__);
             D2GAME_PACKETS_SendPacket0x79_6FC3E1D0(pClient1, 0, 0);
             D2GAME_PACKETS_SendPacket0x79_6FC3E1D0(pClient1, 0, 1);
-            
+
             D2ClientStrc* pClient2 = SUNIT_GetClientFromPlayer(pOtherPlayer, __FILE__, __LINE__);
             D2GAME_PACKETS_SendPacket0x79_6FC3E1D0(pClient2, 0, 0);
             D2GAME_PACKETS_SendPacket0x79_6FC3E1D0(pClient2, 0, 1);

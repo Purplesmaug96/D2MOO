@@ -1,6 +1,7 @@
 #include "PLAYER/PlrIntro.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <D2BitManip.h>

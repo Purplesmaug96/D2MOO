@@ -1,6 +1,7 @@
 #include "PLAYER/Player.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 
@@ -686,7 +687,7 @@ void __fastcall PLAYER_ApplyDeathPenalty(D2GameStrc* pGame, D2UnitStrc* pDefende
     const int32_t nPenaltyPercentage = std::min(nDefenderLevel, 20);
 
     int32_t nGoldPenalty = nDefenderTotalGold * nPenaltyPercentage / 100;
-    
+
     int32_t bAttackedByAnotherPlayer = 0;
     if (pAttacker && pAttacker != pDefender)
     {

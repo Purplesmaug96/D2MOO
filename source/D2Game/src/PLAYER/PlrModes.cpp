@@ -1,6 +1,7 @@
 #include "PLAYER/PlrModes.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 
@@ -792,7 +793,7 @@ void __fastcall PLRMODE_StartXY_Dead(D2GameStrc* pGame, D2UnitStrc* pUnit, int32
 {
     D2GAME_CORPSE_Handler_6FC7FBD0(pGame, pUnit, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit), UNITS_GetRoom(pUnit));
     D2GAME_KillPlayerPets_6FC7CD10(pGame, pUnit);
-    
+
     D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__);
     CLIENTS_ToggleFlag(pClient, CLIENTSAVEFLAG_DEAD, TRUE);
 
@@ -865,7 +866,7 @@ void __fastcall PLRMODE_StartXY_AttackCastThrowKickSpecialSequence(D2GameStrc* p
 void __fastcall PLRMODE_StartID_AttackCastThrowKickSpecialSequence(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t nMode, D2UnitStrc* pTarget)
 {
     SUNIT_SetCombatMode(pGame, pPlayer, nMode);
-    
+
     D2_ASSERT(pTarget);
 
     UNITS_SetTargetUnitForDynamicUnit(pPlayer, pTarget);
@@ -897,7 +898,7 @@ void __fastcall sub_6FC80A30(D2GameStrc* pGame, D2UnitStrc* pUnit)
 
         D2SkillStrc* pRightSkill = UNITS_GetRightSkill(pUnit);
         int32_t nRightSkillOwnerGUID = -1;
-        int32_t nRightSkillId = 0; 
+        int32_t nRightSkillId = 0;
         if (pRightSkill)
         {
             nRightSkillOwnerGUID = SKILLS_GetOwnerGUIDFromSkill(pRightSkill);
@@ -1035,7 +1036,7 @@ void __fastcall sub_6FC80E10(D2GameStrc* pGame, D2UnitStrc* pPlayer)
         while (pItem)
         {
             if (INVENTORY_GetItemNodePage(pItem) == 3 && INVENTORY_UnitIsItem(pItem) && ITEMS_CheckItemTypeId(pItem, ITEMTYPE_WEAPON)
-                && ITEMS_HasDurability(pItem) && (int32_t)STATLIST_UnitGetStatValue(pItem, STAT_DURABILITY, 0) <= 0 
+                && ITEMS_HasDurability(pItem) && (int32_t)STATLIST_UnitGetStatValue(pItem, STAT_DURABILITY, 0) <= 0
                 && !ITEMS_CheckItemFlag(pItem, 0x100u, __LINE__, __FILE__))
             {
                 if (!bChangedToNeutral)
@@ -1342,7 +1343,7 @@ void __fastcall sub_6FC81250(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3, i
     {
         D2GAME_CORPSE_Handler_6FC7FBD0(pGame, pUnit, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit), UNITS_GetRoom(pUnit));
         D2GAME_KillPlayerPets_6FC7CD10(pGame, pUnit);
-        
+
         D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pUnit, __FILE__, __LINE__);
         CLIENTS_ToggleFlag(pClient, CLIENTSAVEFLAG_DEAD, TRUE);
 
