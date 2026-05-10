@@ -6,6 +6,8 @@
 #define __WINDOWS_SHIM_LASTERROR_LOCAL
 #include <errhandlingapi.h>
 
+#include <winreg.h>
+
 #include "Main.h"
 
 #include <Fog.h>

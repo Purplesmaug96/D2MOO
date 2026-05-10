@@ -32,7 +32,7 @@ typedef __windows_shim_struct_HMODULE* HMODULE;
 typedef HANDLE HDC; // Device Context
 typedef HANDLE HINSTANCE;
 typedef HANDLE HGDIOBJ;
-typedef HANDLE HKEY;
+typedef /*HANDLE*/ int HKEY;
 typedef HANDLE HICON;
 typedef HANDLE HCURSOR;
 typedef HANDLE HBRUSH;
