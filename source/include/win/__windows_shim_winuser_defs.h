@@ -3,6 +3,8 @@
 // From here: https://github.com/tpn/winsdk-10/blob/master/Include/10.0.10240.0/um/WinUser.h
 
 #define WINVER 99999999
+#define _WIN32_WINNT 99999999
+#define _WIN32_WINDOWS 99999999
 
 /*
  * Virtual Keys, Standard Set
@@ -659,14 +661,6 @@
 #if (_WIN32_WINNT >= 0x0502)
 #ifndef PBT_POWERSETTINGCHANGE
 #define PBT_POWERSETTINGCHANGE          0x8013
-
-#pragma region Desktop Family
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
-
-
-
-#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
-#pragma endregion
 
 #endif // PBT_POWERSETTINGCHANGE
 
