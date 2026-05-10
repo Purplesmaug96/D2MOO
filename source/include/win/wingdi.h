@@ -9,4 +9,5 @@ typedef struct {
 	uint8_t peFlags;
 } PALETTEENTRY;
 
+typedef PALETTEENTRY* LPPALETTEENTRY;
 typedef PALETTEENTRY* LPPALETTE;

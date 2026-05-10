@@ -3,6 +3,9 @@
 #include <cstdint>
 
 #include <Windows.h>
+#include <wingdi.h>
+#include <iterator>
+
 #include <D2Constants.h>
 
 #include "DrawMode.h"

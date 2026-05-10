@@ -3,6 +3,9 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#include <windef.h>
+#include <winnt.h>
+
 typedef struct {} PAINTSTRUCT;
 
 typedef PAINTSTRUCT* LPPAINTSTRUCT;
@@ -86,3 +89,5 @@ enum {
 	IDS_APP_TITLE,
 	IDYES
 };
+
+typedef LRESULT (*WNDPROC)(HWND unnamedParam1, UINT unnamedParam2, WPARAM unnamedParam3, LPARAM unnamedParam4);
