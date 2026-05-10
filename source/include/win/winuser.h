@@ -157,3 +157,6 @@ static inline BOOL UnregisterClassA(LPCSTR lpClassName, HINSTANCE hInstance) {
 	return FALSE;
 }
 
+#define MAKELPARAM(l, h) ((LPARAM)((uint16_t)l | (uint16_t)((uint16_t)h >> 16)))
+
+#include <__windows_shim_winuser_defs.h>
