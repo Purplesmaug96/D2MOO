@@ -4,6 +4,10 @@
 
 #include "DrawMode.h"
 
+#ifndef _WIN32
+#include <__windows_shim_msvcrt.h>
+#endif
+
 
 struct D2GfxDataStrc;
 
