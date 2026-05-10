@@ -50,7 +50,11 @@
 #pragma warning(disable: 28159)
 
 
+#ifdef _WIN32
 int32_t dword_6FD4DC40;
+#else
+extern int32_t dword_6FD4DC40;
+#endif
 
 
 

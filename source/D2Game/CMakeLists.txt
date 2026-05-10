@@ -1,6 +1,7 @@
 
 D2MOO_prepare_targets(D2Game)
 
+if(WIN32)
 target_link_libraries(${D2GameImplName}
   PRIVATE
     D2CommonDefinitions
@@ -11,6 +12,17 @@ target_link_libraries(${D2GameImplName}
     Fog
     winmm # For timeGetTime()
 )
+else()
+target_link_libraries(${D2GameImplName}
+  PRIVATE
+    D2CommonDefinitions
+    D2CMP
+    D2Common
+    D2Lang
+    D2Net
+    Fog
+)
+endif()
 
 # Ai
 target_sources(${D2GameImplName}
@@ -65,7 +77,7 @@ target_sources(${D2GameImplName}
 target_sources(${D2GameImplName}
   PRIVATE
     src/INVENTORY/InvMode.cpp
-    
+
     include/INVENTORY/InvMode.h
 )
 
@@ -75,7 +87,7 @@ target_sources(${D2GameImplName}
     src/ITEMS/ItemMode.cpp
     src/ITEMS/Items.cpp
     src/ITEMS/ItemsMagic.cpp
-    
+
     include/ITEMS/ItemMode.h
     include/ITEMS/Items.h
     include/ITEMS/ItemsMagic.h
@@ -86,7 +98,7 @@ target_sources(${D2GameImplName}
   PRIVATE
     src/MISSILES/Missiles.cpp
     src/MISSILES/MissMode.cpp
-    
+
     include/MISSILES/Missiles.h
     include/MISSILES/MissMode.h
 )
@@ -106,7 +118,7 @@ target_sources(${D2GameImplName}
     include/MONSTER/Monster.h
     include/MONSTER/MonsterAI.h
     include/MONSTER/MonsterChoose.h
-    include/MONSTER/MonsterMode.h    
+    include/MONSTER/MonsterMode.h
     include/MONSTER/MonsterMsg.h
     include/MONSTER/MonsterRegion.h
     include/MONSTER/MonsterSpawn.h
