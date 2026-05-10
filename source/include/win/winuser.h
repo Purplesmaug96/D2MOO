@@ -182,9 +182,62 @@ static inline BOOL ShowWindow(HWND hWnd, int nCmdShow) {
 	return FALSE;
 }
 
+static inline short GetKeyState(int nVirtKey) {
+	printf("Stubbed function GetKeyState called\n");
+	return FALSE;
+}
+
+typedef struct {} MSG;
+
+static inline BOOL PeekMessageA(/*LPMSG*/ MSG* lpMsg, HWND hWnd, UINT wMsgFilterMin, UINT wMsgFilterMax, UINT wRemoveMsg) {
+	printf("Stubbed function PeekMessageA called\n");
+	return FALSE;
+}
+
+static inline BOOL TranslateMessage(const MSG *lpMsg) {
+	printf("Stubbed function TranslateMessage called\n");
+	return FALSE;
+}
+
+static inline LRESULT DispatchMessageA(const MSG *lpMsg) {
+	printf("Stubbed function DispatchMessageA called\n");
+	return (LRESULT)NULL;
+}
+
+static inline BOOL PtInRect(const RECT *lpRect, const POINT point) {
+	return ( \
+		point.x >= lpRect->left /* X of top-left */ && \
+		point.y >= lpRect->top /* Y of top-left */ && \
+		point.x <= lpRect->right /* X of down-right */ && \
+		point.y <= lpRect->bottom /* Y of down-right */
+	);
+}
+
+static inline BOOL SetCursorPos(int X,int Y) {
+	printf("Stubbed function SetCursorPos called\n");
+	return FALSE;
+}
+
+static inline void PostQuitMessage(int nExitCode) {
+	printf("PostQuitMessage called with %d; calling exit(%d)\n", nExitCode, nExitCode);
+	exit(nExitCode);
+}
+
+static inline LRESULT DefWindowProcA(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
+	printf("Stubbed function DefWindowProcA called\n");
+	return (LRESULT)NULL;
+}
+
+static inline BOOL GetMessageA(MSG* lpMsg, HWND hWnd, UINT wMsgFilterMin, UINT wMsgFilterMax) {
+	printf("Stubbed function GetMessageA called\n");
+	return FALSE;
+}
+
 #define MAKELPARAM(l, h) ((LPARAM)((uint16_t)l | (uint16_t)((uint16_t)h >> 16)))
 #define MAKEWPARAM(l, h) ((LPARAM)((uint16_t)l | (uint16_t)((uint16_t)h >> 16)))
 
 #define SIZE_RESTORED 0
+
+#define INVALID_HANDLE_VALUE -1
 
 #include <__windows_shim_winuser_defs.h>

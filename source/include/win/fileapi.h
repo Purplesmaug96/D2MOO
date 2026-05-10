@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdio.h>
+
 #include <windef.h>
 
 typedef struct {} FILETIME;
@@ -17,5 +19,16 @@ enum {
 };
 
 static inline UINT GetDriveTypeA(LPCSTR lpRootPathName) {
+	printf("Stubbed function GetDriveTypeA called\n");
 	return DRIVE_UNKNOWN;
+}
+
+static inline DWORD GetFileAttributesA(LPCSTR lpFileName) {
+	printf("Stubbed function GetFileAttributesA called\n");
+	return -1; // INVALID_FILE_ATTRIBUTES, i think
+}
+
+static inline BOOL DeleteFileA(LPCSTR lpFileName) {
+	printf("Stubbed function DeleteFileA called\n");
+	return FALSE;
 }

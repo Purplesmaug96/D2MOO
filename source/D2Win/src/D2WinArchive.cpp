@@ -37,8 +37,13 @@ D2CellFileStrc* __fastcall ARCHIVE_LoadCellFileWithFileSize(const char* szFile, 
 {
 	char szPath[260] = {};
 
+	#ifdef _WIN32
 	strcpy_s(szPath, szFile);
 	strcat_s(szPath, D2CMP_GetGfxFileExtension(nType));
+	#else
+	strcpy(szPath, szFile);
+	strcat(szPath, D2CMP_GetGfxFileExtension(nType));
+	#endif
 
 	void* pFile = ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(nullptr, szPath, pFileSize);
 

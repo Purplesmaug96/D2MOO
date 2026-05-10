@@ -76,7 +76,7 @@ int dword_6F8BC190 = 15;
 //
 //	pGfxData->nUnitIndex = pCompositeUnit->nUnitIndex;
 //	pGfxData->nMode = pCompositeUnit->nMode;
-//	
+//
 //	const int nComponent = pGfxData->nComponent;
 //	pGfxData->dwComponentToken = dword_6F8BC100[nComponent];
 //	pGfxData->dwWClassToken = dword_6F8BC154[pCompositeUnit->nWClassTokenIndex];
@@ -1397,7 +1397,7 @@ BOOL __fastcall D2Win_10143(D2CompositeUnitStrc* pCompositeUnit, int nMode)
 {
 	D2_ASSERT(pCompositeUnit);
 
-	
+
 	for (D2CofInfoStrc* pCofInfo = pCompositeUnit->pGfxInfo->pCofInfo; pCofInfo; pCofInfo = pCofInfo->pNext)
 	{
 		if (pCofInfo->pCofNode->nMode == nMode)
@@ -2664,7 +2664,7 @@ void __stdcall D2Win_10149(D2CompositeUnitStrc* pCompositeUnit, uint8_t a2)
 {
 	D2_ASSERT(pCompositeUnit);
 
-	pCompositeUnit->unk0x04 = D2Clamp(a2, 0ui8, pCompositeUnit->unk0x05);
+	pCompositeUnit->unk0x04 = D2Clamp(a2, (uint8_t)0, pCompositeUnit->unk0x05);
 }
 
 //D2Win.0x6F8A4490 (#10150)

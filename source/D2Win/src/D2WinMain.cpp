@@ -321,12 +321,16 @@ int __stdcall D2Win_10008(void(__stdcall* pCallback)(DWORD))
 {
 	int nSleepMillis = 0;
 	DWORD dwCounter = 0;
-	
+
 	DWORD dwTickCount = GetTickCount();
 
 	while (dword_6F8BDF78)
 	{
+		#ifdef _WIN32
 		struct tagMSG Msg = {};
+		#else
+		MSG Msg = {};
+		#endif
 
 		if (PeekMessageA(&Msg, 0, 0, 0, 0))
 		{

@@ -3,6 +3,7 @@
 #include <cstdint>
 
 #include <Windows.h>
+#include <wingdi.h>
 
 
 #pragma pack(push, 1)

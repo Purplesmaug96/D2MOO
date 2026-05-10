@@ -4,10 +4,10 @@
 #include <stddef.h>
 
 typedef struct {
-	int left;
-	int top;
-	int right;
-	int bottom;
+	int left; // X of top-left
+	int top; // Y of top-left
+	int right; // X of down-right
+	int bottom; // Y of down-right
 } RECT;
 
 typedef int BOOL;

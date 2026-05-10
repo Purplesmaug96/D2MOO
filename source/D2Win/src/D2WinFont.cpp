@@ -79,6 +79,10 @@ void __stdcall sub_6F8A9B40()
 	memset(gMonsterIndicatorCodeUnicodeChar_6F8FE204, 0, sizeof(gMonsterIndicatorCodeUnicodeChar_6F8FE204));
 }
 
+#ifndef _WIN32
+#define strcpy_s strcpy
+#endif
+
 //D2Win.0x6F8A9B60 (#10115)
 void __fastcall D2Win_10115_FONT()
 {
@@ -171,6 +175,11 @@ void __fastcall D2Win_10115_FONT()
 	Unicode::toUnicode(gColorCodeUnicodeChar_6F8FE208, "c", 2);
 	Unicode::toUnicode(gMonsterIndicatorCodeUnicodeChar_6F8FE204, "m", 2);
 }
+
+#ifndef _WIN32
+#undef strcpy_s strcpy
+#endif
+
 
 //D2Win.0x6F8A9DC0
 void __fastcall D2Win_FONT_6F8A9DC0(int nFont, char* pBuffer, int nLength)
@@ -437,7 +446,7 @@ void __fastcall D2Win_10119_DrawCroppedText(const Unicode* wszText, int32_t nX, 
 
 	D2GfxDataStrc gfxData = {};
 	gfxData.nDirection = 0;
-		
+
 	const int32_t nLineStartX = nX;
 	const int32_t nTextLength = Unicode::strlen(wszText);
 
@@ -447,7 +456,7 @@ void __fastcall D2Win_10119_DrawCroppedText(const Unicode* wszText, int32_t nX, 
 		const Unicode currentChar = wszText[nCharIdx];
 		++nCharIdx;
 
-		if (/*currentChar < 256 && */ currentChar == 0xFF) // currentChar is ASCII and equal ÿ
+		if (/*currentChar < 256 && */ currentChar == 0xFF) // currentChar is ASCII and equal ï¿½
 		{
 			const Unicode v28 = wszText[nCharIdx];
 			++nCharIdx;
@@ -510,7 +519,7 @@ void __fastcall sub_6F8AA510(const Unicode* wszText, int32_t nX, int32_t nY, int
 	gfxData.nDirection = 0;
 
 	const Unicode* v7 = wszText;
-	
+
 	int32_t v9 = nX + a5;
 	int32_t v12 = a4;
 
@@ -575,7 +584,7 @@ void __fastcall sub_6F8AA510(const Unicode* wszText, int32_t nX, int32_t nY, int
 					const Unicode v15 = *v7;
 					++v10;
 					++v7;
-					
+
 					v12 = v15 - '0';
 					if (v12 >= '\r')
 					{
@@ -814,7 +823,7 @@ void __fastcall sub_6F8AA9E0(const Unicode* wszText, int32_t nX, int32_t nY, int
 			{
 				--v8;
 				--v10;
-				
+
 				D2CharStrc* v16 = dword_6F8FE20C(v12);
 				gfxData.nFrame = v16->nImageIndex;
 				TEXTURE_CelDrawColor(&gfxData, v6, nY, -1u, DRAWMODE_NORMAL, v11);
@@ -1223,7 +1232,7 @@ void __fastcall D2Win_10134_DrawCellFile(D2CellFileStrc* pCellFile, int nX, int 
 	gfxData.nDirection = 0;
 
 	const int nFramesPerDirection = D2CMP_CelFileGetCelsPerDirection(pCellFile);
-	
+
 	if (nDiv == 1 || nDiv == 2)
 	{
 		int nAccumulatedWidth = 0;

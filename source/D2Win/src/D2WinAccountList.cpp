@@ -72,7 +72,11 @@ void __fastcall ACCOUNTLIST_AllocData(D2WinAccountListStrc* pAccountList, const 
 	D2_ASSERT(pAccountList->controlHeader.nType == D2WIN_ACCOUNTLIST);
 
 	D2WinAccountListDataStrc* pData = D2_ALLOC_STRC(D2WinAccountListDataStrc);
+	#ifdef _WIN32
 	strncpy_s(pData->szText, szText, std::size(pData->szText));
+	#else
+	strncpy(pData->szText, szText, std::size(pData->szText));
+	#endif
 
 	D2WinAccountListDataStrc* pList = pAccountList->pDataList;
 	if (pList)
