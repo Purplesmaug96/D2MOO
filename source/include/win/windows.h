@@ -24,6 +24,7 @@
 #include <process.h>
 #include <libloaderapi.h>
 #include <timeapi.h>
+#include <winsvc.h>
 
 #define CALLBACK __stdcall
 

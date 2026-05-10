@@ -1,6 +1,10 @@
-#include <windows.h>
 #include <stddef.h>
 #include <stdio.h>
+
+#include <windows.h>
+
+#define __WINDOWS_SHIM_LASTERROR_LOCAL
+#include <errhandlingapi.h>
 
 #include "Main.h"
 
@@ -225,7 +229,7 @@ void GAMEAPI ParseCmdLine(D2ConfigStrc* pCfg, const char *argv)
 	char szCommandNameTestBuf[24] = {};
 	char szCommandValueBuf[24] = {};
 	char szCommand[48] = {};
-		
+
 	for (int nCharIndex = 0; nCharIndex < nArgvLength; nCharIndex++)
 	{
 		if (argv[nCharIndex] != '-')
@@ -262,7 +266,7 @@ void GAMEAPI ParseCmdLine(D2ConfigStrc* pCfg, const char *argv)
 			}
 			// Copy what's left of the command (value)
 			size_t nValueIdx = 0;
-			for (size_t nCommandValueOffset = strlen(szCommandNameTestBuf); 
+			for (size_t nCommandValueOffset = strlen(szCommandNameTestBuf);
 				szCommand[nCommandValueOffset + nValueIdx];
 				nValueIdx++
 				)
@@ -555,7 +559,7 @@ void GAMEAPI SaveCmdLine(const char* argv[])
 
 	bUseCmdLine = FALSE;
 	SRegSaveValue(REG_KEY_HOME, CMDLINE_USE, SREG_DEFAULT, NULL);
-	
+
 	if(gbD2ServerStopEvent)
 	{
 		SRegLoadString(REG_KEY_HOME, CMDLINE_SVC, SREG_DEFAULT, szSRegReadBuf, MAX_REG_KEY);
@@ -641,7 +645,7 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[])
 	const size_t argvLen = strlen(lpArgvCmd) + 1;
 	char* lpArgvDupe = (char*)D2_ALLOC(argvLen);
 	SStrCopy(lpArgvDupe, lpArgvCmd, argvLen);
-	
+
 	int nChosenModule = MODULE_NONE;
 
 	for (char* pCurrentParam = strtok(lpArgvDupe, "-"); pCurrentParam; pCurrentParam = strtok(0, "-")) // NOLINT(clang-diagnostic-deprecated-declarations)

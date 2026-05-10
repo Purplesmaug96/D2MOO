@@ -34,12 +34,18 @@ typedef void* LPVOID;
 typedef const void* LPCVOID;
 typedef char* LPSTR;
 typedef const char* LPCSTR;
-typedef wchar_t* PWSTR;
+typedef wchar_t* LPWSTR;
+#ifdef UNICODE
+ typedef LPWSTR LPTSTR;
+#else
+ typedef LPSTR LPTSTR;
+#endif
 typedef const wchar_t* PCWSTR;
 typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 
 #define MAX_PATH 256 // Might need to be increased later
+#define _MAX_DIR MAX_PATH // Don't know if correct
 
 typedef int (*FARPROC)();
 
@@ -47,3 +53,5 @@ typedef struct {
 	int32_t x;
 	int32_t y;
 } POINT;
+
+#define WINAPI

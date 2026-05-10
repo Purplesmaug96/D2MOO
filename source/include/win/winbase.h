@@ -1,9 +1,12 @@
 #pragma once
 
-#include <windef.h>
 #include <string.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <stdio.h>
+
+#include <windef.h>
 
 static inline DWORD GetLogicalDriveStringsA(DWORD nBufferLength,  LPSTR lpBuffer) {
 	return 0; // Length written
@@ -32,4 +35,24 @@ static inline BOOL IsBadCodePtr(FARPROC lpfn) {
     void *base = (void *)((((size_t)lpfn) / page_size) * page_size);
     /* call msync, if it returns non-zero, return false */
     return msync(base, page_size, MS_ASYNC) == 0;
+}
+
+static inline DWORD GetCurrentDirectory(DWORD nBufferLength, LPTSTR lpBuffer) {
+	printf("Stubbed function GetCurrentDirectory called\n");
+	return 0; // Chars written
+}
+
+static inline DWORD GetCurrentDirectoryA(DWORD nBufferLength, LPTSTR lpBuffer) {
+	printf("Stubbed function GetCurrentDirectoryA called\n");
+	return 0; // Chars written
+}
+
+static inline /* MS docs say it's a UINT, but that would cause underflow if nDefault is negetive */ int GetPrivateProfileIntA(LPCSTR lpAppName, LPCSTR lpKeyName, int nDefault, LPCSTR lpFileName) {
+	printf("Stubbed function GetProfileIntA called\n");
+	return nDefault;
+}
+
+static inline DWORD GetPrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpDefault, LPSTR lpReturnedString, DWORD nSize, LPCSTR lpFileName) {
+	printf("Stubbed function GetPrivateProfileStringA called\n");
+	return 0;
 }
