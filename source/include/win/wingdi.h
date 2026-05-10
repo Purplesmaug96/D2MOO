@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdio.h>
+
 #include <winnt.h>
 
 typedef struct {
@@ -14,5 +16,11 @@ typedef PALETTEENTRY* LPPALETTEENTRY;
 typedef PALETTEENTRY* LPPALETTE;
 
 static inline HGDIOBJ GetStockObject(int i) {
+	printf("Stubbed function GetStockObject called\n");
 	return NULL;
+}
+
+static inline DWORD GdiSetBatchLimit(DWORD dw) {
+	printf("Stubbed function GdiSetBatchLimit called\n");
+	return 0;
 }

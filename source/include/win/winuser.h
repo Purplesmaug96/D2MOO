@@ -157,7 +157,33 @@ static inline BOOL UnregisterClassA(LPCSTR lpClassName, HINSTANCE hInstance) {
 	return FALSE;
 }
 
+static inline HWND FindWindowA(LPCSTR lpClassName, LPCSTR lpWindowName) {
+	printf("Stubbed function FindWindowA called\n");
+	return NULL;
+}
+
+static inline long ChangeDisplaySettingsA(/*DEVMODEA*/ void *lpDevMode, DWORD dwFlags) {
+	printf("Stubbed function ChangeDisplaySettingsA called\n");
+	return 0; // should be DISP_CHANGE_FAILED
+}
+
+static inline BOOL GetWindowPlacement(HWND hWnd, WINDOWPLACEMENT *lpwndpl) {
+	printf("Stubbed function GetWindowPlacement called\n");
+	return FALSE;
+}
+
+static inline BOOL IsIconic(HWND hWnd) {
+	printf("Stubbed function IsIconic called\n");
+	return FALSE;
+}
+
+static inline BOOL ShowWindow(HWND hWnd, int nCmdShow) {
+	printf("Stubbed function ShowWindow called\n");
+	return FALSE;
+}
+
 #define MAKELPARAM(l, h) ((LPARAM)((uint16_t)l | (uint16_t)((uint16_t)h >> 16)))
+#define MAKEWPARAM(l, h) ((LPARAM)((uint16_t)l | (uint16_t)((uint16_t)h >> 16)))
 
 #define SIZE_RESTORED 0
 

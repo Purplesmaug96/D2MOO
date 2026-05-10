@@ -259,7 +259,11 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 
 	SDL_VERSION(&wmInfo.version);
 	SDL_GetWindowWMInfo(window, &wmInfo);
+	#ifdef _WIN32
 	ghWnd = wmInfo.info.win.window;
+	#else
+	ghWnd = NULL;
+	#endif
 
 	if (ghWnd == NULL)
 	{
