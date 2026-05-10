@@ -5,6 +5,18 @@
 #include <__windows_shim_msvcrt.h>
 #include <windef.h>
 
+typedef union {
+//   struct {
+//     DWORD LowPart;
+//     LONG  HighPart;
+//   } DUMMYSTRUCTNAME;
+  struct {
+    DWORD LowPart;
+    LONG  HighPart;
+  } u;
+  long long QuadPart;
+} LARGE_INTEGER;
+
 typedef void* HANDLE;
 
 // Quite possible the wrong place
@@ -29,23 +41,36 @@ typedef int32_t HRESULT;
 
 typedef DWORD (__stdcall *LPTHREAD_START_ROUTINE) (LPVOID lpThreadParameter);
 
-static long InterlockedIncrement(long volatile *Addend) {
+static inline long InterlockedIncrement(long volatile *Addend) {
 	*Addend++;
 	return *Addend;
 }
 
-static long long InterlockedIncrement64(long long volatile *Addend) {
+static inline long long InterlockedIncrement64(long long volatile *Addend) {
 	*Addend++;
 	return *Addend;
 }
 
-static long InterlockedDecrement(long volatile *Addend) {
+static inline long InterlockedDecrement(long volatile *Addend) {
 	*Addend--;
 	return *Addend;
 }
 
-static long long InterlockedDecrement64(long long volatile *Addend) {
+static inline long long InterlockedDecrement64(long long volatile *Addend) {
 	*Addend--;
 	return *Addend;
 }
 
+// InterlockedCompareExchange taken from this issue: https://github.com/itsmattkc/dotnet9x/issues/19
+
+// Reimplemented
+static inline LONG InterlockedCompareExchange(LONG *dest,  LONG xchg,  LONG compare)
+{
+	LONG temp = *dest;
+
+	if (compare == *dest) {
+		*dest = xchg;
+	}
+
+	return temp;
+}

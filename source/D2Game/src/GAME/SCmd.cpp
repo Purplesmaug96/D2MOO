@@ -1,7 +1,14 @@
 #include "GAME/SCmd.h"
 
+#ifdef _WIN32
 #include <intrin.h>
+#else
+#include <x86intrin.h>
+#include <__windows_shim_msvcrt.h>
+#endif
+
 #include <algorithm>
+#include <limits.h>
 
 #include <D2BitManip.h>
 #include <Fog.h>
@@ -56,7 +63,7 @@ int32_t __fastcall sub_6FC3C640(int32_t nClientId, int16_t nGameId, int16_t nCli
     packetB1.nClientCount = nClientCount;
 
     SStrCopy(packetB1.szGameName, szGameName, 0x10u);
-    
+
     return D2NET_10006(0, nClientId, &packetB1, sizeof(packetB1));
 }
 
@@ -87,7 +94,7 @@ void __fastcall sub_6FC3C6D0(int32_t nClientId, uint32_t nErrorCode)
 
     packetB3.nHeader = 0xB3;
     packetB3.nErrorCode = nErrorCode;
-    
+
     D2NET_10006(0, nClientId, &packetB3, sizeof(packetB3));
 }
 
@@ -647,7 +654,7 @@ void __fastcall D2GAME_PACKETS_SendPacket0x0A_RemoveObject_6FC3D3A0(D2ClientStrc
     if (nUnitType != UNIT_MISSILE)
     {
         D2GSPacketSrv0A packet0A = {};
-        
+
         packet0A.nUnitType = nUnitType;
         packet0A.nHeader = alw0x0A;
         packet0A.dwUnitGUID = nUnitId;
@@ -971,7 +978,7 @@ void __fastcall D2GAME_PACKETS_SendPacket0x21_UpdateSkills_6FC3DB50(D2ClientStrc
             packet21.nSkillId = nSkillId;
             packet21.nSkillLevel = nSkillLevel;
             packet21.nBonusSkillLevel = SKILLS_GetBonusSkillLevelFromSkillId(pUnit, nSkillId);
-            
+
             D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet21, sizeof(packet21));
         }
     }
@@ -1006,7 +1013,7 @@ void __fastcall D2GAME_PACKETS_SendPacket0x23_6FC3DC60(D2ClientStrc* pClient, BY
     packet23.nPosition = a4;
     packet23.nSkill = a5;
     packet23.unk0x009 = a6;
-    
+
     D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet23, sizeof(packet23));
 }
 
@@ -1025,9 +1032,9 @@ void __fastcall sub_6FC3DCA0(D2ClientStrc* pClient, D2UnitStrc* pUnit)
     const int32_t nPacketLength = sizeof(D2GSPacketSrv94::SkillInfo) * nSkillCount + offsetof(D2GSPacketSrv94, Skills);
     D2GameStrc* pGame = CLIENTS_GetGame(pClient);
     D2GSPacketSrv94* pPacket94 = (D2GSPacketSrv94*)D2_ALLOC_POOL(pGame->pMemoryPool, nPacketLength);
-    
+
     pPacket94->nHeader = 0x94u;
-    
+
     D2_ASSERT(nSkillCount < 256);
 
     pPacket94->nSkills = nSkillCount;
@@ -1324,20 +1331,20 @@ int32_t __stdcall sub_6FC3E3F0(D2UnkMonsterDataStrc* a1, int32_t nCurrentLifePer
 
 //D2Game.0x6FC3E440
 int32_t __fastcall sub_6FC3E440(D2UnitStrc* pUnit1, D2UnitStrc* pUnit2, int32_t a3, int32_t a4)
-{    
+{
     // TODO: Names
     D2GameStrc* pGame = SUNIT_GetGameFromUnit(pUnit1);
     if (!pGame)
     {
         return 0;
     }
-    
+
     const int16_t nPartyId = PARTY_GetPartyIdForUnitOwner(pGame, pUnit1);
     if (nPartyId == -1 || nPartyId != PARTY_GetPartyIdForUnitOwner(pGame, pUnit2))
     {
         return 0;
     }
-    
+
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pUnit1);
     if (!pPlayerData)
     {
@@ -1483,7 +1490,7 @@ void __fastcall D2GAME_SendPacket0x9D_6FC3E6F0(D2ClientStrc* pClient, D2UnitStrc
 
     const uint32_t nOldItemFlags = ITEMS_GetItemFlags(pItem);
     ITEMS_SetItemFlag(pItem, dwFlag, 1);
-    
+
     const uint32_t nLength = ITEMS_SerializeItemToBitstream(pItem, packet9D.pBitstream, 0xF4u, 0, 0, bGamble) + 13;
     if (nLength > 252)
     {
@@ -1788,7 +1795,7 @@ void __fastcall D2GAME_SendPacket0x48_6FC3EF40(D2ClientStrc* pClient, D2UnitStrc
     packet48.nUnitType = pUnit ? pUnit->dwUnitType : 6;
     packet48.unk0x02 = a3;
     packet48.nUnitGUID = pUnit ? pUnit->dwUnitId : -1;
-    
+
     D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet48, sizeof(packet48));
 }
 
@@ -2127,7 +2134,7 @@ void __fastcall D2GAME_PACKETS_SendPacket0x74_6FC3F640(D2ClientStrc* pClient, D2
 void __fastcall SCMD_Send0x75_PartyRosterUpdate(D2UnitStrc* pLocalPlayer, D2UnitStrc* pOtherPlayer)
 {
     D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pLocalPlayer, __FILE__, __LINE__);
-    
+
     D2GSPacketSrv75 packet75 = {};
 
     packet75.nHeader = 0x75u;
@@ -2179,7 +2186,7 @@ void __fastcall D2GAME_PACKETS_SendPacket0x82_6FC3F790(D2GameStrc* pGame, D2Clie
             packet82.nHeader = 0x82u;
 
             SStrCopy(packet82.szOwnerName, UNITS_GetPlayerData(pPlayer)->szName, sizeof(packet82.szOwnerName));
-           
+
             packet82.dwOwnerGUID = pPlayer->dwUnitId;
             packet82.dwPortalGUID[0] = nPortalOwnerGUID; // TODO: Maybe [1]
             packet82.dwPortalGUID[1] = nPortalGUID; // TODO: Maybe [0]
@@ -2269,7 +2276,7 @@ void __fastcall D2GAME_PACKETS_SendPacket0x8D_6FC3F960(D2UnitStrc* pUnit, D2Unit
 void __fastcall D2GAME_SendPacket0x8E_CorpseAssign_ToAllPlayers_6FC3F9B0(D2GameStrc* pGame, int32_t nUnitId, int32_t nCorpseId, BYTE bAssign)
 {
     D2GSPacketSrv8E packet8E = {};
-       
+
     packet8E.nHeader = 0x8E;
     packet8E.nType = bAssign;
     packet8E.dwPlayerGUID = nUnitId;
@@ -2469,7 +2476,7 @@ void __fastcall sub_6FC3FC80(D2ClientStrc* pClient, D2UnitStrc* pUnit)
             for (int32_t i = 0; i < 16; ++i)
             {
                 const uint8_t nComponent = pUnit->pMonsterData->nComponent[i];
-                
+
                 const int32_t nCompInfo = D2COMMON_11068_GetCompInfo(pUnit, i);
                 if (nCompInfo >= 3)
                 {

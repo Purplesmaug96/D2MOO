@@ -7,6 +7,7 @@
 
 #include <windef.h>
 #include <winnt.h>
+#include <timeapi.h>
 
 static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD nSize) {
 	strncpy(lpFilename, hModule->name, nSize);
@@ -14,10 +15,11 @@ static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD 
 }
 
 static inline DWORD GetTickCount() {
-	timeval tv;
-	gettimeofday(&tv, 0);
-	unsigned int ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000.0f);
-	return ms;
+	return timeGetTime();
+	// timeval tv;
+	// gettimeofday(&tv, 0);
+	// unsigned int ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000.0f);
+	// return ms;
 }
 
 static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {

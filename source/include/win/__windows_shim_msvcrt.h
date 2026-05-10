@@ -6,6 +6,15 @@
 #include <stdarg.h>
 #include <stdint.h>
 
+#include <__windows_shim_arch_helper.h>
+
+// Greatly increases comilation time
+// #define __windows_shim_BitScanReverse_x86_intrin
+
+#if __windows_shim_arch == __windows_shim_arch_x86 && defined(__windows_shim_BitScanReverse_x86_intrin)
+#include <x86intrin.h>
+#endif
+
 #define __stdcall
 #define __cdecl
 #define __fastcall
@@ -215,3 +224,33 @@ static inline int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *forma
 
     return result;
 }
+
+#if __windows_shim_arch == __windows_shim_arch_x86 && defined(__windows_shim_BitScanReverse_x86_intrin)
+
+static unsigned char _BitScanReverse(unsigned long * Index, uint32_t Mask) {
+	if (Mask == 0) return 0;
+	*Index = _bit_scan_reverse(Mask);
+	return 1;
+}
+
+static unsigned char _BitScanReverse64(unsigned long * Index, uint64_t Mask) {
+	if (Mask == 0) return 0;
+	*Index = _bit_scan_reverse(Mask);
+	return 1;
+}
+
+#else
+
+static unsigned char _BitScanReverse(unsigned long * Index, uint32_t Mask) {
+    if (Mask == 0) return 0;
+    *Index = (uint32_t)(31 - __builtin_clz(Mask));
+    return 1;
+}
+
+static unsigned char _BitScanReverse64(unsigned long * Index, uint64_t Mask) {
+    if (Mask == 0) return 0;
+    *Index = (uint64_t)(63 - __builtin_clzll(Mask));
+    return 1;
+}
+
+#endif

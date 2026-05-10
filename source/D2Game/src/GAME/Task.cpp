@@ -1,5 +1,8 @@
 #include "GAME/Task.h"
 
+#include <profileapi.h>
+#include <ntdef.h>
+
 #include "GAME/Clients.h"
 #include "GAME/Game.h"
 #include "GAME/SCmd.h"
@@ -46,7 +49,7 @@ static int32_t TASK_GetClockTime()
 void __stdcall TASK_FreeAllQueueSlots()
 {
     EnterCriticalSection(&gTaskSlotsCriticalSection.cs);
-    
+
     for (int32_t i = 0; i < TASKQSLOTS; ++i)
     {
         EnterCriticalSection(&gtTaskQueuesCriticalSections[i].cs);
@@ -66,7 +69,7 @@ void __stdcall TASK_FreeAllQueueSlots()
     LeaveCriticalSection(&gTaskSlotsCriticalSection.cs);
 }
 
-//D2Game.0x6FC405B0 (#10041) 
+//D2Game.0x6FC405B0 (#10041)
 int __cdecl D2Game_10041_TASK_Create()
 {
     UNIMPLEMENTED();
@@ -180,7 +183,7 @@ int __cdecl D2Game_10041_TASK_Create()
 BOOL __fastcall D2Game_10042(D2TaskStrc* pTask, int nTaskType, D2LinkStrc* pPrevTaskBalanceLink)
 {
     BOOL nResult = FALSE;
-    
+
     pTask->nTaskQ = TASK_GetClockTime();
     pTask->nType = nTaskType;
     pTask->pTaskBalanceLink.pPrev = pPrevTaskBalanceLink;
@@ -254,7 +257,7 @@ int32_t __fastcall D2Game_10044(int8_t nTaskNumber)
     const int8_t nIndex = nTaskNumber & 31;
     int32_t nResult = 100;
     EnterCriticalSection(&gtTaskQueuesCriticalSections[nIndex].cs);
-    
+
     if (D2TaskStrc* pTask = gtTaskSlots[nIndex])
     {
         D2LinkStrc* pLink = pTask->pTaskBalanceLink.pNext;
@@ -378,7 +381,7 @@ void __fastcall TASK_ProcessGame(char nTaskNumber, D2TaskStrc* ptTask)
                 return;
             }
         }
-        
+
         GAME_LeaveGamesCriticalSection(pGame);
         const int32_t nTaskSlotIdx = nTaskNumber & 0x1F;
         EnterCriticalSection(&gtTaskQueuesCriticalSections[nTaskSlotIdx].cs);
@@ -394,7 +397,7 @@ void __fastcall TASK_ProcessGame(char nTaskNumber, D2TaskStrc* ptTask)
             }
             // Something weird is going on here
             TASK_LinkList_Insert(pTaskBalancePrevLink, (D2LinkStrc*)&ptTask->pTaskBalanceLink.pNext);
-            
+
             D2_ASSERT(ptTaskQ->nTaskQ < TASKQSLOTS);
             LeaveCriticalSection(&gtTaskQueuesCriticalSections[ptTaskQ->nTaskQ].cs);
         }
@@ -416,7 +419,7 @@ void __fastcall TASK_QueueIncrement(D2TaskStrc* ptTaskQueue, int32_t* pTaskType,
         if (TASK_GetTaskFromTaskQueueLink(ptPrev)->nType <= *pTaskType)
             break;
     }
-    
+
     D2TaskStrc* pTask = TASK_GetTaskFromTaskType(pTaskType);
     TASK_LinkList_Insert(ptPrev, &pTask->pTaskQueueLink);
 }

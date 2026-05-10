@@ -23,6 +23,7 @@
 #include <winuser.h>
 #include <process.h>
 #include <libloaderapi.h>
+#include <timeapi.h>
 
 #define CALLBACK __stdcall
 
