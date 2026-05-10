@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include <__windows_shim_arch_helper.h>
 
@@ -254,3 +255,18 @@ static unsigned char _BitScanReverse64(unsigned long * Index, uint64_t Mask) {
 }
 
 #endif
+
+static inline char *_strrev(char *str) {
+	const unsigned int str_len = strlen(str);
+	char* tmp = (char*)malloc(str_len);
+
+	for (int i = str_len; i != 0; i--) {
+		tmp[str_len - i] = str[i];
+	}
+
+	strcpy(str, tmp);
+
+	free(tmp);
+
+	return str;
+}
