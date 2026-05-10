@@ -3,6 +3,7 @@
 #include <D2BitManip.h>
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2Items.h>
 #include <D2Dungeon.h>
@@ -97,7 +98,7 @@ int32_t __fastcall SKILLITEM_pSpell02_CastPortal(D2GameStrc* pGame, D2UnitStrc* 
 #endif
         {
             sub_6FC7C170(pGame, pUnit);
-            
+
             D2UnitStrc* pPortal = nullptr;
 
             const int32_t nResult = D2GAME_CreatePortalObject_6FD13DF0(pGame, pUnit, pRoom, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit), nTownLevelId, &pPortal, 0x3Bu, 0);
@@ -152,7 +153,7 @@ int32_t __fastcall SKILLITEM_pSpell03_Potion(D2GameStrc* pGame, D2UnitStrc* pUni
 
     const int32_t nLength = ITEMMODS_EvaluateItemFormula(pUnit, pItem, pItemsTxtRecord->dwLen);
     const int32_t nState = pItemsTxtRecord->wState;
-    
+
     D2StatListStrc* pStatList = nullptr;
     int32_t nRemainingDuration = 0;
     if (nLength > 0)
@@ -475,7 +476,7 @@ int32_t __fastcall SKILLITEM_pSpell05_RejuvPotion(D2GameStrc* pGame, D2UnitStrc*
     const int32_t nState = pItemsTxtRecord->wState;
 
     D2StatListStrc* pStatList = nullptr;
-    
+
     int32_t nRemainingDuration = 0;
     if (nLength > 0)
     {
@@ -601,7 +602,7 @@ int32_t __fastcall SKILLITEM_pSpell09_StaminaPotion(D2GameStrc* pGame, D2UnitStr
     {
         return 0;
     }
-    
+
     const int32_t nLength = ITEMMODS_EvaluateItemFormula(pUnit, pItem, pItemsTxtRecord->dwLen);
     if (nLength <= 0)
     {
@@ -610,7 +611,7 @@ int32_t __fastcall SKILLITEM_pSpell09_StaminaPotion(D2GameStrc* pGame, D2UnitStr
 
     sub_6FD11C90(pUnit, pItemsTxtRecord->wState, 0);
     D2StatListStrc* pStatList = STATLIST_GetStatListFromUnitAndState(pUnit, pItemsTxtRecord->wState);
-    
+
     int32_t nEndFrame = nLength;
     if (pStatList)
     {
@@ -903,7 +904,7 @@ int32_t __fastcall SKILLS_SrvDo113_Scroll_Book(D2GameStrc* pGame, D2UnitStrc* pU
     }
 
     int32_t bIsValidBookOrScroll = 0;
-    
+
     for (D2UnitStrc* pInvItem = INVENTORY_GetFirstItem(pUnit->pInventory); pInvItem; pInvItem = INVENTORY_GetNextItem(pInvItem))
     {
         if (INVENTORY_UnitIsItem(pInvItem))
@@ -1109,7 +1110,7 @@ int32_t __fastcall SKILLITEM_EventFunc07_Knockback(D2GameStrc* pGame, int32_t nE
     {
         return 0;
     }
-    
+
     int32_t nChance = 64;
     if (pUnit->dwUnitType == UNIT_MONSTER)
     {
@@ -1159,13 +1160,13 @@ int32_t __fastcall SKILLITEM_EventFunc09_Stupidity(D2GameStrc* pGame, int32_t nE
     {
         return 0;
     }
-    
+
     const int32_t nValue = STATLIST_UnitGetItemStatOrSkillStatValue(pAttacker, (uint32_t)nSkillId >> 16, nSkillId);
     if (!nValue)
     {
         return 0;
     }
-    
+
     int32_t nChance = 5 * (STATLIST_UnitGetStatValue(pAttacker, STAT_LEVEL, 0) + 4 * nValue - STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0) + 6);
     if (nEvent == 6 && nChance > 0)
     {
@@ -1240,13 +1241,13 @@ int32_t __fastcall SKILLITEM_EventFunc14_Freeze(D2GameStrc* pGame, int32_t nEven
     {
         return 0;
     }
-    
+
     int32_t nValue = STATLIST_UnitGetItemStatOrSkillStatValue(pAttacker, (uint32_t)nSkillId >> 16, nSkillId);
     if (nValue <= 0)
     {
         return 0;
     }
-    
+
     int32_t nAttackerLevel = STATLIST_UnitGetStatValue(pAttacker, STAT_LEVEL, 0);
     const int32_t nDefenderLevel = STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0);
 
@@ -1375,8 +1376,8 @@ int32_t __fastcall SKILLITEM_EventFunc16_CrushingBlow(D2GameStrc* pGame, int32_t
     {
         return 0;
     }
-    
-    const int32_t nChance = STATLIST_UnitGetItemStatOrSkillStatValue(pAttacker, (uint32_t)nSkillId >> 16, nSkillId); 
+
+    const int32_t nChance = STATLIST_UnitGetItemStatOrSkillStatValue(pAttacker, (uint32_t)nSkillId >> 16, nSkillId);
     if (nChance <= 0 || (ITEMS_RollRandomNumber(&pAttacker->pSeed) % 100) >= nChance)
     {
         return 0;
@@ -1765,7 +1766,7 @@ int32_t __fastcall SKILLITEM_TimerCallback_ReanimateMonster(D2GameStrc* pGame, i
     {
         return 0;
     }
-    
+
     D2UnitStrc* pOwner = SUNIT_GetServerUnit(pGame, UNIT_PLAYER, nOwnerId);
     if (!pOwner || !D2COMMON_11017_CheckUnitIfConsumeable(pSource, 0) || nMonId < 0 || nMonId >= sgptDataTables->nMonStatsTxtRecordCount)
     {
@@ -1780,13 +1781,13 @@ int32_t __fastcall SKILLITEM_TimerCallback_ReanimateMonster(D2GameStrc* pGame, i
     {
         return 0;
     }
-    
+
     D2MonStats2Txt* pMonStats2TxtRecord = MONSTERREGION_GetMonStats2TxtRecord(nMonId);
     if (!pMonStats2TxtRecord)
     {
         return 0;
     }
-     
+
     COLLISION_ResetMaskWithPattern(UNITS_GetRoom(pSource), nX, nY, PATH_GetUnitCollisionPattern(pSource), 0x8000u);
 
     D2UnitStrc* pRevivedMonster = D2GAME_SpawnMonster_6FC69F10(pGame, pRoom, nX, nY, nMonId, MONMODE_NEUTRAL, -1, 74);

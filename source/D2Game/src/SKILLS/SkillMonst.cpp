@@ -1,6 +1,7 @@
 #include "SKILLS/SkillMonst.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -163,7 +164,7 @@ int32_t __fastcall SKILLS_SrvDo084_MaggotEgg(D2GameStrc* pGame, D2UnitStrc* pUni
 
 //D2Game.0x6FD064D0
 int32_t __fastcall SKILLS_SrvDo085_UnholyBolt_ShamanFire(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel)
-{    
+{
     D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);
     if (!pSkillsTxtRecord || pSkillsTxtRecord->wSrvMissileA < 0 || pSkillsTxtRecord->wSrvMissileA >= sgptDataTables->nMissilesTxtRecordCount)
     {
@@ -351,7 +352,7 @@ int32_t __fastcall SKILLS_SrvDo088_AndrialSpray(D2GameStrc* pGame, D2UnitStrc* p
     {
         return 0;
     }
-    
+
     D2SkillStrc* pSkill = UNITS_GetUsedSkill(pUnit);
     if (!pSkill)
     {
@@ -382,7 +383,7 @@ int32_t __fastcall SKILLS_SrvDo088_AndrialSpray(D2GameStrc* pGame, D2UnitStrc* p
     int32_t nFrame = 0;
     int32_t nFrameCount = 0;
     UNITS_GetShiftedFrameMetrics(pUnit, &nFrame, &nFrameCount);
-    
+
     int32_t nOffset = nFrame - 4;
     if (nOffset < 0)
     {
@@ -507,7 +508,7 @@ int32_t __fastcall SKILLS_SrvDo089_Jump(D2GameStrc* pGame, D2UnitStrc* pUnit, in
     }
 
     const uint16_t nSkillFlags = SKILLS_GetFlags(pSkill);
-    
+
     const int32_t nX = SKILLS_GetParam1(pSkill);
     const int32_t nY = SKILLS_GetParam2(pSkill);
     if (!(nSkillFlags & 0x100))
@@ -615,7 +616,7 @@ int32_t __fastcall SKILLS_SrvSt48_SwarmMove(D2GameStrc* pGame, D2UnitStrc* pUnit
         SKILLS_SetFlags(pSkill, 1);
         return 1;
     }
-    
+
     PATH_SetType(pUnit->pDynamicPath, PATHTYPE_ASTAR);
     D2Common_10142(pUnit->pDynamicPath, pUnit, 0);
     if (PATH_GetNumberOfPathPoints(pUnit->pDynamicPath))
@@ -700,13 +701,13 @@ int32_t __fastcall SKILLS_SrvDo091_Nest_EvilHutSpawner(D2GameStrc* pGame, D2Unit
     {
         return 0;
     }
-    
+
     D2SkillStrc* pSkill = UNITS_GetUsedSkill(pUnit);
     if (!pSkill)
     {
         return 0;
     }
-    
+
     D2GAME_EVENTS_Delete_6FC34840(pGame, pUnit, EVENTTYPE_ENDANIM, 0);
     sub_6FCBDE90(pUnit, 0);
     const int32_t nMonsterId = SKILLS_GetParam1(pSkill);
@@ -719,7 +720,7 @@ int32_t __fastcall SKILLS_SrvDo091_Nest_EvilHutSpawner(D2GameStrc* pGame, D2Unit
     {
         return 0;
     }
-    
+
     COLLISION_ResetMaskWithPattern(pRoom, nX, nY, 1, 0x100u);
 
     D2UnitStrc* pSummon = D2GAME_SpawnMonster_6FC69F10(pGame, pRoom, nX, nY, nMonsterId, nAnimMode, 1, 0);
@@ -760,7 +761,7 @@ int32_t __fastcall SKILLS_SrvDo092_QuickStrike(D2GameStrc* pGame, D2UnitStrc* pU
     {
         return 0;
     }
-    
+
     D2UnitStrc* pTarget = SUNIT_GetTargetUnit(pGame, pUnit);
     if (!pTarget)
     {
@@ -769,7 +770,7 @@ int32_t __fastcall SKILLS_SrvDo092_QuickStrike(D2GameStrc* pGame, D2UnitStrc* pU
 
     SUNITDMG_DrainItemDurability(pGame, pUnit, pTarget, 0);
     SUNITDMG_FreeAttackerDefenderCombatList(pGame, pUnit, pTarget);
-    
+
     int32_t nMissileId = pSkillsTxtRecord->wSrvMissileA;
     if (nMissileId < 0)
     {
@@ -1109,7 +1110,7 @@ int32_t __fastcall SKILLS_SrvDo152_DiabLight(D2GameStrc* pGame, D2UnitStrc* pUni
     {
         return 0;
     }
-    
+
     D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(pSkillsTxtRecord->wSrvMissileA);
     if (!pMissilesTxtRecord)
     {
@@ -1288,13 +1289,13 @@ int32_t __fastcall SKILLS_ResurrectUnit(D2GameStrc* pGame, D2UnitStrc* pUnit)
 
 //D2Game.0x6FD089E0
 int32_t __fastcall SKILLS_SrvDo097_Resurrect(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel)
-{    
+{
     D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);
     if (!pSkillsTxtRecord)
     {
         return 0;
     }
-    
+
     D2UnitStrc* pTarget = SUNIT_GetTargetUnit(pGame, pUnit);
     if (!pTarget)
     {
@@ -1712,7 +1713,7 @@ int32_t __fastcall SKILLS_SrvDo104_DiabPrison(D2GameStrc* pGame, D2UnitStrc* pUn
     {
         return 0;
     }
-    
+
     int32_t nSpawnMode = 0;
     const int32_t nSummonId = D2GAME_GetSummonIdFromSkill_6FD15580(pUnit, 0, nSkillId, nSkillLevel, &nSpawnMode, nullptr, nullptr);
     if (nSummonId < 0)
@@ -1727,7 +1728,7 @@ int32_t __fastcall SKILLS_SrvDo104_DiabPrison(D2GameStrc* pGame, D2UnitStrc* pUn
         {
             return 0;
         }
-                
+
         D2UnitStrc* pObject = SUNIT_GetServerUnit(pGame, UNIT_OBJECT, D2COMMON_10175_PathGetFirstPointX(pUnit->pDynamicPath));
         if (!pObject)
         {
@@ -1847,7 +1848,7 @@ int32_t __fastcall SKILLS_SrvDo106_ArcaneTower(D2GameStrc* pGame, D2UnitStrc* pU
 
 //D2Game.0x6FD09C90
 int32_t __fastcall SKILLS_SrvSt55_Mosquito(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel)
-{    
+{
     D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);
     if (!pSkillsTxtRecord)
     {
@@ -1982,7 +1983,7 @@ int32_t __fastcall SKILLS_SrvDo108_RegurgitatorEat(D2GameStrc* pGame, D2UnitStrc
 
             STATLIST_SetUnitStat(pUnit, STAT_HITPOINTS, nNewHp, 0);
         }
-        
+
         return 1;
     }
 
@@ -2123,7 +2124,7 @@ int32_t __fastcall SKILLS_SrvDo148_DoomKnightMissile(D2GameStrc* pGame, D2UnitSt
     {
         return 0;
     }
-    
+
     int32_t nMissileId = pSkillsTxtRecord->wSrvMissileA;
     if (nMissileId < 0 || nMissileId >= sgptDataTables->nMissilesTxtRecordCount)
     {
@@ -2159,13 +2160,13 @@ int32_t __fastcall SKILLS_SrvDo148_DoomKnightMissile(D2GameStrc* pGame, D2UnitSt
 
 //D2Game.0x6FD0A720
 int32_t __fastcall SKILLS_SrvDo149_NecromageMissile(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel)
-{    
+{
     D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);
     if (!pSkillsTxtRecord || !SUNIT_GetTargetUnit(pGame, pUnit))
     {
         return 0;
     }
-    
+
     int32_t nMissileId = pSkillsTxtRecord->wSrvMissileA;
     if (nMissileId < 0 || nMissileId >= sgptDataTables->nMissilesTxtRecordCount)
     {
@@ -2349,7 +2350,7 @@ D2UnitStrc* __fastcall SKILLS_CreateSpiderLayMissile(D2GameStrc* pGame, D2UnitSt
         return nullptr;
     }
 
-    // TODO: Check this calculation, Names    
+    // TODO: Check this calculation, Names
     uint8_t v22[8] = { 10, 8, 22, 20, 18, 16, 14, 12, };
     uint32_t a1a = v22[D2Common_11053(PATH_GetNewDirection(pUnit->pDynamicPath))];
     int32_t a2a = 0;

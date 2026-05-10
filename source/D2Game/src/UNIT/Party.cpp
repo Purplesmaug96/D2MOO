@@ -72,7 +72,7 @@ int16_t __fastcall sub_6FCB9C40(D2GameStrc* pGame)
 
     D2PartyControlStrc* pPartyControl = pGame->pPartyControl;
 
-    int16_t nPartyId = std::max(pPartyControl->field_0, 3i16);
+    int16_t nPartyId = std::max(pPartyControl->field_0, (int16_t)3);
 
     while (1)
     {
@@ -89,7 +89,7 @@ int16_t __fastcall sub_6FCB9C40(D2GameStrc* pGame)
 
         ++nPartyId;
 
-        nPartyId = std::max(nPartyId, 3i16);
+        nPartyId = std::max(nPartyId, (int16_t)3);
     }
 
     pPartyControl->field_0 = nPartyId + 1;
@@ -103,7 +103,7 @@ int16_t __fastcall sub_6FCB9C40(D2GameStrc* pGame)
 int32_t __fastcall sub_6FCB9D10(D2GameStrc* pGame, int16_t nPartyId, D2UnitStrc* pPlayer)
 {
     D2_ASSERT(pGame->pPartyControl);
-   
+
     D2PartyStrc* pParty = nullptr;
     for (D2PartyStrc* i = pGame->pPartyControl->pParties; i; i = i->pNext)
     {
@@ -343,7 +343,7 @@ void __fastcall PARTY_IteratePartyMembersInSameLevel(D2GameStrc* pGame, D2UnitSt
 int32_t __fastcall PARTY_ShareGoldDrop(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nGoldValue)
 {
     const int32_t nLivingPartyMembers = PARTY_GetLivingPartyMemberCountInSameLevel(pGame, pUnit);
-   
+
     if (nLivingPartyMembers > 1)
     {
         const int16_t nPartyId = SUNIT_GetPartyId(pUnit);
@@ -356,7 +356,7 @@ int32_t __fastcall PARTY_ShareGoldDrop(D2GameStrc* pGame, D2UnitStrc* pUnit, int
             {
                 const int32_t nDividedGold = nGoldValue / nLivingPartyMembers;
                 const int32_t nLevelId = DUNGEON_GetLevelIdFromRoom(UNITS_GetRoom(pUnit));
-                
+
                 for (D2PartyNodeStrc* pPartyNode = pParty->pPartyNodes; pPartyNode; pPartyNode = pPartyNode->pNext)
                 {
                     D2UnitStrc* pPartyMember = SUNIT_GetServerUnit(pGame, UNIT_PLAYER, pPartyNode->nUnitGUID);

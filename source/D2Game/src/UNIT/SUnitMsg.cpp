@@ -1,6 +1,7 @@
 #include "UNIT/SUnitMsg.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include "D2PacketDef.h"
 
@@ -286,7 +287,7 @@ void __fastcall D2GAME_STATES_SendUnitStateUpdates_6FCC5BE0(D2UnitStrc* pUnit, D
     {
         return;
     }
-    
+
     const int32_t nTotalStatFlagCount = (sgptDataTables->nStatesTxtRecordCount + 31) / 32;
     memcpy(nFlags, STATES_GetGfxStateFlags(pUnit), sizeof(uint32_t) * nTotalStatFlagCount);
 

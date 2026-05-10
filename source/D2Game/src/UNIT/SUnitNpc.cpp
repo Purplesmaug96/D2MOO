@@ -1,6 +1,7 @@
 #include "UNIT/SUnitNpc.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <D2BitManip.h>
@@ -154,7 +155,7 @@ D2UnitStrc* __fastcall D2GAME_NPC_GenerateStoreItem_6FCC6A60(D2UnitStrc* pNpc, i
 
     int32_t nItemId = 0;
     D2ItemsTxt* pItemsTxtRecord = DATATBLS_GetItemRecordFromItemCode(szCode, &nItemId);
-    
+
     int32_t nItemCode = szCode;
     if (pGame->nDifficulty != DIFFMODE_NORMAL && nPlayerLevel > 25)
     {
@@ -369,7 +370,7 @@ void __fastcall D2GAME_NPC_BuildHirelingList_6FCC6FF0(D2GameStrc* pGame, D2Clien
 
 //D2Game.0x6FCC7100
 void __fastcall D2GAME_NPC_FillStoreInventory_6FCC7100(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc* pNpc, D2NpcTradeStrc* pTrade)
-{    
+{
     D2SeedStrc* pSeed = SUNITPROXY_GetSeedFromNpcControl(pGame);
 
     pTrade->dwTicks = GetTickCount();
@@ -1301,7 +1302,7 @@ int32_t __fastcall sub_6FCC88B0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
 //    v8 = pGame;
 //    v9 = pPlayer;
 //    v65 = pGame;
-//    
+//
 //    D2_ASSERT(pGame);
 //
 //    v10 = SUNIT_GetServerUnit(pGame, 4, nItemGUID);
@@ -2094,7 +2095,11 @@ int32_t __fastcall NPC_HandleDialogMessage(D2GameStrc* pGame, D2UnitStrc* pPlaye
         if (ITEMS_CheckIfFlagIsSet(ITEMS_GetItemFlags(pInput), IFLAG_PERSONALIZED))
         {
             bInputIsPersonalized = true;
-            strcpy_s(szName, ITEMS_GetEarName(pInput));
+            #ifdef _WIN32
+			strcpy_s(szName, ITEMS_GetEarName(pInput));
+			#else
+			strcpy(szName, ITEMS_GetEarName(pInput));
+			#endif
         }
 
         if (!D2GAME_RemoveItemIfOnCursor_6FC49760(pGame, pPlayer, pInput))
@@ -2155,7 +2160,7 @@ int32_t __fastcall NPC_HandleDialogMessage(D2GameStrc* pGame, D2UnitStrc* pPlaye
 
         D2GAME_PlayerChangeAct_6FC867C0(pGame, pPlayer, LEVEL_LUTGHOLEIN, 0);
         QUESTS_ActChange_HirelingChangeAct(pGame, pPlayer, pMonster, LEVEL_LUTGHOLEIN, LEVEL_ROGUEENCAMPMENT);
-        
+
         int16_t nWpNo = 0;
         if (WAYPOINTS_GetWaypointNoFromLevelId(LEVEL_LUTGHOLEIN, &nWpNo))
         {
@@ -2178,7 +2183,7 @@ int32_t __fastcall NPC_HandleDialogMessage(D2GameStrc* pGame, D2UnitStrc* pPlaye
 
         D2GAME_PlayerChangeAct_6FC867C0(pGame, pPlayer, LEVEL_KURASTDOCKTOWN, 0);
         QUESTS_ActChange_HirelingChangeAct(pGame, pPlayer, pMonster, LEVEL_KURASTDOCKTOWN, LEVEL_LUTGHOLEIN);
-        
+
         int16_t nWpNo = 0;
         if (WAYPOINTS_GetWaypointNoFromLevelId(LEVEL_KURASTDOCKTOWN, &nWpNo))
         {
@@ -2204,7 +2209,7 @@ int32_t __fastcall NPC_HandleDialogMessage(D2GameStrc* pGame, D2UnitStrc* pPlaye
 
         D2GAME_PlayerChangeAct_6FC867C0(pGame, pPlayer, LEVEL_HARROGATH, 0);
         QUESTS_ActChange_HirelingChangeAct(pGame, pPlayer, pMonster, LEVEL_HARROGATH, LEVEL_THEPANDEMONIUMFORTRESS);
-        
+
         int16_t nWpNo = 0;
         if (WAYPOINTS_GetWaypointNoFromLevelId(LEVEL_HARROGATH, &nWpNo))
         {
@@ -2252,8 +2257,8 @@ int32_t __fastcall NPC_HandleDialogMessage(D2GameStrc* pGame, D2UnitStrc* pPlaye
             sub_6FC44030(pGame, pPlayer, nItemGUID);
             return 0;
         }
-        
-        D2UnitStrc* pOutput = ITEMS_Duplicate(pGame, pInput, pPlayer, 1);     
+
+        D2UnitStrc* pOutput = ITEMS_Duplicate(pGame, pInput, pPlayer, 1);
         if (!pOutput)
         {
             packet58.unk0x05 = 7;
@@ -2261,7 +2266,7 @@ int32_t __fastcall NPC_HandleDialogMessage(D2GameStrc* pGame, D2UnitStrc* pPlaye
             sub_6FC44030(pGame, pPlayer, nItemGUID);
             return 0;
         }
-        
+
         if (!D2GAME_RemoveItemIfOnCursor_6FC49760(pGame, pPlayer, pInput))
         {
             packet58.unk0x05 = 7;
@@ -2462,7 +2467,7 @@ void __fastcall D2GAME_STORES_FillGamble_6FCCA9F0(D2GameStrc* pGame, D2UnitStrc*
 
     const int32_t nLevel = STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0);
     D2SeedStrc* pSeed = SUNITPROXY_GetSeedFromNpcControl(pGame);
-    
+
     int32_t nCounter = 0;
     do
     {

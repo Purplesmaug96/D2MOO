@@ -1,6 +1,7 @@
 #include "SKILLS/SkillBar.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <D2DataTbls.h>
 #include <DataTbls/SkillsTbls.h>
@@ -545,13 +546,13 @@ int32_t __fastcall SKILLS_SrvDo075_GrimWard(D2GameStrc* pGame, D2UnitStrc* pUnit
     D2CoordStrc coords = {};
     coords.nX = CLIENTS_GetUnitX(pTarget);
     coords.nY = CLIENTS_GetUnitY(pTarget);
-    
+
     D2ActiveRoomStrc* pRoom = D2GAME_GetRoom_6FC52070(UNITS_GetRoom(pTarget), coords.nX, coords.nY);
     if (!pRoom || !COLLISION_GetFreeCoordinates(pRoom, &coords, 2, 0x1000u, 1) || pTarget->dwUnitType != UNIT_MONSTER)
     {
         return 0;
     }
-    
+
     int32_t nMissileId = pSkillsTxtRecord->wSrvMissileA;
     D2MonStats2Txt* pMonStats2TxtRecord = MONSTERREGION_GetMonStats2TxtRecord(pTarget->dwClassId);
     if (!pMonStats2TxtRecord)
@@ -634,7 +635,7 @@ int32_t __fastcall SKILLS_RollFrenzyDamage(D2GameStrc* pGame, D2UnitStrc* pUnit,
 
     SUNITDMG_AllocCombat(pGame, pUnit, pTarget, &damage, nSrcDam);
     SUNITDMG_DrainItemDurability(pGame, pUnit, pTarget, 0);
-    
+
     D2SkillStrc* pSkill = UNITS_GetUsedSkill(pUnit);
     if (pSkill)
     {
@@ -920,7 +921,7 @@ int32_t __fastcall SKILLS_SrvDo076_Whirlwind(D2GameStrc* pGame, D2UnitStrc* pUni
     {
         return 0;
     }
-    
+
     D2SkillStrc* pSkill = SKILLS_GetHighestLevelSkillFromUnitAndId(pUnit, nSkillId);
     if (!pSkill)
     {
@@ -1265,7 +1266,7 @@ int32_t __fastcall SKILLS_SrvSt40_Leap(D2GameStrc* pGame, D2UnitStrc* pUnit, int
         {
             return 0;
         }
-        
+
         D2ActiveRoomStrc* pRoom = D2GAME_GetRoom_6FC52070(UNITS_GetRoom(pUnit), coords.nX, coords.nY);
         if (!pRoom || !(pSkillsTxtRecord->dwFlags[0] & gdwBitMasks[SKILLSFLAGINDEX_INTOWN]) && DUNGEON_IsRoomInTown(pRoom))
         {
@@ -1455,7 +1456,7 @@ int32_t __fastcall SKILLS_Leap(D2GameStrc* pGame, D2UnitStrc* pUnit, D2SkillStrc
     {
         return 0;
     }
-    
+
     D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
     if (!pRoom)
     {
@@ -1570,7 +1571,7 @@ int32_t __fastcall SKILLS_SrvSt41_LeapAttack(D2GameStrc* pGame, D2UnitStrc* pUni
 	}
 
 	D2UnitStrc* pTarget = SUNIT_GetTargetUnit(pGame, pUnit);
-    
+
     int32_t nX = 0;
     int32_t nY = 0;
     if (!SKILLS_CheckIfCanLeapTo(pUnit, pTarget, &nX, &nY))

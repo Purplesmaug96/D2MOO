@@ -617,7 +617,7 @@ D2UnitStrc* __fastcall SUNIT_GetOwner(D2GameStrc* pGame, D2UnitStrc* pUnit)
     {
         return nullptr;
     }
-    
+
     return SUNIT_GetServerUnit(pGame, pUnit->dwOwnerType, pUnit->dwOwnerGUID);
 }
 
@@ -702,7 +702,7 @@ void __fastcall SUNIT_Add(D2UnitStrc* pUnit, int32_t nX, int32_t nY, D2GameStrc*
     {
         UNITS_InitializeStaticPath(pUnit, pRoom, nX, nY);
         UNITS_BlockCollisionPath(pUnit, pRoom, nX, nY);
-        
+
         D2_ASSERT(pRoom);
         UNITROOM_AddUnitToRoom(pUnit, pRoom);
         break;
@@ -1777,7 +1777,11 @@ void __fastcall SUNIT_FillUnitInfo(D2UnitStrc* pUnit, D2UnitInfoStrc* pInfo)
         D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pUnit);
         if (pPlayerData)
         {
+			#ifdef _WIN32
             strcpy_s(pInfo->szDescription, pPlayerData->szName);
+			#else
+			strcpy(pInfo->szDescription, pPlayerData->szName);
+			#endif
         }
     }
 
@@ -2069,19 +2073,19 @@ int32_t __fastcall SUNIT_CanAllyBeTargetedBySkill(D2GameStrc* pGame, D2UnitStrc*
     {
         return 0;
     }
-    
-    int32_t nUnitType = pPet->dwUnitType;   
+
+    int32_t nUnitType = pPet->dwUnitType;
     if (nUnitType != UNIT_PLAYER && nUnitType != UNIT_MONSTER)
     {
         return 0;
     }
-    
+
     D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);
     if (!pSkillsTxtRecord || !(pSkillsTxtRecord->dwFlags[0] & gdwBitMasks[SKILLSFLAGINDEX_TARGETALLY]))
     {
         return 0;
     }
-    
+
     int32_t nUnitGUID = pPet->dwUnitId;
     if (nUnitType == UNIT_MONSTER)
     {
@@ -2091,12 +2095,12 @@ int32_t __fastcall SUNIT_CanAllyBeTargetedBySkill(D2GameStrc* pGame, D2UnitStrc*
             return 0;
         }
     }
-    
+
     if (!pOwner->pGame)
     {
         return 0;
     }
-    
+
     const int16_t nPartyId = PARTY_GetPartyIdForUnitOwner(pOwner->pGame, pOwner);
     if (nPartyId == -1)
     {
@@ -2108,7 +2112,7 @@ int32_t __fastcall SUNIT_CanAllyBeTargetedBySkill(D2GameStrc* pGame, D2UnitStrc*
     {
         return 0;
     }
-    
+
     return nPartyId == PARTY_GetPartyIdForUnitOwner(pOtherPlayer->pGame, pOtherPlayer);
 }
 

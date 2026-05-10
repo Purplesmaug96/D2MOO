@@ -1,6 +1,8 @@
 #include "UNIT/SUnitDmg.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <D2BitManip.h>
 #include <D2Math.h>
@@ -320,7 +322,7 @@ void __fastcall SUNITDMG_FillDamageValues(D2GameStrc* pGame, D2UnitStrc* pAttack
 
 		int32_t nWeaponMastery = 0;
 
-		if (!a5 
+		if (!a5
 			&& (nWeaponMastery = SKILLS_GetWeaponMasteryBonus(pAttacker, sub_6FC7C7B0(pAttacker), 0, 2), nWeaponMastery > 0) // NOLINT(bugprone-assignment-in-if-condition)
 			&& (int32_t)(ITEMS_RollRandomNumber(&pAttacker->pSeed) % 100) < nWeaponMastery
 			)
@@ -726,7 +728,7 @@ void __fastcall SUNITDMG_FillDamageValues(D2GameStrc* pGame, D2UnitStrc* pAttack
 //D2Game.0x6FCBF400
 int32_t __fastcall SUNITDMG_CheckMonType(int32_t nMonType1, int32_t nMonType2)
 {
-	if (nMonType1 > 0 && nMonType1 < sgptDataTables->nMonTypeTxtRecordCount 
+	if (nMonType1 > 0 && nMonType1 < sgptDataTables->nMonTypeTxtRecordCount
 		&& nMonType2 > 0 && nMonType2 < sgptDataTables->nMonTypeTxtRecordCount)
 	{
 		return gdwBitMasks[nMonType1 & 31] & sgptDataTables->pMonTypeNest[(nMonType1 >> 5) + nMonType2 * sgptDataTables->nMonTypeIndex];
@@ -2945,7 +2947,7 @@ void __fastcall SUNITDMG_DistributeExperience(D2GameStrc* pGame, D2UnitStrc* pAt
 		}
 
 		D2UnitStrc* pOwner = AIGENERAL_GetMinionOwner(pAttacker);
-		
+
 		D2StatListStrc* pStatList = nullptr;
 		if (STATES_CheckStateMaskExpOnUnit(pAttacker))
 		{

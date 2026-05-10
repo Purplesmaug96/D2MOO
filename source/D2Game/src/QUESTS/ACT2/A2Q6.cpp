@@ -370,7 +370,7 @@ void __fastcall ACT2Q6_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestData->pNPCMessages = gpAct2Q6NpcMessages;
 	pQuestData->bActive = 1;
 	pQuestData->fState = 0;
-	
+
 	D2Act2Quest6Strc* pQuestDataEx = D2_ALLOC_STRC_POOL(pQuestData->pGame->pMemoryPool, D2Act2Quest6Strc);
 	pQuestData->pQuestDataEx = pQuestDataEx;
 	pQuestData->nQuestFilter = QUESTSTATEFLAG_A2Q6;
@@ -809,7 +809,7 @@ void __fastcall ACT2Q6_Callback08_MonsterKilled(D2QuestDataStrc* pQuestData, D2Q
 					&& !QUESTRECORD_GetQuestState(pQuestFlags, QUESTSTATEFLAG_A2Q6, QFLAG_CUSTOM1))
 				{
 					QUESTRECORD_SetQuestState(pQuestFlags, QUESTSTATEFLAG_A2Q6, QFLAG_CUSTOM1);
-					
+
 					const int16_t nPartyId = SUNIT_GetPartyId(pQuestArg->pPlayer);
 					if (nPartyId != -1)
 					{
@@ -1468,7 +1468,7 @@ void __fastcall ACT2Q6_DeleteAllHoradricItemsAndOpenTomb(D2GameStrc* pGame, D2Un
 
 	D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(338);
 
-	const int32_t nRange = (int32_t)((uint64_t)(1717986919i64 * ((int32_t)pMissilesTxtRecord->wRange - 75)) >> 32) >> 3;
+	const int32_t nRange = (int32_t)((uint64_t)((int64_t)1717986919 * ((int32_t)pMissilesTxtRecord->wRange - 75)) >> 32) >> 3;
 	const int32_t nTicks = ((uint32_t)nRange >> 31) + nRange;
 
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A2Q6_DURIEL);
@@ -1488,7 +1488,7 @@ void __fastcall ACT2Q6_DeleteAllHoradricItemsAndOpenTomb(D2GameStrc* pGame, D2Un
 
 	const int32_t nX = CLIENTS_GetUnitX(pObject) - 13;
 	const int32_t nY = CLIENTS_GetUnitY(pObject) + 3;
-	
+
 	DUNGEON_ToggleHasPortalFlag(pObjectRoom, 0);
 	if (D2ActiveRoomStrc* pRoom = DUNGEON_GetRoomAtPosition(pObjectRoom, nX, nY))
 	{

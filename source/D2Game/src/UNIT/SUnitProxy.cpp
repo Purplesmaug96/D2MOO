@@ -1,6 +1,7 @@
 #include "UNIT/SUnitProxy.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <Fog.h>
 #include <D2BitManip.h>
@@ -489,7 +490,7 @@ void __fastcall SUNITPROXY_UpdateNpcsOnActChange(D2GameStrc* pGame, D2UnitStrc* 
 void __fastcall SUNITPROXY_UpdateVendorInventory(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t nAct, int32_t bNoMorePlayersInLevel)
 {
     const uint32_t nTickCount = GetTickCount();
-    
+
     for (int32_t i = 0; i < pGame->pNpcControl->nArraySize; ++i)
     {
         D2NpcRecordStrc* pNpcRecord = &pGame->pNpcControl->pFirstRecord[i];
@@ -694,7 +695,7 @@ void __fastcall SUNITPROXY_FreeVendorChain(D2GameStrc* pGame, D2UnitStrc* pPlaye
                 }
             }
 
-            
+
             D2NpcVendorChainStrc* pPreviousVendorChain = nullptr;
             for (D2NpcVendorChainStrc* pVendorChain = pNpcRecord->pVendorChain; pVendorChain; pVendorChain = pVendorChain->pNext)
             {

@@ -1,6 +1,8 @@
 #include "SKILLS/Skills.h"
 
 #include <algorithm>
+#include <iterator>
+#include <limits.h>
 
 #include <D2BitManip.h>
 
@@ -362,7 +364,7 @@ int32_t __fastcall sub_6FD0F8B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nV
     {
         return nValue;
     }
-    
+
     D2UnitStrc* pBloodGolem = sub_6FC7E8B0(pGame, pUnit, 3, 0);
     if (!pBloodGolem || pBloodGolem->dwUnitType != UNIT_MONSTER || pBloodGolem->dwClassId != MONSTER_BLOODGOLEM)
     {
@@ -598,7 +600,7 @@ int32_t __fastcall sub_6FD0FA00(D2UnitStrc* pUnit, D2UnitStrc* pTarget, uint32_t
         D2CoordStrc targetCoords = {};
         targetCoords.nX = CLIENTS_GetUnitX(pTarget);
         targetCoords.nY = CLIENTS_GetUnitY(pTarget);
-        
+
         if (COLLISION_RayTrace(pRoom, &coords, &targetCoords, 4u))
         {
             return 0;
@@ -964,7 +966,7 @@ D2UnitStrc* __fastcall sub_6FD107F0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
     {
         return args.unk0x08;
     }
-    
+
     if (a8)
     {
         *a8 = args.unk0x14;
@@ -1112,7 +1114,7 @@ int32_t __fastcall D2GAME_SKILLMANA_Consume_6FD10A50(D2GameStrc* pGame, D2UnitSt
     {
         return 0;
     }
-    
+
     const int32_t nChargeSkillId = SKILLS_GetSkillIdFromSkill(pSkill, __FILE__, __LINE__);
     const int32_t nChargeSkillLevel = SKILLS_GetSkillLevel(pPlayer, pSkill, 0);
 
@@ -1122,14 +1124,14 @@ int32_t __fastcall D2GAME_SKILLMANA_Consume_6FD10A50(D2GameStrc* pGame, D2UnitSt
     {
         return 0;
     }
-    
+
     const int32_t nLayer = (nChargeSkillLevel & sgptDataTables->nShiftedStuff) + (nChargeSkillId << sgptDataTables->nStuff);
     const int32_t nStatValue = STATLIST_GetStatValue(pStatList, STAT_ITEM_CHARGED_SKILL, nLayer);
     if (!nStatValue)
     {
         return 0;
     }
-    
+
     const int32_t nMaxCharges = nStatValue >> 8;
     if (nMaxCharges <= 0 || nMaxCharges > 255)
     {
@@ -1187,7 +1189,7 @@ int32_t __fastcall sub_6FD10CE0(D2UnitStrc* pUnit)
     {
         return 0;
     }
-        
+
     if (SKILLS_GetOwnerGUIDFromSkill(pSkill) == -1)
     {
         D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecordFromSkill(pSkill);
@@ -1207,7 +1209,7 @@ int32_t __fastcall sub_6FD10CE0(D2UnitStrc* pUnit)
         {
             return 1;
         }
-        
+
         return STATLIST_UnitGetStatValue(pUnit, STAT_MANA, 0) >= nManaCost;
     }
 
@@ -2496,7 +2498,7 @@ int32_t __fastcall D2GAME_SKILLS_Handler_6FD12BA0(D2GameStrc* pGame, D2UnitStrc*
     {
         nDoFunc = pSkillsTxtRecord->wItemEffect;
     }
-    
+
     SkillDoFunc pDoFunc = gpSkillSrvDoFnTable_6FD40A20[nDoFunc];
     int32_t nResult = 0;
     if (pDoFunc)
@@ -2787,7 +2789,7 @@ void __fastcall D2GAME_MONSTERS_AiFunction09_6FD13470(D2GameStrc* pGame, D2UnitS
             D2GAME_EVENTS_Delete_6FC34840(pGame, pUnit, EVENTTYPE_PERIODICSKILLS, nSkillIdArg);
             return;
         }
-        
+
         D2StatListStrc* pStatList = STATLIST_GetStatListFromUnitAndState(pUnit, pSkillsTxtRecord->nAuraState);
         if (!pStatList)
         {
@@ -3206,7 +3208,7 @@ void __fastcall sub_6FD14170(D2GameStrc* pGame, D2UnitStrc* pOwner, D2UnitStrc* 
     {
         30, 29, 29, 28, 27, 26, 24, 23, 21, 19, 16, 14, 11, 8, 5, 2, 0, -2, -5, -8, -11, -14, -16, -19, -21, -23, -24, -26, -27, -28, -29, -29, -30, -29, -29, -28, -27, -26, -24, -23, -21, -19, -16, -14, -11, -8, -5, -2, 0, 2, 5, 8, 11, 14, 16, 19, 21, 23, 24, 26, 27, 28, 29, 29
     };
-     
+
     constexpr int32_t yOffsets[] =
     {
         0, 2, 5, 8, 11, 14, 16, 19, 21, 23, 24, 26, 27, 28, 29, 29, 30, 29, 29, 28, 27, 26, 24, 23, 21, 19, 16, 14, 11, 8, 5, 2, 0, -2, -5, -8, -11, -14, -16, -19, -21, -23, -24, -26, -27, -28, -29, -29, -30, -29, -29, -28, -27, -26, -24, -23, -21, -19, -16, -14, -11, -8, -5, -2
@@ -3242,27 +3244,27 @@ void __fastcall sub_6FD14260(D2GameStrc* pGame, int32_t nMissiles, D2MissileStrc
     {
         -1, 1, 1, -1
     };
-    
+
     constexpr int32_t signY[] =
     {
         -1, -1, 1, 1
     };
-    
+
     constexpr int32_t offset1[] =
     {
         18, 20, 17, 20, 15, 19, 18
     };
-    
+
     constexpr int32_t offset2[] =
     {
         8, 2, 11, 4, 13, 6, 9
     };
-    
+
     constexpr int32_t xOffsets[] =
     {
         20, -20, 0, 0, 14, -14, -14, 14
     };
-    
+
     constexpr int32_t yOffsets[] =
     {
         0, 0, 20, -20, 14, 14, -14, -14
@@ -3588,7 +3590,7 @@ D2UnitStrc* __fastcall D2GAME_SummonPet_6FD14430(D2GameStrc* pGame, D2SummonArgS
             D2GAME_SetNecropetFlag_6FCBD760(pSummonArg->pOwner, -1);
         }
     }
-    
+
     int32_t nPetMax = pSummonArg->nPetMax;
     if (nPetMax < 1)
     {
@@ -3946,13 +3948,13 @@ D2UnitStrc* __fastcall sub_6FD15210(D2UnitStrc* pUnit, D2UnitStrc* pTarget, int3
         unitFindArg.nX = nX;
         unitFindArg.nY = nY;
         unitFindArg.nSize = 10;
-        
+
         D2GameStrc* pGame = SUNIT_GetGameFromUnit(pUnit);
 
         D2UnitFindDataStrc unitFindData = {};
         UNITFINDS_InitializeUnitFindData(pGame->pMemoryPool, &unitFindData, UNITS_GetRoom(pTarget), nX, nY, 10, sub_6FD15320, &unitFindArg);
         UNITFINDS_FindAllMatchingUnitsInNeighboredRooms(&unitFindData);
-        
+
         D2UnitStrc* pResult = nullptr;
         if (unitFindData.nIndex)
         {

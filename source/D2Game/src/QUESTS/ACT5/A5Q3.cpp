@@ -1,6 +1,7 @@
 #include "QUESTS/ACT5/A5Q3.h"
 
 #include <algorithm>
+#include <iterator>
 
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
@@ -172,7 +173,7 @@ void __fastcall ACT5Q3_RemoveNihlathakFromTown(D2GameStrc* pGame)
 	D2Common_10153(pNihlathak->pDynamicPath);
 	D2GAME_EVENTS_Delete_6FC34840(pQuestData->pGame, pNihlathak, EVENTTYPE_AITHINK, 0);
 	STATLIST_SetUnitStat(pNihlathak, STAT_HITPOINTS, 0, 0);
-	
+
 	D2ModeChangeStrc modeChange = {};
 	MONSTERMODE_GetModeChangeInfo(pNihlathak, MONMODE_DEAD, &modeChange);
 
@@ -319,7 +320,7 @@ void __fastcall ACT5Q3_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestData->pfCallback[QUESTEVENT_PLAYERJOINEDGAME] = ACT5Q3_Callback14_PlayerJoinedGame;
 	pQuestData->pNPCMessages = gpAct5Q3NpcMessages;
 	pQuestData->bActive = 1;
-	
+
 	D2Act5Quest3Strc* pQuestDataEx = D2_ALLOC_STRC_POOL(pQuestData->pGame->pMemoryPool, D2Act5Quest3Strc);
 	pQuestData->pQuestDataEx = pQuestDataEx;
 	pQuestData->nQuestFilter = 37;
