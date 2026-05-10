@@ -2,7 +2,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4820 4121)
-#include <Winsock2.h>
+#include <winsock2.h>
 #pragma warning(pop)
 
 #include <D2BasicTypes.h>

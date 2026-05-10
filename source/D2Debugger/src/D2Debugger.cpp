@@ -1,5 +1,5 @@
 #include "D2Debugger.h"
-#include <Windows.h>
+#include <windows.h>
 
 // NOLINTBEGIN(bugprone-branch-clone)
 BOOL __stdcall DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)

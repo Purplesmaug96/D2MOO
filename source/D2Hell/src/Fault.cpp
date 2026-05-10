@@ -1,5 +1,5 @@
 #include "Fault.h"
-#include <Windows.h>
+#include <windows.h>
 #include <Fog.h>
 #include <list>
 
@@ -101,7 +101,7 @@ void __fastcall FaultRegisterMessageSource(MessageSource newMessageSource)
     if (!sgfFaultInited)
         sFaultInit();
     EnterCriticalSection(&sgcsFault);
-#if 1 
+#if 1
     sgMessageSourceList.push_front(newMessageSource);
 #else
     *(_DWORD*)(TSList<TMESSAGESOURCE, TSGetExplicitLink<TMESSAGESOURCE>>::NewNode(1, 0, 0) + 8) = a1;
@@ -112,7 +112,7 @@ void __fastcall FaultRegisterMessageSource(MessageSource newMessageSource)
 BOOL __fastcall FaultDoAssert(const char* a1, unsigned int a2, const char* a3)
 {
     CHAR Text[512];
-    
+
     if (sgpfnAssertHandler)
         sgpfnAssertHandler(a1, a2, a3);
     wsprintfA(Text, sgszAssertFormatString, a1, a2, a3);

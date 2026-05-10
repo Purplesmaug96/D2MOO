@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 #include <Imports/DllBases.h>
 
 #ifdef _WIN32

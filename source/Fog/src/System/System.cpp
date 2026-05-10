@@ -1,6 +1,6 @@
 #include <Fog.h>
 #include <System/System.h>
-#include <Windows.h>
+#include <windows.h>
 
 // 1.10f: 0x6FF5A860 (#10176)
 BOOL __stdcall FOG_IsWindowsNT()

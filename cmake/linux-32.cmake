@@ -9,7 +9,7 @@ set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_C_FLAGS "-m32")
 set(CMAKE_CXX_COMPILER g++)
-set(CMAKE_CXX_FLAGS "-m32 -Wno-invalid-offsetof")
+set(CMAKE_CXX_FLAGS "-m32 -Wno-invalid-offsetof -Wno-multichar")
 
 # here is the target environment located
 set(CMAKE_FIND_ROOT_PATH   /usr/i486-linux-gnu )

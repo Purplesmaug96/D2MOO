@@ -10,7 +10,7 @@
 
 #include "IconsFontAwesome6.h"
 
-#include <Windows.h>
+#include <windows.h>
 
 #if defined(D2_VERSION_110F)
 #define HAS_SPAWN_FUNCTIONS
@@ -193,7 +193,7 @@ const char* GetAlignmentString(D2C_UnitAlignment nAlignment)
     case UNIT_ALIGNMENT_EVIL: return "Evil";
     case UNIT_ALIGNMENT_NEUTRAL: return "Neutral";
     case UNIT_ALIGNMENT_GOOD: return "Good";
-    case UNIT_NUM_ALIGNMENT: 
+    case UNIT_NUM_ALIGNMENT:
     case UNIT_ALIGNMENT_UNASSIGNED:
     default:
         return "Invalid alignment";
@@ -326,7 +326,7 @@ void D2DebugUnitSpawner(D2GameStrc* pGame)
 			ImGui::SameLine();
             if (ImGui::Button("Spawn##Normal"))
             {
-                
+
                 if (D2UnitStrc* pSpawned = D2Game_SpawnMonster_6FC69F10(pGame, pPlayer->pDynamicPath->pRoom, tCoords.nX, tCoords.nY, currentNormalSelectionId, MONMODE_NEUTRAL, 5, 0))
                 {
                     // Register for debug view ?

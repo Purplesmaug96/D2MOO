@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 
 
 // NOLINTBEGIN(bugprone-branch-clone)

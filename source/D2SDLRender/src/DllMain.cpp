@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 #include "D2SDLRender.h"
 
 BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved)
@@ -13,5 +13,5 @@ BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved)
 			return FALSE;
 			break;
 	}
-	
+
 }

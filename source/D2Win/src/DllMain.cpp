@@ -1,4 +1,4 @@
-#include <Windows.h>
+#include <windows.h>
 
 // NOLINTBEGIN(bugprone-branch-clone)
 //D2Win.0x6F8A6C70

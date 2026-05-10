@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 #include <D2BasicTypes.h>
 #include <D2Constants.h>
 #include <D2BuildInformation.h>
@@ -8,7 +8,7 @@
 #pragma pack(push, 1)
 
 // Whole structure is used as string, values are encoded so that they are != 0
-struct D2CharacterPreviewInfoStrc 
+struct D2CharacterPreviewInfoStrc
 {
 	uint16_t nVersion;					//0x00 lower byte is cleared if invalid data was found => empty string. Otherwise contains FOG_Encode14BitsToString(10)
 	uint8_t pComponents[11];			//0x02
@@ -76,7 +76,7 @@ struct D2ConfigStrc
 	D2CharacterPreviewInfoStrc tCharPreviewInfo;
 	char szUnk[194];
 	uint8_t _01D0[0x18];
-	
+
 	union
 	{
 		uint32_t dwCTemp;
@@ -121,7 +121,7 @@ struct D2ConfigStrc
 	uint8_t bNoSound;
 	uint8_t bQuests;
 	uint8_t _01F9;
-	
+
 #ifndef VERSION_100 // TODO: figure out when this was added. Probably in 1.10
 	uint8_t bBuild;
 #endif

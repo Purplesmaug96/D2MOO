@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 
 HMODULE delayedD2CMPDllBaseGet();
 HMODULE delayedD2LANGDllBaseGet();
