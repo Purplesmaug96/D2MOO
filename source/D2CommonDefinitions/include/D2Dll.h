@@ -19,14 +19,14 @@ constexpr auto default_or_void<void>() -> void {}
 	DLL##_DLL_DECL RETURN CONV DLL##_##NAME ARGS {           \
 		OutputDebugStringA(#DLL "_" #NAME);                     \
 		return default_or_void<RETURN>();                      \
-	}													   
+	}
 
 // Same as D2FUNC_DLL_STUB but without DLL name prefix
 #define D2FUNC_DLL_NP_STUB(DLL, NAME, RETURN, CONV, ARGS, OFFSET) \
 	DLL##_DLL_DECL RETURN CONV NAME ARGS {          \
 		OutputDebugStringA(#NAME);                     \
 		return default_or_void<RETURN>();             \
-	}													   
+	}
 
 
 // Useful if you do not have an import library or want to use LoadLibray

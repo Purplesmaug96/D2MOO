@@ -6,6 +6,7 @@ CMakeSettings.json
 
 # CMake
 build*/
+_build*/
 out/
 install
 CMakeCache.txt

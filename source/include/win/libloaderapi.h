@@ -23,6 +23,7 @@ static inline DWORD GetTickCount() {
 }
 
 static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {
+	printf("Attempting to load dynamic lib '%s'.\n", lpLibFileName);
 	HMODULE lib = (HMODULE)malloc(sizeof(__windows_shim_struct_HMODULE));
 
 	lib->name = (char*)lpLibFileName;
