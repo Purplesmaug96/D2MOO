@@ -34,3 +34,14 @@ static inline DWORD WaitForSingleObject(HANDLE hHandle, DWORD dwMilliseconds) {
 	return 0xffffffff; // WAIT_FAILED
 }
 
+#define EVENT_MODIFY_STATE 0
+
+static inline HANDLE OpenEventA(DWORD dwDesiredAccess, BOOL bInheritHandle, LPCSTR lpName) {
+	printf("Stubbed function OpenEventA called\n");
+	return NULL;
+}
+
+static inline BOOL SetEvent(HANDLE hEvent) {
+	printf("Stubbed function SetEvent called\n");
+	return FALSE;
+}

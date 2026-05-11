@@ -37,14 +37,14 @@ static inline BOOL IsBadCodePtr(FARPROC lpfn) {
     return msync(base, page_size, MS_ASYNC) == 0;
 }
 
-static inline DWORD GetCurrentDirectory(DWORD nBufferLength, LPTSTR lpBuffer) {
-	printf("Stubbed function GetCurrentDirectory called\n");
-	return 0; // Chars written
-}
-
 static inline DWORD GetCurrentDirectoryA(DWORD nBufferLength, LPTSTR lpBuffer) {
 	printf("Stubbed function GetCurrentDirectoryA called\n");
 	return 0; // Chars written
+}
+
+static inline BOOL SetCurrentDirectoryA(LPCTSTR lpPathName) {
+	printf("Stubbed function SetCurrentDirectory called\n");
+	return FALSE;
 }
 
 static inline /* MS docs say it's a UINT, but that would cause underflow if nDefault is negetive */ int GetPrivateProfileIntA(LPCSTR lpAppName, LPCSTR lpKeyName, int nDefault, LPCSTR lpFileName) {

@@ -15,6 +15,10 @@
 #define HKEY_DYN_DATA                       8
 #define HKEY_CURRENT_USER_LOCAL_SETTINGS    9
 
+#define KEY_QUERY_VALUE 0
+
+#define REG_DWORD_LITTLE_ENDIAN 0
+
 typedef int32_t LSTATUS;
 
 static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {

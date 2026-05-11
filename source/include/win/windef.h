@@ -25,6 +25,7 @@ typedef uint8_t BYTE;
 
 typedef int32_t LONG;
 typedef uint32_t ULONG;
+typedef int INT;
 typedef unsigned int UINT;
 typedef size_t SIZE_T;
 typedef char CHAR;
@@ -35,12 +36,14 @@ typedef const void* LPCVOID;
 typedef char* LPSTR;
 typedef const char* LPCSTR;
 typedef wchar_t* LPWSTR;
-#ifdef UNICODE
- typedef LPWSTR LPTSTR;
-#else
- typedef LPSTR LPTSTR;
-#endif
 typedef const wchar_t* PCWSTR;
+#ifdef UNICODE
+typedef LPWSTR LPTSTR;
+typedef LPCWSTR LPCTSTR;
+ #else
+typedef LPSTR LPTSTR;
+typedef LPCSTR LPCTSTR;
+#endif
 typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 

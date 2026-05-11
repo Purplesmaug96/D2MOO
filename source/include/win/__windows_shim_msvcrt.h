@@ -193,7 +193,7 @@ static inline void _unlock_file(FILE* file) {
 // Retrieved 2026-05-08, License - CC BY-SA 2.5
 
 static inline int fopen_s(FILE **f, const char *name, const char *mode) {
-    int ret = 0;
+	int ret = 0;
     assert(f);
     *f = fopen(name, mode);
     // Can't be sure about 1-to-1 mapping of errno and MS' errno_t
@@ -213,18 +213,22 @@ static inline int strncpy_s(char *dest, size_t dest_size, const char *src, size_
 	return 1; // Assumed success return
 }
 
-static inline int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...) {
-    int result;
-    va_list args;
+// static inline int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...) {
+//     int result;
+//     va_list args;
 
-    va_start(args, format);
+//     va_start(args, format);
 
-    result = vsprintf(buffer, format, args);
+//     result = vsprintf(buffer, format, args);
 
-    va_end(args);
+//     va_end(args);
 
-    return result;
-}
+//     return result;
+// }
+
+// #define strcpy_s strcpy
+// #define strncpy_s strncpy
+#define sprintf_s sprintf
 
 #if __windows_shim_arch == __windows_shim_arch_x86 && defined(__windows_shim_BitScanReverse_x86_intrin)
 

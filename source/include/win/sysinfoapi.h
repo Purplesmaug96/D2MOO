@@ -1,6 +1,7 @@
 #pragma once
 
 #include <time.h>
+#include <stdio.h>
 
 #include <windef.h>
 #include <minwinbase.h>
@@ -9,6 +10,11 @@ typedef struct {
 	DWORD dwOSVersionInfoSize;
 	uint8_t dwPlatformId;
 } OSVERSIONINFOA;
+
+static inline DWORD GetVersion() {
+	printf("Stubbed function GetVersion called\n");
+	return 0;
+}
 
 #define VER_PLATFORM_WIN32_NT 0
 static inline BOOL GetVersionExA(OSVERSIONINFOA* verInfo) {
