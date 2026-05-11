@@ -1,5 +1,7 @@
 #include "QUESTS/ACT4/A4Q3.h"
 
+#include <winbase.h>
+
 #include <algorithm>
 #include <iterator>
 

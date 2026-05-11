@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <iterator>
 
+#include <winbase.h>
+#include <sysinfoapi.h>
+
 #include <D2BitManip.h>
 
 #include <D2Chat.h>

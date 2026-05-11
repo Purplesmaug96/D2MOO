@@ -10,11 +10,11 @@
 
 //D2Common.0x6FD78780
 D2ActiveRoomStrc* __fastcall DRLGWARP_GetDestinationRoom(D2DrlgRoomStrc* pDrlgRoom, int nSourceLevel, int* pDestinationLevel, D2LvlWarpTxt** ppLvlWarpTxtRecord)
-{	
+{
 	for (D2RoomTileStrc* pSourceRoomTile = pDrlgRoom->pRoomTiles; pSourceRoomTile; pSourceRoomTile = pSourceRoomTile->pNext)
 	{
 		if (pSourceRoomTile->pLvlWarpTxtRecord->dwLevelId == nSourceLevel)
-		{			
+		{
 			for (D2RoomTileStrc* pDestinationRoomTile = pSourceRoomTile->pDrlgRoom->pRoomTiles; pDestinationRoomTile; pDestinationRoomTile = pDestinationRoomTile->pNext)
 			{
 				if (pDestinationRoomTile->pDrlgRoom == pDrlgRoom)
@@ -120,7 +120,7 @@ D2ActiveRoomStrc* __fastcall sub_6FD788D0(D2DrlgStrc* pDrlg, int nLevelId, int n
 	int nCounter = 0;
 	int nFlags = 0;
 	int nRand = 0;
-	
+
 	pLevelDefBinRecord = DATATBLS_GetLevelDefRecord(nLevelId);
 	*pX = -1;
 	*pY = -1;
@@ -183,7 +183,7 @@ D2ActiveRoomStrc* __fastcall sub_6FD788D0(D2DrlgStrc* pDrlg, int nLevelId, int n
 
 	pDrlgRoom = DRLGWARP_GetWaypointRoomExFromLevel(pLevel, pX, pY);
 	if (!pDrlgRoom)
-	{		
+	{
 		for (D2DrlgRoomStrc* i = pLevel->pFirstRoomEx; i; i = i->pDrlgRoomNext)
 		{
 			if (i->dwFlags & DRLGROOMFLAG_HAS_WARP_MASK)

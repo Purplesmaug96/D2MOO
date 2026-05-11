@@ -1,5 +1,7 @@
 #include "Units/UnitFinds.h"
 
+#include <winbase.h>
+
 #include "D2Collision.h"
 #include "D2DataTbls.h"
 #include "D2Dungeon.h"
@@ -34,7 +36,7 @@ BOOL __stdcall UNITFINDS_AreUnitsInNeighboredRooms(D2UnitStrc* pDestUnit, D2Unit
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -69,7 +71,7 @@ D2UnitStrc* __stdcall UNITFINDS_FindUnitInNeighboredRooms(D2ActiveRoomStrc* pRoo
 
 //D2Common.0x6FDBC7B0 (#10405)
 int __stdcall UNITFINDS_GetTestedUnitsFromRoom(D2ActiveRoomStrc* pRoom, D2UnitStrc** ppUnits, UNITFINDTEST pfnUnitTest, D2UnitFindArgStrc* pUnitFindArg)
-{	
+{
 	int nUnitIndex = 0;
 
 	D2_ASSERT(!IsBadCodePtr((FARPROC)pfnUnitTest));
@@ -213,7 +215,7 @@ void __stdcall UNITFINDS_FindAllMatchingUnitsInNeighboredRooms(D2UnitFindDataStr
 			if ((nX + nSize >= pRoomCoord.nSubtileX || nX - nSize <= pRoomCoord.nSubtileX + pRoomCoord.nSubtileWidth)
 				&& (nY + nSize >= pRoomCoord.nSubtileY || nY - nSize <= pRoomCoord.nSubtileY + pRoomCoord.nSubtileHeight))
 			{
-				
+
 				for (D2UnitStrc* pUnit = ppRoomList[i]->pUnitFirst; pUnit; pUnit = pNextUnit)
 				{
 					pNextUnit = pUnit->pRoomNext;
@@ -327,7 +329,7 @@ int __stdcall UNITFINDS_TestUnit(D2UnitStrc* pUnit, D2UnitFindArgStrc* pUnitFind
 				{
 					return 0;
 				}
-				
+
 				pMissilesTxtRecord = DATATBLS_GetMissilesTxtRecord(pUnit->dwClassId);
 				if(!pMissilesTxtRecord || pMissilesTxtRecord->dwMissileFlags & gdwBitMasks[MISSILESFLAGINDEX_EXPLOSION])
 				{

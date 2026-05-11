@@ -1,5 +1,7 @@
 #include "D2Composit.h"
 
+#include <winuser.h>
+
 #include "D2DataTbls.h"
 #include "D2Inventory.h"
 #include "D2Items.h"
@@ -381,7 +383,7 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 		*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' hth');
 		return ' hth';
 	}
-	
+
 	*pWeaponClassId = 0;
 	return 0;
 }

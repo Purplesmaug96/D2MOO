@@ -38,6 +38,7 @@ static inline LSTATUS RegEnumValueA(HKEY hKey, DWORD dwIndex, LPSTR lpValueName,
 
 static inline LSTATUS RegSetValueExA(HKEY hKey, LPCSTR lpValueName, DWORD Reserved, DWORD dwType, const BYTE *lpData, DWORD cbData) {
 	printf("Stubbed function RegSetValueExA called\n");
+	return 0;
 }
 
 static inline LSTATUS RegCloseKey(HKEY hKey) {

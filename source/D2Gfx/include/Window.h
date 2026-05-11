@@ -3,7 +3,7 @@
 #include <cstdint>
 
 #include <D2Constants.h>
-#include <windows.h>
+#include <winuser.h>
 
 
 #pragma pack(push, 1)

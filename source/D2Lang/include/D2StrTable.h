@@ -31,7 +31,6 @@
 #include <D2Constants.h>
 
 #include "D2Lang.h"
-#include <windows.h>
 
 /**
  * Returns the string table language.

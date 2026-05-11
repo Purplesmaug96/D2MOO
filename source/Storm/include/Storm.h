@@ -2,7 +2,6 @@
 #include <D2Dll.h>
 #include "StormHandles.h"
 #include <cstdint>
-#include <windows.h>
 #include <windef.h>
 #include <fileapi.h>
 #include <winuser.h>

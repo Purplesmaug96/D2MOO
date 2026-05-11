@@ -5,6 +5,7 @@
 
 #include <timeapi.h>
 #include <profileapi.h>
+#include <winbase.h>
 
 #include <D2Lang.h>
 #include <cstdio>

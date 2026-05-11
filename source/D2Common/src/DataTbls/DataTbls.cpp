@@ -1,4 +1,6 @@
-#include <cstdio>
+#include <stdio.h>
+
+#include <winuser.h>
 
 #include <Archive.h>
 #include <File.h>
@@ -330,7 +332,7 @@ void __fastcall DATATBLS_LoadStatesTxt(HD2ARCHIVE hArchive)
 	}
 
 	sgptDataTables->pStateMasks = (uint32_t*)D2_CALLOC_POOL(nullptr, ARRAY_SIZE(sgptDataTables->fStateMasks) * sizeof(uint32_t) * (sgptDataTables->nStatesTxtRecordCount + 31) / 32);
-	
+
 	for (int i = 0; i < ARRAY_SIZE(sgptDataTables->fStateMasks); ++i)
 	{
 		pStateMasks = &sgptDataTables->pStateMasks[(sgptDataTables->nStatesTxtRecordCount + 31) / 32 * i];
@@ -359,7 +361,7 @@ void __fastcall DATATBLS_LoadStatesTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->pColourStates = (short*)D2_CALLOC_POOL(nullptr, sizeof(short) * sgptDataTables->nStatesTxtRecordCount);
 	sgptDataTables->nColourStates = 0;
-	
+
 	for (int i = 0; i < sgptDataTables->nStatesTxtRecordCount; ++i)
 	{
 		if (sgptDataTables->pStatesTxt[i].dwStateFlags & gdwBitMasks[STATEMASK_PGSV])

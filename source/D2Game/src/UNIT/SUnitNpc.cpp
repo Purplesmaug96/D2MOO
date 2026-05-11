@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <iterator>
 
+#include <sysinfoapi.h>
+
 #include <Fog.h>
 #include <D2BitManip.h>
 

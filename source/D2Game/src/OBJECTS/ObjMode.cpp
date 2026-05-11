@@ -3,6 +3,10 @@
 #include <algorithm>
 #include <iterator>
 
+#include <winbase.h>
+#include <sysinfoapi.h>
+#include <winuser.h>
+
 #include <D2BitManip.h>
 
 #include <D2PacketDef.h>

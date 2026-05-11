@@ -1,5 +1,8 @@
 #include "QUESTS/ACT4/A4Q2.h"
 
+#include <winbase.h>
+#include <sysinfoapi.h>
+
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
 #include <DataTbls/ObjectsIds.h>

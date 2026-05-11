@@ -75,6 +75,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-write-strings -fpermissive")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fpermissive")
 
+if (NOT WIN32)
+add_compile_options(-include ${CMAKE_CURRENT_SOURCE_DIR}/source/include/win/__windows_shim_msvcrt.h)
+endif()
+
 add_subdirectory(source)
 
 if(ENABLE_D2DETOURS_EMBEDDED_PATCHES AND D2DETOURS_EMBEDDED_PATCHES_DIR)

@@ -1,5 +1,7 @@
 #include "D2Dungeon.h"
 
+#include <winbase.h>
+
 #include "D2Collision.h"
 #include "D2DataTbls.h"
 #include <DataTbls/LevelsIds.h>
@@ -1143,8 +1145,8 @@ void __stdcall DUNGEON_GetPortalLevelArrayFromPortalFlags(void* pMemPool, int nF
 		}
 
 		nCurrentFlag <<= 1;
-	}		
-	
+	}
+
 	if (*pnLevels)
 	{
 		*ppLevels = (int*)D2_ALLOC_POOL(pMemPool, sizeof(int) * *pnLevels);

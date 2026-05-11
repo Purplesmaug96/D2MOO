@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fileapi.h>
+
 #include <Units/Units.h>
 
 #include "D2Config.h"

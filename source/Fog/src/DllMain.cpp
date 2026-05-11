@@ -1,6 +1,7 @@
-#include <windows.h>
 #include <Fog.h>
 #include <D2CommonDefinitions.h>
+
+#include <process.h>
 
 void UnimplementedOrdinal()
 {

@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-#include <windows.h>
+#include <windef.h>
 
 /**
  * Returns the count of consecutive bytes that are equal to the first

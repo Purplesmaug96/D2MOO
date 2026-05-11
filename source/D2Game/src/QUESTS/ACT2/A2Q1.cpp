@@ -1,5 +1,7 @@
 #include "QUESTS/ACT2/A2Q1.h"
 
+#include <winbase.h>
+
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
 #include <Drlg/D2DrlgDrlg.h>
@@ -463,7 +465,7 @@ int32_t __fastcall ACT2Q1_UnitIterate_SetPrimaryGoalDoneForPartyMembers(D2GameSt
 	QUESTRECORD_SetQuestState(pQuestFlags, pQuestData->nQuestFilter, QFLAG_REWARDPENDING);
 	QUESTRECORD_SetQuestState(pQuestFlags, QUESTSTATEFLAG_A2Q1, QFLAG_CUSTOM1);
 	QUESTS_UpdatePlayerFlags(pQuestData->pGame, pUnit);
-	
+
 	const int16_t nPartyId = SUNIT_GetPartyId(pUnit);
 	if (nPartyId != -1)
 	{
@@ -614,7 +616,7 @@ void __fastcall ACT2Q1_OnRadamentActivated(D2GameStrc* pGame, D2UnitStrc* pUnit)
 	}
 
 	pQuestData->pfCallback[QUESTEVENT_NPCDEACTIVATE] = nullptr;
-	
+
 	bool bReturn = true;
 	if (pQuestData->fState < 3)
 	{

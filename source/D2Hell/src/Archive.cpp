@@ -32,7 +32,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <windows.h>
+#include <winbase.h>
+#include <libloaderapi.h>
 #include <winerror.h>
 
 #include <Fog.h>

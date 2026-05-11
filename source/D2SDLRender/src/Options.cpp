@@ -1,5 +1,3 @@
-#include <windows.h>
-
 #include "D2Gfx.h"
 
 #include "D2SDLRender.h"

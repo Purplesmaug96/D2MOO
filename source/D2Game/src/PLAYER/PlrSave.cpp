@@ -1,5 +1,7 @@
 #include "PLAYER/PlrSave.h"
 
+#include <winbase.h>
+
 #include <Fog.h>
 #include <File.h>
 #include <CRC.h>

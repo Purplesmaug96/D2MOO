@@ -3,6 +3,8 @@
 #include <D2Dll.h>
 #include <cstdint>
 
+#include <windef.h>
+
 //1.10f Image Base: 0x6F980000
 
 #ifdef D2_VERSION_110F

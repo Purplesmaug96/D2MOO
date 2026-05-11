@@ -1,5 +1,3 @@
-#include <windows.h>
-
 #include <D2Dll.h>
 
 #undef D2FUNC_DLL

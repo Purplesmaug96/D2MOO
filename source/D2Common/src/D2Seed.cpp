@@ -1,4 +1,7 @@
-#include <ctime>
+#include <time.h>
+
+#include <sysinfoapi.h>
+
 #include <D2Seed.h>
 #include <D2CommonDefinitions.h>
 #include <Fog.h>

@@ -1,5 +1,7 @@
 #include "D2DataTbls.h"
 
+#include <winuser.h>
+
 #include <Archive.h>
 
 #include "D2Collision.h"
@@ -127,7 +129,7 @@ int __stdcall D2Common_11097(D2FieldStrc* pField, int nX, int nY)
 //D2Common.0x6FD522A0 (#11098)
 int __stdcall D2Common_11098(D2FieldStrc* pField, int* pX, int* pY)
 {
-	
+
 	D2_ASSERT(pField);
 
 	int nIndex = *(&sgptDataTables->pFieldData[((sgptDataTables->pCollisionField.nCenterY + *pY - pField->nY) << 8) - pField->nX] + *pX + sgptDataTables->pCollisionField.nCenterX);

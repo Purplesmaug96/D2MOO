@@ -4,8 +4,11 @@
 #include <D2BasicTypes.h>
 #include <StormHandles.h>
 #include <stdlib.h>
-#include <windows.h>
+
+#include <windef.h>
+#include <winnt.h>
 #include <minwinbase.h>
+#include <synchapi.h>
 
 //1.10f Image base: 0x6FF50000
 

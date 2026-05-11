@@ -1,5 +1,7 @@
 #include "QUESTS/ACT5/A5Q5.h"
 
+#include <winbase.h>
+
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
 #include <DataTbls/ObjectsIds.h>
@@ -349,7 +351,7 @@ void __fastcall ACT5Q5_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestData->pfCallback[QUESTEVENT_PLAYERSTARTEDGAME] = ACT5Q5_Callback13_PlayerStartedGame;
 	pQuestData->pNPCMessages = gpAct5Q5NpcMessages;
 	pQuestData->bActive = 1;
-	
+
 	D2Act5Quest5Strc* pQuestDataEx = D2_ALLOC_STRC_POOL(pQuestData->pGame->pMemoryPool, D2Act5Quest5Strc);
 	pQuestData->pQuestDataEx = pQuestDataEx;
 	pQuestData->nQuestFilter = QUESTSTATEFLAG_A5Q5;

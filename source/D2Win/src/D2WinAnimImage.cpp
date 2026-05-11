@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+#include <sysinfoapi.h>
+
 #include <D2CMP.h>
 
 #include <D2Gfx.h>
@@ -97,7 +99,7 @@ int32_t __fastcall ANIMIMAGE_ShouldMouseInputBeHandled(D2WinControlStrc* pContro
 	D2_ASSERT(pAnimImage->controlHeader.nType == D2WIN_IMAGE);
 
 	D2GfxDataStrc gfxData = {};
-	
+
 	D2CellFileStrc** ppCellFile = pAnimImage->pAnimatedImageDescriptor[pAnimImage->nAnimType].ppCellFile1;
 	if (ppCellFile)
 	{
@@ -109,7 +111,7 @@ int32_t __fastcall ANIMIMAGE_ShouldMouseInputBeHandled(D2WinControlStrc* pContro
 	const int32_t nX = gMousePosition_6F8FE234.x - D2CMP_CelGetOffsetX(pGfxCell);
 	const int32_t nY = gMousePosition_6F8FE234.y - D2CMP_CelGetOffsetY(pGfxCell);
 
-	return nX >= pAnimImage->controlHeader.nImageX && nY >= pAnimImage->controlHeader.nImageY - D2CMP_CelGetHeight(pGfxCell) 
+	return nX >= pAnimImage->controlHeader.nImageX && nY >= pAnimImage->controlHeader.nImageY - D2CMP_CelGetHeight(pGfxCell)
 		&& nX < pAnimImage->controlHeader.nImageX + D2CMP_CelGetWidth(pGfxCell) && nY < pAnimImage->controlHeader.nImageY;
 }
 

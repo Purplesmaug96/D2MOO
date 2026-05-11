@@ -2,6 +2,7 @@
 
 #include <profileapi.h>
 #include <ntdef.h>
+#include <sysinfoapi.h>
 
 #include "GAME/Clients.h"
 #include "GAME/Game.h"

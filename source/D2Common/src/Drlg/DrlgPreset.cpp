@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <ctype.h>
 
+#include <sysinfoapi.h>
+
 #include <Archive.h>
 #include <D2CMP.h>
 

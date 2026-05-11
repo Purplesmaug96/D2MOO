@@ -1,5 +1,7 @@
 #include "QUESTS/ACT1/A1Q5.h"
 
+#include <winbase.h>
+
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
 #include <DataTbls/ObjectsIds.h>

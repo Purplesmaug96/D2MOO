@@ -1,6 +1,5 @@
 #pragma once
 
-#include <windows.h>
 #include <Safesock.h>
 
 #include "D2Net.h"

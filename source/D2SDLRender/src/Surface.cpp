@@ -1,4 +1,3 @@
-#include <windows.h>
 #include <SDL2/SDL.h>
 
 #include "D2Gfx.h"

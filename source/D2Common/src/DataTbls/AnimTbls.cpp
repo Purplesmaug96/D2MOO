@@ -1,5 +1,7 @@
 #include "D2DataTbls.h"
 
+#include <winuser.h>
+
 #include "D2Composit.h"
 #include "Units/Units.h"
 
@@ -13,7 +15,7 @@ D2AnimDataTableStrc* __fastcall DATATBLS_LoadAnimDataD2(HD2ARCHIVE hArchive)
 	char szPath[MAX_PATH] = {};
 	wsprintfA(szPath, "%s\\AnimData.d2", "DATA\\GLOBAL");
 	pAnimDataTable->pBinaryData = ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(hArchive, szPath, nullptr);
-;
+
 	D2AnimDataBucketStrc* pBucketBinaryData = (D2AnimDataBucketStrc*)pAnimDataTable->pBinaryData;
 	for (int i = 0; i < 256; ++i)
 	{

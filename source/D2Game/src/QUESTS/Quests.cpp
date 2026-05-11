@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <iterator>
 
+#include <winuser.h>
+#include <winbase.h>
+
 #include <D2BitManip.h>
 
 #include "D2Constants.h"

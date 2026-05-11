@@ -1,5 +1,7 @@
 #include "D2DataTbls.h"
 
+#include <winuser.h>
+
 #include "Drlg/D2DrlgMaze.h"
 #include "Drlg/D2DrlgPreset.h"
 #include "Drlg/D2DrlgTileSub.h"

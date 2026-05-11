@@ -1,5 +1,7 @@
 #include "D2WinFont.h"
 
+#include <sysinfoapi.h>
+
 #include <D2Math.h>
 
 #include <D2CMP.h>
@@ -177,7 +179,7 @@ void __fastcall D2Win_10115_FONT()
 }
 
 #ifndef _WIN32
-#undef strcpy_s strcpy
+#undef strcpy_s
 #endif
 
 

@@ -1,4 +1,3 @@
-#include <windows.h>
 #include <malloc.h>
 
 typedef unsigned int uint;

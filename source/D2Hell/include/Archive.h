@@ -29,7 +29,6 @@
 #pragma once
 
 #include <stddef.h>
-#include <windows.h>
 
 // TODO: Replace this include with the header file that defines
 // HSFILE.

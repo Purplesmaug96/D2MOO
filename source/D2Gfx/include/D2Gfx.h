@@ -2,8 +2,9 @@
 
 #include <cstdint>
 
-#include <windows.h>
+#include <windef.h>
 #include <wingdi.h>
+#include <winuser.h>
 #include <iterator>
 
 #include <D2Constants.h>

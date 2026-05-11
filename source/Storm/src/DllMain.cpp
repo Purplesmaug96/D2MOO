@@ -1,5 +1,6 @@
-#include <windows.h>
-
+#include <windef.h>
+#include <process.h>
+#include <winnt.h>
 
 // NOLINTBEGIN(bugprone-branch-clone)
 BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved)

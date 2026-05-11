@@ -1,7 +1,9 @@
 #include "D2WinMain.h"
 
 #include <algorithm>
-#include <cstdio>
+#include <stdio.h>
+
+#include <sysinfoapi.h>
 
 #include <D2CMP.h>
 #include <D2Gfx.h>

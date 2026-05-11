@@ -1,5 +1,7 @@
 #include "D2WinTimer.h"
 
+#include <sysinfoapi.h>
+
 #include <Fog.h>
 #include <D2BitManip.h>
 

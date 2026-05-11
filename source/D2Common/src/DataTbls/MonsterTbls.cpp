@@ -1,7 +1,6 @@
 #include <limits.h>
-#ifndef _WIN32
-#include <__windows_shim_msvcrt.h>
-#endif
+
+#include <winuser.h>
 
 #include "D2DataTbls.h"
 

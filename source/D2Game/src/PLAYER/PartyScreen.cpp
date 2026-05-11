@@ -1,5 +1,8 @@
 #include "PLAYER/PartyScreen.h"
 
+#include <winbase.h>
+#include <sysinfoapi.h>
+
 #include <D2Dungeon.h>
 #include <D2StatList.h>
 

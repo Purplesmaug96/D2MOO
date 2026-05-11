@@ -1,5 +1,7 @@
 #pragma once
 
+#include <debugapi.h>
+
 // NOLINTBEGIN
 // Use this by default if the function will be in an import library
 #define D2FUNC_DLL(DLL, NAME, RETURN, CONV, ARGS, OFFSET) \

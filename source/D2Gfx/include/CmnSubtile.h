@@ -2,8 +2,6 @@
 
 #include <cstdint>
 
-#include <windows.h>
-
 
 struct D2TileLibraryEntryStrc;
 struct D2GfxLightExStrc;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <windows.h>
+#include <windef.h>
 #include <cstdint>
 
 #include <D2Gfx.h>

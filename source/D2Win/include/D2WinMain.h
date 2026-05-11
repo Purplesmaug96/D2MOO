@@ -1,8 +1,10 @@
 #pragma once
 
-#include <windows.h>
+#include <windef.h>
+#include <winnt.h>
+#include <winuser.h>
 
-#include <cstdint>
+#include <stdint.h>
 #include <D2Constants.h>
 #include <DisplayType.h>
 

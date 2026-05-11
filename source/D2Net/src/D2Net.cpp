@@ -4,7 +4,12 @@
 
 #include <Fog.h>
 
+#include <winnt.h>
+#include <sysinfoapi.h>
+
+#ifndef _WIN32
 #include "__windows_shim_local_wsa_lasterror.h"
+#endif
 
 #pragma warning (disable: 28159)
 

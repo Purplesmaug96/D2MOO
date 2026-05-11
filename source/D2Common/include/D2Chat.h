@@ -1,5 +1,7 @@
 #pragma once
 
+#include <windef.h>
+
 #include "D2CommonDefinitions.h"
 #pragma pack(1)
 

@@ -4,6 +4,8 @@
 
 #include "D2Inventory.h"
 
+#include <windef.h>
+
 struct D2CellFileStrc; // From D2CMP / D2Gfx
 struct D2ActiveRoomStrc;
 struct D2SkillsTxt;
@@ -23,7 +25,7 @@ enum D2C_AuraFilters
 	AURAFILTER_FINDPLAYER = 0x01,			//Targets Players Units
 	AURAFILTER_FINDMONSTER = 0x02,			//Targets Monster Units
 	AURAFILTER_FINDUNDEAD = 0x04,			//Targets Undead Monsters Units
-	AURAFILTER_FINDMISSILE = 0x08,			//Targets Missiles Units			
+	AURAFILTER_FINDMISSILE = 0x08,			//Targets Missiles Units
 	AURAFILTER_FINDOBJECT = 0x10,			//Target Objects Units
 	AURAFILTER_FINDITEM = 0x20,				//Targets Items Units
 	AURAFILTER_FINDISATT = 0x80,			//Targets Units with IsAtt (Monstats2)

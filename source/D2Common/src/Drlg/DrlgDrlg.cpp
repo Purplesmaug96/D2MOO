@@ -1,5 +1,7 @@
 #include "Drlg/D2DrlgDrlg.h"
 
+#include <winuser.h>
+
 #include "D2DataTbls.h"
 #include "Drlg/D2DrlgDrlgAnim.h"
 #include "Drlg/D2DrlgDrlgRoom.h"
@@ -50,7 +52,7 @@ D2DrlgStrc* __fastcall DRLG_AllocDrlg(D2DrlgActStrc* pAct, uint8_t nActNo, HD2AR
 		wsprintfA(szPath, "%s\\Tiles\\Act1\\Town\\Floor.dt1", "DATA\\GLOBAL");
 		D2CMP_10087_LoadTileLibrarySlot(pDrlg->pTiles, szPath);
 		break;
-	
+
 	case ACT_II:
 	{
 		unsigned int nStaffLevelOffset = 0;
@@ -424,11 +426,11 @@ D2DrlgLevelStrc* __fastcall DRLG_AllocLevel(D2DrlgStrc* pDrlg, int nLevelId)
 	case DRLGTYPE_MAZE:
 		DRLGMAZE_InitLevelData(pLevel);
 		break;
-	
+
 	case DRLGTYPE_PRESET:
 		DRLGPRESET_InitLevelData(pLevel);
 		break;
-		
+
 	case DRLGTYPE_OUTDOOR:
 		DRLGOUTDOORS_AllocOutdoorInfo(pLevel);
 		break;

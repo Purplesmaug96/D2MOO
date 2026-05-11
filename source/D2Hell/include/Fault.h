@@ -1,6 +1,7 @@
 #pragma once
 
-#include <windows.h>
+#include <winbase.h>
+#include <processthreadsapi.h>
 #include <winuser.h>
 
 typedef void(__stdcall* FaultAssertHandler)(const char*, unsigned __int32, const char*);

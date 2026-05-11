@@ -1,5 +1,7 @@
 #include "QUESTS/ACT3/A3Q4.h"
 
+#include <winbase.h>
+
 #include <DataTbls/LevelsIds.h>
 #include <DataTbls/MonsterIds.h>
 #include <D2Items.h>
@@ -364,7 +366,7 @@ void __fastcall ACT3Q4_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 			pQuestDataEx->bTalkedToCainTwice = 1;
 			QUESTS_NPCActivateSpeeches(pQuestArg->pGame, pQuestArg->pPlayer, pQuestArg->pTarget);
 			pQuestDataEx->nCurrentQuestFlag = QFLAG_ENTERAREA;
-			
+
 			const int16_t nPartyId = SUNIT_GetPartyId(pQuestArg->pPlayer);
 			if (nPartyId != -1)
 			{
@@ -392,7 +394,7 @@ void __fastcall ACT3Q4_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 				pQuestDataEx->bTalkedToAlkor = 1;
 				pQuestData->pfCallback[QUESTEVENT_NPCDEACTIVATE] = ACT3Q4_Callback02_NpcDeactivate;
 				pQuestDataEx->nCurrentQuestFlag = QFLAG_REWARDPENDING;
-				
+
 				const int16_t nPartyId = SUNIT_GetPartyId(pQuestArg->pPlayer);
 				if (nPartyId != -1)
 				{
@@ -590,7 +592,7 @@ bool __fastcall ACT3Q4_SeqCallback(D2QuestDataStrc* pQuestData)
 		}
 		return pQuestData17->pfSeqFilter(pQuestData17) || bResult;
 	}
-	
+
 	return bResult;
 }
 
@@ -696,7 +698,7 @@ int32_t __fastcall ACT3Q4_UnitIterate_SetGoldenBirdBoss(D2QuestDataStrc* pQuestD
 	{
 		return 0;
 	}
-	
+
 	D2QuestDataStrc* pQuest = QUESTS_GetQuestData(pQuestData->pGame, QUEST_A3Q3_GIDBINN);
 	if (pQuest && ((D2Act3Quest3Strc*)pQuest->pQuestDataEx)->bBossIsSpawning)
 	{

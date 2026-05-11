@@ -1,5 +1,7 @@
 #include "QUESTS/ACT1/A1Q4.h"
 
+#include <winbase.h>
+
 #include <algorithm>
 
 #include <DataTbls/LevelsIds.h>

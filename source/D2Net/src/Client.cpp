@@ -13,6 +13,9 @@
 #include <winsock2.h>
 #include <minwindef.h>
 
+#include <processthreadsapi.h>
+#include <libloaderapi.h>
+
 
 #pragma warning (disable: 6387)
 #pragma warning (disable: 28159)

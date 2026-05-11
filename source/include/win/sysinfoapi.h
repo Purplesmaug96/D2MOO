@@ -6,6 +6,8 @@
 #include <windef.h>
 #include <minwinbase.h>
 
+#include <timeapi.h>
+
 typedef struct {
 	DWORD dwOSVersionInfoSize;
 	uint8_t dwPlatformId;
@@ -41,3 +43,10 @@ static inline void GetLocalTime(SYSTEMTIME* lpSystemTime) {
 	return GetSystemTime(lpSystemTime);
 }
 
+static inline DWORD GetTickCount() {
+	return timeGetTime();
+	// timeval tv;
+	// gettimeofday(&tv, 0);
+	// unsigned int ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000.0f);
+	// return ms;
+}

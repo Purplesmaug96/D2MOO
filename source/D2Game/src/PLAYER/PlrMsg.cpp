@@ -4,6 +4,8 @@
 #include <iterator>
 #include <limits.h>
 
+#include <winbase.h>
+
 #include <Fog.h>
 #include <Storm.h>
 #include <D2BitManip.h>

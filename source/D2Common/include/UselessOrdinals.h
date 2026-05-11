@@ -2,6 +2,8 @@
 
 #include "D2CommonDefinitions.h"
 
+#include <windef.h>
+
 struct D2StatListStrc;
 struct D2UnitStrc;
 

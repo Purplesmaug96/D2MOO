@@ -1,5 +1,7 @@
 #include "PLAYER/PlayerList.h"
 
+#include <sysinfoapi.h>
+
 #include <D2States.h>
 
 #include "GAME/SCmd.h"
@@ -325,7 +327,7 @@ int32_t __fastcall PLAYERLIST_GetHostileDelay(D2UnitStrc* pPlayer1, D2UnitStrc* 
     {
         return 0;
     }
- 
+
     return pPlayerList->field_8;
 }
 

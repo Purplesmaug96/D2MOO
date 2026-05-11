@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstddef>
-#include <cstdio>
+#include <stddef.h>
+#include <stdio.h>
 
 #include <SDL2/SDL.h>
 

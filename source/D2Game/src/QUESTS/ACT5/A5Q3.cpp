@@ -1,5 +1,7 @@
 #include "QUESTS/ACT5/A5Q3.h"
 
+#include <winbase.h>
+
 #include <algorithm>
 #include <iterator>
 

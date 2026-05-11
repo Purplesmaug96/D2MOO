@@ -1,7 +1,5 @@
 #pragma once
 
-#include <windows.h>
-
 #include "D2Net.h"
 #include "Packet.h"
 

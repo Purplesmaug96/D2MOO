@@ -274,3 +274,18 @@ static inline char *_strrev(char *str) {
 
 	return str;
 }
+
+#define CALLBACK __stdcall
+
+#define _Acquires_lock_(x)
+#define _Releases_lock_(x)
+
+#define _Requires_lock_held_(x)
+
+#define _Curr_ NULL
+
+typedef int LCID;
+
+#define _Analysis_assume_(x)
+
+#define _strcmpi strcasecmp

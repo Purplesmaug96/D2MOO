@@ -1,5 +1,7 @@
 #include "Units/MissileStream.h"
 
+#include <winbase.h>
+
 #include "D2Collision.h"
 #include "Units/Missile.h"
 #include "Path/Path.h"

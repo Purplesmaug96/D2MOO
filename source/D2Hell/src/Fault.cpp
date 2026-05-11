@@ -1,5 +1,4 @@
 #include "Fault.h"
-#include <windows.h>
 #include <Fog.h>
 #include <list>
 

@@ -1,5 +1,7 @@
 #include "Drlg/D2DrlgRoomTile.h"
 
+#include <winuser.h>
+
 #include "D2Collision.h"
 #include "D2DataTbls.h"
 #include "Drlg/D2DrlgDrlg.h"
@@ -462,7 +464,7 @@ void __fastcall DRLGROOMTILE_LoadInitRoomTiles(D2DrlgRoomStrc* pDrlgRoom, D2Drlg
 			const uint8_t nTileSequence = nTileInformation.nTileSequence;
 
 			const int nTileType = pTileTypeGrid ? DRLGGRID_GetGridEntry(pTileTypeGrid, nTileOffsetX, nTileOffsetY) : TILETYPE_FLOOR;
-			
+
 			if ((nTileType == TILETYPE_WALL_LEFT_EXIT || nTileType == TILETYPE_WALL_RIGHT_EXIT) && nTileStyle >= 8)
 			{
 				continue;
@@ -486,8 +488,8 @@ void __fastcall DRLGROOMTILE_LoadInitRoomTiles(D2DrlgRoomStrc* pDrlgRoom, D2Drlg
 				case TILETYPE_WALL_RIGHT_DOOR:
 				{
 					const int nLevelId = pDrlgRoom->pLevel->nLevelId;
-					if (nLevelId == LEVEL_ID_ACT5_BARRICADE_1 
-						|| nLevelId == LEVEL_ARREATPLATEAU 
+					if (nLevelId == LEVEL_ID_ACT5_BARRICADE_1
+						|| nLevelId == LEVEL_ARREATPLATEAU
 						|| nLevelId == LEVEL_TUNDRAWASTELANDS)
 					{
 						break; // ignore doors for those levels
@@ -611,7 +613,7 @@ BOOL __fastcall DRLGROOMTILE_AddWarp(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY, 
 {
 	D2C_PackedTileInformation nTileInformation{ nPackedTileInformation };
 	D2LvlWarpTxt* pLvlWarpTxtRecord = DRLGWARP_GetLvlWarpTxtRecordFromWarpIdAndDirection(pDrlgRoom->pLevel, nTileInformation.nTileStyle, nTileType == TILETYPE_WALL_RIGHT_EXIT ? 'r' : 'l');
-	
+
 	if (pLvlWarpTxtRecord)
 	{
 		int nPosX = nX - pDrlgRoom->nTileXPos;
@@ -667,7 +669,7 @@ static D2LvlWarpTxt* DRLGROOMTILE_UpdateAndGetLvlWarpTxtRecord(D2RoomTileStrc* p
 void __fastcall DRLGROOMTILE_LoadWallWarpTiles(D2DrlgRoomStrc* pDrlgRoom, D2DrlgTileDataStrc* pTileData, uint32_t nPackedTileInformation, int nTileType)
 {
 	D2C_PackedTileInformation nTileInformation{ nPackedTileInformation };
-	
+
 	D2RoomTileStrc* pWarpTile = DRLGROOMTILE_FindDestinationWarpTile(pDrlgRoom, nTileInformation);
 
 	if (!pWarpTile)
@@ -714,9 +716,9 @@ void __fastcall DRLGROOMTILE_LoadFloorWarpTiles(D2DrlgRoomStrc* pDrlgRoom, int n
 	};
 
 	D2C_PackedTileInformation nTileInformation{ nPackedTileInformation };
-	
+
 	pDrlgRoom->dwFlags |= DRLGROOMFLAG_POPULATION_ZERO;
-	
+
 	if (D2RoomTileStrc* pWarpTile = DRLGROOMTILE_FindDestinationWarpTile(pDrlgRoom, nTileInformation))
 	{
 		const D2LvlWarpTxt* pWarpDef = DRLGROOMTILE_UpdateAndGetLvlWarpTxtRecord(pWarpTile, nTileType);
@@ -845,7 +847,7 @@ void __fastcall DRLGROOMTILE_LinkedTileDataManager(void* pMemPool, D2DrlgRoomStr
 	// -2 Means ignore remapping but still init tile data
 	static const int nRemapIndices[] =
 	{
-		-1, 
+		-1,
 		0, // [TILETYPE_WALL_LEFT            ]
 		1, // [TILETYPE_WALL_RIGHT           ]
 		2, // [TILETYPE_WALL_TOP_CORNER_RIGHT]
@@ -866,7 +868,7 @@ void __fastcall DRLGROOMTILE_LinkedTileDataManager(void* pMemPool, D2DrlgRoomStr
 		/* [TILETYPE_WALL_BOTTOM_LEFT     ] */ { TILETYPE_WALL_TOP_CORNER_RIGHT,TILETYPE_WALL_RIGHT,TILETYPE_WALL_TOP_CORNER_RIGHT,TILETYPE_WALL_TOP_CORNER_LEFT,TILETYPE_WALL_TOP_CORNER_RIGHT,TILETYPE_WALL_BOTTOM_LEFT,TILETYPE_WALL_RIGHT},
 		/* [TILETYPE_WALL_BOTTOM_RIGHT    ] */ { TILETYPE_WALL_LEFT,TILETYPE_WALL_RIGHT,TILETYPE_WALL_TOP_CORNER_RIGHT,TILETYPE_WALL_TOP_CORNER_LEFT,TILETYPE_WALL_LEFT,TILETYPE_WALL_RIGHT,TILETYPE_WALL_BOTTOM_RIGHT	},
 	};
-	
+
 	D2C_PackedTileInformation nTileInformation{ nPackedTileInformation };
 	int v10 = nRemapIndices[nTileType];
 
@@ -931,7 +933,7 @@ void __fastcall DRLGROOMTILE_LinkedTileDataManager(void* pMemPool, D2DrlgRoomStr
 		}
 	}
 
-	if (nTileType != pTileData->nTileType || 
+	if (nTileType != pTileData->nTileType ||
 		pTileData->nTileType == TILETYPE_FLOOR && D2CMP_10078_GetTileStyle(pTileData->pTile) == 30 && D2CMP_10082_GetTileSequence(pTileData->pTile) == 0)
 	{
 		D2TileLibraryEntryStrc* pTileCache = DRLGROOMTILE_GetTileCache(pDrlgRoom2, nTileType, nPackedTileInformation);
@@ -1121,7 +1123,7 @@ void __fastcall DRLGROOMTILE_ReallocRoofTileGrid(void* pMemPool, D2DrlgTileGridS
 	if (nAdditionalRoofs)
 	{
 		pTileGrid->pTiles.pRoofTiles = (D2DrlgTileDataStrc*)D2_REALLOC_POOL(pMemPool, pTileGrid->pTiles.pRoofTiles, sizeof(D2DrlgTileDataStrc) * (nAdditionalRoofs + pTileGrid->pTiles.nRoofs));
-		
+
 		int nCounter = 0;
 		while (nCounter < pTileGrid->nShadows - 1)
 		{
@@ -1234,7 +1236,7 @@ void __fastcall DRLGROOMTILE_LoadDT1FilesForRoom(D2DrlgRoomStrc* pDrlgRoom)
 	D2LvlTypesTxt* pLvlTypesTxtRecord = DATATBLS_GetLevelTypesTxtRecord(pDrlgRoom->pLevel->nLevelType);
 
 	static_assert(ARRAY_SIZE(pLvlTypesTxtRecord->szFile) <= 32, "DT1Mask is 32bits, needs to match the number of file records");
-	
+
 	uint32_t dwDT1Mask = pDrlgRoom->dwDT1Mask;
 	for (int nFileIndex = 0; nFileIndex < ARRAY_SIZE(pLvlTypesTxtRecord->szFile) && dwDT1Mask != 0; ++nFileIndex, dwDT1Mask >>= 1)
 	{

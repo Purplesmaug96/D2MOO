@@ -4,6 +4,8 @@
 #include <iterator>
 #include <limits.h>
 
+#include <sysinfoapi.h>
+
 #include <Fog.h>
 #include <Storm.h>
 

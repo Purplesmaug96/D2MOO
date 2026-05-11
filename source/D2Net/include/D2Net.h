@@ -1,6 +1,8 @@
 #pragma once
 
-#include <windows.h>
+#include <sysinfoapi.h>
+
+#include <synchapi.h>
 
 #include "Packet.h"
 

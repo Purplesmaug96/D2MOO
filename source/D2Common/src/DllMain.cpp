@@ -1,4 +1,8 @@
-#include <windows.h>
+#include <windef.h>
+#include <process.h>
+#include <winnt.h>
+#include <libloaderapi.h>
+
 #include <Imports/DllBases.h>
 
 #ifdef _WIN32

@@ -28,8 +28,6 @@
 
 #include "Count.h"
 
-#include <windows.h>
-
 #include <cstdlib>
 
 #include "Fog.h"

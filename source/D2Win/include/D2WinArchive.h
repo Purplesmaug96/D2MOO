@@ -1,6 +1,6 @@
 #pragma once
 
-#include <windows.h>
+#include <winnt.h>
 #include <D2BasicTypes.h>
 #include <Archive.h>
 #include <D2Config.h>

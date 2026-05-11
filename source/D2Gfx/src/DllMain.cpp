@@ -1,4 +1,6 @@
-#include <windows.h>
+#include <windef.h>
+#include <process.h>
+#include <winnt.h>
 
 
 extern HWND ghWnd;

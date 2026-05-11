@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+#include <sysinfoapi.h>
+
 #include <D2Math.h>
 
 #include "D2CMP.h"

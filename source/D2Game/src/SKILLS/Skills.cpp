@@ -1,5 +1,7 @@
 #include "SKILLS/Skills.h"
 
+#include <winbase.h>
+
 #include <algorithm>
 #include <iterator>
 #include <limits.h>

@@ -1,4 +1,6 @@
-#include <windows.h>
+#include <windef.h>
+#include <process.h>
+#include <winnt.h>
 
 // NOLINTBEGIN(bugprone-branch-clone)
 //D2Win.0x6F8A6C70

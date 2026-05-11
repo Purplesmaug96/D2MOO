@@ -1,5 +1,8 @@
 #include "UNIT/SUnit.h"
 
+#include <winbase.h>
+#include <sysinfoapi.h>
+
 #include <D2BitManip.h>
 
 #include <D2Dungeon.h>

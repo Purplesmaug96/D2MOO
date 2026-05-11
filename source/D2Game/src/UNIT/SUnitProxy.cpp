@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <iterator>
 
+#include <winbase.h>
+#include <sysinfoapi.h>
+
 #include <Fog.h>
 #include <D2BitManip.h>
 

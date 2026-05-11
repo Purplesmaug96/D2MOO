@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <windows.h>
 
 #ifdef _WIN32
 typedef int32_t BOOL;

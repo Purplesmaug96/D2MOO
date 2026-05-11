@@ -1,7 +1,11 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include <windows.h>
+#include <windef.h>
+#include <libloaderapi.h>
+#include <winbase.h>
+#include <winsvc.h>
+#include <sysinfoapi.h>
 
 #define __WINDOWS_SHIM_LASTERROR_LOCAL
 #include <errhandlingapi.h>

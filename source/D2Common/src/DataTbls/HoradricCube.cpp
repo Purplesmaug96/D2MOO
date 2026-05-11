@@ -1,5 +1,7 @@
 #include "D2DataTbls.h"
 
+#include <winuser.h>
+
 #include <Archive.h>
 
 #include "D2Items.h"

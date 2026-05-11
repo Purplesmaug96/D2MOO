@@ -2,7 +2,6 @@
 
 #include <cstdint>
 
-#include <windows.h>
 #include <wingdi.h>
 
 

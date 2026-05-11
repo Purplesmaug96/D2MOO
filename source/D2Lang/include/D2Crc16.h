@@ -25,7 +25,6 @@
 #pragma once
 
 #include <stddef.h>
-#include <windows.h>
 
 #include "D2Lang.h"
 
