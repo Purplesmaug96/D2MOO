@@ -76,3 +76,8 @@ static inline BOOL FreeLibrary(HMODULE hModule) {
 
 	return FALSE;
 }
+
+static inline HMODULE GetModuleHandleA(LPCSTR lpModuleName) {
+	printf("Stubbed function GetModuleHandleA called\n");
+	return NULL;
+}
