@@ -706,6 +706,16 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[])
 	return GameStart(ghCurrentProcess, &tCfg, MODULE_LAUNCHER);
 }
 
+#ifndef _WIN32
+
+INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd);
+
+int main(int argc, char* argv) {
+	return WinMain(NULL, NULL, NULL, 1);
+}
+
+#endif
+
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd)
 {
 	ghCurrentProcess = hInstance;
