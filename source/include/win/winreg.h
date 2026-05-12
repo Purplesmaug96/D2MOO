@@ -34,7 +34,8 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyClassesRoot = 
     .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyClassesRoot,
     .name = NULL,
     .type = -1,
-    .value = 0
+    .value = 0,
+	.parent = NULL
 };
 
 static inline const char* __windows_shim_pathSeparatedHKeyCurrentUser[] = {"HKEY_CURRENT_USER", NULL};
@@ -45,7 +46,8 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyCurrentUser = 
     .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentUser,
     .name = NULL,
     .type = -1,
-    .value = 0
+    .value = 0,
+	.parent = NULL
 };
 
 static inline const char* __windows_shim_pathSeparatedHKeyLocalMachine[] = {"HKEY_LOCAL_MACHINE", NULL};
@@ -56,7 +58,8 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyLocalMachine =
     .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyLocalMachine,
     .name = NULL,
     .type = -1,
-    .value = 0
+    .value = 0,
+	.parent = NULL
 };
 
 static inline const char* __windows_shim_pathSeparatedHKeyUsers[] = {"HKEY_USERS", NULL};
@@ -66,7 +69,8 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyUsers = {
     .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyUsers,
     .name = NULL,
     .type = -1,
-    .value = 0
+    .value = 0,
+	.parent = NULL
 };
 
 static inline const char* __windows_shim_pathSeparatedHKeyPerformanceData[] = {"HKEY_PERFORMANCE_DATA", NULL};
@@ -76,7 +80,8 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyPerformanceDat
     .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceData,
     .name = NULL,
     .type = -1,
-    .value = 0
+    .value = 0,
+	.parent = NULL
 };
 
 static inline const char* __windows_shim_pathSeparatedHKeyPerformanceText[] = {"HKEY_PERFORMANCE_TEXT", NULL};
@@ -86,7 +91,8 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyPerformanceTex
     .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceText,
     .name = NULL,
     .type = -1,
-    .value = 0
+    .value = 0,
+	.parent = NULL
 };
 
 static inline const char* __windows_shim_pathSeparatedHKeyPerformanceNLSText[] = {"HKEY_PERFORMANCE_NLSTEXT", NULL};
@@ -96,7 +102,8 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyPerformanceNLS
     .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceNLSText,
     .name = NULL,
     .type = -1,
-    .value = 0
+    .value = 0,
+	.parent = NULL
 };
 
 static inline const __windows_shim_struct_HKEY* __windows_shim_hKeysLookup[7] = {
@@ -245,6 +252,7 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 		}
 		newHKey->type = -1;
 		newHKey->value = 0;
+		newHKey->parent = hKey;
 		*phkResult = newHKey;
 	}
 
