@@ -715,7 +715,7 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[])
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd);
 
 int main(int argc, char* argv) {
-	return WinMain(NULL, NULL, NULL, 1);
+	return WinMain(NULL, NULL, "", 1);
 }
 
 #endif
@@ -724,6 +724,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 {
 	ghCurrentProcess = hInstance;
 	gnCmdShow = nShowCmd;
+
+	printf("GetVersion returns %u\n", GetVersion());
 
 	const bool bHasBuildVersion = GetVersion() & 0x80000000; // NOLINT(clang-diagnostic-deprecated-declarations)
 

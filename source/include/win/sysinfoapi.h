@@ -15,7 +15,9 @@ typedef struct {
 
 static inline DWORD GetVersion() {
 	printf("Stubbed function GetVersion called\n");
-	return 0;
+    // Windows 10: major version 10, minor version 0
+    // Format: low byte = major, next byte = minor, high word = build
+    return (10) | (0 << 8) | (19045 << 16);
 }
 
 #define VER_PLATFORM_WIN32_NT 0
