@@ -1,8 +1,8 @@
 
-add_executable(Game WIN32 
+add_executable(Game WIN32
   src/Main.cpp
   include/Main.h
-  
+
   resources/Game.rc
 )
 
@@ -11,7 +11,8 @@ if(EXISTS resources/Game.${D2MOO_ORDINALS_VERSION}.rc)
 endif()
 
 target_include_directories(Game PRIVATE include)
-target_link_libraries(Game 
+
+target_link_libraries(Game
   PRIVATE
     Fog
 	Storm
@@ -20,6 +21,12 @@ target_link_libraries(Game
 	D2Sound
 	D2MCPClient
 )
+
+if (NOT WIN32)
+find_package(json-c CONFIG)
+target_link_libraries(Game PRIVATE json-c::json-c)
+endif()
+
 set_target_properties(Game PROPERTIES OUTPUT_NAME Game.D2MOO)
 
 if(D2MOO_WITH_STATIC_TESTS)

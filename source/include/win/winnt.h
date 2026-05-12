@@ -32,7 +32,17 @@ typedef __windows_shim_struct_HMODULE* HMODULE;
 typedef HANDLE HDC; // Device Context
 typedef HANDLE HINSTANCE;
 typedef HANDLE HGDIOBJ;
-typedef /*HANDLE*/ int HKEY;
+
+typedef struct {
+	char* path;
+	char** pathSeperated; // List of folders (example: ["HKCU", "SOFTWARE", "Blizzard Entertainment"])
+	char* name;
+	int type;
+	uint32_t value;
+} __windows_shim_struct_HKEY;
+
+typedef __windows_shim_struct_HKEY* HKEY;
+
 typedef HANDLE HICON;
 typedef HANDLE HCURSOR;
 typedef HANDLE HBRUSH;
