@@ -13,6 +13,10 @@
 #define HKEY_PERFORMANCE_TEXT               ((HKEY)5)
 #define HKEY_PERFORMANCE_NLSTEXT            ((HKEY)6)
 
+#define HKEY_CURRENT_CONFIG                 ((HKEY)7)
+#define HKEY_DYN_DATA                       ((HKEY)8)
+#define HKEY_CURRENT_USER_LOCAL_SETTINGS    ((HKEY)9)
+
 /*
 
 typedef struct {
@@ -106,14 +110,50 @@ static inline const __windows_shim_struct_HKEY __windows_shim_hKeyPerformanceNLS
 	.parent = NULL
 };
 
-static inline const __windows_shim_struct_HKEY* __windows_shim_hKeysLookup[7] = {
+static inline const char* __windows_shim_pathSeparatedHKeyCurrentConfig[] = {"HKEY_CURRENT_CONFIG", NULL};
+
+static inline const __windows_shim_struct_HKEY __windows_shim_hKeyCurrentConfig = {
+    .path = (char*)"HKEY_CURRENT_CONFIG",
+    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentConfig,
+    .name = NULL,
+    .type = -1,
+    .value = 0,
+	.parent = NULL
+};
+
+static inline const char* __windows_shim_pathSeparatedHKeyDynData[] = {"HKEY_DYN_DATA", NULL};
+
+static inline const __windows_shim_struct_HKEY __windows_shim_hKeyDynData = {
+    .path = (char*)"HKEY_DYN_DATA",
+    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyDynData,
+    .name = NULL,
+    .type = -1,
+    .value = 0,
+	.parent = NULL
+};
+
+static inline const char* __windows_shim_pathSeparatedHKeyCurrentUserLocalSettings[] = {"HKEY_CURRENT_USER_LOCAL_SETTINGS", NULL};
+
+static inline const __windows_shim_struct_HKEY __windows_shim_hKeyCurrentUserLocalSettings = {
+    .path = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS",
+    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentUserLocalSettings,
+    .name = NULL,
+    .type = -1,
+    .value = 0,
+	.parent = NULL
+};
+
+static inline const __windows_shim_struct_HKEY* __windows_shim_hKeysLookup[10] = {
 	&__windows_shim_hKeyClassesRoot,
 	&__windows_shim_hKeyCurrentUser,
 	&__windows_shim_hKeyLocalMachine,
 	&__windows_shim_hKeyUsers,
 	&__windows_shim_hKeyPerformanceData,
 	&__windows_shim_hKeyPerformanceText,
-	&__windows_shim_hKeyPerformanceNLSText
+	&__windows_shim_hKeyPerformanceNLSText,
+	&__windows_shim_hKeyCurrentConfig,
+	&__windows_shim_hKeyDynData,
+	&__windows_shim_hKeyCurrentUserLocalSettings
 };
 
 static inline HKEY __windows_shim_GetHKey(const HKEY hKey) {
@@ -163,6 +203,18 @@ static inline HKEY __windows_shim_GetInstancedBuiltinHKey(const int id) {
 		case 6:
 			pathSeparatedhKey[0] = (char*)"HKEY_PERFORMANCE_NLSTEXT";
 			hKey->path = (char*)"HKEY_PERFORMANCE_NLSTEXT";
+			break;
+		case 7:
+			pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_CONFIG";
+			hKey->path = (char*)"HKEY_CURRENT_CONFIG";
+			break;
+		case 8:
+			pathSeparatedhKey[0] = (char*)"HKEY_DYN_DATA";
+			hKey->path = (char*)"HKEY_DYN_DATA";
+			break;
+		case 9:
+			pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS";
+			hKey->path = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS";
 			break;
 		default:
 			return NULL;
@@ -214,10 +266,6 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 
 	return pathSeperatedNew;
 }
-
-#define HKEY_CURRENT_CONFIG                 7
-#define HKEY_DYN_DATA                       8
-#define HKEY_CURRENT_USER_LOCAL_SETTINGS    9
 
 #define KEY_QUERY_VALUE 0
 
