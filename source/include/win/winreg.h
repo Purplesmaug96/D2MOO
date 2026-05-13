@@ -245,7 +245,9 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 	int cntElements = 1;
 
 	for (int i = 0; i < lpSubKeyLen; i++) {
+		printf("%c\n", lpSubKey[i]);
 		if (lpSubKey[i] == "/"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
+			lptmpSubKey[i] = "/"[0];
 			cntElements++;
 		}
 		else if (lpSubKey[i] == "\\"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
@@ -256,6 +258,8 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 			lptmpSubKey[i] = lpSubKey[i];
 		}
 	}
+
+	printf("path2 %s\n", lptmpSubKey);
 
 	*pCntElements = cntElements;
 
@@ -301,7 +305,7 @@ void __windows_shim_writeJson(HKEY hKey) {
 	printf("Stubbed function __windows_shim_writeJson called\n");
 }
 
-void __windows_shim_readJson(HKEY hKey) {
+int __windows_shim_readJson(HKEY hKey) {
 	printf("Stubbed function __windows_shim_writeJson called\n");
 }
 
@@ -337,8 +341,8 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 		int cntElements;
 		newHKey->pathSeperated = __windows_shim_HKeyPathSeperate(newHKey->path, &newHKey->path, true, &cntElements);
 		if (newHKey->pathSeperated[cntElements - 1] != NULL) {
-			newHKey->name = (char*)malloc(strlen(newHKey->pathSeperated[strlen(newHKey->path) - 1]));
-			strcpy(newHKey->name, newHKey->pathSeperated[strlen(newHKey->path) - 1]);
+			newHKey->name = (char*)malloc(strlen(newHKey->pathSeperated[cntElements - 1]));
+			strcpy(newHKey->name, newHKey->pathSeperated[cntElements - 1]);
 		}
 		else {
 			newHKey->name = (char*)"UNKNOWN";
