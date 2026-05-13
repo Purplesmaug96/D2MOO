@@ -94,7 +94,7 @@ void __windows_shim_writeJson(HKEY key) {
     json_object_put(root);
 }
 
-int __windows_shim_readJson(HKEY key) {
+bool __windows_shim_readJson(HKEY key) {
     if (!key || !key->pathSeperated || !key->pathSeperated[0]) return 0;
 
     char filepath[256];
@@ -121,11 +121,11 @@ int __windows_shim_readJson(HKEY key) {
                 key->type = json_object_get_int(j_type);
                 key->value = (uint32_t)json_object_get_int64(j_value);
                 json_object_put(root);
-                return 1;
+                return true;
             }
         }
     }
 
     json_object_put(root);
-    return 0;
+    return false;
 }

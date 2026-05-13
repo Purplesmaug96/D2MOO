@@ -4,6 +4,7 @@
 
 #include <windef.h>
 #include <winnt.h>
+#include <winerror.h>
 
 #ifdef __windows_shim_has_jsonc
 
@@ -307,8 +308,9 @@ void __windows_shim_writeJson(HKEY hKey) {
 	printf("Stubbed function __windows_shim_writeJson called\n");
 }
 
-int __windows_shim_readJson(HKEY hKey) {
+bool __windows_shim_readJson(HKEY hKey) {
 	printf("Stubbed function __windows_shim_writeJson called\n");
+	return false;
 }
 
 
@@ -323,6 +325,10 @@ int __windows_shim_readJson(HKEY hKey) {
 typedef int32_t LSTATUS;
 
 static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
+	if ((uintptr_t)hKey > 6 && !__windows_shim_readJson(hKey)) {
+		return ERROR_FILE_NOT_FOUND;
+	}
+
 	if (lpSubKey == NULL || strlen(lpSubKey) == 0) {
 		if ((uintptr_t)hKey > 6) {
 			*phkResult = hKey;
@@ -353,6 +359,11 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 		newHKey->type = -1;
 		newHKey->value = 0;
 		newHKey->parent = hKey;
+
+		if (!__windows_shim_readJson(newHKey)) {
+			return ERROR_FILE_NOT_FOUND;
+		}
+
 		*phkResult = newHKey;
 	}
 

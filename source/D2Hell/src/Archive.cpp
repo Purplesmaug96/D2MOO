@@ -35,6 +35,8 @@
 #include <winbase.h>
 #include <libloaderapi.h>
 #include <winerror.h>
+#define __WINDOWS_SHIM_LASTERROR_LOCAL
+#include <errhandlingapi.h>
 
 #include <Fog.h>
 #include <Storm.h>
