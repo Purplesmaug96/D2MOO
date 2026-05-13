@@ -240,18 +240,19 @@ static inline int __windows_shim_HKeyPathLength(char** pathSeperated) {
 static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNewSubKey, bool freeNewSubKey, int* pCntElements) {
 	char** subKeyPathSeperated = NULL;
 	int lpSubKeyLen = strlen(lpSubKey);
-	char* lptmpSubKey = (char*)malloc(sizeof(char) * strlen(lpSubKey));
+	char* lptmpSubKey = (char*)malloc(sizeof(char) * strlen(lpSubKey) + 1);
+	lptmpSubKey[strlen(lpSubKey)] = "\0"[0];
 
 	int cntElements = 1;
 
 	for (int i = 0; i < lpSubKeyLen; i++) {
 		printf("%c\n", lpSubKey[i]);
-		if (lpSubKey[i] == "/"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
-			lptmpSubKey[i] = "/"[0];
+		if (lpSubKey[i] == '/') { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
+			lptmpSubKey[i] = '/';
 			cntElements++;
 		}
-		else if (lpSubKey[i] == "\\"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
-			lptmpSubKey[i] = "/"[0];
+		else if (lpSubKey[i] == '\\') { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
+			lptmpSubKey[i] = '/';
 			cntElements++;
 		}
 		else {
@@ -259,7 +260,7 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 		}
 	}
 
-	printf("path2 %s\n", lptmpSubKey);
+	// printf("path2 %s\n", lptmpSubKey);
 
 	*pCntElements = cntElements;
 
@@ -271,9 +272,10 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 	int l = 0;
 	for (int i = 0; i < lpSubKeyLen + 1; i++) {
 		// printf("lptmpSubKey[i]: %c: ", lptmpSubKey[i]);
-		if ((lptmpSubKey[i] == "/"[0]) || (i == lpSubKeyLen)) {
-			pathSeperatedNew[k] = (char*)malloc(j);
+		if ((lptmpSubKey[i] == '/') || (i == lpSubKeyLen)) {
+			pathSeperatedNew[k] = (char*)malloc(j + 1);
 			strncpy(pathSeperatedNew[k], lptmpSubKey + l, j);
+			pathSeperatedNew[k][j] = '\0';
 			j = 0;
 			l = i + 1;
 			k++;
@@ -334,14 +336,15 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 		tmpHKey = __windows_shim_GetHKey(hKey);
 
 		HKEY newHKey = (HKEY)malloc(sizeof(__windows_shim_struct_HKEY));
-		newHKey->path = (char*)malloc(sizeof(char) * (strlen(tmpHKey->path) + strlen(lpSubKey)));
+		newHKey->path = (char*)malloc(sizeof(char) * (strlen(tmpHKey->path) + strlen(lpSubKey)) + 2);
 		strcpy(newHKey->path, tmpHKey->path);
 		strcat(newHKey->path, "/");
 		strcat(newHKey->path, lpSubKey);
 		int cntElements;
 		newHKey->pathSeperated = __windows_shim_HKeyPathSeperate(newHKey->path, &newHKey->path, true, &cntElements);
 		if (newHKey->pathSeperated[cntElements - 1] != NULL) {
-			newHKey->name = (char*)malloc(strlen(newHKey->pathSeperated[cntElements - 1]));
+			newHKey->name = (char*)malloc(strlen(newHKey->pathSeperated[cntElements - 1]) + 1);
+			newHKey->name[strlen(newHKey->pathSeperated[cntElements - 1])] = '\0';
 			strcpy(newHKey->name, newHKey->pathSeperated[cntElements - 1]);
 		}
 		else {
