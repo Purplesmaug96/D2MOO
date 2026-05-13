@@ -5,6 +5,12 @@
 #include <windef.h>
 #include <winnt.h>
 
+#ifdef __windows_shim_has_jsonc
+
+#include <json.h>
+
+#endif
+
 #define HKEY_CLASSES_ROOT                   ((HKEY)0)
 #define HKEY_CURRENT_USER                   ((HKEY)1)
 #define HKEY_LOCAL_MACHINE                  ((HKEY)2)
@@ -231,13 +237,13 @@ static inline int __windows_shim_HKeyPathLength(char** pathSeperated) {
 	return i;
 }
 
-static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNewSubKey) {
+static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNewSubKey, bool freeNewSubKey) {
 	char** subKeyPathSeperated = NULL;
 	int lpSubKeyLen = strlen(lpSubKey);
 	char* lptmpSubKey = (char*)malloc(sizeof(char) * strlen(lpSubKey));
 
 	for (int i = 0; i < lpSubKeyLen; i++) {
-		if (((int)lpSubKey[i] - ((intptr_t)"\\")) == 0) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
+		if (lpSubKey[i] == "\\"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
 			lptmpSubKey[i] = "/"[0];
 		}
 		else {
@@ -250,19 +256,29 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 
 	int j = 0;
 	int k = 0;
-	for (int i = 0; i < lpSubKeyLen; i++) {
-		if (((int)lptmpSubKey[i] - ((intptr_t)"/")) == 0) { // If lpSubKey == "/", then lptmpSubKey[i] = "/"
+	int l = 0;
+	for (int i = 0; i < lpSubKeyLen + 1; i++) {
+		printf("lptmpSubKey[i]: %c: ", lptmpSubKey[i]);
+		if ((lptmpSubKey[i] == "/"[0]) || (i == lpSubKeyLen)) {
 			pathSeperatedNew[k] = (char*)malloc(j);
-			strncpy(pathSeperatedNew[k], lptmpSubKey + i, j);
+			strncpy(pathSeperatedNew[k], lptmpSubKey + l, j);
 			j = 0;
+			l = i + 1;
 			k++;
+			printf("A\n");
 		}
 		else {
 			j++;
+			printf("B\n");
 		}
 	}
+	pathSeperatedNew[k] = NULL;
 
-	*lpNewSubKey = lpSubKey;
+	if (freeNewSubKey) {
+		free(*lpNewSubKey);
+	}
+
+	*lpNewSubKey = lptmpSubKey;
 
 	return pathSeperatedNew;
 }
@@ -274,7 +290,7 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 typedef int32_t LSTATUS;
 
 static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
-	if (strlen(lpSubKey) == 0) {
+	if (lpSubKey == NULL || strlen(lpSubKey) == 0) {
 		if ((uintptr_t)hKey > 6) {
 			*phkResult = hKey;
 		}
@@ -289,8 +305,9 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 		HKEY newHKey = (HKEY)malloc(sizeof(__windows_shim_struct_HKEY));
 		newHKey->path = (char*)malloc(sizeof(char) * (strlen(tmpHKey->path) + strlen(lpSubKey)));
 		strcpy(newHKey->path, tmpHKey->path);
+		strcat(newHKey->path, "/");
 		strcat(newHKey->path, lpSubKey);
-		newHKey->pathSeperated = __windows_shim_HKeyPathSeperate(newHKey->path, &newHKey->path);
+		newHKey->pathSeperated = __windows_shim_HKeyPathSeperate(newHKey->path, &newHKey->path, true);
 		if (newHKey->pathSeperated[strlen(newHKey->path) - 1] != NULL) {
 			newHKey->name = (char*)malloc(strlen(newHKey->pathSeperated[strlen(newHKey->path) - 1]));
 			strcpy(newHKey->name, newHKey->pathSeperated[strlen(newHKey->path) - 1]);
@@ -303,6 +320,14 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 		newHKey->parent = hKey;
 		*phkResult = newHKey;
 	}
+
+	printf("path %s\n", (*phkResult)->path);
+
+	printf("pathSeperated [");
+	for (int i=0; (*phkResult)->pathSeperated[i] != NULL; i++) {
+		printf("%s, ", (*phkResult)->pathSeperated[i]);
+	}
+	printf("NULL]\n");
 
 	return 0;
 }

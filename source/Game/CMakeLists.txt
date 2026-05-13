@@ -25,6 +25,7 @@ target_link_libraries(Game
 if (NOT WIN32)
 find_package(json-c CONFIG)
 target_link_libraries(Game PRIVATE json-c::json-c)
+target_compile_definitions(Game PRIVATE __windows_shim_has_jsonc)
 endif()
 
 set_target_properties(Game PROPERTIES OUTPUT_NAME Game.D2MOO)
