@@ -8,7 +8,11 @@ enum {
 	INVALID_SET_FILE_POINTER
 };
 
-uint32_t __winerror_LastError = ERROR_NONE;
+#ifdef __WINDOWS_SHIM_LASTERROR_LOCAL
+#include <__windows_shim_local_lasterror.h>
+#else
+extern uint32_t __winerror_LastError = ERROR_NONE;
+#endif
 
 static inline void SetLastError(uint32_t errorCode) {
 	__winerror_LastError = errorCode;
