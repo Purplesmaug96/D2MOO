@@ -237,22 +237,30 @@ static inline int __windows_shim_HKeyPathLength(char** pathSeperated) {
 	return i;
 }
 
-static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNewSubKey, bool freeNewSubKey) {
+static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNewSubKey, bool freeNewSubKey, int* pCntElements) {
 	char** subKeyPathSeperated = NULL;
 	int lpSubKeyLen = strlen(lpSubKey);
 	char* lptmpSubKey = (char*)malloc(sizeof(char) * strlen(lpSubKey));
 
+	int cntElements = 1;
+
 	for (int i = 0; i < lpSubKeyLen; i++) {
-		if (lpSubKey[i] == "\\"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
+		if (lpSubKey[i] == "/"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
+			cntElements++;
+		}
+		else if (lpSubKey[i] == "\\"[0]) { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
 			lptmpSubKey[i] = "/"[0];
+			cntElements++;
 		}
 		else {
 			lptmpSubKey[i] = lpSubKey[i];
 		}
 	}
 
-	char** pathSeperatedNew = (char**)malloc(sizeof(char*) * strlen(lptmpSubKey) + 1);
-	pathSeperatedNew[strlen(lptmpSubKey)] = NULL;
+	*pCntElements = cntElements;
+
+	char** pathSeperatedNew = (char**)malloc(sizeof(char*) * cntElements + 1);
+	pathSeperatedNew[cntElements] = NULL;
 
 	int j = 0;
 	int k = 0;
@@ -307,8 +315,9 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 		strcpy(newHKey->path, tmpHKey->path);
 		strcat(newHKey->path, "/");
 		strcat(newHKey->path, lpSubKey);
-		newHKey->pathSeperated = __windows_shim_HKeyPathSeperate(newHKey->path, &newHKey->path, true);
-		if (newHKey->pathSeperated[strlen(newHKey->path) - 1] != NULL) {
+		int cntElements;
+		newHKey->pathSeperated = __windows_shim_HKeyPathSeperate(newHKey->path, &newHKey->path, true, &cntElements);
+		if (newHKey->pathSeperated[cntElements - 1] != NULL) {
 			newHKey->name = (char*)malloc(strlen(newHKey->pathSeperated[strlen(newHKey->path) - 1]));
 			strcpy(newHKey->name, newHKey->pathSeperated[strlen(newHKey->path) - 1]);
 		}
