@@ -375,7 +375,7 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 	}
 	printf("NULL]\n");
 
-	__windows_shim_writeJson(*phkResult);
+	// __windows_shim_writeJson(*phkResult);
 
 	return 0;
 }
