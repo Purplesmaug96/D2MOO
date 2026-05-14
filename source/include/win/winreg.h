@@ -247,7 +247,7 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 	int cntElements = 1;
 
 	for (int i = 0; i < lpSubKeyLen; i++) {
-		printf("%c\n", lpSubKey[i]);
+		// printf("%c\n", lpSubKey[i]);
 		if (lpSubKey[i] == '/') { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
 			lptmpSubKey[i] = '/';
 			cntElements++;
@@ -369,11 +369,11 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 
 	// printf("path %s\n", (*phkResult)->path);
 
-	printf("pathSeperated [");
-	for (int i=0; (*phkResult)->pathSeperated[i] != NULL; i++) {
-		printf("%s, ", (*phkResult)->pathSeperated[i]);
-	}
-	printf("NULL]\n");
+	// printf("pathSeperated [");
+	// for (int i=0; (*phkResult)->pathSeperated[i] != NULL; i++) {
+	// 	printf("%s, ", (*phkResult)->pathSeperated[i]);
+	// }
+	// printf("NULL]\n");
 
 	// __windows_shim_writeJson(*phkResult);
 
