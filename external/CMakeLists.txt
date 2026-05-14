@@ -65,20 +65,15 @@ if(WIN32)
 	add_library(imgui::imgui ALIAS imgui)
 endif()
 
-# Note: we only use squall for a few headers
-# We may want to use the whole library at some point though.
-add_library(squallstorm
-	squall/storm/thread/CCritSect.cpp
-)
-target_include_directories(squallstorm SYSTEM PUBLIC squall)
-if(WIN32)
-	target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_WIN)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_LINUX)
-else()
-	target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_MAC)
-endif()
+add_subdirectory(squall)
+
+add_library(squallstorm INTERFACE)
+target_link_libraries(squallstorm INTERFACE storm)
+target_include_directories(squallstorm SYSTEM INTERFACE squall)
 add_library(squall::Storm ALIAS squallstorm)
+add_library(Storm ALIAS squallstorm)
+
+
 
 #STB for image writing
 add_library(stb INTERFACE)

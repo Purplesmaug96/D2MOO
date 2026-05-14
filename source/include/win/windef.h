@@ -12,6 +12,14 @@ typedef struct {
 
 typedef int BOOL;
 
+#ifdef TRUE
+#undef TRUE
+#endif
+
+#ifdef FALSE
+#undef FALSE
+#endif
+
 #define TRUE ((BOOL)(uint32_t)true)
 #define FALSE ((BOOL)(uint32_t)false)
 

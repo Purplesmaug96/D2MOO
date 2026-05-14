@@ -24,6 +24,8 @@
 #define __declspec(x)
 #define __forceinline __attribute__((always_inline)) inline
 
+#define __windows_shim
+
 typedef int64_t __int64;
 typedef int32_t __int32;
 typedef int16_t __int16;

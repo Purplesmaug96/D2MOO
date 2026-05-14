@@ -60,14 +60,6 @@ endif()
 # It is always easier to navigate in an IDE when projects are organized in folders.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# 3rd party dependencies
-add_subdirectory(external)
-
-include_directories(source/include)
-if (NOT WIN32)
-	include_directories(source/include/win)
-endif()
-
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -78,6 +70,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fpermissive")
 if (NOT WIN32)
 add_compile_options(-include ${CMAKE_CURRENT_SOURCE_DIR}/source/include/win/__windows_shim_msvcrt.h)
 endif()
+
+include_directories(source/include)
+if (NOT WIN32)
+	include_directories(source/include/win)
+endif()
+
+# 3rd party dependencies
+add_subdirectory(external)
 
 add_subdirectory(source)
 

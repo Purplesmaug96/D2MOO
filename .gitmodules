@@ -9,7 +9,7 @@
 	url = https://github.com/ocornut/imgui.git
 [submodule "external/squall"]
 	path = external/squall
-	url = https://github.com/Lectem/squall.git
+	url = https://github.com/Purplesmaug96/squall.git
 [submodule "external/sdl2"]
 	path = external/sdl2
 	url = https://github.com/libsdl-org/SDL.git
