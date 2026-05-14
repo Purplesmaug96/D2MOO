@@ -1,5 +1,7 @@
 #pragma once
 
+#include <__windows_shim_msvcrt.h>
+
 #include <stdint.h>
 #include <stdio.h>
 #include <netinet/in.h>

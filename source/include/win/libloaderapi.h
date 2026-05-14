@@ -1,5 +1,7 @@
 #pragma once
 
+#include <__windows_shim_msvcrt.h>
+
 #include <string.h>
 #include <sys/time.h>
 #include <malloc.h>

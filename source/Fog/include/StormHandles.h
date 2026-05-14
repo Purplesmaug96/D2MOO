@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <windef.h>
+
 #include "Storm.h"
 
 // Note: This actually belongs to Storm.h or each type's respective header.

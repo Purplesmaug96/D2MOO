@@ -1,6 +1,9 @@
 #pragma once
 
-#include <cstdint>
+#include <__windows_shim_msvcrt.h>
+
+#include <stdint.h>
+
 #include <windef.h>
 #include <winnt.h>
 

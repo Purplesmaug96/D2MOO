@@ -26,6 +26,8 @@
 
 #define __windows_shim
 
+#pragma GCC diagnostic ignored "-Wunused-function"
+
 typedef int64_t __int64;
 typedef int32_t __int32;
 typedef int16_t __int16;
@@ -291,3 +293,5 @@ typedef int LCID;
 #define _Analysis_assume_(x)
 
 #define _strcmpi strcasecmp
+
+#pragma GCC diagnostic pop

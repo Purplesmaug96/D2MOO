@@ -1,5 +1,7 @@
 #pragma once
 
+#include <__windows_shim_msvcrt.h>
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -31,12 +33,18 @@ typedef uint32_t DWORD;
 typedef uint16_t WORD;
 typedef uint8_t BYTE;
 
-typedef int32_t LONG;
-typedef uint32_t ULONG;
+typedef long LONG;
+typedef unsigned long ULONG;
+typedef long long LONGLONG;
+typedef unsigned long long ULONGLONG;
+typedef short SHORT;
+typedef unsigned short USHORT;
+
 typedef int INT;
 typedef unsigned int UINT;
 typedef size_t SIZE_T;
 typedef char CHAR;
+typedef char TCHAR;
 typedef void VOID;
 
 typedef void* LPVOID;
@@ -64,5 +72,7 @@ typedef struct {
 	int32_t x;
 	int32_t y;
 } POINT;
+
+typedef int32_t ATOMIC32;
 
 #define WINAPI

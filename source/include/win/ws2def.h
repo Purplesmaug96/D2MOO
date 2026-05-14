@@ -1,5 +1,7 @@
 #pragma once
 
+#include <__windows_shim_msvcrt.h>
+
 // Turned out not to be necessary
 
 // struct in_addr {

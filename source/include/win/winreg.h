@@ -1,5 +1,7 @@
 #pragma once
 
+#include <__windows_shim_msvcrt.h>
+
 #include <string.h>
 
 #include <windef.h>
@@ -304,11 +306,11 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 
 #else
 
-void __windows_shim_writeJson(HKEY hKey) {
+static inline void __windows_shim_writeJson(HKEY hKey) {
 	printf("Stubbed function __windows_shim_writeJson called\n");
 }
 
-bool __windows_shim_readJson(HKEY hKey) {
+static inline bool __windows_shim_readJson(HKEY hKey) {
 	printf("Stubbed function __windows_shim_writeJson called\n");
 	return false;
 }

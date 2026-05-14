@@ -12,7 +12,7 @@
 // Vibecoded
 
 // Helper: Ensure the "registry" directory exists
-void __windows_shim_ensure_directory() {
+static inline void __windows_shim_ensure_directory() {
     struct stat st = {0};
     if (stat("registry", &st) == -1) {
         #ifdef _WIN32
@@ -24,7 +24,7 @@ void __windows_shim_ensure_directory() {
 }
 
 // Helper: Construct the file path based on the hive
-void __windows_shim_get_hive_filepath(char* buffer, size_t size, const char* hive) {
+static inline void __windows_shim_get_hive_filepath(char* buffer, size_t size, const char* hive) {
     snprintf(buffer, size, "registry/%s.json", hive);
 }
 
@@ -48,7 +48,7 @@ struct json_object* __windows_shim_get_nested_folder(struct json_object *root, c
     return current;
 }
 
-void __windows_shim_writeJson(HKEY key) {
+static inline void __windows_shim_writeJson(HKEY key) {
     if (!key || !key->pathSeperated || !key->pathSeperated[0]) return;
 
     __windows_shim_ensure_directory();
@@ -94,7 +94,7 @@ void __windows_shim_writeJson(HKEY key) {
     json_object_put(root);
 }
 
-bool __windows_shim_readJson(HKEY key) {
+static inline bool __windows_shim_readJson(HKEY key) {
     if (!key || !key->pathSeperated || !key->pathSeperated[0]) return 0;
 
     char filepath[256];

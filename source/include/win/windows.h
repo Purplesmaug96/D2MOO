@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef __windows_shim_dissalow_windows_h
+#error Including 'windows.h' is disallowed.
+#endif
+
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -9,10 +13,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <errno.h>
-
-#ifdef __windows_shim_dissalow_windows_h
-#error Including 'windows.h' is disallowed.
-#endif
 
 #include <__windows_shim_msvcrt.h>
 

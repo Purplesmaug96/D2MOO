@@ -60,6 +60,9 @@ endif()
 # It is always easier to navigate in an IDE when projects are organized in folders.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# 3rd party dependencies
+add_subdirectory(external)
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -75,9 +78,6 @@ include_directories(source/include)
 if (NOT WIN32)
 	include_directories(source/include/win)
 endif()
-
-# 3rd party dependencies
-add_subdirectory(external)
 
 add_subdirectory(source)
 
