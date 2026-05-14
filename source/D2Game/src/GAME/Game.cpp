@@ -52,8 +52,8 @@
 
 #ifdef _WIN32 // Fails on linux
 static_assert(offsetof(D2GameStrc, lpCriticalSection) == 0x18, "Make sure TSHashObject<D2GameStrc,HASHKEY_NONE> has the correct size.");
-#endif
 static_assert(sizeof(D2GameDataTableStrc) == 0x68, "Make sure D2GameDataTableStrc has the correct size.");
+#endif
 
 D2GameStrc* gpGame_6FD457FC;
 int32_t gnAct_6FD45824;
