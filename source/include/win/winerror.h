@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#include <errno.h>
+
 #define ERROR_SUCCESS                  0
 #define ERROR_FILE_NOT_FOUND           ENOENT
 #define ERROR_ACCESS_DENIED            EPERM
