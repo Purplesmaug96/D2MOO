@@ -3195,8 +3195,12 @@ D2GameStrc* __fastcall D2GameDataTable_Lock(D2GameDataTableStrc* pGameDataTable,
 void __fastcall D2GameDataTable_SyncEnterLock(D2GameDataTableStrc* pGameDataTable, int32_t nUnused, int32_t* pLockHandle, int32_t bForWriting)
 {
     D2_MAYBE_UNUSED(nUnused);
-    pGameDataTable->tHashTable.GetSync().Enter(bForWriting);
-    *pLockHandle = 2 * (bForWriting != 0) - 1;
+
+    // Call the template method directly
+    pGameDataTable->tHashTable.SyncEnterLock(
+        reinterpret_cast<GAMEDATALOCKEDHANDLE__**>(pLockHandle),
+        bForWriting
+    );
 }
 
 //D2Game.0x6FC3B540
@@ -3207,7 +3211,10 @@ void __fastcall D2GameDataTable_SyncLeaveLock(D2GameDataTableStrc* pGameDataTabl
     D2_MAYBE_UNUSED(nUnused);
     if (tLockHandle != 0)
     {
-        pGameDataTable->tHashTable.GetSync().Leave(tLockHandle == 1);
+        // Call the template method directly
+        pGameDataTable->tHashTable.SyncLeaveLock(
+            reinterpret_cast<GAMEDATALOCKEDHANDLE__*>(static_cast<intptr_t>(tLockHandle))
+        );
     }
 }
 
