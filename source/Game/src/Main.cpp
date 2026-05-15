@@ -12,6 +12,8 @@
 
 #include <winreg.h>
 
+#include <SDL2/SDL_messagebox.h>
+
 #include "Main.h"
 
 #include <Fog.h>
@@ -780,7 +782,13 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 		argv[0] = INIT_NAME;
 		argv[1] = lpCmdLine;
 
-		printf("GameInit: %d\n", GameInit(ARRAY_SIZE(argv), argv));
+		int nGameInit = GameInit(ARRAY_SIZE(argv), argv);
+		if (nGameInit == 0) {
+			char cBuf[256];
+			snprintf(cBuf, 256, "GameInit failed.\nError code: %d\n", nGameInit);
+			printf("%s\n", &cBuf);
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Diablo II failed to run", cBuf, NULL);
+		}
 	}
 	else
 	{
