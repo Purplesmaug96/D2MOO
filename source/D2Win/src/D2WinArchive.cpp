@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+#include <SDL2/SDL.h>
+
 #include <D2CMP.h>
 #include <Archive.h>
 #include <Fog.h>
@@ -10,6 +12,11 @@
 #include <D2Gfx.h>
 #include <Window.h>
 
+#ifdef _WIN32
+#define D2WIN_DLL_NAME "D2Win.dll"
+#else
+#define D2WIN_DLL_NAME "libD2Win.so"
+#endif
 
 D2ArchiveHandleStrc* gpD2MusicMPQ;
 D2ArchiveHandleStrc* gpD2SpeechMPQ;
@@ -66,31 +73,36 @@ void __fastcall ARCHIVE_FreeCellFile(D2CellFileStrc* pCellFile)
 //D2Win.0x6F8A5B00 (#10205)
 BOOL __stdcall ARCHIVE_ShowInsertExpansionDiscMessage()
 {
-	return MessageBoxA(WINDOW_GetWindow(), "Insert Expansion Disc", "Diablo II", MB_ICONWARNING | MB_OKCANCEL) == 1;
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Diablo II", "Insert Expansion Disc", NULL);
+	return TRUE;
+	// return MessageBoxA(WINDOW_GetWindow(), "Insert Expansion Disc", "Diablo II", MB_ICONWARNING | MB_OKCANCEL) == 1;
 }
 
 //D2Win.0x6F8A5B20 (#10174)
 BOOL __stdcall ARCHIVE_ShowInsertPlayDiscMessage()
 {
-	return MessageBoxA(WINDOW_GetWindow(), "Insert Play Disc", "Diablo II", MB_ICONWARNING | MB_OKCANCEL) == 1;
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Diablo II", "Insert Play Disc", NULL);
+	return TRUE;
+	// return MessageBoxA(WINDOW_GetWindow(), "Insert Play Disc", "Diablo II", MB_ICONWARNING | MB_OKCANCEL) == 1;
 }
 
 //D2Win.0x6F8A5B40 (#10183)
 BOOL __stdcall ARCHIVE_ShowInsertCinematicsDisc()
 {
-	return MessageBoxA(WINDOW_GetWindow(), "Insert Cinematics Disc", "Diablo II", MB_ICONWARNING | MB_OKCANCEL) == 1;
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Diablo II", "Insert Cinematics Disc", NULL);
+	// return MessageBoxA(WINDOW_GetWindow(), "Insert Cinematics Disc", "Diablo II", MB_ICONWARNING | MB_OKCANCEL) == 1;
 }
 
 //D2Win.0x6F8A5B60 (#10037)
 int32_t __fastcall ARCHIVE_LoadArchives()
 {
-	gpD2DataMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2data.mpq", "D2DATA", 0, 0, nullptr, 1000);
-	gpD2SfxMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2sfx.mpq", "D2SFX", 0, 0, nullptr, 1000);
-	gpD2SpeechMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2speech.mpq", "D2SPEECH", 0, 0, nullptr, 1000);
-	gpD2DeltaMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2delta.mpq", "D2DELTA", 0, 0, nullptr, 1000);
-	gpD2kfixupMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2kfixup.mpq", "D2KOREANFIXUP", 0, 0, nullptr, 1000);
-	gpD2PatchMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "patch_d2.mpq", "PATCH_D2", 0, 0, nullptr, 5000);
-	gpD2ExpMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2exp.mpq", "D2EXPANSION", 0, 0, nullptr, 3000);
+	gpD2DataMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2data.mpq", "D2DATA", 0, 0, nullptr, 1000);
+	gpD2SfxMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2sfx.mpq", "D2SFX", 0, 0, nullptr, 1000);
+	gpD2SpeechMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2speech.mpq", "D2SPEECH", 0, 0, nullptr, 1000);
+	gpD2DeltaMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2delta.mpq", "D2DELTA", 0, 0, nullptr, 1000);
+	gpD2kfixupMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2kfixup.mpq", "D2KOREANFIXUP", 0, 0, nullptr, 1000);
+	gpD2PatchMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "patch_d2.mpq", "PATCH_D2", 0, 0, nullptr, 5000);
+	gpD2ExpMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2exp.mpq", "D2EXPANSION", 0, 0, nullptr, 3000);
 
 	return FOG_UseDirect() || gpD2DataMPQ && gpD2SfxMPQ && gpD2SpeechMPQ && (!FOG_IsExpansion() || gpD2ExpMPQ);
 }
@@ -191,11 +203,11 @@ BOOL __fastcall ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowMessageFunctionPtr pfS
 
 	if (FOG_IsExpansion() && (!pConfig || pConfig->pAllowExpansionCallback()))
 	{
-		gpD2CharMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2char.mpq", "D2CHAR", 0, nullptr, pfShowInsertPlayDisc, 1000);
-		gpD2MusicMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2music.mpq", "D2MUSIC", 0, nullptr, pfShowInsertPlayDisc, 1000);
-		gpD2XMusicMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2Xmusic.mpq", "D2EXPANSION", 0, hFile, pfShowInsertExpansionDisc, 3000);
-		gpD2XTalkMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2Xtalk.mpq", "D2EXPANSION", 0, hFile, pfShowInsertExpansionDisc, 3000);
-		gpD2XVideoMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2Xvideo.mpq", "D2EXPANSION", 0, hFile, pfShowInsertExpansionDisc, 3000);
+		gpD2CharMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2char.mpq", "D2CHAR", 0, nullptr, pfShowInsertPlayDisc, 1000);
+		gpD2MusicMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2music.mpq", "D2MUSIC", 0, nullptr, pfShowInsertPlayDisc, 1000);
+		gpD2XMusicMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2Xmusic.mpq", "D2EXPANSION", 0, hFile, pfShowInsertExpansionDisc, 3000);
+		gpD2XTalkMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2Xtalk.mpq", "D2EXPANSION", 0, hFile, pfShowInsertExpansionDisc, 3000);
+		gpD2XVideoMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2Xvideo.mpq", "D2EXPANSION", 0, hFile, pfShowInsertExpansionDisc, 3000);
 
 		if (gpD2CharMPQ && gpD2MusicMPQ && gpD2XMusicMPQ && gpD2XTalkMPQ && gpD2XVideoMPQ)
 		{
@@ -204,8 +216,8 @@ BOOL __fastcall ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowMessageFunctionPtr pfS
 	}
 	else
 	{
-		gpD2CharMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2char.mpq", "D2CHAR", 0, hFile, pfShowInsertPlayDisc, 1000);
-		gpD2MusicMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2music.mpq", "D2MUSIC", 0, hFile, pfShowInsertPlayDisc, 1000);
+		gpD2CharMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2char.mpq", "D2CHAR", 0, hFile, pfShowInsertPlayDisc, 1000);
+		gpD2MusicMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2music.mpq", "D2MUSIC", 0, hFile, pfShowInsertPlayDisc, 1000);
 		gpD2XMusicMPQ = nullptr;
 		gpD2XTalkMPQ = nullptr;
 
@@ -230,7 +242,7 @@ BOOL __fastcall ARCHIVE_LoadVideoArchives(ARCHIVE_ShowMessageFunctionPtr pfShowM
 
 	if (!bExpansion)
 	{
-		gpD2VideoMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2video.mpq", "D2VIDEO", 0, hFile, pfShowMessage, 1000);
+		gpD2VideoMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2video.mpq", "D2VIDEO", 0, hFile, pfShowMessage, 1000);
 		if (!gpD2VideoMPQ)
 		{
 			return 0;
@@ -238,7 +250,7 @@ BOOL __fastcall ARCHIVE_LoadVideoArchives(ARCHIVE_ShowMessageFunctionPtr pfShowM
 	}
 	else
 	{
-		gpD2XVideoMPQ = ARCHIVE_LoadMPQFile("D2Win.dll", "d2Xvideo.mpq", "D2EXPANSION", 0, hFile, pfShowMessage, 1000);
+		gpD2XVideoMPQ = ARCHIVE_LoadMPQFile(D2WIN_DLL_NAME, "d2Xvideo.mpq", "D2EXPANSION", 0, hFile, pfShowMessage, 1000);
 		if (!gpD2XVideoMPQ)
 		{
 			return 0;

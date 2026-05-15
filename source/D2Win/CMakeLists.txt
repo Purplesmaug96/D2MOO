@@ -1,14 +1,15 @@
 D2MOO_prepare_targets(D2Win)
 
 target_link_libraries(${D2WinImplName}
-  PRIVATE 
-    Fog 
+  PRIVATE
+    Fog
     D2CMP
     D2Gfx
     D2Lang
     Storm
     D2Sound
     stb::stb
+	SDL2::SDL2
   PUBLIC
     D2Hell
 )
