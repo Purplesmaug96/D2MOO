@@ -6,11 +6,37 @@
 #include <sys/time.h>
 #include <malloc.h>
 #include <dlfcn.h>
+#include <unistd.h>
 
 #include <windef.h>
 #include <winnt.h>
 
+// Source - https://stackoverflow.com/a/4031835
+// Posted by Fred Foo, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-05-15, License - CC BY-SA 2.5
+
+static inline char *__windows_shim_program_path() {
+    char *path = malloc(MAX_PATH);
+    if (path != NULL) {
+        if (readlink("/proc/self/exe", path, MAX_PATH) == -1) {
+            free(path);
+            path = NULL;
+        }
+    }
+    return path;
+}
+
+
 static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD nSize) {
+	if (hModule == NULL) {
+		char* fileName = __windows_shim_program_path();
+		if (fileName == NULL) {
+			return FALSE;
+		}
+		strncpy(lpFilename, fileName, nSize);
+		free(fileName);
+		return TRUE;
+	}
 	strncpy(lpFilename, hModule->name, nSize);
 	return TRUE;
 }

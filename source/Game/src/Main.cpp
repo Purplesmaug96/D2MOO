@@ -103,9 +103,10 @@ D2CmdArgStrc gaCmdArguments[] = {
 };
 #undef cmdidx
 
-/*
- *	Module names loaded by main game
- */
+//
+//	Module names loaded by main game
+//
+#ifdef _WIN32
 const char *lpszD2Module[] = {
 	"none.dll",
 	"D2Client.dll",
@@ -117,6 +118,21 @@ const char *lpszD2Module[] = {
 #endif
 	"D2EClient.dll"
 };
+#else
+const char *lpszD2Module[] = {
+	"libnone.so",
+	"libD2Client.so",
+	"libD2Server.so",
+	"libD2Multi.so",
+	"libD2Launch.so",
+#if D2_HAS_MULTILAN
+	"libD2MultiLAN.so",
+#endif
+	"libD2EClient.so"
+};
+#endif
+
+
 static_assert(D2_MODULES_COUNT == ARRAY_SIZE(lpszD2Module), "Size of module types need to match enum.");
 
 /*

@@ -63,7 +63,13 @@ typedef LPCSTR LPCTSTR;
 typedef DWORD* LPDWORD;
 typedef uint8_t* LPBYTE;
 
+#ifdef __linux__
+#include <linux/limits.h>
+#define MAX_PATH PATH_MAX
+#else
 #define MAX_PATH 256 // Might need to be increased later
+#endif
+
 #define _MAX_DIR MAX_PATH // Don't know if correct
 
 typedef int (*FARPROC)();
