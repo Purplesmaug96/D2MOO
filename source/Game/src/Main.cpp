@@ -12,7 +12,7 @@
 
 #include <winreg.h>
 
-#include <SDL2/SDL_messagebox.h>
+#include <SDL2/SDL.h>
 
 #include "Main.h"
 
@@ -393,7 +393,7 @@ D2_MODULES LoadCurrentlySelectedModule(D2ConfigStrc* pCfg)
 }
 
 //1.10f: Game.0x401570
-int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModType)
+int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModType, char** pCrashReason)
 {
 	BOOL bSoundStarted = FALSE;
 	BOOL bGfxStarted = FALSE;
@@ -410,7 +410,8 @@ int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModTy
 		if(!ARCHIVE_LoadArchives() || !ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowInsertPlayDiscMessage, ARCHIVE_ShowInsertExpansionDiscMessage, 0, pCfg))
 		{
 			ARCHIVE_FreeArchives();
-			return 0;
+			*pCrashReason = "Failed to load archives";
+			return 1;
 		}
 #if D2_VERSION_EXPANSION
 		pCfg->bIsExpansion = FOG_IsExpansion();
@@ -431,8 +432,10 @@ int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModTy
 
 	if(geModState != MODULE_SERVER)
 	{
-		if(!D2Win_CreateWindow(hInstance, dwRenderMode, pCfg->bWindow, !pCfg->bNoCompress))
-			return 0;
+		if(!D2Win_CreateWindow(hInstance, dwRenderMode, pCfg->bWindow, !pCfg->bNoCompress)) {
+			*pCrashReason = "Failed to create window";
+			return 2;
+		}
 
 		if(pCfg->bPerspective && dwRenderMode >= DISPLAYTYPE_GLIDE)
 			D2GFX_SetPerspective(TRUE);
@@ -440,7 +443,8 @@ int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModTy
 		if(!D2Win_InitializeSpriteCache(pCfg->bWindow != 0, D2GAMERES_640x480))
 		{
 			WINDOW_Destroy();
-			return 0;
+			*pCrashReason = "Failed to initialize sprite cache";
+			return 3;
 		}
 
 		if(gbUseKeyhook)
@@ -630,13 +634,15 @@ BOOL __stdcall AllowExpansion()
 }
 
 //1.10f: Game.0x401970
-int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[])
+int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[], char** pCrashReason)
 {
 	char *lpArgvTokens;
 	char **lpszModType;
 	const char *lpArgvCmd;
 	char szRegPathVid[sizeof(REG_PATH_VIDEO)];
 	D2ConfigStrc tCfg;
+
+	*pCrashReason = "Successful";
 
 	lpArgvCmd = &lpZero;
 
@@ -726,7 +732,7 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[])
 		}
 	}
 
-	return GameStart(ghCurrentProcess, &tCfg, MODULE_LAUNCHER);
+	return GameStart(ghCurrentProcess, &tCfg, MODULE_LAUNCHER, pCrashReason);
 }
 
 #ifndef _WIN32
@@ -814,11 +820,12 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 		const char* argv[2];
 		argv[0] = INIT_NAME;
 		argv[1] = lpCmdLine;
+		char* rBuf;
 
-		int nGameInit = GameInit(ARRAY_SIZE(argv), argv);
-		if (nGameInit == 0) {
+		int nGameInit = GameInit(ARRAY_SIZE(argv), argv, &rBuf);
+		if (nGameInit != 0) {
 			char cBuf[256];
-			snprintf(cBuf, 256, "GameInit failed.\nError code: %d\n", nGameInit);
+			snprintf(cBuf, 256, "GameInit failed.\nError code: %d\nReason: %s\n", nGameInit, rBuf);
 			printf("%s\n", &cBuf);
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, ERRMSG_TITLE, cBuf, NULL);
 		}
@@ -872,7 +879,8 @@ VOID WINAPI D2ServerServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 	gbD2ServerStopEvent = TRUE;
 	ghD2ServerServiceStatus = RegisterServiceCtrlHandlerA(SVC_NAME, D2ServerServiceHandlerProc);
 	SetServiceStatus(ghD2ServerServiceStatus, &gD2ServerServiceStatus);
-	GameInit(dwArgc, (const char**)lpszArgv);
+	char* rBuf;
+	GameInit(dwArgc, (const char**)lpszArgv, &rBuf);
 	gD2ServerServiceStatus.dwCurrentState = SERVICE_STOPPED;
 	SetServiceStatus(ghD2ServerServiceStatus, &gD2ServerServiceStatus);
 	gbD2ServerStopEvent = FALSE;
