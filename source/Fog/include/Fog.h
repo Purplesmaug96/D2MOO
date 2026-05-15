@@ -11,6 +11,7 @@
 #include <synchapi.h>
 
 #include "Mem/Mem.h"
+#include "AsyncData.h"
 
 //1.10f Image base: 0x6FF50000
 
@@ -197,7 +198,6 @@ D2FUNC_DLL(FOG, AsyncDataSetResults, void, __fastcall, (AsyncData* pAsyncData, v
 D2FUNC_DLL(FOG, AsyncDataFree, void, __fastcall, (AsyncData* pAsyncData), 0xC880)																	//Fog.#10097
 D2FUNC_DLL(FOG, AsyncDataSetPriority, void, __fastcall, (AsyncData* pAsyncData, int nPriority), 0xC4E0)												//Fog.#10099
 D2FUNC_DLL(FOG, AsyncDataHandlePriorityChanges, void, __fastcall, (BOOL bPostpone), 0xC5A0)															//Fog.#10100
-D2FUNC_DLL(FOG, MPQSetConfig, BOOL, __fastcall, (int dwDirectAccessFlags, int bEnableSeekOptimization), 0x11590)									//Fog.#10101
 D2FUNC_DLL(FOG, FOpenFile, BOOL, __fastcall, (const char* szFile, HSFILE* pFileHandle), 0x11600)													//Fog.#10102
 D2FUNC_DLL(FOG, FCloseFile, void, __fastcall, (HSFILE pFile), 0x11610)																				//Fog.#10103
 D2FUNC_DLL(FOG, FReadFile, BOOL, __fastcall, (HSFILE pFile, void* pBuffer, size_t nSize, int* nBytesRead, uint32_t, uint32_t, uint32_t), 0x11620)	//Fog.#10104
@@ -209,7 +209,6 @@ D2FUNC_DLL(FOG, CloseFile, BOOL, __fastcall, (HANDLE hFILE), 0x116C0);										
 D2FUNC_DLL(FOG, CreatePathHierarchy, BOOL, __fastcall, (char* szPath), 0x11730)																		//Fog.#10114
 D2FUNC_DLL(FOG, GetSavePath, size_t, __fastcall, (char* pPathBuffer, size_t nBufferSize), 0x11900)													//Fog.#10115
 D2FUNC_DLL(FOG, GetInstallPath, BOOL, __fastcall, (char* pPathBuffer, size_t nBufferSize), 0x11870)													//Fog.#10116
-D2FUNC_DLL(FOG, UseDirect, BOOL, __fastcall, (), 0x11A10)																							//Fog.#10117
 D2FUNC_DLL(FOG, ComputeStringCRC16, uint16_t, __stdcall, (const char* szString), 0x3DB0)															//Fog.#10137
 D2FUNC_DLL(FOG, CreateNewPoolSystem, void, __cdecl, (void** pMemPoolSystem, const char* szName, uint32_t nPools, uint32_t nUnused), 0xA280)			//Fog.#10142
 D2FUNC_DLL(FOG, DestroyMemoryPoolSystem, void, __cdecl, (void* pMemoryPoolSystem), 0xA100)															//Fog.#10143
