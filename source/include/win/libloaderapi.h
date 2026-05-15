@@ -16,7 +16,7 @@
 // Retrieved 2026-05-15, License - CC BY-SA 2.5
 
 static inline char *__windows_shim_program_path() {
-    char *path = malloc(MAX_PATH);
+    char *path = (char*)malloc(MAX_PATH);
     if (path != NULL) {
         if (readlink("/proc/self/exe", path, MAX_PATH) == -1) {
             free(path);

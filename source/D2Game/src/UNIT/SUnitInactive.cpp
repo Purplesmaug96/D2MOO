@@ -909,7 +909,7 @@ void __fastcall SUNITINACTIVE_CompressInactiveUnit(D2GameStrc* pGame, D2UnitStrc
 		{
 			uint8_t pBitstream[1024] = {};
 			const size_t nBitstreamSize = ITEMS_SerializeItemToBitstream(pUnit, pBitstream, ARRAY_SIZE(pBitstream), 1, 1, 0);
-#ifdef D2_VERSION_110F
+#if defined(D2_VERSION_110F) && defined(_WIN32)
 			static_assert(sizeof(D2InactiveItemNodeStrc) == 15, "Game considers this structure to be 15bytes");
 #endif
 			D2InactiveItemNodeStrc* pInactiveItemNode = (D2InactiveItemNodeStrc*)D2_ALLOC_POOL(pGame->pMemoryPool, sizeof(D2InactiveItemNodeStrc) + nBitstreamSize);

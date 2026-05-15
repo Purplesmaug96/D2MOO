@@ -3053,7 +3053,9 @@ uint32_t __fastcall SUNITDMG_ComputeExperienceGain(D2GameStrc* pGame, D2UnitStrc
 			256, 256, 256, 256, 256, 256, 207, 159, 110, 61, 13
 		};
 
-		const uint32_t nIndex = std::min(nAttackerLevel - nDefenderLevel, std::size(experienceFactors) - 1);
+		const auto a = nAttackerLevel - nDefenderLevel;
+		const auto b = std::size(experienceFactors) - 1;
+		const uint32_t nIndex = /*std::min(nAttackerLevel - nDefenderLevel, std::size(experienceFactors) - 1)*/ a < b ? a : b;
 		const int32_t nFactor = experienceFactors[nIndex];
 		if (nFactor != 256)
 		{
@@ -3067,7 +3069,9 @@ uint32_t __fastcall SUNITDMG_ComputeExperienceGain(D2GameStrc* pGame, D2UnitStrc
 			256, 256, 256, 256, 256, 256, 225, 174, 92, 38, 5
 		};
 
-		const uint32_t nIndex = std::min(nDefenderLevel - nAttackerLevel, std::size(experienceFactors) - 1);
+		const auto a = nDefenderLevel - nAttackerLevel;
+		const auto b = std::size(experienceFactors) - 1;
+		const uint32_t nIndex = /*std::min(nDefenderLevel - nAttackerLevel, std::size(experienceFactors) - 1)*/ a < b ? a : b;
 		const int32_t nFactor = experienceFactors[nIndex];
 		if (nFactor != 256)
 		{

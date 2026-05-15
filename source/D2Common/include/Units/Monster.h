@@ -49,7 +49,7 @@ struct D2MonsterDataStrc
 	uint32_t unk0x38;							//0x38
 	D2UnkMonsterDataStrc unk0x3C;				//0x3C
 	uint32_t unk0x4C;							//0x4C
-	uint32_t pVision;							//0x50
+	uintptr_t pVision;							//0x50
 	uint32_t dwAiState;						//0x54
 	uint32_t dwTxtLevelNo;						//0x58
 	uint16_t wSummonerFlag;						//0x5C

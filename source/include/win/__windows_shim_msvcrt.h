@@ -236,13 +236,13 @@ static inline int strncpy_s(char *dest, size_t dest_size, const char *src, size_
 
 #if __windows_shim_arch == __windows_shim_arch_x86 && defined(__windows_shim_BitScanReverse_x86_intrin)
 
-static unsigned char _BitScanReverse(unsigned long * Index, uint32_t Mask) {
+static unsigned char _BitScanReverse(uint32_t * Index, uint32_t Mask) {
 	if (Mask == 0) return 0;
 	*Index = _bit_scan_reverse(Mask);
 	return 1;
 }
 
-static unsigned char _BitScanReverse64(unsigned long * Index, uint64_t Mask) {
+static unsigned char _BitScanReverse64(uint32_t * Index, uint64_t Mask) {
 	if (Mask == 0) return 0;
 	*Index = _bit_scan_reverse(Mask);
 	return 1;
@@ -250,13 +250,13 @@ static unsigned char _BitScanReverse64(unsigned long * Index, uint64_t Mask) {
 
 #else
 
-static unsigned char _BitScanReverse(unsigned long * Index, uint32_t Mask) {
+static unsigned char _BitScanReverse(uint32_t * Index, uint32_t Mask) {
     if (Mask == 0) return 0;
     *Index = (uint32_t)(31 - __builtin_clz(Mask));
     return 1;
 }
 
-static unsigned char _BitScanReverse64(unsigned long * Index, uint64_t Mask) {
+static unsigned char _BitScanReverse64(uint32_t * Index, uint64_t Mask) {
     if (Mask == 0) return 0;
     *Index = (uint64_t)(63 - __builtin_clzll(Mask));
     return 1;

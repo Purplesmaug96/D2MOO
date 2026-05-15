@@ -1356,7 +1356,9 @@ void __fastcall CLIENTS_UpdatePing(int32_t nClientId, int32_t a2, int32_t arg_0)
             pClient->aPingHistory[pClient->dwPingsCount % std::size(pClient->aPingHistory)] = nPing;
 
             uint64_t nPingsSum = 0;
-            const uint32_t nPingsCount = std::min(++pClient->dwPingsCount, std::size(pClient->aPingHistory));
+			const auto a = ++pClient->dwPingsCount;
+			const auto b = std::size(pClient->aPingHistory);
+            const uint32_t nPingsCount = /*std::min(++pClient->dwPingsCount, std::size(pClient->aPingHistory))*/ a < b ? a : b;
             for (int32_t i = 0; i < nPingsCount; ++i)
             {
                 nPingsSum += pClient->aPingHistory[i];

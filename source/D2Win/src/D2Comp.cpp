@@ -1437,7 +1437,7 @@ void* __stdcall sub_6F8A2CE0(HD2ARCHIVE hArchive, const char* szName, D2BinField
 		wsprintfA(szFilename, "%s\\%s%s", "DATA\\GLOBAL\\EXCEL", "levels", ".txt");
 	}
 
-	unsigned int nFileSize = 0;
+	size_t nFileSize = 0;
 	void* pFileData = ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(hArchive, szFilename, &nFileSize);
 
 	D2_ASSERT(pFileData);

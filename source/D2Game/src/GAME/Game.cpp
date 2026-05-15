@@ -119,7 +119,7 @@ void* __fastcall sub_6FC35720()
 void GAME_LogMessage(int32_t a1, const char* szFormat, ...)
 {
     char szMessage[4096] = {};
-    va_list va = nullptr;
+    va_list va /*= nullptr*/;
 
     va_start(va, szFormat);
     vsprintf(szMessage, szFormat, va); // NOLINT(clang-diagnostic-deprecated-declarations)

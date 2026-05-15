@@ -11,7 +11,7 @@ struct D2CellFileStrc;
 //D2Win.0x6F8A59C0 (#10039)
 D2WIN_DLL_DECL D2CellFileStrc* __fastcall ARCHIVE_LoadCellFile(const char* szFile, int32_t nType);
 //D2Win.0x6F8A5A50 (#10040)
-D2WIN_DLL_DECL D2CellFileStrc* __fastcall ARCHIVE_LoadCellFileWithFileSize(const char* szFile, uint32_t* pFileSize, int32_t nType);
+D2WIN_DLL_DECL D2CellFileStrc* __fastcall ARCHIVE_LoadCellFileWithFileSize(const char* szFile, size_t* pFileSize, int32_t nType);
 //D2Win.0x6F8A5AE0 (#10041)
 D2WIN_DLL_DECL void __fastcall ARCHIVE_FreeCellFile(D2CellFileStrc* pCellFile);
 //D2Win.0x6F8A5B00 (#10205)

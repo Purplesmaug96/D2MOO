@@ -40,7 +40,7 @@ D2CellFileStrc* __fastcall ARCHIVE_LoadCellFile(const char* szFile, int32_t nTyp
 }
 
 //D2Win.0x6F8A5A50 (#10040)
-D2CellFileStrc* __fastcall ARCHIVE_LoadCellFileWithFileSize(const char* szFile, uint32_t* pFileSize, int32_t nType)
+D2CellFileStrc* __fastcall ARCHIVE_LoadCellFileWithFileSize(const char* szFile, size_t* pFileSize, int32_t nType)
 {
 	char szPath[260] = {};
 
