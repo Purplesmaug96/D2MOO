@@ -780,7 +780,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 		argv[0] = INIT_NAME;
 		argv[1] = lpCmdLine;
 
-		GameInit(ARRAY_SIZE(argv), argv);
+		printf("GameInit: %d\n", GameInit(ARRAY_SIZE(argv), argv));
 	}
 	else
 	{
