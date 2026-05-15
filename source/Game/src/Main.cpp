@@ -385,7 +385,8 @@ D2_MODULES LoadCurrentlySelectedModule(D2ConfigStrc* pCfg)
 		{
 			char szErrMsg[100];
 			sprintf(szErrMsg, ERRMSG_LOADMOD, lpszD2Module[geModState], (int)GetLastError());
-			MessageBoxA(NULL, szErrMsg, ERRMSG_TITLE, MB_ICONERROR);
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, ERRMSG_TITLE, szErrMsg, NULL);
+			// MessageBoxA(NULL, szErrMsg, ERRMSG_TITLE, MB_ICONERROR);
 		}
 	}
 	return MODULE_NONE;
@@ -730,10 +731,42 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[])
 
 #ifndef _WIN32
 
+char* ArgvToCommandLineC(int argc, char* argv[]) {
+    if (argc <= 1) return "";
+
+    // 1. Calculate total length needed
+    size_t total_len = 0;
+    for (int i = 1; i < argc; i++) {
+        total_len += strlen(argv[i]) + 3; // +2 for potential quotes, +1 for space/null
+    }
+
+    // 2. Allocate the buffer
+    char* lpCmdLine = (char*)malloc(total_len);
+    if (!lpCmdLine) return NULL;
+
+    lpCmdLine[0] = '\0';
+
+    // 3. Build the string
+    for (int i = 1; i < argc; i++) {
+        int needs_quotes = (strchr(argv[i], ' ') != NULL);
+
+        if (needs_quotes) strcat(lpCmdLine, "\"");
+        strcat(lpCmdLine, argv[i]);
+        if (needs_quotes) strcat(lpCmdLine, "\"");
+
+        // Add space between arguments
+        if (i < argc - 1) {
+            strcat(lpCmdLine, " ");
+        }
+    }
+
+    return lpCmdLine;
+}
+
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd);
 
-int main(int argc, char* argv) {
-	return WinMain(NULL, NULL, "", 1);
+int main(int argc, char* argv[]) {
+	return WinMain(NULL, NULL, ArgvToCommandLineC(argc, argv), 1);
 }
 
 #endif
@@ -787,7 +820,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 			char cBuf[256];
 			snprintf(cBuf, 256, "GameInit failed.\nError code: %d\n", nGameInit);
 			printf("%s\n", &cBuf);
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Diablo II failed to run", cBuf, NULL);
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, ERRMSG_TITLE, cBuf, NULL);
 		}
 	}
 	else
@@ -800,7 +833,8 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 		}
 		if (!schSCManager)
 		{
-			MessageBoxA(NULL, ERRMSG_INSTALLSVC, SVC_DISPLAYNAME, MB_ICONEXCLAMATION | MB_SETFOREGROUND);
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, ERRMSG_TITLE, ERRMSG_INSTALLSVC, NULL);
+			// MessageBoxA(NULL, ERRMSG_INSTALLSVC, SVC_DISPLAYNAME, MB_ICONEXCLAMATION | MB_SETFOREGROUND);
 			return 1;
 		}
 		else
