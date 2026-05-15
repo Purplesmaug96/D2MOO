@@ -79,7 +79,7 @@ static inline long long InterlockedDecrement64(long long volatile *Addend) {
 // InterlockedCompareExchange taken from this issue: https://github.com/itsmattkc/dotnet9x/issues/19
 
 // Reimplemented
-static inline LONG InterlockedCompareExchange(LONG *dest,  LONG xchg,  LONG compare)
+static inline LONG InterlockedCompareExchange(LONG volatile *dest,  LONG xchg,  LONG compare)
 {
 	LONG temp = *dest;
 

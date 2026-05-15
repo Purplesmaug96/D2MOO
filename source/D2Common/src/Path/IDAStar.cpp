@@ -77,7 +77,7 @@ int __fastcall PATH_IdaStar_ComputePathWithRooms(D2DrlgCoordsStrc* pRoomCoords, 
     memset(&tContext.aNodesStorage[0], 0, sizeof(tContext.aNodesStorage[0]));
     tContext.nNodesCount = 1;
     tContext.pCurrentNode = &tContext.aNodesStorage[0];
-    
+
     int16_t nMaxFScore;
     int16_t nFScoreCutoff;
     switch (pPathInfo->nPathType)
@@ -225,7 +225,7 @@ D2PathIDAStarNodeStrc* __fastcall PATH_IDAStar_VisitNodes(D2PathIDAStarContextSt
 
         const int nDataIndex = tNeighborCoords.X + pContext->nXOffset + pContext->nStride * (tNeighborCoords.Y + pContext->nYOffset);
         int* pNeighborBestDistanceToStart = &pContext->aCoordData[nDataIndex];
-        
+
         bool bShouldEvaluateNextNeighbor = true;
         bool bMayEvaluateNode = true;
         if (*pNeighborBestDistanceToStart == 0)
@@ -314,9 +314,9 @@ void __fastcall PATH_IDAStar_GetNextNeighborIndex(D2PathIDAStarNodeStrc* pNode, 
 	if (pContext->bRandomDirection)
 	{
 		const uint64_t nRand = SEED_RollRandomNumber(pContext->pSeed);
-		pNode->nNextNeighborIndex = ((unsigned __int8)pNode->nNextNeighborIndex
-			+ (unsigned __int8)*pNode->pNeighborsSequence
-			+ (unsigned __int8)dword_6FDD1CE0[nRand & 0x1F]) & 7;
+		pNode->nNextNeighborIndex = ((uint8_t)pNode->nNextNeighborIndex
+			+ (uint8_t)*pNode->pNeighborsSequence
+			+ (uint8_t)dword_6FDD1CE0[nRand & 0x1F]) & 7;
 	}
 	else
 	{

@@ -17,8 +17,13 @@ using CurseCallbackFunc = void(__fastcall*)(D2GameStrc*, D2UnitStrc*, D2UnitStrc
 
 using SkillStartFunc = int32_t(__fastcall*)(D2GameStrc*, D2UnitStrc*, int32_t, int32_t);
 using SkillDoFunc = int32_t(__fastcall*)(D2GameStrc*, D2UnitStrc*, int32_t, int32_t);
+#ifdef _SKILL_CPP
+// static const SkillDoFunc gpSkillSrvDoFnTable_6FD40A20[];
+// static const int32_t gnSkillSrvDoFns;
+#else
 extern const SkillDoFunc gpSkillSrvDoFnTable_6FD40A20[];
 extern const int32_t gnSkillSrvDoFns;
+#endif
 
 #pragma pack(push, 1)
 struct D2AuraCallbackStrc
@@ -113,7 +118,7 @@ struct D2SummonArgStrc
 	int32_t nHcIdx;							//0x08
 	D2C_AiSpecialState nAiSpecialState;		//0x0C
 	int32_t nMonMode;						//0x10
-	D2CoordStrc pPosition;					//0x14		
+	D2CoordStrc pPosition;					//0x14
 	int32_t nPetType;						//0x1C
 	int32_t nPetMax;						//0x20
 };

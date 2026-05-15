@@ -733,7 +733,7 @@ int32_t __stdcall SERVER_WaitForSingleObject(uint32_t dwMilliseconds)
 //D2Net.0x6FC02150 (#10003)
 void __stdcall SERVER_Initialize(int32_t a1, int32_t a2)
 {
-	gpServer = FOG_InitializeServer(a1, 3, GAME_PORT, a2, SERVER_ValidateClientPacket, sub_6FC020B0, sub_6FC020E0, SERVER_ReadPacketFromBufferCallback);
+	gpServer = FOG_InitializeServer(a1, 3, GAME_PORT, a2, (void*)SERVER_ValidateClientPacket, (void*)sub_6FC020B0, (void*)sub_6FC020E0, (void*)SERVER_ReadPacketFromBufferCallback);
 }
 
 //D2Net.0x6FC02190 (#10035)
@@ -898,7 +898,7 @@ void __stdcall D2NET_10018(int32_t a1)
 //D2Net.0x6FC02530 (#10019)
 int32_t __stdcall D2NET_10019(D2NET_Unk_Callback pfCallback)
 {
-	return FOG_10171(gpServer, pfCallback);
+	return FOG_10171(gpServer, (void*)pfCallback);
 }
 
 //D2Net.0x6FC02550 (#10020)

@@ -283,7 +283,7 @@ int32_t __fastcall SKILLS_SrvDo116_Wearwolf_Wearbear(D2GameStrc* pGame, D2UnitSt
     {
         return 0;
     }
-    
+
     int32_t nUnitGUID = -1;
     int32_t nUnitType = 6;
     if (pUnit)
@@ -511,7 +511,7 @@ int32_t __fastcall SKILLS_SrvSt56_FeralRage_Maul(D2GameStrc* pGame, D2UnitStrc* 
     }
 
     SUNITDMG_AllocCombat(pGame, pUnit, pTarget, &damage, nSrcDam);
-    
+
     if (damage.wResultFlags & DAMAGERESULTFLAG_SUCCESSFULHIT)
     {
         SKILLS_SetParam1(pSkill, 1);
@@ -961,7 +961,7 @@ int32_t __fastcall SKILLS_SrvDo124_Armageddon_Hurricane(D2GameStrc* pGame, D2Uni
     {
         return 0;
     }
-    
+
     D2SkillStrc* pSkill = UNITS_GetUsedSkill(pUnit);
     if (!pSkill || SKILLS_GetSkillIdFromSkill(pSkill, __FILE__, __LINE__) != nSkillId)
     {
@@ -1111,7 +1111,7 @@ int32_t __fastcall SKILLS_SrvDo146_Unused(D2GameStrc* pGame, D2UnitStrc* pUnit, 
         D2GAME_EVENTS_Delete_6FC34840(pGame, pUnit, EVENTTYPE_ACTIVESTATE, nSkillId);
         return 0;
     }
-    
+
     const int32_t nRange = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraRangeCalc, nSkillId, nSkillLevel);
     if (nRange <= 0)
     {
@@ -1121,7 +1121,7 @@ int32_t __fastcall SKILLS_SrvDo146_Unused(D2GameStrc* pGame, D2UnitStrc* pUnit, 
 
     D2GAME_EVENTS_Delete_6FC34840(pGame, pUnit, EVENTTYPE_ACTIVESTATE, nSkillId);
     EVENT_SetEvent(pGame, pUnit, EVENTTYPE_ACTIVESTATE, pGame->dwGameFrame + pSkillsTxtRecord->dwParam[3], nSkillId, nSkillLevel);
-    
+
     D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
     if (!pRoom || DUNGEON_IsRoomInTown(pRoom))
     {
@@ -1365,13 +1365,13 @@ int32_t __fastcall SKILLS_SrvDo126_ImpInferno(D2GameStrc* pGame, D2UnitStrc* pUn
     {
         return 0;
     }
-    
+
     D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(pSkillsTxtRecord->wSrvMissileA);
     if (!pMissilesTxtRecord)
     {
         return 0;
     }
-    
+
     D2SkillStrc* pSkill = UNITS_GetUsedSkill(pUnit);
     if (!pSkill)
     {
@@ -1839,7 +1839,7 @@ int32_t __fastcall SKILLS_SrvDo131_OverseerWhip(D2GameStrc* pGame, D2UnitStrc* p
     curse.nStat = -1;
     curse.nDuration = SKILLS_EvaluateSkillFormula(pUnit, pSkillsTxtRecord->dwAuraLenCalc, nSkillId, nSkillLevel);
     curse.nState = pSkillsTxtRecord->wAuraTargetState;
-    
+
     D2StatListStrc* pCurseStatList = sub_6FD10EC0(&curse);
     if (pCurseStatList)
     {
@@ -1901,7 +1901,7 @@ int32_t __fastcall sub_6FD01910(D2UnitStrc* pUnit, D2UnitStrc* pTarget)
     {
         return 0;
     }
-    
+
     int32_t nBaseId = pTarget->dwClassId;
     D2MonStatsTxt* pMonStatsTxtRecord = MONSTERMODE_GetMonStatsTxtRecord(nBaseId);
     if (pMonStatsTxtRecord)
@@ -2332,7 +2332,7 @@ int32_t __fastcall SKILLS_SrvDo140_BaalTentacle(D2GameStrc* pGame, D2UnitStrc* p
     int32_t nMinionX = 0;
     int32_t nMinionY = 0;
     MONSTERS_GetMinionSpawnInfo(pUnit, &nMinionId, &nMinionX, &nMinionY, &nMinionSpawnMode, pGame->nDifficulty, 0);
-    
+
     D2UnitStrc* pTarget = SUNIT_GetTargetUnit(pGame, pUnit);
 
     int32_t nX = 0;
@@ -2352,7 +2352,7 @@ int32_t __fastcall SKILLS_SrvDo140_BaalTentacle(D2GameStrc* pGame, D2UnitStrc* p
     {
         nMinionX = nX + ITEMS_RollRandomNumber(&pUnit->pSeed) % 18 - 9;
         nMinionY = nY + ITEMS_RollRandomNumber(&pUnit->pSeed) % 18 - 9;
-        
+
         D2ActiveRoomStrc* pRoom = D2GAME_GetRoom_6FC52070(UNITS_GetRoom(pUnit), nMinionX, nMinionY);
         if (pRoom)
         {
@@ -2381,7 +2381,7 @@ int32_t __fastcall SKILLS_SrvDo141_BaalCorpseExplode(D2GameStrc* pGame, D2UnitSt
     effect.pUnit = pUnit;
     effect.nSkillId = SKILL_BAALCORPSEEXPLODE;
     effect.nSkillLevel = nSkillLevel;
-    effect.pfAreaEffect = SKILLS_AreaEffect_BaalCorpseExplode;
+    effect.pfAreaEffect = (void*)SKILLS_AreaEffect_BaalCorpseExplode;
 
     D2SkillsTxt* pSkillsTxtRecord = SKILLS_GetSkillsTxtRecord(nSkillId);
     if (pSkillsTxtRecord && nSkillLevel > 0)
@@ -2413,7 +2413,7 @@ D2UnitStrc* __fastcall SKILLS_FindUseableCorpse(D2GameStrc* pGame, D2UnitStrc* p
     unitFindArg.nSize = nUnitSize;
     unitFindArg.nFlags = 0x1002;
     unitFindArg.pUnit = pUnit;
-    
+
     D2UnitFindDataStrc unitFindData = {};
     UNITFINDS_InitializeUnitFindData(pGame->pMemoryPool, &unitFindData, UNITS_GetRoom(pUnit), unitFindArg.nX, unitFindArg.nY, nUnitSize, 0, &unitFindArg);
     UNITFINDS_FindAllMatchingUnitsInNeighboredRooms(&unitFindData);

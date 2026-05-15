@@ -781,6 +781,7 @@ char* ArgvToCommandLineC(int argc, char* argv[]) {
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd);
 
+#undef main
 int main(int argc, char* argv[]) {
 	return WinMain(NULL, NULL, ArgvToCommandLineC(argc, argv), 1);
 }
@@ -812,7 +813,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 			if(bCouldOpenService)
 			{
 				SERVICE_TABLE_ENTRYA DispatchTable[] = {
-					{ SVC_NAME, D2ServerServiceMain }, // NOLINT(clang-diagnostic-writable-strings)
+					{ SVC_NAME, (void*)D2ServerServiceMain }, // NOLINT(clang-diagnostic-writable-strings)
 					{ NULL, NULL }
 				};
 
@@ -887,7 +888,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 VOID WINAPI D2ServerServiceMain(DWORD dwArgc, LPTSTR *lpszArgv)
 {
 	gbD2ServerStopEvent = TRUE;
-	ghD2ServerServiceStatus = RegisterServiceCtrlHandlerA(SVC_NAME, D2ServerServiceHandlerProc);
+	ghD2ServerServiceStatus = RegisterServiceCtrlHandlerA(SVC_NAME, (void*)D2ServerServiceHandlerProc);
 	SetServiceStatus(ghD2ServerServiceStatus, &gD2ServerServiceStatus);
 	char* rBuf;
 	GameInit(dwArgc, (const char**)lpszArgv, &rBuf);

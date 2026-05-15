@@ -395,12 +395,12 @@ BOOL __fastcall DRLGOUTDOORS_SpawnRandomOutdoorDS1(D2DrlgLevelStrc* pLevel, int 
 {
 	static const char nOffsetX[] =
 	{
-		-1, 0, 0, 1, -1, 1, 1, -1
+		(char)-1, (char)0, (char)0, (char)1, (char)-1, (char)1, (char)1, (char)-1
 	};
 
 	static const char nOffsetY[] =
 	{
-		0, -1, 1, 0, -1, 1, -1, 1
+		(char)0, (char)-1, (char)1, (char)0, (char)-1, (char)1, (char)-1, (char)1
 	};
 
 	D2CoordStrc pCoord[256] = {};
@@ -904,7 +904,7 @@ static const uint8_t byte_6FDCF958[] =
 	0x0D, 0x0D, 0x07, 0x07, 0x0D, 0x0D, 0x0D, 0x07,
 	0x17, 0x17, 0x29, 0x11, 0x17, 0x17, 0x29, 0x11,
 	0x12, 0x12, 0x23, 0x23, 0x12, 0x12, 0x16, 0x16,
-	0x18, 0x18, 0x19, 0x20, 0x18, 0x18, 0x1E, 0x01		
+	0x18, 0x18, 0x19, 0x20, 0x18, 0x18, 0x1E, 0x01
 };
 
 //D2Common.0x6FD7EFE0
@@ -1187,10 +1187,10 @@ void __fastcall sub_6FD7F5B0(D2DrlgLevelStrc* pLevel)
 	int nY = -1;
 
 	if (pLevel->pOutdoors->dwFlags & 0x10 && (DRLGOUTWILD_GetBridgeCoords(pLevel, &nX, &nY), nX != -1))
-	{	
+	{
 		nPosX = pLevel->nPosX + 8 * nX + 3;
 		nPosY = pLevel->nPosY + 8 * nY + 3;
-		
+
 		for (int i = 0; i < pLevel->pOutdoors->nVertices; ++i)
 		{
 			pLevel->pOutdoors->pVertices[18 + i].nPosY = nPosY;
@@ -1225,7 +1225,7 @@ void __fastcall sub_6FD7F5B0(D2DrlgLevelStrc* pLevel)
 					nPosY = pLevel->pOutdoors->nGridHeight / 2;
 				}
 				else
-				{		
+				{
 					nX = 0;
 					nY = 0;
 

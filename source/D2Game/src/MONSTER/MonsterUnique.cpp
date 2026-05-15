@@ -2552,7 +2552,7 @@ void __fastcall D2GAME_SpawnMinions_6FC6F440(D2GameStrc* pGame, D2ActiveRoomStrc
     {
         sub_6FC6F670(pUnit, mods[i], TRUE);
 
-        AIGENERAL_ExecuteCallbackOnMinions(pUnit, (void*)(uintptr_t)mods[i], FALSE, (void(__fastcall*)(D2UnitStrc*, void*, void*))sub_6FC6F670);
+        AIGENERAL_ExecuteCallbackOnMinions(pUnit, (void*)(uintptr_t)mods[i], NULL, (void(__fastcall*)(D2UnitStrc*, void*, void*))sub_6FC6F670);
     }
 
     if (uint8_t * pMonUmods = MONSTERUNIQUE_GetUMods(pUnit))
@@ -2567,7 +2567,7 @@ void __fastcall D2GAME_SpawnMinions_6FC6F440(D2GameStrc* pGame, D2ActiveRoomStrc
 
             sub_6FC6F670(pUnit, nUMod, TRUE);
 
-            AIGENERAL_ExecuteCallbackOnMinions(pUnit, (void*)(uintptr_t)nUMod, FALSE, (void(__fastcall*)(D2UnitStrc*, void*, void*))sub_6FC6F670);
+            AIGENERAL_ExecuteCallbackOnMinions(pUnit, (void*)(uintptr_t)nUMod, NULL, (void(__fastcall*)(D2UnitStrc*, void*, void*))sub_6FC6F670);
         }
     }
 }

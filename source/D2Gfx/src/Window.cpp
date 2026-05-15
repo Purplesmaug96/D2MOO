@@ -559,7 +559,7 @@ void __stdcall WINDOW_OpenSmackCutscene(const char* szFile, D2GameResolutionMode
 {
     D2_ASSERT(gpGraphicsInterface);
 
-    return gpGraphicsInterface->pfOpenSmackCutscene(szFile, nResolution, pfFrame);
+    return gpGraphicsInterface->pfOpenSmackCutscene(szFile, nResolution, (void*)pfFrame);
 }
 
 //D2Gfx.0x6FA74E20 (#10035)

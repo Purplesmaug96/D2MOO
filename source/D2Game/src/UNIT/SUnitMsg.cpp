@@ -687,7 +687,7 @@ void __fastcall sub_6FCC6540(D2UnitStrc* pUnit, D2ClientStrc* pClient)
 {
     for (D2UnitPacketListStrc* pMsg = pUnit->pMsgFirst; pMsg; pMsg = pMsg->pNext)
     {
-        int32_t i = (int32_t)pMsg;
+        intptr_t i = (intptr_t)pMsg;
         switch (pMsg->nHeader)
         {
         case 0x23:

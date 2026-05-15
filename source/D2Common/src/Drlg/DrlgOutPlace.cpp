@@ -28,41 +28,41 @@ int dword_6FDEA6FC;
 //D2Common.0x6FDCFE40
 static D2DrlgLinkStrc gAct1WildernessDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_STONYFIELD, -1, -1 },
-	{ sub_6FD81380, LEVEL_COLDPLAINS, 0, -1 },
-	{ sub_6FD81950, LEVEL_BLOODMOOR, 1, -1 },
-	{ sub_6FD81720, LEVEL_ROGUEENCAMPMENT, 2, -1 },
-	{ sub_6FD81380, LEVEL_BURIALGROUNDS, 1, -1 },
+	{ (void*)sub_6FD81330, LEVEL_STONYFIELD, -1, -1 },
+	{ (void*)sub_6FD81380, LEVEL_COLDPLAINS, 0, -1 },
+	{ (void*)sub_6FD81950, LEVEL_BLOODMOOR, 1, -1 },
+	{ (void*)sub_6FD81720, LEVEL_ROGUEENCAMPMENT, 2, -1 },
+	{ (void*)sub_6FD81380, LEVEL_BURIALGROUNDS, 1, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
 //D2Common.0x6FDCFF30
 static D2DrlgLinkStrc gAct1MonasteryDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_MOOMOOFARM, -1, -1 },
-	{ sub_6FD81330, LEVEL_MONASTERYGATE, -1, -1 },
-	{ sub_6FD81AD0, LEVEL_TAMOEHIGHLAND, 1, -1 },
-	{ sub_6FD81380, LEVEL_BLACKMARSH, 2, -1 },
-	{ sub_6FD81380, LEVEL_DARKWOOD, 3, -1 },
+	{ (void*)sub_6FD81330, LEVEL_MOOMOOFARM, -1, -1 },
+	{ (void*)sub_6FD81330, LEVEL_MONASTERYGATE, -1, -1 },
+	{ (void*)sub_6FD81AD0, LEVEL_TAMOEHIGHLAND, 1, -1 },
+	{ (void*)sub_6FD81380, LEVEL_BLACKMARSH, 2, -1 },
+	{ (void*)sub_6FD81380, LEVEL_DARKWOOD, 3, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
 //D2Common.0x6FDD0020
 static D2DrlgLinkStrc gAct2OutdoorDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_LUTGHOLEIN, -1, -1 },
-	{ sub_6FD81B30, LEVEL_ROCKYWASTE, 0, -1 },
-	{ sub_6FD81530, LEVEL_DRYHILLS, 1, -1 },
-	{ sub_6FD81530, LEVEL_FAROASIS, 2, -1 },
-	{ sub_6FD81530, LEVEL_LOSTCITY, 3, -1 },
-	{ sub_6FD81BF0, LEVEL_VALLEYOFSNAKES, 4, -1 },
+	{ (void*)sub_6FD81330, LEVEL_LUTGHOLEIN, -1, -1 },
+	{ (void*)sub_6FD81B30, LEVEL_ROCKYWASTE, 0, -1 },
+	{ (void*)sub_6FD81530, LEVEL_DRYHILLS, 1, -1 },
+	{ (void*)sub_6FD81530, LEVEL_FAROASIS, 2, -1 },
+	{ (void*)sub_6FD81530, LEVEL_LOSTCITY, 3, -1 },
+	{ (void*)sub_6FD81BF0, LEVEL_VALLEYOFSNAKES, 4, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
 //D2Common.0x6FDD0110
 static D2DrlgLinkStrc gAct2CanyonDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_CANYONOFTHEMAGI, -1, -1 },
+	{ (void*)sub_6FD81330, LEVEL_CANYONOFTHEMAGI, -1, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
@@ -71,8 +71,8 @@ static D2DrlgLinkStrc gAct2CanyonDrlgLink[15] =
 //1.14d: 0x006F0B10
 static D2DrlgLinkStrc gAct5UbersDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_PANDEMONIUMRUN2, -1, -1 },
-	{ sub_6FD81330, LEVEL_PANDEMONIUMFINALE, -1, -1 },
+	{ (void*)sub_6FD81330, LEVEL_PANDEMONIUMRUN2, -1, -1 },
+	{ (void*)sub_6FD81330, LEVEL_PANDEMONIUMFINALE, -1, -1 },
 	{ NULL, 0, -1, -1 },
 };
 #endif
@@ -80,17 +80,17 @@ static D2DrlgLinkStrc gAct5UbersDrlgLink[15] =
 //D2Common.0x6FDD0200
 static D2DrlgLinkStrc gAct4OutdoorDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_THEPANDEMONIUMFORTRESS, -1, -1 },
-	{ sub_6FD81CA0, LEVEL_OUTERSTEPPES, 0, -1 },
-	{ sub_6FD81380, LEVEL_PLAINSOFDESPAIR, 1, -1 },
-	{ sub_6FD81380, LEVEL_CITYOFTHEDAMNED, 2, -1 },
+	{ (void*)sub_6FD81330, LEVEL_THEPANDEMONIUMFORTRESS, -1, -1 },
+	{ (void*)sub_6FD81CA0, LEVEL_OUTERSTEPPES, 0, -1 },
+	{ (void*)sub_6FD81380, LEVEL_PLAINSOFDESPAIR, 1, -1 },
+	{ (void*)sub_6FD81380, LEVEL_CITYOFTHEDAMNED, 2, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
 //D2Common.0x6FDD02F0
 static D2DrlgLinkStrc gAct4ChaosSanctumDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_CHAOSSANCTUM, -1, -1 },
+	{ (void*)sub_6FD81330, LEVEL_CHAOSSANCTUM, -1, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
@@ -98,10 +98,10 @@ static D2DrlgLinkStrc gAct4ChaosSanctumDrlgLink[15] =
 //1.11: D2Common.0x6FDDC388
 static D2DrlgLinkStrc gAct5OutdoorDrlgLink[15] =
 {
-	{ sub_6FD81330, LEVEL_HARROGATH, -1, -1 },
-	{ sub_6FD81330, LEVEL_BLOODYFOOTHILLS, 0, -1 },
-	{ DRLGOUTROOM_LinkLevelsByLevelCoords, LEVEL_ID_ACT5_BARRICADE_1, 1, -1 },
-	{ DRLGOUTROOM_LinkLevelsByOffsetCoords, LEVEL_ARREATPLATEAU, 2, -1 },
+	{ (void*)sub_6FD81330, LEVEL_HARROGATH, -1, -1 },
+	{ (void*)sub_6FD81330, LEVEL_BLOODYFOOTHILLS, 0, -1 },
+	{ (void*)DRLGOUTROOM_LinkLevelsByLevelCoords, LEVEL_ID_ACT5_BARRICADE_1, 1, -1 },
+	{ (void*)DRLGOUTROOM_LinkLevelsByOffsetCoords, LEVEL_ARREATPLATEAU, 2, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
@@ -109,7 +109,7 @@ static D2DrlgLinkStrc gAct5OutdoorDrlgLink[15] =
 //1.11: D2Common.0x6FDDC478
 static D2DrlgLinkStrc gAct5TundraDrlgLink[15] =
 {
-	{ DRLGOUTROOM_LinkLevelsByLevelDef, LEVEL_TUNDRAWASTELANDS, -1, -1 },
+	{ (void*)DRLGOUTROOM_LinkLevelsByLevelDef, LEVEL_TUNDRAWASTELANDS, -1, -1 },
 	{ NULL, 0, -1, -1 },
 };
 
@@ -236,8 +236,8 @@ uint8_t byte_6FDCFB70[4*4] = {
 	0, 3, 2, 1,
 };
 
-char byte_6FDCFB80[] = { 1, 0, -1, 0 };
-char byte_6FDCFB84[] = { 0, 1, 0, -1 };
+char byte_6FDCFB80[] = { (char)1, (char)0, (char)-1, (char)0 };
+char byte_6FDCFB84[] = { (char)0, (char)1, (char)0, (char)-1 };
 
 //D2Common.0x6FD80750
 BOOL __fastcall sub_6FD80750(D2DrlgLevelStrc* pLevel, int nVertexId)

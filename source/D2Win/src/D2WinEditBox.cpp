@@ -1571,7 +1571,7 @@ void __fastcall sub_6F8A8D60(D2WinEditBoxStrc* pEditBox, int32_t* a2, int32_t* a
 			++v16;
 		}
 
-		const int32_t v19 = (int32_t)&v45[pEditBox->field_25C - (int32_t)v32];
+		const intptr_t v19 = (intptr_t)&v45[pEditBox->field_25C - (intptr_t)v32];
 		if (*a2 == -1 && v19 >= 0 && v19 <= v16)
 		{
 			*a2 = v37;
@@ -1842,7 +1842,7 @@ int32_t __fastcall sub_6F8A9410(SMSGHANDLER_PARAMS* pMsg, int32_t nX, int32_t nY
 				}
 				v35 = pEditBox->field_25C;
 				v31 = 1;
-				pEditBox->field_25C = (int32_t)&v30[v21 - (int32_t)v38 - 1];
+				pEditBox->field_25C = (intptr_t)&v30[v21 - (intptr_t)v38 - 1];
 			}
 
 			if (!v34)

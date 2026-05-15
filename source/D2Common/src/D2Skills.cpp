@@ -411,7 +411,7 @@ int __stdcall SKILLS_GetSpecialParamValue(D2UnitStrc* pUnit, uint8_t nParamId, i
 			return 0;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -447,7 +447,7 @@ int __fastcall sub_6FDAF6C0(int nSkillId, int nParamId, int nUnused, void* pUser
 
 		return SKILLS_GetSpecialParamValue(pSkillCalc->pUnit, nParamId, nSkillId, nSkillLevel);
 	}
-	
+
 	return 0;
 }
 
@@ -893,7 +893,7 @@ void* __stdcall D2Common_10958(D2UnitStrc* pUnit, void* a2)
 	if (pUnit && pUnit->pSkills)
 	{
 		pResult = (void*)pUnit->pSkills->unk014;
-		pUnit->pSkills->unk014 = (int)a2;
+		pUnit->pSkills->unk014 = (intptr_t)a2;
 	}
 
 	return pResult;
@@ -1604,7 +1604,7 @@ int __stdcall SKILLS_GetUseState(D2UnitStrc* pUnit, D2SkillStrc* pSkill)
 	{
 		return SKILLUSTATE_BLOCKED;
 	}
-	
+
 	return SKILLUSTATE_USABLE;
 }
 
@@ -2017,7 +2017,7 @@ int __stdcall SKILLS_GetSkillLevel(D2UnitStrc* pUnit, D2SkillStrc* pSkill, BOOL 
 int __stdcall SKILLS_GetBonusSkillLevelFromSkillId(D2UnitStrc* pUnit, int nSkillId)
 {
 	D2SkillStrc* pSkill = NULL;
-	
+
 	if (pUnit && pUnit->pSkills)
 	{
 		pSkill = pUnit->pSkills->pFirstSkill;
@@ -2079,7 +2079,7 @@ void __stdcall D2Common_11031(D2UnitStrc* pUnit, int nSkillId, int a3)
 		{
 			return;
 		}
-		
+
 		pSkill = SKILLS_AddSkill(pUnit, nSkillId);
 		if(!pSkill)
 		{
@@ -2373,7 +2373,7 @@ D2SkillStrc* __fastcall SKILLS_GetSkill(D2UnitStrc* pUnit, int nSkillId, D2UnitG
 
 		return pSkill;
 	}
-	
+
 	return NULL;
 }
 
@@ -2482,7 +2482,7 @@ int __fastcall SKILLS_CalculateDamageBonusByLevel(int nLevel, int* pLevelDamage)
 		}
 
 	}
-	
+
 	return 0;
 }
 
@@ -2810,7 +2810,7 @@ void __stdcall SKILLS_SetQuantity(D2SkillStrc* pSkill, int nQuantity)
 int __stdcall D2Common_11014_ConvertShapeShiftedMode(int nArrayIndex, int nMonsterId)
 {
 	int nMode = dword_6FDD2BD8[nArrayIndex];
-	
+
 	while (1)
 	{
 		D2MonStats2Txt* pMonStats2TxtRecord = UNITS_GetMonStats2TxtRecordFromMonsterId(nMonsterId);
@@ -2865,7 +2865,7 @@ void __stdcall D2COMMON_11013_ConvertMode(D2UnitStrc* pUnit, int* pType, int* pC
 			{
 				break;
 			}
-			
+
 			if (pStatesTxtRecord->nGfxType == 2)
 			{
 				*pType = UNIT_PLAYER;
@@ -3031,7 +3031,7 @@ int __stdcall D2Common_11024(D2UnitStrc* pUnit, D2UnitStrc* pItem, D2SkillStrc* 
 			return 0;
 		}
 	}
-	
+
 	if(!ITEMS_CheckIfThrowable(pItem) || !pSkill->pSkillsTxt || pSkill->pSkillsTxt->nITypeA[0] <= 0
 	   || !ITEMS_CheckType(pSkill->pSkillsTxt->nITypeA[0], ITEMTYPE_THROWN_WEAPON) || pSkill->pSkillsTxt->nRange != 2)
 	{
@@ -3188,7 +3188,7 @@ BOOL __stdcall D2Common_11026(int nX, int nY, D2UnitStrc* pUnit, uint16_t nColMa
 
 	pCoords1.nX = nX;
 	pCoords1.nY = nY;
-	
+
 	UNITS_GetCoords(pUnit, &pCoords2);
 
 	return COLLISION_RayTrace(UNITS_GetRoom(pUnit), &pCoords1, &pCoords2, nColMask) == 0;
@@ -3294,7 +3294,7 @@ BOOL __stdcall SKILLS_CheckIfCanLeapTo(D2UnitStrc* pUnit1, D2UnitStrc* pUnit2, i
 	}
 
 	nDivisor = UNITS_GetDistanceToCoordinates(pUnit1, pCoords2.nX, pCoords2.nY);
-	
+
 	if (nDivisor)
 	{
 		pCoord.nX = pCoords2.nX + 2 * (pCoords2.nX - pCoords1.nX) / nDivisor;
@@ -3314,7 +3314,7 @@ BOOL __stdcall SKILLS_CheckIfCanLeapTo(D2UnitStrc* pUnit1, D2UnitStrc* pUnit2, i
 				return FALSE;
 			}
 		}
-		
+
 		if (!COLLISION_RayTrace(pRoom, &pCoords1, &pCoord, COLLIDE_DOOR | COLLIDE_MISSILE_BARRIER))
 		{
 			*pX = pCoord.nX;
@@ -3500,7 +3500,7 @@ int __stdcall D2Common_11043(D2UnitStrc* pUnit)
 	{
 		return 0;
 	}
-	
+
 	pItem = D2Common_10434(pUnit, 0);
 	if(pItem)
 	{

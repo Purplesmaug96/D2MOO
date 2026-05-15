@@ -535,9 +535,9 @@ D2WinControlStrc* __stdcall CONTROL_Create(D2WinControlInitStrc* pControlInit)
 			pControlInit->nStringId,
 			pCellFile,
 			pControlInit->field_20,
-			(int)pControlInit->field_2C,
-			(int)pControlInit->field_28,
-			(int)pControlInit->field_24);
+			(intptr_t)pControlInit->field_2C,
+			(intptr_t)pControlInit->field_28,
+			(intptr_t)pControlInit->field_24);
 
 	case D2WIN_EDITBOX:
 		return (D2WinControlStrc*)D2Win_10070_EDITBOX_Create(
@@ -548,10 +548,10 @@ D2WinControlStrc* __stdcall CONTROL_Create(D2WinControlInitStrc* pControlInit)
 			pControlInit->field_14,
 			pControlInit->nStringId,
 			pCellFile,
-			(int)pControlInit->field_24,
+			(intptr_t)pControlInit->field_24,
 			pControlInit->field_20,
-			(int)pControlInit->field_2C,
-			(int)pControlInit->field_28);
+			(intptr_t)pControlInit->field_2C,
+			(intptr_t)pControlInit->field_28);
 
 	case D2WIN_IMAGE:
 		return (D2WinControlStrc*)IMAGE2_Create(
@@ -592,8 +592,8 @@ D2WinControlStrc* __stdcall CONTROL_Create(D2WinControlInitStrc* pControlInit)
 			pCellFile,
 			pControlInit->field_20,
 			pControlInit->field_14,
-			(int)pControlInit->field_24,
-			(int)pControlInit->field_2C,
+			(intptr_t)pControlInit->field_24,
+			(intptr_t)pControlInit->field_2C,
 			pControlInit->nStringId,
 			(int(__stdcall*)(SMSGHANDLER_PARAMS*))pControlInit->field_28);
 
@@ -610,7 +610,7 @@ D2WinControlStrc* __stdcall CONTROL_Create(D2WinControlInitStrc* pControlInit)
 		return (D2WinControlStrc*)PROGRESSBAR_Create(pControlInit->nX, pControlInit->nY, pControlInit->nWidth, pControlInit->nHeight);
 
 	case D2WIN_ACCOUNTLIST:
-		return (D2WinControlStrc*)ACCOUNTLIST_Create(pControlInit->nX, pControlInit->nY, pControlInit->nWidth, pControlInit->nHeight, (int)pControlInit->field_2C, pControlInit->field_28);
+		return (D2WinControlStrc*)ACCOUNTLIST_Create(pControlInit->nX, pControlInit->nY, pControlInit->nWidth, pControlInit->nHeight, (intptr_t)pControlInit->field_2C, pControlInit->field_28);
 
 	default:
 		break;
@@ -1179,7 +1179,7 @@ void __stdcall D2Win_10168_WINMAIN_CreateScreenshot()
 		{
 			sprintf_s(szFilename, "Screenshot%03d.jpg", gnScreenshotCounter_6F8BDE1C++);
 			const HANDLE v3 = FOG_CreateFileA(szFilename, 0x80000000u, 0, 0, 3, 128, 0);
-			if (v3 == INVALID_HANDLE_VALUE)
+			if ((intptr_t)v3 == (intptr_t)INVALID_HANDLE_VALUE)
 			{
 				break;
 			}

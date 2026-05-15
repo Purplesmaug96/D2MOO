@@ -38,7 +38,7 @@ void __fastcall DRLGLOGIC_InitializeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom, D2D
 {
 	int nCellPositions[1024] = {};
 	int nCellFlags[256] = {};
-	
+
 	D2DrlgLogicalRoomInfoStrc* pDrlgCoordList = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2DrlgLogicalRoomInfoStrc);
 	pDrlgRoom->pLogicalRoomInfo = pDrlgCoordList;
 
@@ -138,7 +138,7 @@ void __fastcall DRLGLOGIC_InitializeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom, D2D
 	pDrlgCoordList->nLists = tDRLGLogicUnkStrc.field_18 - nLists + 1;
 
 	pDrlgCoordList->pCoordList = (D2RoomCoordListStrc *)D2_CALLOC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, sizeof(D2RoomCoordListStrc) * pDrlgCoordList->nLists);
-	
+
 	pDrlgRoom->pLevel->nCoordLists += pDrlgCoordList->nLists;
 
 	DRLGLOGIC_AssignCoordListsForGrids(pDrlgRoom, pDrlgCoordList, nLists);
@@ -415,7 +415,7 @@ void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2
 				{
 					for (int i = pRoomCoordList->pBox[0].nPosX; i < pRoomCoordList->pBox[0].nWidth; ++i)
 					{
-						DRLGGRID_AlterGridFlag(&pDrlgCoordList->pIndexY, i, j, (int)pRoomCoordList, FLAG_OPERATION_OVERWRITE);
+						DRLGGRID_AlterGridFlag(&pDrlgCoordList->pIndexY, i, j, (intptr_t)pRoomCoordList, FLAG_OPERATION_OVERWRITE);
 					}
 				}
 
@@ -464,7 +464,7 @@ void __fastcall DRLGLOGIC_AllocCoordLists(D2DrlgRoomStrc* pDrlgRoom)
 	pLogicalRoomInfo->nLists = 1;
 
 	pLogicalRoomInfo->pCoordList = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2RoomCoordListStrc);
-	
+
 	pLogicalRoomInfo->pCoordList->nIndex = pDrlgRoom->pLevel->nCoordLists;
 	pLogicalRoomInfo->pCoordList->pBox[0].nPosY = pDrlgRoom->nTileYPos;
 	pLogicalRoomInfo->pCoordList->pBox[0].nHeight = pDrlgRoom->nTileYPos + pDrlgRoom->nTileHeight;

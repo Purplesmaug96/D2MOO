@@ -23,7 +23,7 @@ target_link_libraries(Game
 	SDL2::SDL2
 )
 
-if (NOT WIN32)
+if (NOT WIN32 AND NOT ANDROID)
 find_package(json-c CONFIG)
 target_link_libraries(Game PRIVATE json-c::json-c)
 target_compile_definitions(Game PRIVATE __windows_shim_has_jsonc)

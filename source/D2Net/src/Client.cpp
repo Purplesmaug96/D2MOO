@@ -528,7 +528,7 @@ void __stdcall CLIENT_GetLocalIpAddressString(char* szBuffer)
 	sockaddr_in sa = {};
 	int32_t sa_len = sizeof(sa);
 
-	getsockname(gClientSocket, (sockaddr*)&sa, &sa_len);
+	getsockname(gClientSocket, (sockaddr*)&sa, (socklen_t*)&sa_len);
 
 	const char* szLocalIpAddress = inet_ntoa(sa.sin_addr); // NOLINT
 

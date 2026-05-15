@@ -69,7 +69,7 @@ uint32_t __fastcall CCMD_CanClientJoinGame(int32_t a1, int32_t a2, char* szClien
         GAME_LeaveGamesCriticalSection(pGame);
         return 6;
     }
-  
+
     for (D2ClientStrc* pClient = pGame->pClientList; pClient; pClient = CLIENTS_GetNext(pClient))
     {
         const char* szName = CLIENTS_GetName(pClient);
@@ -89,7 +89,7 @@ void __fastcall CCMD_ProcessClientSystemMessage(void* pData, int32_t nSize)
 {
     // TODO: Names
     const int32_t nClientId = *(int32_t*)pData;
-    int32_t pPacket = (int32_t)((char*)pData + 4);
+    intptr_t pPacket = (intptr_t)((char*)pData + 4);
 
     switch (*((uint8_t*)pPacket))
     {

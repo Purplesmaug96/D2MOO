@@ -3304,7 +3304,7 @@ void __fastcall D2GameDataTable_TSExplicitList_InplaceNew(void* pMemory)
         pNode->m_terminator.m_next = 0;
         pNode->m_terminator.m_prevlink = &pNode->m_terminator;
         pNode->m_linkoffset = 0xDDDDDDDD;
-        pNode->m_terminator.m_next = (struct D2GameStrc*)~(unsigned int)&pNode->m_terminator;
+        pNode->m_terminator.m_next = (struct D2GameStrc*)~(uintptr_t)&pNode->m_terminator;
     }
 }
 
@@ -3320,6 +3320,6 @@ void __fastcall D2GameDataTable_TSExplicitList_InplaceNew_WithList(void* pMemory
         pNode->m_terminator.m_next = 0;
         pNode->m_terminator.m_prevlink = &pNode->m_terminator;
         pNode->m_linkoffset = pList->m_linkoffset;
-        pNode->m_terminator.m_next = (struct D2GameStrc*)~(unsigned int)&pNode->m_terminator;
+        pNode->m_terminator.m_next = (struct D2GameStrc*)~(uintptr_t)&pNode->m_terminator;
     }
 }

@@ -1,3 +1,4 @@
+#define _SKILL_CPP
 #include "SKILLS/Skills.h"
 
 #include <winbase.h>

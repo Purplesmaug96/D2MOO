@@ -26,7 +26,7 @@
 
 #define __windows_shim
 
-#pragma GCC diagnostic ignored "-Wunused-function"
+#pragma diagnostic ignored "-Wunused-function"
 
 typedef int64_t __int64;
 typedef int32_t __int32;
@@ -217,22 +217,35 @@ static inline int strncpy_s(char *dest, size_t dest_size, const char *src, size_
 	return 1; // Assumed success return
 }
 
-// static inline int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...) {
-//     int result;
-//     va_list args;
+static inline int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...) {
+    int result;
+    va_list args;
 
-//     va_start(args, format);
+    va_start(args, format);
 
-//     result = vsprintf(buffer, format, args);
+    result = vsprintf(buffer, format, args);
 
-//     va_end(args);
+    va_end(args);
 
-//     return result;
-// }
+    return result;
+}
+
+static inline int sprintf_s(char *buffer, const char *format, ...) {
+    int result;
+    va_list args;
+
+    va_start(args, format);
+
+    result = vsprintf(buffer, format, args);
+
+    va_end(args);
+
+    return result;
+}
 
 // #define strcpy_s strcpy
 // #define strncpy_s strncpy
-#define sprintf_s sprintf
+// #define sprintf_s sprintf
 
 #if __windows_shim_arch == __windows_shim_arch_x86 && defined(__windows_shim_BitScanReverse_x86_intrin)
 
@@ -294,4 +307,4 @@ typedef int LCID;
 
 #define _strcmpi strcasecmp
 
-#pragma GCC diagnostic pop
+#pragma diagnostic pop
