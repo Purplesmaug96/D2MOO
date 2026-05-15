@@ -407,11 +407,17 @@ int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModTy
 
 	if(geModState != MODULE_SERVER)
 	{
-		if(!ARCHIVE_LoadArchives() || !ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowInsertPlayDiscMessage, ARCHIVE_ShowInsertExpansionDiscMessage, 0, pCfg))
+		if(!ARCHIVE_LoadArchives())
 		{
 			ARCHIVE_FreeArchives();
 			*pCrashReason = "Failed to load archives";
 			return 1;
+		}
+		if(!ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowInsertPlayDiscMessage, ARCHIVE_ShowInsertExpansionDiscMessage, 0, pCfg))
+		{
+			ARCHIVE_FreeArchives();
+			*pCrashReason = "Failed to load expansion archives";
+			return 2;
 		}
 #if D2_VERSION_EXPANSION
 		pCfg->bIsExpansion = FOG_IsExpansion();
@@ -434,7 +440,7 @@ int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModTy
 	{
 		if(!D2Win_CreateWindow(hInstance, dwRenderMode, pCfg->bWindow, !pCfg->bNoCompress)) {
 			*pCrashReason = "Failed to create window";
-			return 2;
+			return 3;
 		}
 
 		if(pCfg->bPerspective && dwRenderMode >= DISPLAYTYPE_GLIDE)
@@ -444,7 +450,7 @@ int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModTy
 		{
 			WINDOW_Destroy();
 			*pCrashReason = "Failed to initialize sprite cache";
-			return 3;
+			return 4;
 		}
 
 		if(gbUseKeyhook)
