@@ -2,7 +2,7 @@
 
 typedef unsigned int uint;
 
-#include <SDL_image.h>
+// #include <SDL_image.h>
 
 #include "D2Gfx.h"
 

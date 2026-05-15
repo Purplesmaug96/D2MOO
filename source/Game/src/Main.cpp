@@ -7,8 +7,8 @@
 #include <winsvc.h>
 #include <sysinfoapi.h>
 
-#define __WINDOWS_SHIM_LASTERROR_LOCAL
-#include <errhandlingapi.h>
+// #define __WINDOWS_SHIM_LASTERROR_LOCAL
+// #include <errhandlingapi.h>
 
 #include <winreg.h>
 
@@ -379,12 +379,16 @@ D2_MODULES LoadCurrentlySelectedModule(D2ConfigStrc* pCfg)
 				return (*(ModuleInitPointer*)gpCurrentModuleInterface)(pCfg);
 			}
 
-			GetLastError();
+			// GetLastError();
 		}
 		else
 		{
 			char szErrMsg[100];
+			#ifdef _WIN32
 			sprintf(szErrMsg, ERRMSG_LOADMOD, lpszD2Module[geModState], (int)GetLastError());
+			#else
+			sprintf(szErrMsg, ERRMSG_LOADMOD, lpszD2Module[geModState], 0);
+			#endif
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, ERRMSG_TITLE, szErrMsg, NULL);
 			// MessageBoxA(NULL, szErrMsg, ERRMSG_TITLE, MB_ICONERROR);
 		}

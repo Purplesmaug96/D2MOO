@@ -3,8 +3,9 @@
 #include <SDL2/SDL.h>
 #include <algorithm>
 
-#define __WINDOWS_SHIM_LASTERROR_LOCAL
+#ifdef _WIN32
 #include <errhandlingapi.h>
+#endif
 
 #include <libloaderapi.h>
 
@@ -103,7 +104,11 @@ int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, Displ
     if (!pfGetGraphicsInterface)
     {
         char szErrorMessage[256] = {};
+		#ifdef _WIN32
         wsprintfA(szErrorMessage, "Error interfacing with Gfx DLL #%i", GetLastError());
+		#else
+		wsprintfA(szErrorMessage, "Error interfacing with Gfx DLL");
+		#endif
         FOG_DisplayHalt(szErrorMessage, __FILE__, __LINE__);
         exit(-1);
     }

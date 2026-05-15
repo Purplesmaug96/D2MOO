@@ -8,7 +8,7 @@ set(CMAKE_FOLDER external)
 set(SDL_SHARED ON CACHE BOOL "" FORCE)
 set(SDL_STATIC OFF CACHE BOOL "" FORCE)
 add_subdirectory(sdl2 EXCLUDE_FROM_ALL)
-add_subdirectory(sdl2_image EXCLUDE_FROM_ALL)
+# add_subdirectory(sdl2_image EXCLUDE_FROM_ALL)
 
 set(BUILD_SHARED_LIBS_BACKUP ${BUILD_SHARED_LIBS})
 set(BUILD_SHARED_LIBS OFF) # Build external libs as static libs (or their default settings) for now
