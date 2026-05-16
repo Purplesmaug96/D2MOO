@@ -1,0 +1,24 @@
+# Gradle build artifacts and caches
+.gradle/
+build/
+app/build/
+app/.c/
+app/.cxx/
+
+# Local configuration (CRITICAL: Do not commit your SDK/NDK paths or keys)
+local.properties
+.bundle/
+*.keystore
+*.jks
+
+# Log files
+*.log
+
+# Android Studio / IntelliJ IDE files
+.idea/
+*.iml
+.modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db

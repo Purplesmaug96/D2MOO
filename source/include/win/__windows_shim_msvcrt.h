@@ -9,6 +9,11 @@
 
 #include <__windows_shim_arch_helper.h>
 
+#ifdef __ANDROID__
+    #include <android/log.h>
+    #define printf(...) __android_log_print(ANDROID_LOG_INFO, "D2MOO", __VA_ARGS__)
+#endif
+
 // Greatly increases comilation time
 // #define __windows_shim_BitScanReverse_x86_intrin
 

@@ -783,6 +783,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
 #undef main
 int main(int argc, char* argv[]) {
+	printf("main called\n");
 	return WinMain(NULL, NULL, ArgvToCommandLineC(argc, argv), 1);
 }
 

@@ -79,6 +79,10 @@ if (NOT WIN32)
 	include_directories(source/include/win)
 endif()
 
+if(ANDROID)
+    link_libraries(log)
+endif()
+
 add_subdirectory(source)
 
 if(ENABLE_D2DETOURS_EMBEDDED_PATCHES AND D2DETOURS_EMBEDDED_PATCHES_DIR)
