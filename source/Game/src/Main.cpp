@@ -781,13 +781,40 @@ char* ArgvToCommandLineC(int argc, char* argv[]) {
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd);
 
-#undef main
+#ifdef __ANDROID__
+#include <android/log.h>
+#include <jni.h>
+// __attribute__((constructor)) void debug_android_linker_errors() {
+//     __android_log_print(ANDROID_LOG_WARN, "GAME_DEBUG", "--- STARTING LIVE LINKER CHECK ---");
+
+//     // Attempt to open our own library explicitly to extract the hidden error
+//     void* handle = dlopen("libGame.so", RTLD_NOW);
+//     if (!handle) {
+//         // This captures the exact reason why the library is structurally unhappy
+//         const char* error_msg = dlerror();
+//         __android_log_print(ANDROID_LOG_ERROR, "GAME_DEBUG", "CRITICAL LINKER ERROR: %s", error_msg);
+//     } else {
+//         __android_log_print(ANDROID_LOG_INFO, "GAME_DEBUG", "Self-dlopen passed successfully.");
+//         dlclose(handle);
+//     }
+
+//     __android_log_print(ANDROID_LOG_WARN, "GAME_DEBUG", "--- ENDING LIVE LINKER CHECK ---");
+// }
+extern "C" {
+    // Android SDL entry point must be named SDL_main with default visibility
+    __attribute__((visibility("default"))) JNIEXPORT int JNICALL SDL_main(int argc, char* argv[]) {
+        return WinMain(NULL, NULL, ArgvToCommandLineC(argc, argv), 1);
+    }
+}
+#else
 int main(int argc, char* argv[]) {
 	printf("main called\n");
 	return WinMain(NULL, NULL, ArgvToCommandLineC(argc, argv), 1);
 }
+#endif
 
 #endif
+
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd)
 {

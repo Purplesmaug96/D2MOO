@@ -1,4 +1,4 @@
-package com.purplesmaug96.Diablo2;
+package org.libsdl.app;
 
 import android.content.Context;
 import android.media.AudioDeviceCallback;

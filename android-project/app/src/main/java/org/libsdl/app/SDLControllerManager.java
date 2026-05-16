@@ -1,4 +1,4 @@
-package com.purplesmaug96.Diablo2;
+package org.libsdl.app;
 
 import java.util.ArrayList;
 import java.util.Collections;
