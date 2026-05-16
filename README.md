@@ -4,7 +4,7 @@
 | - | - | - | - | - |
 | **Builds** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
 | **Launches** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
-| **Runs** | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
+| **Executes** | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
 | **Playable** | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
 
 (Windows builds are being worked on)
