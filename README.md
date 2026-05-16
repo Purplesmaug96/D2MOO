@@ -1,6 +1,19 @@
+# D2MOOPortable - A project to make D2MOO more portable to other systems
+
+| | Windows | Linux | MacOS | Android
+| - | - | - | - | - |
+| **Builds** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
+| **Launches** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
+| **Runs** | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
+| **Playable** | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
+
+(Windows builds are being worked on)
+
+# Original README.md:
+
 # D2MOO - Diablo II Method and Ordinal Overhaul
 
-![Cow](doc/assets/img/ECWLHTH.gif)
+![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif)
 
 This project is a re-implementation of the Diablo2 game coupled with patching facilities for modders.
 The aim is to provide the modding community with an easy tool to understand and patch the game.
@@ -50,7 +63,7 @@ An embryo of documentation is available in the repository's [doc](./doc/) folder
 ## D2MOO Debugger (Experimental!)
 
 Start the game with the `-debug` argument.
-For example: `D2.DetoursLauncher -- -debug`.  
+For example: `D2.DetoursLauncher -- -debug`.
 Alternatively, you may set the environment variable `D2_DEBUGGER=1`.
 
 ![D2Moo Debugger](./doc/assets/img/D2MooDebugger.png)
