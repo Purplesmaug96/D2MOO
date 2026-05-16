@@ -13,7 +13,7 @@
 
 # D2MOO - Diablo II Method and Ordinal Overhaul
 
-![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif)
+![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif) ![Cow](doc/assets/img/ECWLHTH.gif)
 
 This project is a re-implementation of the Diablo2 game coupled with patching facilities for modders.
 The aim is to provide the modding community with an easy tool to understand and patch the game.
