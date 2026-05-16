@@ -1,6 +1,6 @@
 # D2MOOPortable - A project to make D2MOO more portable to other systems
 
-| | Windows | Linux | MacOS | Android
+| | Windows | Linux | MacOS | Android |
 | - | - | - | - | - |
 | **Builds** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
 | **Executes** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
