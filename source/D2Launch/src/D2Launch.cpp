@@ -3,7 +3,11 @@
 #include <stddef.h>
 
 extern "C" {
-	void** QueryInterface() {
-		return NULL;
+	void* QueryInterface() {
+		return (void*)&UnkFunc;
 	}
+}
+
+void* UnkFunc(void*) {
+	return NULL;
 }

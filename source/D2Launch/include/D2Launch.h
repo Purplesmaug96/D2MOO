@@ -1,5 +1,7 @@
 #pragma once
 
 extern "C" {
-	void** QueryInterface();
+	void* QueryInterface();
 }
+
+void* UnkFunc(void*);
