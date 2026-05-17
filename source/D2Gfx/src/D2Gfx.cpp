@@ -65,6 +65,7 @@ int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, Displ
     wndClass.lpszClassName = "Diablo II";
     wndClass.hbrBackground = (HBRUSH)GetStockObject(COLOR_WINDOW);
 
+	#ifdef _WIN32
     if (!RegisterClassA(&wndClass))
     {
     	//if (sub_6FA750A7(GetLastError()))
@@ -74,6 +75,7 @@ int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, Displ
     	//}
         return 0;
     }
+	#endif
 
     D2GFX_InitGouraudCache_6FA71000();
 
