@@ -417,15 +417,15 @@ int GAMEAPI GameStart(HINSTANCE hInstance, D2ConfigStrc* pCfg, D2_MODULES nModTy
 			*pCrashReason = "Failed to load archives";
 			return 1;
 		}
-		if(!ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowInsertPlayDiscMessage, ARCHIVE_ShowInsertExpansionDiscMessage, 0, pCfg))
+		#if D2_VERSION_EXPANSION
+				pCfg->bIsExpansion = FOG_IsExpansion();
+		#endif
+		if(pCfg->bIsExpansion && !ARCHIVE_LoadExpansionArchives(ARCHIVE_ShowInsertPlayDiscMessage, ARCHIVE_ShowInsertExpansionDiscMessage, 0, pCfg))
 		{
 			ARCHIVE_FreeArchives();
 			*pCrashReason = "Failed to load expansion archives";
 			return 2;
 		}
-#if D2_VERSION_EXPANSION
-		pCfg->bIsExpansion = FOG_IsExpansion();
-#endif
 	}
 
 
@@ -741,6 +741,8 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[],
 			}
 		}
 	}
+
+	tCfg.bDirect = true;
 
 	return GameStart(ghCurrentProcess, &tCfg, MODULE_LAUNCHER, pCrashReason);
 }
