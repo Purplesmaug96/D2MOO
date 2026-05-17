@@ -1,12 +1,12 @@
 
 D2MOO_prepare_targets(Fog)
 
-target_link_libraries(${FogImplName} PUBLIC D2CommonDefinitions Storm)
+target_link_libraries(${FogImplName} PUBLIC D2CommonDefinitions Storm SDL2::SDL2)
 
 target_sources(${FogImplName}
   PRIVATE
 	src/Fog.cpp
-	
+
 	# Official file names
 	src/AsyncData.cpp
 	src/BitManip/BitManip.cpp
@@ -14,7 +14,6 @@ target_sources(${FogImplName}
 	src/D2QSQueue.cpp
 	src/D2QSSocket.cpp
 	src/DataArrays.cpp
-	src/ErrorManager.cpp
 	src/ErrorManager.cpp
 	src/Excel/Excel.cpp
 	src/Exceptions.cpp
@@ -28,10 +27,10 @@ target_sources(${FogImplName}
 	src/SafeSock.cpp
 	src/String/FogString.cpp
 	src/System/System.cpp
-	
+
 	# Made up filename
 	src/Calc.cpp
-	
+
 	# Headers
 	include/Fog.h
 	include/D2BitManip.h
