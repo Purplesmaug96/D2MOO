@@ -261,16 +261,16 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 	SDL_GetWindowWMInfo(window, &wmInfo);
 	#ifdef _WIN32
 	ghWnd = wmInfo.info.win.window;
-	#else
-	ghWnd = NULL;
-	#endif
-
 	if (ghWnd == NULL)
 	{
 		static char szLocalBuffer[256];
 		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
 		exit(-1);
 	}
+	#else
+	ghWnd = NULL;
+	#endif
+
 
 	SDL_AddEventWatch(DispatchSDLToWndProc, NULL); // g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);
 
