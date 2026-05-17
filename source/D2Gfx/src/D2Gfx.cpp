@@ -20,7 +20,37 @@ extern D2GameResolutionMode gnResolutionMode;
 extern int32_t gbNoWindowCreated_6FA8D848;
 extern HINSTANCE ghInstance;
 
-constexpr const char* gszDriverDllNames[NUMBER_OF_DISPLAYTYPES] = { "", "D2Gdi.dll", "", "D2DDraw.dll", "D2Glide.dll", "D2OpenGL.dll", "D2Direct3D.dll", "D2Rave.dll" };
+#ifdef _WIN32
+constexpr const char* gszDriverDllNames[NUMBER_OF_DISPLAYTYPES] = {
+	"",
+	"D2Gdi.dll",
+	"",
+	"D2DDraw.dll",
+#ifdef D2_GLIDE_AS_SDLRENDERER
+	"D2SDLRender.dll",
+#else
+	"D2Glide.dll",
+#endif
+	"D2OpenGL.dll",
+	"D2Direct3D.dll",
+	"D2Rave.dll"
+};
+#else
+constexpr const char* gszDriverDllNames[NUMBER_OF_DISPLAYTYPES] = {
+	"",
+	"libD2Gdi.so",
+	"",
+	"libD2DDraw.so",
+#ifdef D2_GLIDE_AS_SDLRENDERER
+	"../D2SDLRender/libD2SDLRender.so",
+#else
+	"libD2Glide.so",
+#endif
+	"libD2OpenGL.so",
+	"libD2Direct3D.so",
+	"libD2Rave.so"
+};
+#endif
 
 WNDPROC gpfWndProc;
 PALETTEENTRY gpPalette_6FA8D278[256];
@@ -101,7 +131,11 @@ int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, Displ
 
     FOG_10233(gszDriverDllNames[nDisplayType], 1);
 
+	#ifdef _WIN32
     D2GraphicsInterfaceStrc* (__fastcall * pfGetGraphicsInterface)() = (D2GraphicsInterfaceStrc * (__fastcall*)())GetProcAddress(ghRenderModule, (LPCSTR)10000);
+	#else
+	D2GraphicsInterfaceStrc* (__fastcall * pfGetGraphicsInterface)() = (D2GraphicsInterfaceStrc * (__fastcall*)())GetProcAddress(ghRenderModule, (LPCSTR)"GraphicsInterface");
+	#endif
 
     if (!pfGetGraphicsInterface)
     {

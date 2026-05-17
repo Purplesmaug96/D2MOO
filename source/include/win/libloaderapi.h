@@ -50,6 +50,8 @@ static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {
 
 	if (lib->dlHandle == NULL) {
 		printf("Failed to load dynamic lib '%s'.\n", lib->name);
+		free(lib);
+		return NULL;
 	}
 	else {
 		printf("Successfully loaded dynamic lib '%s'.\n", lib->name);

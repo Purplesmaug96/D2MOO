@@ -35,14 +35,14 @@ BOOL __fastcall D2SDLRender_pfClose() {
 	return TRUE;
 }
 
-bool D2SDLRender_Init() {
+bool GraphicsInterface() {
 	#ifdef _WIN32
 	AllocConsole();
 	FILE* fDummy;
 	freopen_s(&fDummy, "CONOUT$", "w", stdout);
 	#endif
 
-	FUNC_LOG("D2SDLRender_Init");
+	FUNC_LOG("GraphicsInterface");
 	Interface = (D2GraphicsInterfaceStrc*)malloc(sizeof(D2GraphicsInterfaceStrc));
 	assert(Interface != NULL);
 
