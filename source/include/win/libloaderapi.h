@@ -10,6 +10,7 @@
 
 #include <windef.h>
 #include <winnt.h>
+#include <process.h>
 
 // Source - https://stackoverflow.com/a/4031835
 // Posted by Fred Foo, modified by community. See post 'Timeline' for change history
@@ -41,6 +42,8 @@ static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD 
 	return TRUE;
 }
 
+static inline FARPROC GetProcAddress(HMODULE hModule, LPCSTR lpProcName);
+
 static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {
 	printf("Attempting to load dynamic lib '%s'.\n", lpLibFileName);
 	HMODULE lib = (HMODULE)malloc(sizeof(__windows_shim_struct_HMODULE));
@@ -55,6 +58,10 @@ static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {
 	}
 	else {
 		printf("Successfully loaded dynamic lib '%s'.\n", lib->name);
+		BOOL (__stdcall* DllMain)(HINSTANCE, DWORD, void*) = (BOOL (__stdcall*)(HINSTANCE, DWORD, void*))GetProcAddress(lib, "DllMain");
+
+		DllMain(lib, DLL_PROCESS_ATTACH, NULL);
+		printf("Successfully called DllMain.\n");
 	}
 
 	return lib;

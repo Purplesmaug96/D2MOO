@@ -35,14 +35,14 @@ BOOL __fastcall D2SDLRender_pfClose() {
 	return TRUE;
 }
 
-bool GraphicsInterface() {
+bool D2SDLRender_Init() {
 	#ifdef _WIN32
 	AllocConsole();
 	FILE* fDummy;
 	freopen_s(&fDummy, "CONOUT$", "w", stdout);
 	#endif
 
-	FUNC_LOG("GraphicsInterface");
+	FUNC_LOG("D2SDLRender_Init");
 	Interface = (D2GraphicsInterfaceStrc*)malloc(sizeof(D2GraphicsInterfaceStrc));
 	assert(Interface != NULL);
 
@@ -104,6 +104,8 @@ bool GraphicsInterface() {
 	return TRUE;
 }
 
-D2GraphicsInterfaceStrc* D2SDLRender_GetGraphicsInterface() {
-	return Interface;
+extern "C" {
+	D2GraphicsInterfaceStrc* GraphicsInterface() {
+		return Interface;
+	}
 }
