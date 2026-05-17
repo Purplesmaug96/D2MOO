@@ -60,8 +60,12 @@ static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {
 		printf("Successfully loaded dynamic lib '%s'.\n", lib->name);
 		BOOL (__stdcall* DllMain)(HINSTANCE, DWORD, void*) = (BOOL (__stdcall*)(HINSTANCE, DWORD, void*))GetProcAddress(lib, "DllMain");
 
-		DllMain(lib, DLL_PROCESS_ATTACH, NULL);
-		printf("Successfully called DllMain.\n");
+		if (DllMain(lib, DLL_PROCESS_ATTACH, NULL)) {
+			printf("Successfully called DllMain.\n");
+		}
+		else {
+			printf("Call to DllMain failed.\n");
+		}
 	}
 
 	return lib;
