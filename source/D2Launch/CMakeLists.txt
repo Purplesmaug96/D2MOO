@@ -2,7 +2,7 @@
 D2MOO_prepare_targets(D2Launch)
 
 #  SDL2_image::SDL2_image
-# target_link_libraries(${D2SDLRenderImplName} PUBLIC SDL2::SDL2 D2Gfx D2CommonDefinitions)
+target_link_libraries(${D2LaunchImplName} PUBLIC D2CommonDefinitions)
 
 target_sources(${D2LaunchImplName}
   PRIVATE
