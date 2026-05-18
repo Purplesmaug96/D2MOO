@@ -1,11 +1,10 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdint.h>
 
-#include <__windows_shim_msvcrt.h>
-#include <windef.h>
+#include "windef.h"
 
 typedef union {
 //   struct {

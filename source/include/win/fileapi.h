@@ -1,10 +1,10 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdio.h>
 
-#include <windef.h>
+#include "windef.h"
 
 typedef struct {} FILETIME;
 

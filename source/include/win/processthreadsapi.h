@@ -1,12 +1,12 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <windef.h>
-#include <winnt.h>
+#include "windef.h"
+#include "winnt.h"
 
 static inline HANDLE GetCurrentProcess() {
 	return NULL;

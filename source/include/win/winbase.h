@@ -1,6 +1,6 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <string.h>
 #include <sys/types.h>
@@ -8,7 +8,7 @@
 #include <sys/mman.h>
 #include <stdio.h>
 
-#include <windef.h>
+#include "windef.h"
 
 static inline DWORD GetLogicalDriveStringsA(DWORD nBufferLength,  LPSTR lpBuffer) {
 	return 0; // Length written

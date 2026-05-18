@@ -1,12 +1,12 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <time.h>
 #include <stdio.h>
 
-#include <windef.h>
-#include <minwinbase.h>
+#include "windef.h"
+#include "minwinbase.h"
 
 #include <timeapi.h>
 

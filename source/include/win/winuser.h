@@ -1,12 +1,12 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdarg.h>
 #include <stdio.h>
 
-#include <windef.h>
-#include <winnt.h>
+#include "windef.h"
+#include "winnt.h"
 
 typedef struct {} PAINTSTRUCT;
 

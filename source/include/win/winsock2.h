@@ -1,6 +1,6 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -9,7 +9,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-// #include <ws2def.h>
+// #include "ws2def.h"
 
 typedef int SOCKET;
 

@@ -2,10 +2,6 @@
 
 #include <cstdint>
 
-#ifndef _WIN32
-#include <__windows_shim_msvcrt.h>
-#endif
-
 
 struct D2GfxLightStrc;
 struct D2TileLibraryEntryStrc;

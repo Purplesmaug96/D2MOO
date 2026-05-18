@@ -1,11 +1,11 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdint.h>
 #include <stdio.h>
 
-#include <winnt.h>
+#include "winnt.h"
 
 typedef struct {
 	uint8_t peRed;

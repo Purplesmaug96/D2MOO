@@ -1,6 +1,6 @@
 #pragma once
 
-#include <winnt.h>
+#include "winnt.h"
 
 #include <stdio.h>
 #include <stdlib.h>

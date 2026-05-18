@@ -4,7 +4,6 @@
 #include <intrin.h>
 #else
 // #include <x86intrin.h>
-#include <__windows_shim_msvcrt.h>
 #endif
 
 #include <algorithm>

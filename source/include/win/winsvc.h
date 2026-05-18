@@ -1,12 +1,12 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdint.h>
 #include <stdio.h>
 
-#include <winnt.h>
-#include <windef.h>
+#include "winnt.h"
+#include "windef.h"
 
 typedef struct _SERVICE_STATUS {
   DWORD dwServiceType;

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <string.h>
 
-#include <windef.h>
-#include <winnt.h>
-#include <winerror.h>
+#include "windef.h"
+#include "winnt.h"
+#include "winerror.h"
 
 #ifdef __windows_shim_has_jsonc
 

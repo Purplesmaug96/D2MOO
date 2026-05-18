@@ -1,11 +1,11 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdint.h>
 
-#include <windef.h>
-#include <winnt.h>
+#include "windef.h"
+#include "winnt.h"
 
 typedef struct {
   DWORD  cbSize;

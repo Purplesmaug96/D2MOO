@@ -1,10 +1,6 @@
 #pragma once
 
-#include <cstdint>
-
-#ifndef _WIN32
-#include <__windows_shim_msvcrt.h>
-#endif
+#include <stdint.h>
 
 //D2Gfx.0x6FA73F30 (#10059)
 void __stdcall SCALE_UpdateFactor();

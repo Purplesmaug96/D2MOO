@@ -1,6 +1,6 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <string.h>
 #include <sys/time.h>
@@ -8,9 +8,9 @@
 #include <dlfcn.h>
 #include <unistd.h>
 
-#include <windef.h>
-#include <winnt.h>
-#include <process.h>
+#include "windef.h"
+#include "winnt.h"
+#include "process.h"
 
 // Source - https://stackoverflow.com/a/4031835
 // Posted by Fred Foo, modified by community. See post 'Timeline' for change history

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <__windows_shim_msvcrt.h>
+#include "__windows_shim_msvcrt.h"
 
 #include <stdio.h>
 #include <unistd.h>
 
-#include <windef.h>
-#include <winnt.h>
+#include "windef.h"
+#include "winnt.h"
 
 typedef struct {} CRITICAL_SECTION;
 typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
