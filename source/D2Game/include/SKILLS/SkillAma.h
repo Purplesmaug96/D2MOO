@@ -2,9 +2,7 @@
 
 #include <Units/Units.h>
 
-
 struct D2AuraCallbackStrc;
-
 
 // Same as #10049
 int32_t __stdcall D2Game_10048_Return1(int32_t a1, int32_t a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6);

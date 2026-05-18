@@ -1,7 +1,6 @@
 #pragma once
 
-enum DrawMode
-{
+enum DrawMode {
 	DRAWMODE_TRANS25,
 	DRAWMODE_TRANS50,
 	DRAWMODE_TRANS75,

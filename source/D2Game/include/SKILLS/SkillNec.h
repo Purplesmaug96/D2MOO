@@ -1,11 +1,9 @@
 #pragma once
 
-#include <Units/Units.h>
 #include <UNIT/SUnitDmg.h>
-
+#include <Units/Units.h>
 
 struct D2AuraCallbackStrc;
-
 
 // D2Game.0x6FD0AF30
 int32_t __fastcall SKILLS_SrvSt15_RaiseSkeleton_Mage(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel);

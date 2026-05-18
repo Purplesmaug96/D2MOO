@@ -49,7 +49,6 @@ void __fastcall D2SDLRender_SetAmbientColor(uint8_t nRed, uint8_t nGreen, uint8_
 	nAmbientBlue = nBlue;
 }
 
-
 void RenderSquare(SDL_Texture* tex, float nStartPosX, float nStartPosY, float nEndPosX, float nEndPosY, uint8_t nRed, uint8_t nGreen, uint8_t nBlue) {
 	SDL_Vertex verts[4];
 

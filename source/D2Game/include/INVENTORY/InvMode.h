@@ -2,7 +2,6 @@
 
 #include <Units/Units.h>
 
-
 // D2Game.0x6FC40FB0
 void __fastcall D2GAME_INVMODE_First_6FC40FB0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2ClientStrc* pClient, D2InventoryStrc* pInventory);
 // D2Game.0x6FC410E0

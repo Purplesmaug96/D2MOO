@@ -1,12 +1,9 @@
 #include "D2DataTbls.h"
 #include <D2Lang.h>
 
-
 // D2Common.0x6FD6FDF0
-void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "Name", TXTFIELD_ASCII, 63, 0, NULL },
 		{ "Token", TXTFIELD_ASCII, 2, 192, NULL },
 		{ "SpawnMax", TXTFIELD_BYTE, 0, 195, NULL },
@@ -169,47 +166,40 @@ void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->pObjectsTxt = (D2ObjectsTxt*)DATATBLS_CompileTxt(hArchive, "objects", pTbl, &sgptDataTables->nObjectsTxtRecordCount, sizeof(D2ObjectsTxt));
 
-	for (int i = 0; i < sgptDataTables->nObjectsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nObjectsTxtRecordCount; ++i) {
 		memset(sgptDataTables->pObjectsTxt[i].wszName, 0x00, sizeof(sgptDataTables->pObjectsTxt[i].wszName));
 		Unicode::strncpy(sgptDataTables->pObjectsTxt[i].wszName, D2LANG_GetStringByReferenceString(sgptDataTables->pObjectsTxt[i].szName), sizeof(sgptDataTables->pObjectsTxt[i].szName));
 
-		for (int j = 0; j < 8; ++j)
-		{
+		for (int j = 0; j < 8; ++j) {
 			sgptDataTables->pObjectsTxt[i].dwFrameCnt[j] <<= 8;
 		}
 	}
 }
 
 // D2Common.0x6FD718F0 (#10626)
-D2ObjectsTxt* __stdcall DATATBLS_GetObjectsTxtRecord(int nObjectId)
-{
+D2ObjectsTxt* __stdcall DATATBLS_GetObjectsTxtRecord(int nObjectId) {
 	D2_ASSERT(nObjectId < sgptDataTables->nObjectsTxtRecordCount);
 	D2_ASSERT(nObjectId >= 0);
 	return &sgptDataTables->pObjectsTxt[nObjectId];
 }
 
 // D2Common.0x6FD71960
-void __fastcall DATATBLS_UnloadObjectsTxt()
-{
+void __fastcall DATATBLS_UnloadObjectsTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pObjectsTxt);
 	sgptDataTables->pObjectsTxt = NULL;
 	sgptDataTables->nObjectsTxtRecordCount = 0;
 }
 
 // D2Common.0x6FD71980
-void __fastcall DATATBLS_UnloadObjGroupTxt()
-{
+void __fastcall DATATBLS_UnloadObjGroupTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pObjGroupTxt);
 	sgptDataTables->pObjGroupTxt = NULL;
 	sgptDataTables->nObjGroupTxtRecordCount = 0;
 }
 
 // D2Common.0x6FD719A0
-void __fastcall DATATBLS_LoadObjGroupTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadObjGroupTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "ID0", TXTFIELD_DWORD, 0, 0, NULL },
 		{ "DENSITY0", TXTFIELD_BYTE, 0, 32, NULL },
 		{ "PROB0", TXTFIELD_BYTE, 0, 40, NULL },
@@ -243,10 +233,8 @@ void __fastcall DATATBLS_LoadObjGroupTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD71E00 (#10627)
-D2ObjGroupTxt* __stdcall DATATBLS_GetObjGroupTxtRecord(int nId)
-{
-	if (nId < sgptDataTables->nObjGroupTxtRecordCount)
-	{
+D2ObjGroupTxt* __stdcall DATATBLS_GetObjGroupTxtRecord(int nId) {
+	if (nId < sgptDataTables->nObjGroupTxtRecordCount) {
 		return &sgptDataTables->pObjGroupTxt[nId];
 	}
 
@@ -254,10 +242,8 @@ D2ObjGroupTxt* __stdcall DATATBLS_GetObjGroupTxtRecord(int nId)
 }
 
 // D2Common.0x6FD71E30
-void __fastcall DATATBLS_LoadShrinesTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadShrinesTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "Code", TXTFIELD_BYTE, 0, 0, NULL },
 		{ "Arg0", TXTFIELD_DWORD, 0, 4, NULL },
 		{ "Arg1", TXTFIELD_DWORD, 0, 8, NULL },
@@ -275,22 +261,19 @@ void __fastcall DATATBLS_LoadShrinesTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD72000 (#10624)
-D2ShrinesTxt* __stdcall DATATBLS_GetShrinesTxtRecord(int nShrineId)
-{
+D2ShrinesTxt* __stdcall DATATBLS_GetShrinesTxtRecord(int nShrineId) {
 	D2_ASSERT(nShrineId < sgptDataTables->nShrinesTxtRecordCount);
 	D2_ASSERT(nShrineId >= 0);
 	return &sgptDataTables->pShrinesTxt[nShrineId];
 }
 
 // D2Common.0x6FD72070 (#10625)
-int __stdcall DATATBLS_GetShrinesTxtRecordCount()
-{
+int __stdcall DATATBLS_GetShrinesTxtRecordCount() {
 	return sgptDataTables->nShrinesTxtRecordCount;
 }
 
 // D2Common.0x6FD72080
-void __fastcall DATATBLS_UnloadShrinesTxt()
-{
+void __fastcall DATATBLS_UnloadShrinesTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pShrinesTxt);
 	sgptDataTables->pShrinesTxt = NULL;
 	sgptDataTables->nShrinesTxtRecordCount = 0;

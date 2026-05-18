@@ -4,8 +4,6 @@
 
 #include "D2PacketDef.h"
 
-
-
 // D2Game.0x6FC81C00
 void __fastcall sub_6FC81C00(D2UnitStrc* pUnit, D2ClientStrc* pClient);
 // D2Game.0x6FC81CA0

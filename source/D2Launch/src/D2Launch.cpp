@@ -3,9 +3,9 @@
 #include <stddef.h>
 
 extern "C" {
-	void* QueryInterface() {
-		return (void*)&UnkFunc;
-	}
+void* QueryInterface() {
+	return (void*)&UnkFunc;
+}
 }
 
 void* UnkFunc(void*) {

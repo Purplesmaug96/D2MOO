@@ -1,11 +1,8 @@
 #include "D2DataTbls.h"
 
-
 // D2Common.0x6FD720A0
-void __fastcall DATATBLS_LoadOverlayTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadOverlayTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "overlay", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pOverlayLinker },
 		{ "Filename", TXTFIELD_ASCII, 64, TXTFIELD_DWORD, NULL },
 		{ "version", TXTFIELD_WORD, 0, 66, NULL },
@@ -40,8 +37,7 @@ void __fastcall DATATBLS_LoadOverlayTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD72500
-void __fastcall DATATBLS_UnloadOverlayTxt()
-{
+void __fastcall DATATBLS_UnloadOverlayTxt() {
 	FOG_FreeLinker(sgptDataTables->pOverlayLinker);
 	DATATBLS_UnloadBin(sgptDataTables->pOverlayTxt);
 	sgptDataTables->pOverlayTxt = NULL;
@@ -49,12 +45,10 @@ void __fastcall DATATBLS_UnloadOverlayTxt()
 }
 
 // D2Common.0x6FD72530 (#10674)
-uint32_t __stdcall DATATBLS_GetFramesFromOverlayTxt(int nOverlayId)
-{
+uint32_t __stdcall DATATBLS_GetFramesFromOverlayTxt(int nOverlayId) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		return pOverlayTxt->dwFrames;
 	}
 
@@ -62,12 +56,10 @@ uint32_t __stdcall DATATBLS_GetFramesFromOverlayTxt(int nOverlayId)
 }
 
 // D2Common.0x6FD72570 (#10675)
-int __stdcall DATABLS_GetPreDrawFromOverlayTxt(int nOverlayId)
-{
+int __stdcall DATABLS_GetPreDrawFromOverlayTxt(int nOverlayId) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		return pOverlayTxt->nPreDraw;
 	}
 
@@ -75,12 +67,10 @@ int __stdcall DATABLS_GetPreDrawFromOverlayTxt(int nOverlayId)
 }
 
 // D2Common.0x6FD725B0 (#10676)
-uint32_t __stdcall DATATBLS_GetOffsetXFromOverlayTxt(int nOverlayId)
-{
+uint32_t __stdcall DATATBLS_GetOffsetXFromOverlayTxt(int nOverlayId) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		return pOverlayTxt->dwOffsetX;
 	}
 
@@ -88,12 +78,10 @@ uint32_t __stdcall DATATBLS_GetOffsetXFromOverlayTxt(int nOverlayId)
 }
 
 // D2Common.0x6FD725F0 (#10677)
-uint32_t __stdcall DATATBLS_GetOffsetYFromOverlayTxt(int nOverlayId)
-{
+uint32_t __stdcall DATATBLS_GetOffsetYFromOverlayTxt(int nOverlayId) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		return pOverlayTxt->dwOffsetY;
 	}
 
@@ -101,12 +89,10 @@ uint32_t __stdcall DATATBLS_GetOffsetYFromOverlayTxt(int nOverlayId)
 }
 
 // D2Common.0x6FD72630 (#10678)
-int __stdcall DATATBLS_GetTransFromOverlayTxt(int nOverlayId)
-{
+int __stdcall DATATBLS_GetTransFromOverlayTxt(int nOverlayId) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		return pOverlayTxt->nTrans;
 	}
 
@@ -114,12 +100,10 @@ int __stdcall DATATBLS_GetTransFromOverlayTxt(int nOverlayId)
 }
 
 // D2Common.0x6FD72670 (#10679)
-int __stdcall DATATBLS_GetRadiusAndColorFromOverlayTxt(int nOverlayId, int* pInitRadius, int* pRadius, uint8_t* pRed, uint8_t* pGreen, uint8_t* pBlue)
-{
+int __stdcall DATATBLS_GetRadiusAndColorFromOverlayTxt(int nOverlayId, int* pInitRadius, int* pRadius, uint8_t* pRed, uint8_t* pGreen, uint8_t* pBlue) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		*pInitRadius = pOverlayTxt->dwInitRadius;
 		*pRadius = pOverlayTxt->dwRadius;
 		*pRed = pOverlayTxt->nRed;
@@ -138,12 +122,10 @@ int __stdcall DATATBLS_GetRadiusAndColorFromOverlayTxt(int nOverlayId, int* pIni
 }
 
 // D2Common.0x6FD72720 (#10680)
-uint32_t __stdcall DATATBLS_Get1OfNFromOverlayTxt(int nOverlayId)
-{
+uint32_t __stdcall DATATBLS_Get1OfNFromOverlayTxt(int nOverlayId) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		return pOverlayTxt->dw1ofN;
 	}
 
@@ -151,23 +133,19 @@ uint32_t __stdcall DATATBLS_Get1OfNFromOverlayTxt(int nOverlayId)
 }
 
 // D2Common.0x6FD72760 (#10681)
-int __stdcall DATATBLS_GetDirFromOverlayTxt(int nOverlayId)
-{
+int __stdcall DATATBLS_GetDirFromOverlayTxt(int nOverlayId) {
 	D2OverlayTxt* pOverlayTxt = DATATBLS_GetOverlayTxtRecord(nOverlayId);
 
-	if (pOverlayTxt)
-	{
+	if (pOverlayTxt) {
 		return pOverlayTxt->nDir;
 	}
 
 	return 0;
 }
 
-//Inlined at various places
-D2OverlayTxt* __fastcall DATATBLS_GetOverlayTxtRecord(int nOverlay)
-{
-	if (nOverlay >= 0 && nOverlay < sgptDataTables->nOverlayTxtRecordCount)
-	{
+// Inlined at various places
+D2OverlayTxt* __fastcall DATATBLS_GetOverlayTxtRecord(int nOverlay) {
+	if (nOverlay >= 0 && nOverlay < sgptDataTables->nOverlayTxtRecordCount) {
 		return &sgptDataTables->pOverlayTxt[nOverlay];
 	}
 

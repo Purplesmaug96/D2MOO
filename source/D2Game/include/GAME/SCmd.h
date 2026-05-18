@@ -4,7 +4,6 @@
 
 #include "D2PacketDef.h"
 
-
 // D2Game.0x6FC3C640
 int32_t __fastcall sub_6FC3C640(int32_t nClientId, int16_t nGameId, int16_t nClientCount, const char* szGameName);
 // D2Game.0x6FC3C690

@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Units/Units.h>
 #include "GAME/Event.h"
 #include "SUnitDmg.h"
+#include <Units/Units.h>
 
 using D2UnitEventCallbackFunction = int32_t(__fastcall*)(D2GameStrc*, int32_t, D2UnitStrc*, D2UnitStrc*, D2DamageStrc*, int32_t, int32_t);
 
-enum D2C_UnitEventTypes: uint8_t // Events.txt
+enum D2C_UnitEventTypes : uint8_t // Events.txt
 {
 	UNITEVENT_HITBYMISSILE,
 	UNITEVENT_DAMAGEDINMELEE,
@@ -29,18 +29,17 @@ enum D2C_UnitEventFlags : uint16_t {
 	UNITEVENTFLAG_SHOULD_BE_FREED = 1 << 1,
 };
 
-struct D2UnitEventStrc
-{
-	D2C_UnitEventTypes nUnitEvent;			//0x00 Event from events.txt. NOT the same thing as timer events
-	uint8_t unk0x01;						//0x01
-	uint16_t nFlags;						//0x02 D2C_UnitEventFlags
-	uint32_t nQueueNo;						//0x04
-	int32_t unk0x08;						//0x08
-	int32_t nGUID1;							//0x0C First identifier
-	int32_t nGUID2;							//0x10 Second identifier
-	D2UnitEventCallbackFunction pCallback;	//0x14
-	D2UnitEventStrc* pPrevious;				//0x18  Seems to be any kind of id, not necessariyl the prevtimer ?
-	D2UnitEventStrc* pNext;					//0x1C
+struct D2UnitEventStrc {
+	D2C_UnitEventTypes nUnitEvent;		   // 0x00 Event from events.txt. NOT the same thing as timer events
+	uint8_t unk0x01;					   // 0x01
+	uint16_t nFlags;					   // 0x02 D2C_UnitEventFlags
+	uint32_t nQueueNo;					   // 0x04
+	int32_t unk0x08;					   // 0x08
+	int32_t nGUID1;						   // 0x0C First identifier
+	int32_t nGUID2;						   // 0x10 Second identifier
+	D2UnitEventCallbackFunction pCallback; // 0x14
+	D2UnitEventStrc* pPrevious;			   // 0x18  Seems to be any kind of id, not necessariyl the prevtimer ?
+	D2UnitEventStrc* pNext;				   // 0x1C
 };
 
 // D2Game.0x6FCC3610

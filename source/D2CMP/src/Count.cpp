@@ -40,8 +40,7 @@
  *
  * This implementation outputs effectively the same binary from 1.00.
  */
-int __fastcall CountConsecutiveFirst(const BYTE* pSrc, const BYTE* pEnd, int nMaxCount, BOOL* pbCountEqualsDist, BOOL* pbIsRemainingSame)
-{
+int __fastcall CountConsecutiveFirst(const BYTE* pSrc, const BYTE* pEnd, int nMaxCount, BOOL* pbCountEqualsDist, BOOL* pbIsRemainingSame) {
 	return CountConsecutive(pSrc[0], pSrc, pEnd, nMaxCount, pbCountEqualsDist, pbIsRemainingSame);
 }
 
@@ -54,14 +53,12 @@ int __fastcall CountConsecutiveFirst(const BYTE* pSrc, const BYTE* pEnd, int nMa
  * This implementation outputs effectively the same binary from 1.00, 1.07,
  * and 1.10.
  */
-int __fastcall CountConsecutive(BYTE bValue, const BYTE* pSrc, const BYTE* pEnd, int nMaxCount, BOOL* pbCountEqualsDist, BOOL* pbIsRemainingSame)
-{
+int __fastcall CountConsecutive(BYTE bValue, const BYTE* pSrc, const BYTE* pEnd, int nMaxCount, BOOL* pbCountEqualsDist, BOOL* pbIsRemainingSame) {
 	D2_ASSERT(pSrc < pEnd);
 
 	int nCount;
 	for (nCount = 0; pSrc < pEnd && bValue == *pSrc && nCount < nMaxCount; ++pSrc, ++nCount) {}
-	if (pSrc == pEnd)
-	{
+	if (pSrc == pEnd) {
 		*pbCountEqualsDist = TRUE;
 		*pbIsRemainingSame = FALSE;
 		return nCount;
@@ -70,12 +67,9 @@ int __fastcall CountConsecutive(BYTE bValue, const BYTE* pSrc, const BYTE* pEnd,
 	*pbCountEqualsDist = FALSE;
 	for (; pSrc < pEnd && bValue == *pSrc; ++pSrc) {}
 
-	if (pSrc == pEnd)
-	{
+	if (pSrc == pEnd) {
 		*pbIsRemainingSame = TRUE;
-	}
-	else
-	{
+	} else {
 		*pbIsRemainingSame = FALSE;
 	}
 
@@ -91,14 +85,12 @@ int __fastcall CountConsecutive(BYTE bValue, const BYTE* pSrc, const BYTE* pEnd,
  * This implementation outputs effectively the same binary from 1.00, 1.07,
  * and 1.10.
  */
-int __fastcall CountConsecutiveDiff(const BYTE* pSrc, const BYTE* pEnd, BYTE bValue, int nMaxCount, BOOL* pbCountEqualsDist, BOOL* pbIsRemainingSame)
-{
+int __fastcall CountConsecutiveDiff(const BYTE* pSrc, const BYTE* pEnd, BYTE bValue, int nMaxCount, BOOL* pbCountEqualsDist, BOOL* pbIsRemainingSame) {
 	D2_ASSERT(pSrc < pEnd);
 
 	int nCount;
 	for (nCount = 0; pSrc < pEnd && *pSrc != bValue && nCount < nMaxCount; ++pSrc, ++nCount) {}
-	if (pSrc == pEnd)
-	{
+	if (pSrc == pEnd) {
 		*pbCountEqualsDist = TRUE;
 		*pbIsRemainingSame = FALSE;
 		return nCount;
@@ -107,12 +99,9 @@ int __fastcall CountConsecutiveDiff(const BYTE* pSrc, const BYTE* pEnd, BYTE bVa
 	*pbCountEqualsDist = FALSE;
 	for (; pSrc < pEnd && bValue == *pSrc; ++pSrc) {}
 
-	if (pSrc == pEnd)
-	{
+	if (pSrc == pEnd) {
 		*pbIsRemainingSame = TRUE;
-	}
-	else
-	{
+	} else {
 		*pbIsRemainingSame = FALSE;
 	}
 

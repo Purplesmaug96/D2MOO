@@ -1,16 +1,14 @@
 #pragma once
 
-#include <Units/Units.h>
-#include <UNIT/SUnitDmg.h>
 #include <GAME/Event.h>
-
+#include <UNIT/SUnitDmg.h>
+#include <Units/Units.h>
 
 #pragma pack(push, 1)
 struct D2AuraCallbackStrc;
 struct D2MissilesTxt;
 
-enum D2C_MissileModes
-{
+enum D2C_MissileModes {
 	MISSMODE_NOCOLLIDE,
 	MISSMODE_PLAYERKILL,
 	MISSMODE_MONSTERKILL,
@@ -23,25 +21,21 @@ enum D2C_MissileModes
 	MISSMODE_COUNT,
 };
 
-struct D2MissileUnitFindArgStrc
-{
-    D2GameStrc* pGame;
-    D2UnitStrc* pMissile;
-    D2UnitStrc* pOwner;
-    D2MissilesTxt* pMissilesTxtRecord;
+struct D2MissileUnitFindArgStrc {
+	D2GameStrc* pGame;
+	D2UnitStrc* pMissile;
+	D2UnitStrc* pOwner;
+	D2MissilesTxt* pMissilesTxtRecord;
 };
 
 using MissileUnitFindFunc = int32_t(__fastcall*)(D2UnitStrc*, void*);
-struct D2MissileUnitFindTableStrc
-{
-    MissileUnitFindFunc pfUnitFindCallback;
-    int32_t nCollisionMask;
+struct D2MissileUnitFindTableStrc {
+	MissileUnitFindFunc pfUnitFindCallback;
+	int32_t nCollisionMask;
 };
 #pragma pack(pop)
 
-
 extern D2MissileUnitFindTableStrc stru_6FD2E5F8[9];
-
 
 // D2Game.0x6FC55CE0
 int32_t __fastcall MISSMODE_UnitFindCallback_CanCollideWithMonster(D2UnitStrc* pUnit, void* pArgument);

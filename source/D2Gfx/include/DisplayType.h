@@ -1,7 +1,6 @@
 #pragma once
 
-enum DisplayType
-{
+enum DisplayType {
 	DISPLAYTYPE_NONE,
 	DISPLAYTYPE_GDI,	  // Both 1 and 2 are called "Software" render modes (in demos)
 	DISPLAYTYPE_SOFTWARE, // Both 1 and 2 are called "Software" render modes (in demos)

@@ -1,8 +1,7 @@
 #pragma once
 #pragma pack(push, 1)
 
-struct S2C_Packet_SID_LOGONREALMEX
-{
+struct S2C_Packet_SID_LOGONREALMEX {
 	uint32_t MCPCookie;
 	uint32_t MCPStatus;
 	uint32_t MCPChunk1[2];
@@ -12,32 +11,30 @@ struct S2C_Packet_SID_LOGONREALMEX
 	char BattleNetUniqueName[];
 };
 
-struct RealmLogonInformation
-{
+struct RealmLogonInformation {
 	uint32_t nSize;
 	S2C_Packet_SID_LOGONREALMEX tPacket;
 };
 
-struct BnClientInterface
-{
+struct BnClientInterface {
 	int(__stdcall* field0x00)();
 	HANDLE(__stdcall* OpenBNetConnection)();
 	int(__fastcall* Logon)(int a1, int a2);
 	int(__stdcall* GetLogonInfo)();
 	int(__stdcall* CloseBNetConnection)();
 	BOOL(__thiscall* ChatCommand)(const char* _this);
-	void* (__stdcall* field_18)();
+	void*(__stdcall* field_18)();
 	int(__fastcall* JoinChannel)(BYTE* a1, int a2, int a3);
 	int(__thiscall* GetChannelList)(void* _this);
 	int(__fastcall* BnMessQueue_Read)(DWORD* a1, void* a2);
 	int(__thiscall* BnMessageQueueGetLastError)(DWORD* errInfo);
 	int(__fastcall* field_2C)(int a1, int a2);
 	int(__stdcall* CheckAd)();
-	int(__fastcall* RefreshGame)(char *szGameName, char *szPassword, const char *szStatstring, int nGameType);
+	int(__fastcall* RefreshGame)(char* szGameName, char* szPassword, const char* szStatstring, int nGameType);
 	int(__fastcall* GetGamesList)(int a1, int a2, int a3, int a4);
 	int(__fastcall* NotifyJoinedGame)(int a1, int a2);
 	int(__stdcall* SendRealmList)();
-	struct RealmLogonInformation* (__fastcall* LogonRealm)(const char *szRealmName, const char *szRealmPassword);
+	struct RealmLogonInformation*(__fastcall* LogonRealm)(const char* szRealmName, const char* szRealmPassword);
 	int(__thiscall* PatchUnk)(DWORD* _this);
 	int(__stdcall* field_4C)();
 	uintptr_t(__fastcall* PatchUnk0x4C)(BYTE* source, size_t size);
@@ -58,7 +55,7 @@ struct BnClientInterface
 	int(__thiscall* GetCreateGameResult)(int* _this);
 	int(__stdcall* SendKeepAlivePacket)();
 	int(__stdcall* field_94)();
-	struct BNGatewayAccess* (__stdcall* GetBnGatewayAccess)();
+	struct BNGatewayAccess*(__stdcall* GetBnGatewayAccess)();
 	int(__fastcall* ChangePassword)(int ecx0, int a2, int a1);
 	int(__thiscall* GetChangePasswordResult)(int* _this);
 	int(__thiscall* QueryAdUrl)(void* _this);

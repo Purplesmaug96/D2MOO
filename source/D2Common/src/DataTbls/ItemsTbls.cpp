@@ -2,74 +2,57 @@
 
 #include "D2Items.h"
 #include <Archive.h>
-#include <D2Lang.h>
-#include <D2BitManip.h>
-#include <D2StatList.h>
 #include <Calc.h>
+#include <D2BitManip.h>
+#include <D2Lang.h>
+#include <D2StatList.h>
 #include <Storm.h>
 
 // D2Common.0x6FD550E0
-int __fastcall DATATBLS_MapItemsTxtKeywordToNumber(char* szKey)
-{
-	if (!SStrCmpI(szKey, "min", 32))
-	{
+int __fastcall DATATBLS_MapItemsTxtKeywordToNumber(char* szKey) {
+	if (!SStrCmpI(szKey, "min", 32)) {
 		return 0;
-	}
-	else if (!SStrCmpI(szKey, "max", 32))
-	{
+	} else if (!SStrCmpI(szKey, "max", 32)) {
 		return 1;
-	}
-	else if (!SStrCmpI(szKey, "rand", 32))
-	{
+	} else if (!SStrCmpI(szKey, "rand", 32)) {
 		return 2;
-	}
-	else if (!SStrCmpI(szKey, "stat", 32))
-	{
+	} else if (!SStrCmpI(szKey, "stat", 32)) {
 		return 3;
-	}
-	else
-	{
+	} else {
 		return -1;
 	}
 }
 
 // D2Common.0x6FD55140
-int __fastcall DATATBLS_Return2(int)
-{
+int __fastcall DATATBLS_Return2(int) {
 	return 2;
 }
 
 // D2Common.0x6FD55150
-//TODO: Find a name
-int __fastcall sub_6FD55150(char* szText, int* a2, int a3, int nKeywordNumber)
-{
+// TODO: Find a name
+int __fastcall sub_6FD55150(char* szText, int* a2, int a3, int nKeywordNumber) {
 	int nRow = 0;
 
-	if (a3 == 1 && nKeywordNumber == 3)
-	{
-		if (sgptDataTables->pItemStatCostLinker)
-		{
+	if (a3 == 1 && nKeywordNumber == 3) {
+		if (sgptDataTables->pItemStatCostLinker) {
 			nRow = FOG_GetRowFromTxt(sgptDataTables->pItemStatCostLinker, szText, 0);
-			if (nRow >= 0)
-			{
+			if (nRow >= 0) {
 				*a2 = 1;
 				return nRow;
 			}
 		}
 
-		if (!SStrCmpI(szText, "base", 32))
-		{
+		if (!SStrCmpI(szText, "base", 32)) {
 			*a2 = 0;
 			return 1;
 		}
 
-		if (!SStrCmpI(szText, "mod", 32))
-		{
+		if (!SStrCmpI(szText, "mod", 32)) {
 			*a2 = 0;
 			return 2;
 		}
 
-		bool isAcc = SStrCmpI(szText, "accr", 32) == 0; //Seems unused / unneeded
+		bool isAcc = SStrCmpI(szText, "accr", 32) == 0; // Seems unused / unneeded
 		D2_MAYBE_UNUSED(isAcc);
 		*a2 = 0;
 	}
@@ -78,43 +61,33 @@ int __fastcall sub_6FD55150(char* szText, int* a2, int a3, int nKeywordNumber)
 }
 
 // D2Common.0x6FD551E0
-void __fastcall DATATBLS_ItemCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
+void __fastcall DATATBLS_ItemCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
 	int nBufferSize = 0;
 	FOGASTNodeStrc pBuffer[1024] = {};
 
-	if (pRecord)
-	{
-		if (pSrc)
-		{
+	if (pRecord) {
+		if (pSrc) {
 			nBufferSize = DATATBLS_CompileExpression(pSrc, pBuffer, sizeof(pBuffer), DATATBLS_MapItemsTxtKeywordToNumber, DATATBLS_Return2, sub_6FD55150);
-			if (nBufferSize > 0)
-			{
+			if (nBufferSize > 0) {
 				*(uint32_t*)((char*)pRecord + nOffset) = DATATBLS_AppendMemoryBuffer((char**)&sgptDataTables->pItemsCode, (int*)&sgptDataTables->nItemsCodeSize, &sgptDataTables->nItemsCodeSizeEx, pBuffer, nBufferSize);
-			}
-			else
-			{
+			} else {
 				*(uint32_t*)((char*)pRecord + nOffset) = -1;
 			}
-		}
-		else
-		{
+		} else {
 			*(uint32_t*)((char*)pRecord + nOffset) = -1;
 		}
 	}
 }
 
 // D2Common.0x6FD55280
-void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive) {
 	D2ItemsTxt* pWeapons = NULL;
 	D2ItemsTxt* pArmor = NULL;
 	D2ItemsTxt* pMisc = NULL;
 	D2ItemsTxt* pItems = NULL;
 	int nOldCounter = 0;
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "code", TXTFIELD_ASCIITOCODE, 0, 128, &sgptDataTables->pItemsLinker },
 		{ "namestr", TXTFIELD_KEYTOWORD, 0, 244, (void*)DATATBLS_GetStringIdFromReferenceString },
 		{ "version", TXTFIELD_WORD, 0, 246, NULL },
@@ -311,7 +284,6 @@ void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive)
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
-
 	sgptDataTables->pItemsLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	pWeapons = (D2ItemsTxt*)DATATBLS_CompileTxt(hArchive, "weapons", pTbl, &sgptDataTables->pItemDataTables.nWeaponsTxtRecordCount, sizeof(D2ItemsTxt));
 	pArmor = (D2ItemsTxt*)DATATBLS_CompileTxt(hArchive, "armor", pTbl, &sgptDataTables->pItemDataTables.nArmorTxtRecordCount, sizeof(D2ItemsTxt));
@@ -336,10 +308,8 @@ void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive)
 
 	DATATBLS_GetBinFileHandle(hArchive, "itemscode", (void**)&sgptDataTables->pItemsCode, (int*)&sgptDataTables->nItemsCodeSize, &sgptDataTables->nItemsCodeSizeEx);
 
-	if (!sgptDataTables->bCompileTxt)
-	{
-		for (int i = 0; i < sgptDataTables->pItemDataTables.nItemsTxtRecordCount; ++i)
-		{
+	if (!sgptDataTables->bCompileTxt) {
+		for (int i = 0; i < sgptDataTables->pItemDataTables.nItemsTxtRecordCount; ++i) {
 			FOG_10215(sgptDataTables->pItemsLinker, sgptDataTables->pItemDataTables.pItemsTxt[i].dwCode);
 		}
 	}
@@ -347,10 +317,8 @@ void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pIndexOldToCurrent = (uint16_t*)D2_CALLOC_POOL(nullptr, sizeof(uint16_t) * sgptDataTables->pItemDataTables.nItemsTxtRecordCount);
 
 	nOldCounter = 0;
-	for (int i = 0; i < sgptDataTables->pItemDataTables.nItemsTxtRecordCount; ++i)
-	{
-		if (!sgptDataTables->pItemDataTables.pItemsTxt[i].wVersion)
-		{
+	for (int i = 0; i < sgptDataTables->pItemDataTables.nItemsTxtRecordCount; ++i) {
+		if (!sgptDataTables->pItemDataTables.pItemsTxt[i].wVersion) {
 			sgptDataTables->pIndexOldToCurrent[nOldCounter] = i;
 			++nOldCounter;
 		}
@@ -358,17 +326,14 @@ void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD575D0
-void __fastcall DATATBLS_UnloadItemsTxt()
-{
+void __fastcall DATATBLS_UnloadItemsTxt() {
 	FOG_FreeLinker(sgptDataTables->pItemsLinker);
 
-	if (sgptDataTables->pItemDataTables.pItemsTxt)
-	{
+	if (sgptDataTables->pItemDataTables.pItemsTxt) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pItemDataTables.pItemsTxt);
 	}
 
-	if (sgptDataTables->pIndexOldToCurrent)
-	{
+	if (sgptDataTables->pIndexOldToCurrent) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pIndexOldToCurrent);
 	}
 
@@ -376,18 +341,14 @@ void __fastcall DATATBLS_UnloadItemsTxt()
 }
 
 // D2Common.0x6FD57620 (#10599)
-D2ItemDataTbl* __stdcall DATATBLS_GetItemDataTables()
-{
+D2ItemDataTbl* __stdcall DATATBLS_GetItemDataTables() {
 	return &sgptDataTables->pItemDataTables;
 }
 
 // D2Common.0x6FD57630 (#10597)
-int __stdcall DATATBLS_MapOldItemIndexToCurrent(int nItemId)
-{
-	if (nItemId < sgptDataTables->pItemDataTables.nItemsTxtRecordCount)
-	{
-		if (nItemId >= 0)
-		{
+int __stdcall DATATBLS_MapOldItemIndexToCurrent(int nItemId) {
+	if (nItemId < sgptDataTables->pItemDataTables.nItemsTxtRecordCount) {
+		if (nItemId >= 0) {
 			D2_ASSERT(sgptDataTables->pIndexOldToCurrent);
 			return sgptDataTables->pIndexOldToCurrent[nItemId];
 		}
@@ -397,10 +358,8 @@ int __stdcall DATATBLS_MapOldItemIndexToCurrent(int nItemId)
 }
 
 // D2Common.0x6FD57680 (#10600)
-D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
-{
-	if (nItemId < sgptDataTables->pItemDataTables.nItemsTxtRecordCount)
-	{
+D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId) {
+	if (nItemId < sgptDataTables->pItemDataTables.nItemsTxtRecordCount) {
 		D2_ASSERT(sgptDataTables->pItemDataTables.pItemsTxt);
 		return &sgptDataTables->pItemDataTables.pItemsTxt[nItemId];
 	}
@@ -409,11 +368,9 @@ D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
 }
 
 // D2Common.0x6FD576D0 (#10601)
-D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId)
-{
+D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId) {
 	*pItemId = FOG_GetLinkIndex(sgptDataTables->pItemsLinker, dwCode, 0);
-	if (*pItemId >= 0)
-	{
+	if (*pItemId >= 0) {
 		return &sgptDataTables->pItemDataTables.pItemsTxt[*pItemId];
 	}
 
@@ -422,51 +379,38 @@ D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* p
 }
 
 // D2Common.0x6FD57720 (#10602)
-int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode)
-{
+int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode) {
 	return FOG_GetLinkIndex(sgptDataTables->pItemsLinker, dwCode, 0);
 }
 
 // D2Common.0x6FD57740
-void __fastcall DATATBLS_ItemParamLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
+void __fastcall DATATBLS_ItemParamLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
 	int nRow = 0;
 
-	if (pRecord)
-	{
-		if (pSrc && *pSrc != 0)
-		{
-			if (*pSrc == '-' || *pSrc >= '0' && *pSrc <= '9')
-			{
+	if (pRecord) {
+		if (pSrc && *pSrc != 0) {
+			if (*pSrc == '-' || *pSrc >= '0' && *pSrc <= '9') {
 				*(uint32_t*)((char*)pRecord + nOffset) = atoi(pSrc);
-			}
-			else
-			{
-				if (sgptDataTables->pSkillsLinker)
-				{
+			} else {
+				if (sgptDataTables->pSkillsLinker) {
 					nRow = FOG_GetRowFromTxt(sgptDataTables->pSkillsLinker, pSrc, 0);
-					if (nRow >= 0)
-					{
+					if (nRow >= 0) {
 						*(uint32_t*)((char*)pRecord + nOffset) = nRow;
 						return;
 					}
 				}
 
-				if (sgptDataTables->pMonTypeLinker)
-				{
+				if (sgptDataTables->pMonTypeLinker) {
 					nRow = FOG_GetRowFromTxt(sgptDataTables->pMonTypeLinker, pSrc, 0);
-					if (nRow >= 0)
-					{
+					if (nRow >= 0) {
 						*(uint32_t*)((char*)pRecord + nOffset) = nRow;
 						return;
 					}
 				}
 
-				if (sgptDataTables->pStatesLinker)
-				{
+				if (sgptDataTables->pStatesLinker) {
 					nRow = FOG_GetRowFromTxt(sgptDataTables->pStatesLinker, pSrc, 0);
-					if (nRow >= 0)
-					{
+					if (nRow >= 0) {
 						*(uint32_t*)((char*)pRecord + nOffset) = nRow;
 						return;
 					}
@@ -475,17 +419,14 @@ void __fastcall DATATBLS_ItemParamLinker(char* pSrc, void* pRecord, int nOffset,
 				*(uint32_t*)((char*)pRecord + nOffset) = 0;
 				FOG_Trace("Failed to parse '%s' line %d", pSrc, nTxtRow);
 			}
-		}
-		else
-		{
+		} else {
 			*(uint32_t*)((char*)pRecord + nOffset) = 0;
 		}
 	}
 }
 
 // D2Common.0x6FD57820
-void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive) {
 	const Unicode* pUnicode = NULL;
 
 	int nSuffixRecords = 0;
@@ -496,8 +437,7 @@ void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive
 	D2MagicAffixTxt* pMagicPrefix = NULL;
 	D2MagicAffixTxt* pAutoMagic = NULL;
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "name", TXTFIELD_ASCII, 31, 0, NULL },
 		{ "spawnable", TXTFIELD_BYTE, 0, 84, NULL },
 		{ "level", TXTFIELD_DWORD, 0, 88, NULL },
@@ -546,7 +486,7 @@ void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive
 	pAutoMagic = (D2MagicAffixTxt*)DATATBLS_CompileTxt(hArchive, "automagic", pTbl, &nAutoMagicRecords, sizeof(D2MagicAffixTxt));
 
 	sgptDataTables->pMagicAffixDataTables.nMagicAffixTxtRecordCount = nSuffixRecords + nPrefixRecords + nAutoMagicRecords;
-	sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt = (D2MagicAffixTxt *)D2_ALLOC_POOL(nullptr, sizeof(D2MagicAffixTxt) * sgptDataTables->pMagicAffixDataTables.nMagicAffixTxtRecordCount);
+	sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt = (D2MagicAffixTxt*)D2_ALLOC_POOL(nullptr, sizeof(D2MagicAffixTxt) * sgptDataTables->pMagicAffixDataTables.nMagicAffixTxtRecordCount);
 	// Suffixes
 	sgptDataTables->pMagicAffixDataTables.pMagicSuffix = sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt;
 	memcpy(sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt, pMagicSuffix, sizeof(D2MagicAffixTxt) * nSuffixRecords);
@@ -561,45 +501,36 @@ void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive
 	DATATBLS_UnloadBin(pMagicPrefix);
 	DATATBLS_UnloadBin(pAutoMagic);
 
-	for (int i = 0; i < sgptDataTables->pMagicAffixDataTables.nMagicAffixTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->pMagicAffixDataTables.nMagicAffixTxtRecordCount; ++i) {
 		sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt[i].wTblIndex = D2LANG_GetTblIndex(sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt[i].szName, &pUnicode);
 	}
 }
 
 // D2Common.0x6FD58080
-void __fastcall DATATBLS_UnloadMagicSuffix_Prefix_AutomagicTxt()
-{
-	if (sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt)
-	{
+void __fastcall DATATBLS_UnloadMagicSuffix_Prefix_AutomagicTxt() {
+	if (sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt);
 	}
 	sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt = NULL;
 }
 
 // D2Common.0x6FD580B0 (#10603)
-D2MagicAffixDataTbl* __stdcall DATATBLS_GetMagicAffixDataTables()
-{
+D2MagicAffixDataTbl* __stdcall DATATBLS_GetMagicAffixDataTables() {
 	return &sgptDataTables->pMagicAffixDataTables;
 }
 
 // D2Common.0x6FD580C0 (#10604)
-D2MagicAffixTxt* __stdcall DATATBLS_GetMagicAffixTxtRecord(int nIndex)
-{
+D2MagicAffixTxt* __stdcall DATATBLS_GetMagicAffixTxtRecord(int nIndex) {
 	D2_ASSERT(sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt);
-	if (nIndex > sgptDataTables->pMagicAffixDataTables.nMagicAffixTxtRecordCount || nIndex <= 0)
-	{
+	if (nIndex > sgptDataTables->pMagicAffixDataTables.nMagicAffixTxtRecordCount || nIndex <= 0) {
 		return NULL;
-	}
-	else
-	{
+	} else {
 		return &sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt[nIndex - 1];
 	}
 }
 
 // D2Common.0x6FD58110
-void __fastcall DATATBLS_LoadRareSuffix_PrefixTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadRareSuffix_PrefixTxt(HD2ARCHIVE hArchive) {
 	const Unicode* pUnicode = NULL;
 
 	D2RareAffixTxt* pRareSuffix = NULL;
@@ -608,8 +539,7 @@ void __fastcall DATATBLS_LoadRareSuffix_PrefixTxt(HD2ARCHIVE hArchive)
 	int nSuffixRecords = 0;
 	int nPrefixRecords = 0;
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "name", TXTFIELD_ASCII, 31, 38, NULL },
 		{ "version", TXTFIELD_WORD, 0, 14, NULL },
 		{ "itype1", TXTFIELD_CODETOWORD, 0, 16, &sgptDataTables->pItemTypesLinker },
@@ -641,49 +571,39 @@ void __fastcall DATATBLS_LoadRareSuffix_PrefixTxt(HD2ARCHIVE hArchive)
 	DATATBLS_UnloadBin(pRarePrefix);
 	DATATBLS_UnloadBin(pRareSuffix);
 
-	for (int i = 0; i < sgptDataTables->pRareAffixDataTables.nRareAffixTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->pRareAffixDataTables.nRareAffixTxtRecordCount; ++i) {
 		sgptDataTables->pRareAffixDataTables.pRareAffixTxt[i].wStringId = D2LANG_GetTblIndex(sgptDataTables->pRareAffixDataTables.pRareAffixTxt[i].szName, &pUnicode);
 	}
 }
 
 // D2Common.0x6FD58450
-void __fastcall DATATBLS_UnloadRareSuffix_PrefixTxt()
-{
-	if (sgptDataTables->pRareAffixDataTables.pRareAffixTxt)
-	{
+void __fastcall DATATBLS_UnloadRareSuffix_PrefixTxt() {
+	if (sgptDataTables->pRareAffixDataTables.pRareAffixTxt) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pRareAffixDataTables.pRareAffixTxt);
 	}
 	sgptDataTables->pRareAffixDataTables.pRareAffixTxt = NULL;
 }
 
 // D2Common.0x6FD58480 (#10605)
-D2RareAffixDataTbl* __fastcall DATATBLS_GetRareAffixDataTables()
-{
+D2RareAffixDataTbl* __fastcall DATATBLS_GetRareAffixDataTables() {
 	return &sgptDataTables->pRareAffixDataTables;
 }
 
 // D2Common.0x6FD58490 (#10606)
-D2RareAffixTxt* __stdcall DATATBLS_GetRareAffixTxtRecord(int nId)
-{
-	if (nId > sgptDataTables->pRareAffixDataTables.nRareAffixTxtRecordCount || nId <= 0)
-	{
+D2RareAffixTxt* __stdcall DATATBLS_GetRareAffixTxtRecord(int nId) {
+	if (nId > sgptDataTables->pRareAffixDataTables.nRareAffixTxtRecordCount || nId <= 0) {
 		return NULL;
-	}
-	else
-	{
+	} else {
 		D2_ASSERT(sgptDataTables->pRareAffixDataTables.pRareAffixTxt);
 		return &sgptDataTables->pRareAffixDataTables.pRareAffixTxt[nId - 1];
 	}
 }
 
 // D2Common.0x6FD584E0
-void __fastcall DATATBLS_LoadUniqueItemsTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadUniqueItemsTxt(HD2ARCHIVE hArchive) {
 	const Unicode* pUnicode = NULL;
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "index", TXTFIELD_ASCII, 31, 2, NULL },
 		{ "version", TXTFIELD_WORD, 0, 36, NULL },
 		{ "enabled", TXTFIELD_BIT, 0, 44, NULL },
@@ -757,40 +677,34 @@ void __fastcall DATATBLS_LoadUniqueItemsTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pUniqueItemsLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pUniqueItemsTxt = (D2UniqueItemsTxt*)DATATBLS_CompileTxt(hArchive, "uniqueitems", pTbl, &sgptDataTables->nUniqueItemsTxtRecordCount, sizeof(D2UniqueItemsTxt));
 
-	if (sgptDataTables->nUniqueItemsTxtRecordCount >= 32767)
-	{
+	if (sgptDataTables->nUniqueItemsTxtRecordCount >= 32767) {
 		FOG_DisplayWarning("uniqueitems table exceeded maximum number of entries.", __FILE__, __LINE__);
 	}
 
-	for (int i = 0; i < sgptDataTables->nUniqueItemsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nUniqueItemsTxtRecordCount; ++i) {
 		sgptDataTables->pUniqueItemsTxt[i].wId = i;
 		FOG_10216_AddRecordToLinkingTable(sgptDataTables->pUniqueItemsLinker, sgptDataTables->pUniqueItemsTxt[i].szName);
 
 		sgptDataTables->pUniqueItemsTxt[i].wTblIndex = D2LANG_GetTblIndex(sgptDataTables->pUniqueItemsTxt[i].szName, &pUnicode);
-		if (sgptDataTables->pUniqueItemsTxt[i].wTblIndex == 0)
-		{
+		if (sgptDataTables->pUniqueItemsTxt[i].wTblIndex == 0) {
 			sgptDataTables->pUniqueItemsTxt[i].wTblIndex = 5383;
 		}
 	}
 }
 
 // D2Common.0x6FD59110
-void __fastcall DATATBLS_UnloadUniqueItemsTxt()
-{
+void __fastcall DATATBLS_UnloadUniqueItemsTxt() {
 	FOG_FreeLinker(sgptDataTables->pUniqueItemsLinker);
 	DATATBLS_UnloadBin(sgptDataTables->pUniqueItemsTxt);
 	sgptDataTables->nUniqueItemsTxtRecordCount = 0;
 }
 
 // D2Common.0x6FD59140
-void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive) {
 	const Unicode* pUnicode = NULL;
 	short nSetId = 0;
 
-	D2BinFieldStrc pSetsTbl[] =
-	{
+	D2BinFieldStrc pSetsTbl[] = {
 		{ "index", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pSetsLinker },
 		{ "name", TXTFIELD_KEYTOWORD, 0, TXTFIELD_DWORD, (void*)DATATBLS_GetStringIdFromReferenceString },
 		{ "version", TXTFIELD_WORD, 0, 4, NULL },
@@ -861,8 +775,7 @@ void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive)
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
-	D2BinFieldStrc pSetItemsTbl[] =
-	{
+	D2BinFieldStrc pSetItemsTbl[] = {
 		{ "index", TXTFIELD_ASCII, 31, TXTFIELD_DWORD, NULL },
 		{ "item", TXTFIELD_RAW, 0, 40, NULL },
 		{ "set", TXTFIELD_NAMETOWORD, 0, 44, &sgptDataTables->pSetsLinker },
@@ -961,43 +874,35 @@ void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pSetsLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pSetsTxt = (D2SetsTxt*)DATATBLS_CompileTxt(hArchive, "sets", pSetsTbl, &sgptDataTables->nSetsTxtRecordCount, sizeof(D2SetsTxt));
 
-	if (sgptDataTables->nSetsTxtRecordCount >= 32767)
-	{
+	if (sgptDataTables->nSetsTxtRecordCount >= 32767) {
 		FOG_DisplayWarning("sets table exceeded maximum number of entries.", __FILE__, __LINE__);
 	}
 
 	sgptDataTables->pSetItemsLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pSetItemsTxt = (D2SetItemsTxt*)DATATBLS_CompileTxt(hArchive, "setitems", pSetItemsTbl, &sgptDataTables->nSetItemsTxtRecordCount, sizeof(D2SetItemsTxt));
 
-	if (sgptDataTables->nSetItemsTxtRecordCount >= 32767)
-	{
+	if (sgptDataTables->nSetItemsTxtRecordCount >= 32767) {
 		FOG_DisplayWarning("setitems table exceeded maximum number of entries.", __FILE__, __LINE__);
 	}
 
-	for (int i = 0; i < sgptDataTables->nSetItemsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nSetItemsTxtRecordCount; ++i) {
 		sgptDataTables->pSetItemsTxt[i].wSetItemId = i;
 		FOG_10216_AddRecordToLinkingTable(sgptDataTables->pSetItemsLinker, sgptDataTables->pSetItemsTxt[i].szName);
 
 		sgptDataTables->pSetItemsTxt[i].wStringId = D2LANG_GetTblIndex(sgptDataTables->pSetItemsTxt[i].szName, &pUnicode);
-		if (!sgptDataTables->pSetItemsTxt[i].wStringId)
-		{
+		if (!sgptDataTables->pSetItemsTxt[i].wStringId) {
 			sgptDataTables->pSetItemsTxt[i].wStringId = 5383;
 		}
 
 		nSetId = sgptDataTables->pSetItemsTxt[i].nSetId;
-		if (nSetId >= 0 && nSetId < sgptDataTables->nSetsTxtRecordCount)
-		{
-			if (sgptDataTables->pSetsTxt[nSetId].nSetItems < 6)
-			{
+		if (nSetId >= 0 && nSetId < sgptDataTables->nSetsTxtRecordCount) {
+			if (sgptDataTables->pSetsTxt[nSetId].nSetItems < 6) {
 				sgptDataTables->pSetItemsTxt[i].wVersion = sgptDataTables->pSetsTxt[nSetId].wVersion;
 				sgptDataTables->pSetItemsTxt[i].nSetItems = sgptDataTables->pSetsTxt[nSetId].nSetItems;
 				sgptDataTables->pSetsTxt[nSetId].pSetItem[sgptDataTables->pSetsTxt[nSetId].nSetItems] = &sgptDataTables->pSetItemsTxt[i];
 
-				++sgptDataTables->pSetsTxt[nSetId].nSetItems;//TODO: Increment SetItemsTxt-Counter, too? (Not done in the original code)
-			}
-			else
-			{
+				++sgptDataTables->pSetsTxt[nSetId].nSetItems; // TODO: Increment SetItemsTxt-Counter, too? (Not done in the original code)
+			} else {
 				FOG_Trace("Error: too many items in set %d", sgptDataTables->pSetsTxt[nSetId].wSetId);
 			}
 		}
@@ -1005,8 +910,7 @@ void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD5AE00
-void __fastcall DATATBLS_UnloadSets_SetItemsTxt()
-{
+void __fastcall DATATBLS_UnloadSets_SetItemsTxt() {
 	FOG_FreeLinker(sgptDataTables->pSetsLinker);
 	FOG_FreeLinker(sgptDataTables->pSetItemsLinker);
 	DATATBLS_UnloadBin(sgptDataTables->pSetItemsTxt);
@@ -1016,40 +920,32 @@ void __fastcall DATATBLS_UnloadSets_SetItemsTxt()
 }
 
 // Inlined
-D2SetItemsTxt* __stdcall DATATBLS_GetSetItemsTxtRecord(int nSetItemId)
-{
-	if (nSetItemId >= 0 && nSetItemId < sgptDataTables->nSetItemsTxtRecordCount)
-	{
+D2SetItemsTxt* __stdcall DATATBLS_GetSetItemsTxtRecord(int nSetItemId) {
+	if (nSetItemId >= 0 && nSetItemId < sgptDataTables->nSetItemsTxtRecordCount) {
 		return &sgptDataTables->pSetItemsTxt[nSetItemId];
 	}
 	return nullptr;
 }
 
-D2SetsTxt* __stdcall DATATBLS_GetSetsTxtRecord(int nSetId)
-{
-	if (nSetId >= 0 && nSetId < sgptDataTables->nSetsTxtRecordCount)
-	{
+D2SetsTxt* __stdcall DATATBLS_GetSetsTxtRecord(int nSetId) {
+	if (nSetId >= 0 && nSetId < sgptDataTables->nSetsTxtRecordCount) {
 		return &sgptDataTables->pSetsTxt[nSetId];
 	}
 	return nullptr;
 }
 
-D2SetsTxt* __stdcall DATATBLS_GetSetsTxtRecordFromSetItemId(int nSetItemId)
-{
-	if (D2SetItemsTxt* pSetItemTxt = DATATBLS_GetSetItemsTxtRecord(nSetItemId))
-	{
+D2SetsTxt* __stdcall DATATBLS_GetSetsTxtRecordFromSetItemId(int nSetItemId) {
+	if (D2SetItemsTxt* pSetItemTxt = DATATBLS_GetSetItemsTxtRecord(nSetItemId)) {
 		return DATATBLS_GetSetsTxtRecord(pSetItemTxt->nSetId);
 	}
 	return nullptr;
 }
 
 // D2Common.0x6FD5AE40
-void __fastcall DATATBLS_LoadQualityItemsTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadQualityItemsTxt(HD2ARCHIVE hArchive) {
 	const Unicode* pUnicode = NULL;
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "nummods", TXTFIELD_BYTE, 0, 10, NULL },
 		{ "mod1code", TXTFIELD_NAMETODWORD, 0, 12, &sgptDataTables->pPropertiesLinker },
 		{ "mod2code", TXTFIELD_NAMETODWORD, 0, 28, &sgptDataTables->pPropertiesLinker },
@@ -1076,41 +972,32 @@ void __fastcall DATATBLS_LoadQualityItemsTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->pQualityItemDataTables.pQualityItemsTxt = (D2QualityItemsTxt*)DATATBLS_CompileTxt(hArchive, "qualityitems", pTbl, &sgptDataTables->pQualityItemDataTables.nQualityItemsTxtRecordCount, sizeof(D2QualityItemsTxt));
 
-	for (int i = 0; i < sgptDataTables->pQualityItemDataTables.nQualityItemsTxtRecordCount; ++i)
-	{
-		if (sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].szEffect1[0])
-		{
+	for (int i = 0; i < sgptDataTables->pQualityItemDataTables.nQualityItemsTxtRecordCount; ++i) {
+		if (sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].szEffect1[0]) {
 			sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].wEffect1TblId = D2LANG_GetTblIndex(sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].szEffect1, &pUnicode);
 		}
 
-		if (sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].szEffect2[0])
-		{
+		if (sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].szEffect2[0]) {
 			sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].wEffect2TblId = D2LANG_GetTblIndex(sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[i].szEffect2, &pUnicode);
 		}
 	}
 }
 
 // D2Common.0x6FD5B250
-void __fastcall DATATBLS_UnloadQualityItemsTxt()
-{
+void __fastcall DATATBLS_UnloadQualityItemsTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pQualityItemDataTables.pQualityItemsTxt);
 }
 
 // D2Common.0x6FD5B260 (#10611)
-D2QualityItemDataTbl* __fastcall DATATBLS_GetQualityItemDataTables()
-{
+D2QualityItemDataTbl* __fastcall DATATBLS_GetQualityItemDataTables() {
 	return &sgptDataTables->pQualityItemDataTables;
 }
 
 // D2Common.0x6FD5B270 (#10612)
-D2QualityItemsTxt* __stdcall DATATBLS_GetQualityItemsTxtRecord(int nIndex)
-{
-	if (nIndex >= sgptDataTables->pQualityItemDataTables.nQualityItemsTxtRecordCount || nIndex == -1)
-	{
+D2QualityItemsTxt* __stdcall DATATBLS_GetQualityItemsTxtRecord(int nIndex) {
+	if (nIndex >= sgptDataTables->pQualityItemDataTables.nQualityItemsTxtRecordCount || nIndex == -1) {
 		return NULL;
-	}
-	else
-	{
+	} else {
 		D2_ASSERT(sgptDataTables->pQualityItemDataTables.pQualityItemsTxt);
 		D2_ASSERT(&sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[nIndex]);
 		return &sgptDataTables->pQualityItemDataTables.pQualityItemsTxt[nIndex];
@@ -1118,14 +1005,12 @@ D2QualityItemsTxt* __stdcall DATATBLS_GetQualityItemsTxtRecord(int nIndex)
 }
 
 // D2Common.0x6FD5B2F0
-void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive) {
 	const Unicode* pUnicode = NULL;
 	int nItemCode = 0;
 	char szReference[4] = {};
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "name", TXTFIELD_ASCII, 31, 0, NULL },
 		{ "letter", TXTFIELD_ASCII, 5, 32, NULL },
 		{ "code", TXTFIELD_UNKNOWN3, 0, 40, &sgptDataTables->pItemsLinker },
@@ -1172,9 +1057,7 @@ void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->pGemDataTables.pGemsTxt = (D2GemsTxt*)DATATBLS_CompileTxt(hArchive, "gems", pTbl, &sgptDataTables->pGemDataTables.nGemsTxtRecordCount, sizeof(D2GemsTxt));
 
-
-	for (int i = 0; i < sgptDataTables->pGemDataTables.nGemsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->pGemDataTables.nGemsTxtRecordCount; ++i) {
 		szReference[0] = sgptDataTables->pGemDataTables.pGemsTxt[i].szItemCode[0] & ((sgptDataTables->pGemDataTables.pGemsTxt[i].szItemCode[0] == ' ') - 1);
 		szReference[1] = sgptDataTables->pGemDataTables.pGemsTxt[i].szItemCode[1] & ((sgptDataTables->pGemDataTables.pGemsTxt[i].szItemCode[1] == ' ') - 1);
 		szReference[2] = sgptDataTables->pGemDataTables.pGemsTxt[i].szItemCode[2] & ((sgptDataTables->pGemDataTables.pGemsTxt[i].szItemCode[2] == ' ') - 1);
@@ -1183,38 +1066,30 @@ void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive)
 		sgptDataTables->pGemDataTables.pGemsTxt[i].wStringId = D2LANG_GetTblIndex(szReference, &pUnicode);
 	}
 
-	for (int i = 0; i < sgptDataTables->pGemDataTables.nGemsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->pGemDataTables.nGemsTxtRecordCount; ++i) {
 		sgptDataTables->pItemDataTables.pItemsTxt[i].dwGemOffset = -1;
 		nItemCode = sgptDataTables->pGemDataTables.pGemsTxt[i].dwItemCode;
-		if (nItemCode >= 0)
-		{
+		if (nItemCode >= 0) {
 			sgptDataTables->pItemDataTables.pItemsTxt[nItemCode].dwGemOffset = i;
 		}
 	}
 }
 
 // D2Common.0x6FD5BAE0
-void __fastcall DATATBLS_UnloadGemsTxt()
-{
+void __fastcall DATATBLS_UnloadGemsTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pGemDataTables.pGemsTxt);
 }
 
 // D2Common.0x6FD5BAF0 (#10615)
-D2GemDataTbl* __fastcall DATATBLS_GetGemDataTables()
-{
+D2GemDataTbl* __fastcall DATATBLS_GetGemDataTables() {
 	return &sgptDataTables->pGemDataTables;
 }
 
 // D2Common.0x6FD5BB00 (#10616)
-D2GemsTxt* __stdcall DATATBLS_GetGemsTxtRecord(int nGemId)
-{
-	if (nGemId >= sgptDataTables->pGemDataTables.nGemsTxtRecordCount || nGemId == -1)
-	{
+D2GemsTxt* __stdcall DATATBLS_GetGemsTxtRecord(int nGemId) {
+	if (nGemId >= sgptDataTables->pGemDataTables.nGemsTxtRecordCount || nGemId == -1) {
 		return NULL;
-	}
-	else
-	{
+	} else {
 		D2_ASSERT(sgptDataTables->pGemDataTables.pGemsTxt);
 		D2_ASSERT(&sgptDataTables->pGemDataTables.pGemsTxt[nGemId]);
 		return &sgptDataTables->pGemDataTables.pGemsTxt[nGemId];
@@ -1222,10 +1097,8 @@ D2GemsTxt* __stdcall DATATBLS_GetGemsTxtRecord(int nGemId)
 }
 
 // D2Common.0x6FD5BB70
-void __fastcall DATATBLS_LoadBooksTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadBooksTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "name", TXTFIELD_KEYTOWORD, 0, 0, (void*)DATATBLS_GetStringIdFromReferenceString },
 		{ "scrollspellcode", TXTFIELD_RAW, 0, 24, NULL },
 		{ "bookspellcode", TXTFIELD_RAW, 0, 28, NULL },
@@ -1242,26 +1115,20 @@ void __fastcall DATATBLS_LoadBooksTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD5BD10
-void __fastcall DATATBLS_UnloadBooksTxt()
-{
+void __fastcall DATATBLS_UnloadBooksTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pBookDataTables.pBooksTxt);
 }
 
 // D2Common.0x6FD5BD20 (#10617)
-D2BookDataTbl* __fastcall DATATBLS_GetBookDataTables()
-{
+D2BookDataTbl* __fastcall DATATBLS_GetBookDataTables() {
 	return &sgptDataTables->pBookDataTables;
 }
 
 // D2Common.0x6FD5BD30 (#10618)
-D2BooksTxt* __stdcall DATATBLS_GetBooksTxtRecord(int nBookId)
-{
-	if (nBookId >= sgptDataTables->pBookDataTables.nBooksTxtRecordCount || nBookId == -1)
-	{
+D2BooksTxt* __stdcall DATATBLS_GetBooksTxtRecord(int nBookId) {
+	if (nBookId >= sgptDataTables->pBookDataTables.nBooksTxtRecordCount || nBookId == -1) {
 		return NULL;
-	}
-	else
-	{
+	} else {
 		D2_ASSERT(sgptDataTables->pBookDataTables.pBooksTxt);
 		D2_ASSERT(&sgptDataTables->pBookDataTables.pBooksTxt[nBookId]);
 
@@ -1270,44 +1137,35 @@ D2BooksTxt* __stdcall DATATBLS_GetBooksTxtRecord(int nBookId)
 }
 
 // D2Common.0x6FD5BDA0
-void __fastcall DATATBLS_LoadLowQualityItemsTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadLowQualityItemsTxt(HD2ARCHIVE hArchive) {
 	const Unicode* pUnicode = NULL;
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "Name", TXTFIELD_ASCII, 31, 0, NULL },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
-	sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt = (D2LowQualityItemsTxt *)DATATBLS_CompileTxt(hArchive, "lowqualityitems", pTbl, &sgptDataTables->pLowQualityItemDataTables.nLowQualityItemsTxtRecordCount, sizeof(D2LowQualityItemsTxt));
+	sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt = (D2LowQualityItemsTxt*)DATATBLS_CompileTxt(hArchive, "lowqualityitems", pTbl, &sgptDataTables->pLowQualityItemDataTables.nLowQualityItemsTxtRecordCount, sizeof(D2LowQualityItemsTxt));
 
-	for (int i = 0; i < sgptDataTables->pLowQualityItemDataTables.nLowQualityItemsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->pLowQualityItemDataTables.nLowQualityItemsTxtRecordCount; ++i) {
 		sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt[i].wTblId = D2LANG_GetTblIndex(sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt[i].szName, &pUnicode);
 	}
 }
 
 // D2Common.0x6FD5BE40
-void __fastcall DATATBLS_UnloadLowQualityItemsTxt()
-{
+void __fastcall DATATBLS_UnloadLowQualityItemsTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt);
 }
 
 // D2Common.0x6FD5BE50 (#10613)
-D2LowQualityItemDataTbl* __fastcall DATATBLS_GetLowQualityItemDataTables()
-{
+D2LowQualityItemDataTbl* __fastcall DATATBLS_GetLowQualityItemDataTables() {
 	return &sgptDataTables->pLowQualityItemDataTables;
 }
 
 // D2Common.0x6FD5BE60 (#10614)
-D2LowQualityItemsTxt* __stdcall DATATBLS_GetLowQualityItemsTxtRecord(int nId)
-{
-	if (nId >= sgptDataTables->pLowQualityItemDataTables.nLowQualityItemsTxtRecordCount || nId == -1)
-	{
+D2LowQualityItemsTxt* __stdcall DATATBLS_GetLowQualityItemsTxtRecord(int nId) {
+	if (nId >= sgptDataTables->pLowQualityItemDataTables.nLowQualityItemsTxtRecordCount || nId == -1) {
 		return NULL;
-	}
-	else
-	{
+	} else {
 		D2_ASSERT(sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt);
 		D2_ASSERT(&sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt[nId]);
 
@@ -1316,10 +1174,8 @@ D2LowQualityItemsTxt* __stdcall DATATBLS_GetLowQualityItemsTxtRecord(int nId)
 }
 
 // D2Common.0x6FD5BED0
-void __fastcall DATATBLS_LoadItemRatioTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadItemRatioTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "Version", TXTFIELD_WORD, 0, 64, NULL },
 		{ "Uber", TXTFIELD_BYTE, 0, 66, NULL },
 		{ "Class Specific", TXTFIELD_BYTE, 0, 67, NULL },
@@ -1346,20 +1202,17 @@ void __fastcall DATATBLS_LoadItemRatioTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD5C200
-void __fastcall DATATBLS_UnloadItemRatioTxt()
-{
+void __fastcall DATATBLS_UnloadItemRatioTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pItemRatioDataTables.pItemRatioTxt);
 }
 
 // D2Common.0x6FD5C210 (#10622)
-D2ItemRatioDataTbl* __fastcall DATATBLS_GetItemRatioDataTables()
-{
+D2ItemRatioDataTbl* __fastcall DATATBLS_GetItemRatioDataTables() {
 	return &sgptDataTables->pItemRatioDataTables;
 }
 
 // D2Common.0x6FD5C220 (#10623)
-D2ItemRatioTxt* __stdcall DATATBLS_GetItemRatioTxtRecord(int nItemId, uint8_t nDifficulty, uint16_t wVersion)
-{
+D2ItemRatioTxt* __stdcall DATATBLS_GetItemRatioTxtRecord(int nItemId, uint8_t nDifficulty, uint16_t wVersion) {
 	int nClass = 0;
 	int nQuest = 0;
 	int nId = -1;
@@ -1372,20 +1225,14 @@ D2ItemRatioTxt* __stdcall DATATBLS_GetItemRatioTxtRecord(int nItemId, uint8_t nD
 #define ITEMS_EXPANSION_VERSION_BASE 100
 	D2_ASSERT(wVersion == ITEMS_PRE_EXPANSION_VERSION || wVersion == ITEMS_EXPANSION_VERSION_BASE);
 
-	for (int i = 0; i < sgptDataTables->pItemRatioDataTables.nItemRatioTxtRecordCount; ++i)
-	{
-		if (nClass == sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].nClassSpecific
-			&& nQuest == sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].nUber
-			&& sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].wVersion <= wVersion
-			&& sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].wVersion >= nLastVersion)
-		{
+	for (int i = 0; i < sgptDataTables->pItemRatioDataTables.nItemRatioTxtRecordCount; ++i) {
+		if (nClass == sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].nClassSpecific && nQuest == sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].nUber && sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].wVersion <= wVersion && sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].wVersion >= nLastVersion) {
 			nLastVersion = sgptDataTables->pItemRatioDataTables.pItemRatioTxt[i].wVersion;
 			nId = i;
 		}
 	}
 
-	if (nId >= 0)
-	{
+	if (nId >= 0) {
 		return &sgptDataTables->pItemRatioDataTables.pItemRatioTxt[nId];
 	}
 
@@ -1393,33 +1240,25 @@ D2ItemRatioTxt* __stdcall DATATBLS_GetItemRatioTxtRecord(int nItemId, uint8_t nD
 }
 
 // D2Common.0x6FD5C2F0
-int __cdecl DATATBLS_CompareItemStatCostDescs(const void* pRecord1, const void* pRecord2)
-{
+int __cdecl DATATBLS_CompareItemStatCostDescs(const void* pRecord1, const void* pRecord2) {
 	D2ItemStatCostDescStrc* pElem1 = (D2ItemStatCostDescStrc*)pRecord1;
 	D2ItemStatCostDescStrc* pElem2 = (D2ItemStatCostDescStrc*)pRecord2;
 
-	if (pElem1->nDescPriority > pElem2->nDescPriority)
-	{
+	if (pElem1->nDescPriority > pElem2->nDescPriority) {
 		return 1;
-	}
-	else if (pElem1->nDescPriority == pElem2->nDescPriority)
-	{
+	} else if (pElem1->nDescPriority == pElem2->nDescPriority) {
 		return 0;
-	}
-	else
-	{
+	} else {
 		return -1;
 	}
 }
 
 // D2Common.0x6FD5C320
-void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive) {
 	uint16_t nOpBase = 0;
 	D2ItemStatCostDescStrc pStatsWithDescFunc[511] = {};
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "stat", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pItemStatCostLinker },
 		{ "send bits", TXTFIELD_BYTE, 0, 8, NULL },
 		{ "send param bits", TXTFIELD_BYTE, 0, 9, NULL },
@@ -1481,35 +1320,30 @@ void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
 	D2_ASSERT(sgptDataTables->nItemStatCostTxtRecordCount <= MAX_STATS);
 
 	sgptDataTables->nStuff = sgptDataTables->pItemStatCostTxt->dwStuff;
-	if (sgptDataTables->nStuff <= 0 || sgptDataTables->nStuff > 8)
-	{
+	if (sgptDataTables->nStuff <= 0 || sgptDataTables->nStuff > 8) {
 		sgptDataTables->nStuff = 6;
 	}
 	sgptDataTables->nShiftedStuff = (1 << sgptDataTables->nStuff) - 1;
 
-	for (int i = 0; i < sgptDataTables->nItemStatCostTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nItemStatCostTxtRecordCount; ++i) {
 		memset(sgptDataTables->pItemStatCostTxt[i].unk0x5E, -1, sizeof(sgptDataTables->pItemStatCostTxt[i].unk0x5E));
 	}
 
-	for (int nStatId = 0; nStatId < sgptDataTables->nItemStatCostTxtRecordCount; ++nStatId)
-	{
+	for (int nStatId = 0; nStatId < sgptDataTables->nItemStatCostTxtRecordCount; ++nStatId) {
 		D2ItemStatCostTxt& rCurrentStatRecord = sgptDataTables->pItemStatCostTxt[nStatId];
 		uint8_t nCurrentStatOp = rCurrentStatRecord.nOp;
-		if (nCurrentStatOp <= 0 || nCurrentStatOp >= 14)
+		if (nCurrentStatOp <= 0 || nCurrentStatOp >= 14) {
 			continue;
+		}
 
 		nOpBase = rCurrentStatRecord.wOpBase;
 
-		if (nOpBase < sgptDataTables->nItemStatCostTxtRecordCount)
-		{
+		if (nOpBase < sgptDataTables->nItemStatCostTxtRecordCount) {
 			sgptDataTables->pItemStatCostTxt[nOpBase].bIsBaseOfOtherStatOp = TRUE;
 
 			int nNextFreeId = 0;
-			while (nNextFreeId < ARRAY_SIZE(sgptDataTables->pItemStatCostTxt[nOpBase].unk0x5E))
-			{
-				if (sgptDataTables->pItemStatCostTxt[nOpBase].unk0x5E[nNextFreeId] >= sgptDataTables->nItemStatCostTxtRecordCount)
-				{
+			while (nNextFreeId < ARRAY_SIZE(sgptDataTables->pItemStatCostTxt[nOpBase].unk0x5E)) {
+				if (sgptDataTables->pItemStatCostTxt[nOpBase].unk0x5E[nNextFreeId] >= sgptDataTables->nItemStatCostTxtRecordCount) {
 					sgptDataTables->pItemStatCostTxt[nOpBase].unk0x5E[nNextFreeId] = nStatId;
 					break;
 				}
@@ -1517,33 +1351,27 @@ void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
 				++nNextFreeId;
 			}
 
-			if (nNextFreeId >= ARRAY_SIZE(sgptDataTables->pItemStatCostTxt[nOpBase].unk0x5E) && sgptDataTables->bCompileTxt)
-			{
+			if (nNextFreeId >= ARRAY_SIZE(sgptDataTables->pItemStatCostTxt[nOpBase].unk0x5E) && sgptDataTables->bCompileTxt) {
 				FOG_Trace("Error: greater than %d ops applied to target %s\n", 3, FOG_10255(sgptDataTables->pItemStatCostLinker, nOpBase, 0));
 			}
 
-			if (nCurrentStatOp == STAT_OP_APPLY_TO_ITEM || nCurrentStatOp == STAT_OP_APPLY_TO_ITEM_PCT)
-			{
+			if (nCurrentStatOp == STAT_OP_APPLY_TO_ITEM || nCurrentStatOp == STAT_OP_APPLY_TO_ITEM_PCT) {
 				rCurrentStatRecord.bHasOpApplyingToItem = TRUE;
 			}
 		}
 
-		for (const uint16_t wOpStat : rCurrentStatRecord.wOpStat)
-		{
-			if (wOpStat >= sgptDataTables->nItemStatCostTxtRecordCount)
-			{
+		for (const uint16_t wOpStat : rCurrentStatRecord.wOpStat) {
+			if (wOpStat >= sgptDataTables->nItemStatCostTxtRecordCount) {
 				break;
 			}
 
 			rCurrentStatRecord.bIsBaseOfOtherStatOp = TRUE;
 
 			int nNextFreeId = 0;
-			while (nNextFreeId < 16)
-			{
+			while (nNextFreeId < 16) {
 				D2ItemStatCostTxt& rCurrentOpStatRecord = sgptDataTables->pItemStatCostTxt[wOpStat];
 				// Find first unused slot
-				if (rCurrentOpStatRecord.pOpStatData[nNextFreeId].nOp == STAT_OP_NONE)
-				{
+				if (rCurrentOpStatRecord.pOpStatData[nNextFreeId].nOp == STAT_OP_NONE) {
 					rCurrentOpStatRecord.pOpStatData[nNextFreeId].nStat = nStatId;
 					rCurrentOpStatRecord.pOpStatData[nNextFreeId].nOp = nCurrentStatOp;
 					rCurrentOpStatRecord.pOpStatData[nNextFreeId].nOpBase = nOpBase;
@@ -1551,18 +1379,13 @@ void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
 
 					rCurrentOpStatRecord.bHasOpStatData = TRUE;
 
-					if (nStatId == STAT_MAXHP || wOpStat == STAT_MAXHP)
-					{
+					if (nStatId == STAT_MAXHP || wOpStat == STAT_MAXHP) {
 						rCurrentStatRecord.dwItemStatFlags |= gdwBitMasks[ITEMSTATCOSTFLAGINDEX_HP];
 						rCurrentStatRecord.dwItemStatFlags |= gdwBitMasks[ITEMSTATCOSTFLAGINDEX_HP_MANA_STAMINA];
-					}
-					else if (nStatId == STAT_MAXMANA || wOpStat == STAT_MAXMANA)
-					{
+					} else if (nStatId == STAT_MAXMANA || wOpStat == STAT_MAXMANA) {
 						rCurrentStatRecord.dwItemStatFlags |= gdwBitMasks[ITEMSTATCOSTFLAGINDEX_MANA];
 						rCurrentStatRecord.dwItemStatFlags |= gdwBitMasks[ITEMSTATCOSTFLAGINDEX_HP_MANA_STAMINA];
-					}
-					else if (nStatId == STAT_MAXSTAMINA || wOpStat == STAT_MAXSTAMINA)
-					{
+					} else if (nStatId == STAT_MAXSTAMINA || wOpStat == STAT_MAXSTAMINA) {
 						rCurrentStatRecord.dwItemStatFlags |= gdwBitMasks[ITEMSTATCOSTFLAGINDEX_STAMINA];
 						rCurrentStatRecord.dwItemStatFlags |= gdwBitMasks[ITEMSTATCOSTFLAGINDEX_HP_MANA_STAMINA];
 					}
@@ -1572,18 +1395,15 @@ void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
 				++nNextFreeId;
 			}
 
-			if (nNextFreeId >= 16 && sgptDataTables->bCompileTxt)
-			{
+			if (nNextFreeId >= 16 && sgptDataTables->bCompileTxt) {
 				FOG_Trace("Error: greater than %d ops applied to target %s\n", 16, FOG_10255(sgptDataTables->pItemStatCostLinker, sgptDataTables->pItemStatCostTxt[wOpStat].wStatId, 0));
 			}
 		}
 	}
 
 	int nStatsWithDescFunc = 0;
-	for (int i = 0; i < sgptDataTables->nItemStatCostTxtRecordCount; ++i)
-	{
-		if (sgptDataTables->pItemStatCostTxt[i].nDescFunc)
-		{
+	for (int i = 0; i < sgptDataTables->nItemStatCostTxtRecordCount; ++i) {
+		if (sgptDataTables->pItemStatCostTxt[i].nDescFunc) {
 			pStatsWithDescFunc[nStatsWithDescFunc].nRecordId = i;
 			pStatsWithDescFunc[nStatsWithDescFunc].nDescPriority = sgptDataTables->pItemStatCostTxt[i].nDescPriority;
 			++nStatsWithDescFunc;
@@ -1594,40 +1414,33 @@ void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
 	qsort(pStatsWithDescFunc, nStatsWithDescFunc, sizeof(D2ItemStatCostDescStrc), DATATBLS_CompareItemStatCostDescs);
 
 	sgptDataTables->pStatsWithDescFunc = (uint16_t*)D2_ALLOC_POOL(nullptr, sizeof(uint16_t) * sgptDataTables->nStatsWithDescFunc);
-	for (int i = 0; i < sgptDataTables->nStatsWithDescFunc; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nStatsWithDescFunc; ++i) {
 		sgptDataTables->pStatsWithDescFunc[i] = pStatsWithDescFunc[i].nRecordId;
 	}
 }
 
 // D2Common.0x6FD5D070
-void __fastcall DATATBLS_UnloadItemStatCostTxt()
-{
-	if (sgptDataTables->pItemStatCostTxt)
-	{
+void __fastcall DATATBLS_UnloadItemStatCostTxt() {
+	if (sgptDataTables->pItemStatCostTxt) {
 		DATATBLS_UnloadBin(sgptDataTables->pItemStatCostTxt);
 	}
 	sgptDataTables->pItemStatCostTxt = NULL;
 
-	if (sgptDataTables->pItemStatCostLinker)
-	{
+	if (sgptDataTables->pItemStatCostLinker) {
 		FOG_FreeLinker(sgptDataTables->pItemStatCostLinker);
 	}
 	sgptDataTables->pItemStatCostLinker = NULL;
 	sgptDataTables->nItemStatCostTxtRecordCount = 0;
 
-	if (sgptDataTables->pStatsWithDescFunc)
-	{
+	if (sgptDataTables->pStatsWithDescFunc) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pStatsWithDescFunc);
 	}
 	sgptDataTables->nStatsWithDescFunc = 0;
 }
 
 // D2Common.0x6FD5D0D0
-void __fastcall DATATBLS_LoadPropertiesTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadPropertiesTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "code", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pPropertiesLinker },
 		{ "set1", TXTFIELD_BYTE, 0, 2, NULL },
 		{ "val1", TXTFIELD_WORD, 0, 10, NULL },
@@ -1665,65 +1478,53 @@ void __fastcall DATATBLS_LoadPropertiesTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD5D5E0
-void __fastcall DATATBLS_UnloadPropertiesTxt()
-{
+void __fastcall DATATBLS_UnloadPropertiesTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pPropertiesTxt);
 	FOG_FreeLinker(sgptDataTables->pPropertiesLinker);
 }
 
 // D2Common.0x6FD5D600
-void __fastcall DATATBLS_LoadGambleTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadGambleTxt(HD2ARCHIVE hArchive) {
 	int nCounter = 0;
 	int nItemId = 0;
 	D2GambleTxt* pGambleTxt = NULL;
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "code", TXTFIELD_RAW, 0, 0, NULL },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
 	pGambleTxt = (D2GambleTxt*)DATATBLS_CompileTxt(hArchive, "gamble", pTbl, &sgptDataTables->pGambleDataTables.nGambleTxtRecordCount, sizeof(D2GambleTxt));
 
-	if (sgptDataTables->pGambleDataTables.nGambleTxtRecordCount)
-	{
+	if (sgptDataTables->pGambleDataTables.nGambleTxtRecordCount) {
 		sgptDataTables->pGambleDataTables.pGambleSelection = (uint32_t*)D2_ALLOC_POOL(nullptr, sizeof(uint32_t) * sgptDataTables->pGambleDataTables.nGambleTxtRecordCount);
-		for (int i = 0; i < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount; ++i)
-		{
+		for (int i = 0; i < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount; ++i) {
 			nItemId = FOG_GetLinkIndex(sgptDataTables->pItemsLinker, pGambleTxt[i].dwItemCode, 0);
 			D2_ASSERT(nItemId >= 0 && &sgptDataTables->pItemDataTables.pItemsTxt[nItemId]);
 			pGambleTxt[i].nItemId = nItemId;
 			pGambleTxt[i].nLevel = sgptDataTables->pItemDataTables.pItemsTxt[nItemId].nLevel;
 		}
 		qsort(pGambleTxt, sgptDataTables->pGambleDataTables.nGambleTxtRecordCount, sizeof(D2GambleTxt), DATATBLS_CompareGambleTxtRecords);
-	}
-	else
-	{
+	} else {
 		sgptDataTables->pGambleDataTables.pGambleSelection = NULL;
 	}
 
-	for (int i = 0; i < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount; ++i) {
 		sgptDataTables->pGambleDataTables.pGambleSelection[i] = pGambleTxt[i].nItemId;
 	}
 
 	sgptDataTables->pGambleDataTables.pGambleChooseLimit[0] = 2;
 
-	for (int i = 1; i < ARRAY_SIZE(sgptDataTables->pGambleDataTables.pGambleChooseLimit); ++i)
-	{
+	for (int i = 1; i < ARRAY_SIZE(sgptDataTables->pGambleDataTables.pGambleChooseLimit); ++i) {
 		sgptDataTables->pGambleDataTables.pGambleChooseLimit[i] = sgptDataTables->pGambleDataTables.nGambleTxtRecordCount;
 
-		if (sgptDataTables->pGambleDataTables.nGambleTxtRecordCount > 0)
-		{
+		if (sgptDataTables->pGambleDataTables.nGambleTxtRecordCount > 0) {
 			nCounter = 0;
-			while (nCounter < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount && i >= pGambleTxt[nCounter].nLevel)
-			{
+			while (nCounter < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount && i >= pGambleTxt[nCounter].nLevel) {
 				++nCounter;
 			}
 
-			if (nCounter < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount)
-			{
+			if (nCounter < sgptDataTables->pGambleDataTables.nGambleTxtRecordCount) {
 				sgptDataTables->pGambleDataTables.pGambleChooseLimit[i] = nCounter;
 			}
 		}
@@ -1733,30 +1534,22 @@ void __fastcall DATATBLS_LoadGambleTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD5D790
-int __cdecl DATATBLS_CompareGambleTxtRecords(const void* pRecord1, const void* pRecord2)
-{
+int __cdecl DATATBLS_CompareGambleTxtRecords(const void* pRecord1, const void* pRecord2) {
 	D2GambleTxt* pElem1 = (D2GambleTxt*)pRecord1;
 	D2GambleTxt* pElem2 = (D2GambleTxt*)pRecord2;
 
-	if (pElem1->nLevel > pElem2->nLevel)
-	{
+	if (pElem1->nLevel > pElem2->nLevel) {
 		return 1;
-	}
-	else if (pElem1->nLevel == pElem2->nLevel)
-	{
+	} else if (pElem1->nLevel == pElem2->nLevel) {
 		return 0;
-	}
-	else
-	{
+	} else {
 		return -1;
 	}
 }
 
 // D2Common.0x6FD5D7B0
-void __fastcall DATATBLS_UnloadGambleTxt()
-{
-	if (sgptDataTables->pGambleDataTables.pGambleSelection)
-	{
+void __fastcall DATATBLS_UnloadGambleTxt() {
+	if (sgptDataTables->pGambleDataTables.pGambleSelection) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pGambleDataTables.pGambleSelection);
 		sgptDataTables->pGambleDataTables.pGambleSelection = NULL;
 		sgptDataTables->pGambleDataTables.nGambleTxtRecordCount = 0;
@@ -1764,63 +1557,53 @@ void __fastcall DATATBLS_UnloadGambleTxt()
 }
 
 // D2Common.0x6FD5D7F0 (#10671)
-D2GambleDataTbl* __fastcall DATATBLS_GetGambleDataTables()
-{
+D2GambleDataTbl* __fastcall DATATBLS_GetGambleDataTables() {
 	return &sgptDataTables->pGambleDataTables;
 }
 
 // D2Common.0x6FD5D800
-BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nItemType2)
-{
+BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nItemType2) {
 	int nParentItemTypes[129] = {};
 
-	if (nItemType2 <= 0)
-	{
+	if (nItemType2 <= 0) {
 		return TRUE;
 	}
 
-	if (nItemType1 > 0 && nItemType1 < sgptDataTables->nItemTypesTxtRecordCount)
-	{
+	if (nItemType1 > 0 && nItemType1 < sgptDataTables->nItemTypesTxtRecordCount) {
 		nParentItemTypes[1] = nItemType1;
 		int nIndex = 1;
 
-		while (1)
-		{
+		while (1) {
 			int nItemType = nItemType = nParentItemTypes[nIndex];
 			--nIndex;
 
-			if (nItemType2 == nItemType)
-			{
+			if (nItemType2 == nItemType) {
 				return TRUE;
 			}
 
-			if (nItemType >= sgptDataTables->nItemTypesTxtRecordCount)
-			{
+			if (nItemType >= sgptDataTables->nItemTypesTxtRecordCount) {
 				FOG_Trace("Invalid item type at line %d of file %s", __LINE__, __FILE__);
 				return FALSE;
 			}
 
-			if (nIndex > 124)//TODO: Limit of nParentItemTypes? Arbitrary? Only 124 ItemTypes possible?
+			if (nIndex > 124) // TODO: Limit of nParentItemTypes? Arbitrary? Only 124 ItemTypes possible?
 			{
 				return FALSE;
 			}
 
 			D2ItemTypesTxt* pItemTypesTxtRecord = &sgptDataTables->pItemTypesTxt[nItemType];
 
-			if (pItemTypesTxtRecord->nEquiv1 > 0)
-			{
+			if (pItemTypesTxtRecord->nEquiv1 > 0) {
 				++nIndex;
 				nParentItemTypes[nIndex] = pItemTypesTxtRecord->nEquiv1;
 
-				if (pItemTypesTxtRecord->nEquiv2)
-				{
+				if (pItemTypesTxtRecord->nEquiv2) {
 					++nIndex;
 					nParentItemTypes[nIndex] = pItemTypesTxtRecord->nEquiv2;
 				}
 			}
 
-			if (!nIndex)
-			{
+			if (!nIndex) {
 				return FALSE;
 			}
 		}
@@ -1831,12 +1614,10 @@ BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nIt
 }
 
 // D2Common.0x6FD5D8C0
-void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive) {
 	uint32_t* pItemTypesNest = NULL;
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pItemTypesLinker },
 		{ "equiv1", TXTFIELD_CODETOWORD, 0, TXTFIELD_BYTE, &sgptDataTables->pItemTypesLinker },
 		{ "equiv2", TXTFIELD_CODETOWORD, 0, 6, &sgptDataTables->pItemTypesLinker },
@@ -1878,10 +1659,8 @@ void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pItemTypesLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pItemTypesTxt = (D2ItemTypesTxt*)DATATBLS_CompileTxt(hArchive, "itemtypes", pTbl, &sgptDataTables->nItemTypesTxtRecordCount, sizeof(D2ItemTypesTxt));
 
-	if (!sgptDataTables->bCompileTxt && DATATBLS_LoadFromBin)
-	{
-		for (int i = 0; i < sgptDataTables->nItemTypesTxtRecordCount; ++i)
-		{
+	if (!sgptDataTables->bCompileTxt && DATATBLS_LoadFromBin) {
+		for (int i = 0; i < sgptDataTables->nItemTypesTxtRecordCount; ++i) {
 			FOG_10215(sgptDataTables->pItemTypesLinker, *(uint32_t*)&sgptDataTables->pItemTypesTxt[i].szCode[0]);
 		}
 	}
@@ -1889,14 +1668,11 @@ void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->nItemTypesIndex = (sgptDataTables->nItemTypesTxtRecordCount + 31) / 32;
 	sgptDataTables->pItemTypesEquivalenceLUTs = (uint32_t*)D2_CALLOC_POOL(nullptr, sizeof(uint32_t) * sgptDataTables->nItemTypesTxtRecordCount * sgptDataTables->nItemTypesIndex);
 
-	for (int i = 0; i < sgptDataTables->nItemTypesTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nItemTypesTxtRecordCount; ++i) {
 		pItemTypesNest = &sgptDataTables->pItemTypesEquivalenceLUTs[sgptDataTables->nItemTypesIndex * i];
 
-		for (int j = 0; j < sgptDataTables->nItemTypesTxtRecordCount; ++j)
-		{
-			if (DATATBLS_CheckItemTypesEquivalenceNested(i, j))
-			{
+		for (int j = 0; j < sgptDataTables->nItemTypesTxtRecordCount; ++j) {
+			if (DATATBLS_CheckItemTypesEquivalenceNested(i, j)) {
 				pItemTypesNest[j >> 5] |= gdwBitMasks[j & 31];
 			}
 		}
@@ -1904,21 +1680,18 @@ void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD5DFE0
-void __fastcall DATATBLS_UnloadItemTypesTxt()
-{
+void __fastcall DATATBLS_UnloadItemTypesTxt() {
 	D2_FREE_POOL(nullptr, sgptDataTables->pItemTypesEquivalenceLUTs);
 	DATATBLS_UnloadBin(sgptDataTables->pItemTypesTxt);
 	FOG_FreeLinker(sgptDataTables->pItemTypesLinker);
 }
 
 // D2Common.0x6FD5E020
-void __fastcall DATATBLS_LoadRunesTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadRunesTxt(HD2ARCHIVE hArchive) {
 	HSFILE pFileHandle = NULL;
 	char szPath[100] = {};
 	const Unicode* pUnicode = NULL;
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "name", TXTFIELD_ASCII, 63, 0, NULL },
 		{ "rune name", TXTFIELD_ASCII, 63, 64, NULL },
 		{ "complete", TXTFIELD_BYTE, 0, 128, NULL },
@@ -1972,70 +1745,60 @@ void __fastcall DATATBLS_LoadRunesTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pRunesLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 
 	wsprintfA(szPath, "%s\\%s%s", "DATA\\GLOBAL\\EXCEL", "runessrv", ".txt");
-	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE))
-	{
+	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE)) {
 		ARCHIVE_CloseFile(hArchive, pFileHandle);
 		FOG_DisplayWarning("Found runessrv.txt in archive - This file should only be in server builds.", __FILE__, __LINE__);
 	}
 
 	wsprintfA(szPath, "%s\\%s%s", "DATA\\GLOBAL\\EXCEL", "runessrv", ".bin");
-	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE))
-	{
+	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE)) {
 		ARCHIVE_CloseFile(hArchive, pFileHandle);
 		FOG_DisplayWarning("Found runessrv.bin in archive - This file should only be in server builds.", __FILE__, __LINE__);
 	}
 
 	wsprintfA(szPath, "%s\\%s%s", "DATA\\GLOBAL\\EXCEL", "runessrv", ".xls");
-	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE))
-	{
+	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE)) {
 		ARCHIVE_CloseFile(hArchive, pFileHandle);
 		FOG_DisplayWarning("Found runessrv.xls in archive - This file should only be in server builds.", __FILE__, __LINE__);
 	}
 
 	sgptDataTables->pRuneDataTables.pRunesTxt = (D2RunesTxt*)DATATBLS_CompileTxt(hArchive, "runes", pTbl, &sgptDataTables->pRuneDataTables.nRunesTxtRecordCount, sizeof(D2RunesTxt));
 
-	for (int i = 0; i < sgptDataTables->pRuneDataTables.nRunesTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->pRuneDataTables.nRunesTxtRecordCount; ++i) {
 		sgptDataTables->pRuneDataTables.pRunesTxt[i].wStringId = D2LANG_GetTblIndex(sgptDataTables->pRuneDataTables.pRunesTxt[i].szName, &pUnicode);
 	}
 }
 
 // D2Common.0x6FD5E9C0
-void __fastcall DATATBLS_UnloadRunesTxt()
-{
+void __fastcall DATATBLS_UnloadRunesTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pRuneDataTables.pRunesTxt);
 	FOG_FreeLinker(sgptDataTables->pRunesLinker);
 }
 
 // D2Common.0x6FD5E9E0 (#10619)
-D2RuneDataTbl* __fastcall DATATBLS_GetRuneDataTables()
-{
+D2RuneDataTbl* __fastcall DATATBLS_GetRuneDataTables() {
 	return &sgptDataTables->pRuneDataTables;
 }
 
 // D2Common.0x6FD5E9F0 (#10621)
-void __stdcall DATATBLS_AddOrChangeRunesTxtRecord(int nRecordId, D2RunesTxt* pRecord)
-{
+void __stdcall DATATBLS_AddOrChangeRunesTxtRecord(int nRecordId, D2RunesTxt* pRecord) {
 	D2RunesTxt* pRunesTxt = NULL;
 	D2RunesTxt* pTmp = NULL;
 
 	int nSize = 0;
 
-	if (nRecordId >= sgptDataTables->pRuneDataTables.nRunesTxtRecordCount)
-	{
+	if (nRecordId >= sgptDataTables->pRuneDataTables.nRunesTxtRecordCount) {
 		pRunesTxt = sgptDataTables->pRuneDataTables.pRunesTxt;
 		nSize = sizeof(D2RunesTxt) * (nRecordId + 1);
 
-		if (DATATBLS_LoadFromBin)
-		{
+		if (DATATBLS_LoadFromBin) {
 			pRunesTxt = (D2RunesTxt*)((char*)sgptDataTables->pRuneDataTables.pRunesTxt - 4);
 			nSize += 4;
 		}
 
 		pTmp = (D2RunesTxt*)D2_REALLOC_POOL(NULL, pRunesTxt, nSize);
 
-		if (DATATBLS_LoadFromBin)
-		{
+		if (DATATBLS_LoadFromBin) {
 			*(uint32_t*)pTmp = nRecordId + 1;
 			pTmp = (D2RunesTxt*)((char*)pTmp + 4);
 		}
@@ -2049,8 +1812,7 @@ void __stdcall DATATBLS_AddOrChangeRunesTxtRecord(int nRecordId, D2RunesTxt* pRe
 }
 
 // D2Common.0x6FD5EAA0 (#10620)
-D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId)
-{
+D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId) {
 	D2_ASSERT(nRunewordId > 0 || nRunewordId < sgptDataTables->pRuneDataTables.nRunesTxtRecordCount);
 	return &sgptDataTables->pRuneDataTables.pRunesTxt[nRunewordId];
 }

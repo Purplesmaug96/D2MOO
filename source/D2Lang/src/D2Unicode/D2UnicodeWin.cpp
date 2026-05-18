@@ -28,18 +28,15 @@
 
 #include "D2Unicode.h"
 
-
 /**
  * This implementation outputs the same binary from 1.00 and 1.10.
  *
  * 1.00: D2Lang.0x1000109B (#10053)
  * 1.10: D2Lang.0x6FC11C20 (#10055)
  */
-char* __fastcall Unicode::unicode2Win(char* dest, const Unicode* src, int count)
-{
+char* __fastcall Unicode::unicode2Win(char* dest, const Unicode* src, int count) {
 	char* current_dest = dest;
-	while (count > 1 && src->ch != L'\0')
-	{
+	while (count > 1 && src->ch != L'\0') {
 		const Unicode* current_src = src++;
 		++current_dest;
 		--count;
@@ -57,23 +54,19 @@ char* __fastcall Unicode::unicode2Win(char* dest, const Unicode* src, int count)
  * 1.00: D2Lang.0x10001122 (#10059)
  * 1.10: D2Lang.0x6FC11BD0 (#10062)
  */
-Unicode* __fastcall Unicode::win2Unicode(Unicode* dest, const char* src, int count)
-{
+Unicode* __fastcall Unicode::win2Unicode(Unicode* dest, const char* src, int count) {
 	int i;
 	// Copy the source string as-is to the destination.
-	for (i = 0; i < count; ++i)
-	{
+	for (i = 0; i < count; ++i) {
 		unsigned char src_ch = src[i];
-		if (src_ch == '\0')
-		{
+		if (src_ch == '\0') {
 			break;
 		}
 		dest[i].ch = src_ch;
 	}
 
 	// Set the null-terminator.
-	if (src[i] != '\0')
-	{
+	if (src[i] != '\0') {
 		dest[i - 1].ch = L'\0';
 		return dest;
 	}

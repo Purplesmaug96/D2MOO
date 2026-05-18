@@ -1,8 +1,6 @@
-#pragma once 
+#pragma once
 
-
-enum D2C_MonsterIds
-{
+enum D2C_MonsterIds {
 	MONSTER_SKELETON1 = 0,
 	MONSTER_SKELETON2,
 	MONSTER_SKELETON3,
@@ -744,8 +742,7 @@ enum D2C_MonsterIds
 #endif
 };
 
-enum D2C_SuperUniques
-{
+enum D2C_SuperUniques {
 	SUPERUNIQUE_BISHIBOSH,
 	SUPERUNIQUE_BONEBREAK,
 	SUPERUNIQUE_COLDCROW,
@@ -813,4 +810,3 @@ enum D2C_SuperUniques
 	SUPERUNIQUE_BAAL_SUBJECT_4,
 	SUPERUNIQUE_BAAL_SUBJECT_5,
 };
-

@@ -4,34 +4,33 @@
 
 #include "D2SDLRender.h"
 
-#include "Surface.h"
-#include "Options.h"
 #include "Draw.h"
+#include "Options.h"
+#include "Surface.h"
 
 static void GetResFromResMode(uint16_t* w, uint16_t* h, D2GameResolutionMode nResolutionMode) {
 	FUNC_LOG_ARGS("GetResFromResMode", "w: %p, h: %p, nResolutionMode: %d", w, h, nResolutionMode);
-	switch (nResolutionMode)
-	{
-		case D2GAMERES_640x480:
-			*w = 640;
-			*h = 480;
-			break;
+	switch (nResolutionMode) {
+	case D2GAMERES_640x480:
+		*w = 640;
+		*h = 480;
+		break;
 
-		case D2GAMERES_800x600:
-		case NUM_GAME_RESOLUTIONS:
-			*w = 800;
-			*h = 600;
-			break;
+	case D2GAMERES_800x600:
+	case NUM_GAME_RESOLUTIONS:
+		*w = 800;
+		*h = 600;
+		break;
 
-		case D2GAMERES_1344x700:
-			*w = 1344;
-			*h = 700;
-			break;
+	case D2GAMERES_1344x700:
+		*w = 1344;
+		*h = 700;
+		break;
 
-		default:
-			static char szLocalBuffer[256];
-			sprintf(szLocalBuffer, "Unknown resolution %d", nResolutionMode);
-			FUNC_ERR("GetResFromResMode", szLocalBuffer);
+	default:
+		static char szLocalBuffer[256];
+		sprintf(szLocalBuffer, "Unknown resolution %d", nResolutionMode);
+		FUNC_ERR("GetResFromResMode", szLocalBuffer);
 	}
 }
 

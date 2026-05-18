@@ -6,18 +6,15 @@
 
 #pragma pack(1)
 
-
 extern "C" FOG_DLL_DECL const uint32_t gdwBitMasks[];
 extern "C" FOG_DLL_DECL const uint32_t gdwInvBitMasks[];
 
-
-struct D2BitBufferStrc
-{
-	uint8_t* pBuffer;							//0x00
-	int32_t nBits;								//0x04
-	int32_t nPos;								//0x08
-	int32_t nPosBits;							//0x0C
-	BOOL bFull;									//0x10
+struct D2BitBufferStrc {
+	uint8_t* pBuffer; // 0x00
+	int32_t nBits;	  // 0x04
+	int32_t nPos;	  // 0x08
+	int32_t nPosBits; // 0x0C
+	BOOL bFull;		  // 0x10
 };
 
 #pragma pack()
@@ -64,9 +61,6 @@ Notes:
 */
 FOG_DLL_DECL void __stdcall BITMANIP_GoToNextByte(D2BitBufferStrc* pBuffer);
 
-
-
-
 /*
 Function:		BITMANIP_SetBitState
 Address:		Fog.#10118
@@ -88,18 +82,13 @@ Notes:
 */
 FOG_DLL_DECL void __stdcall BITMANIP_MaskBitstate(uint8_t* pBitStream, int nBit);
 
-
 // Sets bits of the mask to newBitValue, and returns wether the value changed
-template<typename T>
-bool BITMANIP_SetBitsValueForMask(T& var, uint64_t mask, bool newBitValue)
-{
+template <typename T>
+bool BITMANIP_SetBitsValueForMask(T& var, uint64_t mask, bool newBitValue) {
 	T previousValue = var;
-	if (newBitValue)
-	{
+	if (newBitValue) {
 		var |= mask;
-	}
-	else
-	{
+	} else {
 		var &= ~mask;
 	}
 	return previousValue != var;

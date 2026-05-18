@@ -1,19 +1,16 @@
 #include "Drlg/D2DrlgDrlgVer.h"
 #include <Drlg/D2DrlgDrlg.h>
 
-
 // D2Common.0x6FD782A0
-D2DrlgVertexStrc* __fastcall DRLGVER_AllocVertex(void* pMemPool, uint8_t nDirection)
-{
+D2DrlgVertexStrc* __fastcall DRLGVER_AllocVertex(void* pMemPool, uint8_t nDirection) {
 	D2DrlgVertexStrc* pDrlgVertex = D2_CALLOC_STRC_POOL(pMemPool, D2DrlgVertexStrc);
 	pDrlgVertex->nDirection = nDirection;
 	return pDrlgVertex;
 }
 
 // D2Common.0x6FD782D0
-//TODO: v15, v16, v21, v23
-void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVertices, D2DrlgCoordStrc* pDrlgCoord, uint8_t nDirection, D2DrlgOrthStrc* pDrlgRoomData)
-{
+// TODO: v15, v16, v21, v23
+void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVertices, D2DrlgCoordStrc* pDrlgCoord, uint8_t nDirection, D2DrlgOrthStrc* pDrlgRoomData) {
 	D2DrlgOrthStrc* pCurrentRoomData = NULL;
 	D2DrlgVertexStrc* pPreviousVertex = NULL;
 	D2DrlgVertexStrc* pCurrentVertex = NULL;
@@ -33,8 +30,7 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 	--pDrlgCoord->nHeight;
 
 	pCurrentRoomData = pDrlgRoomData;
-	while (pCurrentRoomData)
-	{
+	while (pCurrentRoomData) {
 		--pCurrentRoomData->pBox->nWidth;
 		--pCurrentRoomData->pBox->nHeight;
 
@@ -68,19 +64,14 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 	pPreviousVertex = pLastVertex->pNext;
 
 	pCurrentRoomData = pDrlgRoomData;
-	while (pCurrentRoomData)
-	{
-		if (pCurrentRoomData->pBox)
-		{
+	while (pCurrentRoomData) {
+		if (pCurrentRoomData->pBox) {
 			pCurrentCoords = pCurrentRoomData->pBox;
-		}
-		else
-		{
+		} else {
 			pCurrentCoords = pDrlgCoord;
 		}
 
-		switch (pCurrentRoomData->nDirection)
-		{
+		switch (pCurrentRoomData->nDirection) {
 		case 0:
 			pVertex = pCurrentVertex;
 			bDirection = 1;
@@ -124,21 +115,15 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 		default:
 			FOG_DisplayWarning("FALSE", __FILE__, __LINE__);
 			exit(-1);
-
 		}
 
-		if (nSign * v16 > nSign * v21)
-		{
-			if (nSign * v16 <= nSign * v23)
-			{
+		if (nSign * v16 > nSign * v21) {
+			if (nSign * v16 <= nSign * v23) {
 				pNewVertex = DRLGVER_AllocVertex(pMemPool, nDirection);
-				if (bDirection)
-				{
+				if (bDirection) {
 					pNewVertex->nPosY = v16;
 					pNewVertex->nPosX = pVertex->nPosX;
-				}
-				else
-				{
+				} else {
 					pNewVertex->nPosX = v16;
 					pNewVertex->nPosY = pVertex->nPosY;
 				}
@@ -148,21 +133,16 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 				pVertex = pNewVertex;
 
 				pVertex->dwFlags |= 1;
-				if (pCurrentRoomData->bPreset)
-				{
+				if (pCurrentRoomData->bPreset) {
 					pVertex->dwFlags |= 2;
 				}
 
-				if (nSign * v15 < nSign * v23)
-				{
+				if (nSign * v15 < nSign * v23) {
 					pNewVertex = DRLGVER_AllocVertex(pMemPool, nDirection);
-					if (bDirection)
-					{
+					if (bDirection) {
 						pNewVertex->nPosY = v15;
 						pNewVertex->nPosX = pVertex->nPosX;
-					}
-					else
-					{
+					} else {
 						pNewVertex->nPosX = v15;
 						pNewVertex->nPosY = pVertex->nPosY;
 					}
@@ -171,25 +151,18 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 					pVertex->pNext = pNewVertex;
 				}
 			}
-		}
-		else if (nSign * v15 >= nSign * v21)
-		{
+		} else if (nSign * v15 >= nSign * v21) {
 			pVertex->dwFlags |= 1;
-			if (pCurrentRoomData->bPreset)
-			{
+			if (pCurrentRoomData->bPreset) {
 				pVertex->dwFlags |= 2;
 			}
 
-			if (nSign * v15 < nSign * v23)
-			{
+			if (nSign * v15 < nSign * v23) {
 				pNewVertex = DRLGVER_AllocVertex(pMemPool, nDirection);
-				if (bDirection)
-				{
+				if (bDirection) {
 					pNewVertex->nPosY = v15;
 					pNewVertex->nPosX = pVertex->nPosX;
-				}
-				else
-				{
+				} else {
 					pNewVertex->nPosX = v15;
 					pNewVertex->nPosY = pVertex->nPosY;
 				}
@@ -203,21 +176,18 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 	}
 
 	pCurrentVertex = *ppVertices;
-	do
-	{
+	do {
 		pCurrentVertex->nPosX -= pDrlgCoord->nPosX;
 		pCurrentVertex->nPosY -= pDrlgCoord->nPosY;
 
 		pCurrentVertex = pCurrentVertex->pNext;
-	}
-	while (pCurrentVertex != *ppVertices);
+	} while (pCurrentVertex != *ppVertices);
 
 	++pDrlgCoord->nWidth;
 	++pDrlgCoord->nHeight;
 
 	pCurrentRoomData = pDrlgRoomData;
-	while (pCurrentRoomData)
-	{
+	while (pCurrentRoomData) {
 		++pCurrentRoomData->pBox->nWidth;
 		++pCurrentRoomData->pBox->nHeight;
 
@@ -226,24 +196,19 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 }
 
 // D2Common.0x6FD786C0
-void __fastcall DRLGVER_FreeVertices(void* pMemPool, D2DrlgVertexStrc** ppVertices)
-{
+void __fastcall DRLGVER_FreeVertices(void* pMemPool, D2DrlgVertexStrc** ppVertices) {
 	D2DrlgVertexStrc* pVertex = NULL;
 	D2DrlgVertexStrc* pNext = NULL;
 
-	if (*ppVertices)
-	{
+	if (*ppVertices) {
 		pVertex = (*ppVertices)->pNext;
 
-		if (pVertex)
-		{
-			do
-			{
+		if (pVertex) {
+			do {
 				pNext = pVertex->pNext;
 				D2_FREE_POOL(pMemPool, pVertex);
 				pVertex = pNext;
-			}
-			while (pVertex != *ppVertices && pVertex);
+			} while (pVertex != *ppVertices && pVertex);
 		}
 
 		D2_FREE_POOL(pMemPool, *ppVertices);
@@ -252,32 +217,23 @@ void __fastcall DRLGVER_FreeVertices(void* pMemPool, D2DrlgVertexStrc** ppVertic
 }
 
 // D2Common.0x6FD78730
-void __fastcall DRLGVER_GetCoordDiff(D2DrlgVertexStrc* pDrlgVertex, int* pDiffX, int* pDiffY)
-{
+void __fastcall DRLGVER_GetCoordDiff(D2DrlgVertexStrc* pDrlgVertex, int* pDiffX, int* pDiffY) {
 	*pDiffX = pDrlgVertex->pNext->nPosX - pDrlgVertex->nPosX;
 	*pDiffY = pDrlgVertex->pNext->nPosY - pDrlgVertex->nPosY;
 
-	if (*pDiffX >= 0)
-	{
-		if (*pDiffX > 0)
-		{
+	if (*pDiffX >= 0) {
+		if (*pDiffX > 0) {
 			*pDiffX = 1;
 		}
-	}
-	else
-	{
+	} else {
 		*pDiffX = -1;
 	}
 
-	if (*pDiffY >= 0)
-	{
-		if (*pDiffY > 0)
-		{
+	if (*pDiffY >= 0) {
+		if (*pDiffY > 0) {
 			*pDiffY = 1;
 		}
-	}
-	else
-	{
+	} else {
 		*pDiffY = -1;
 	}
 }

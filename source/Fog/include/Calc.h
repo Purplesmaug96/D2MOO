@@ -2,13 +2,11 @@
 
 #include <D2BasicTypes.h>
 
-
 #include <Fog.h>
 
 #pragma pack(1)
 
-enum FOGCalcExpressionParserTokenType : uint8_t
-{
+enum FOGCalcExpressionParserTokenType : uint8_t {
 	TOKEN_PAREN_OPEN = 0,
 	TOKEN_PAREN_CLOSE = 1,
 	TOKEN_COMMA = 2,
@@ -30,8 +28,7 @@ enum FOGCalcExpressionParserTokenType : uint8_t
 	TOKEN_CUSTOM_FUNCTION_TABLE = 18,
 };
 
-enum FOGASTType : uint8_t
-{
+enum FOGASTType : uint8_t {
 	AST_None = 0,
 	AST_CallbackTable = 1,
 	AST_Parenthesis_Open = 2,
@@ -59,8 +56,7 @@ enum FOGASTType : uint8_t
 	AST_COUNT = 24,
 };
 
-union FOGASTNodeStrc
-{
+union FOGASTNodeStrc {
 	FOGASTType nType;
 	uint8_t nRawValue;
 };
@@ -68,10 +64,9 @@ union FOGASTNodeStrc
 typedef int(__fastcall* CalcFogCallBack_t)(int, int, int, void*);
 typedef int(__fastcall* CalcFogCallBack2_t)(int, void*);
 
-struct D2CalcCallbackInfoStrc
-{
-	CalcFogCallBack_t fpCallBack;            //0x00
-	int nParameters;                         //0x04
+struct D2CalcCallbackInfoStrc {
+	CalcFogCallBack_t fpCallBack; // 0x00
+	int nParameters;			  // 0x04
 };
 
 typedef int(__fastcall* CalcGetKeyWordToNumber_t)(char* szKey);
@@ -79,20 +74,18 @@ typedef int(__fastcall* CalcGetFunctionParameterCount_t)(int nFunctionIndex);
 typedef int(__fastcall* CalcGetLinkerIndex_t)(char* szText, BOOL* pOutHasResolvedToConstant, int nAST, int nKeywordNumber);
 typedef int(__fastcall* CalcProcessCache_t)(int nIndex);
 
-struct FOGExpressionParserContextStrc
-{
+struct FOGExpressionParserContextStrc {
 	FOGASTType tPendingOperationsASTs[64]; // 0x000
-	int32_t tLinkerIndex[64];              // 0x040
-	int32_t nPendingOps;                   // 0x140
-	int32_t nPendingParameters;            // 0x144
+	int32_t tLinkerIndex[64];			   // 0x040
+	int32_t nPendingOps;				   // 0x140
+	int32_t nPendingParameters;			   // 0x144
 };
 
-struct Fog64IntStack
-{
-  static const int32_t nCapacity = 64;
-  
-  int32_t tData[nCapacity];
-  int32_t nSize;
+struct Fog64IntStack {
+	static const int32_t nCapacity = 64;
+
+	int32_t tData[nCapacity];
+	int32_t nSize;
 };
 
 #pragma pack()
@@ -132,4 +125,3 @@ const char* DATATABLS_ParseExpressionToken(const char* szExpression, FOGCalcExpr
 // 1.10f: 0x6FF524F0 (#10254)
 // 1.13c: 0x6FF5BB20 (#10254)
 FOG_DLL_DECL int __stdcall DATATBLS_CompileExpression(const char* szFormulaString, FOGASTNodeStrc* pOutASTBuffer, int nOutASTBufferSize, CalcGetKeyWordToNumber_t pfnFunctionNameToId, CalcGetFunctionParameterCount_t pfnGetFunctionParameterCount, CalcGetLinkerIndex_t pfnLinkParse);
-

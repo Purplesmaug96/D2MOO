@@ -1,15 +1,14 @@
 #pragma once
 
-#include "D2PacketDef.h"
-#include <Units/Units.h>
-#include "Game.h"
 #include "D2Packet.h"
+#include "D2PacketDef.h"
+#include "Game.h"
+#include <Units/Units.h>
 
 struct D2SaveHeaderStrc;
 
 #pragma pack(1)
-enum D2SystemError
-{
+enum D2SystemError {
 	SYSERROR_SUCCESS = 0,
 	SYSERROR_BAD_INPUT = 1,
 	SYSERROR_UNK_1 = 1,
@@ -37,8 +36,7 @@ enum D2SystemError
 	SYSERROR_NOTLADDERGAME = 26,
 };
 
-enum D2ClientState : uint32_t
-{
+enum D2ClientState : uint32_t {
 	CLIENTSTATE_JUST_CREATED = 0,
 	CLIENTSTATE_GAME_INIT_SENT = 1,
 	CLIENTSTATE_ACT_INIT_SENT = 2,
@@ -47,12 +45,10 @@ enum D2ClientState : uint32_t
 	CLIENTSTATE_CHANGING_ACT = 5,
 };
 
-
 // Character information flags
-enum D2ClientSaveFlags
-{
+enum D2ClientSaveFlags {
 	CLIENTSAVEFLAG_INIT = 0x1, // Newbie save
-	CLIENTSAVEFLAG_0x2 = 0x2, // Set at character creation for realm characters.
+	CLIENTSAVEFLAG_0x2 = 0x2,  // Set at character creation for realm characters.
 	CLIENTSAVEFLAG_HARDCORE = 0x4,
 	CLIENTSAVEFLAG_DEAD = 0x8,
 	CLIENTSAVEFLAG_0x10 = 0x10,
@@ -69,169 +65,160 @@ enum D2ClientSaveFlags
 	CLIENTSAVEFLAG_CHARACTER_PROGRESSION_MASK = (0x1F) << CLIENTSAVEFLAG_CHARACTER_PROGRESSION_BIT,
 };
 
-union D2PackedClientSaveFlags
-{
-	uint16_t nPackedValue;			// D2ClientSaveFlags
+union D2PackedClientSaveFlags {
+	uint16_t nPackedValue; // D2ClientSaveFlags
 	struct {
-		uint16_t bInit : 1;			// BIT(0)
-		uint16_t bUnkFlag0x02 : 1;	// BIT(1)
-		uint16_t bHardcore : 1;		// BIT(2)
-		uint16_t bDead : 1;			// BIT(3)
-		uint16_t bUnkFlag0x10 : 1;	// BIT(4)
-		uint16_t bExpansion : 1;	// BIT(5)
-		uint16_t bLadder : 1;		// BIT(6)
-		uint16_t bUnkFlag0x80 : 1;	// BIT(7)
+		uint16_t bInit : 1;		   // BIT(0)
+		uint16_t bUnkFlag0x02 : 1; // BIT(1)
+		uint16_t bHardcore : 1;	   // BIT(2)
+		uint16_t bDead : 1;		   // BIT(3)
+		uint16_t bUnkFlag0x10 : 1; // BIT(4)
+		uint16_t bExpansion : 1;   // BIT(5)
+		uint16_t bLadder : 1;	   // BIT(6)
+		uint16_t bUnkFlag0x80 : 1; // BIT(7)
 		// Encodes completed acts
 		// => 0 No act completed
 		// => Acts 1-5 Normal (values 1-5), then 1-5 NM (values 6-10), then 1-5 Hell (values 11-15) for Expansion
 		// => Acts 1-4 Normal (values 1-4), then 1-4 NM (values 5-8), then 1-4 Hell  (values 9-12) for Classic
 		uint16_t nProgression : 5;	// BIT(8-12)
-		uint16_t bWeaponSwitch : 1;	// BIT(13)
+		uint16_t bWeaponSwitch : 1; // BIT(13)
 		uint16_t nDONOTUSEBITS : 2; // BIT(14-15) Will not be propagated to character preview info string due to encoding with FOG_Encode14BitsToString
 	};
 };
 
 // Internal management flags
-enum D2ClientFlagsEx
-{
-	CLIENTFLAGEX_PLAYER_UNIT_ALIVE	= 0x01,
-	CLIENTFLAGEX_ARENA_RELATED		= 0x04,
-	CLIENTFLAGEX_HAS_SAVE_CHECKSUM	= 0x08,
-	CLIENTFLAGEX_SAVE_LOADED		= 0x10,
+enum D2ClientFlagsEx {
+	CLIENTFLAGEX_PLAYER_UNIT_ALIVE = 0x01,
+	CLIENTFLAGEX_ARENA_RELATED = 0x04,
+	CLIENTFLAGEX_HAS_SAVE_CHECKSUM = 0x08,
+	CLIENTFLAGEX_SAVE_LOADED = 0x10,
 };
 
-enum D2ClientsConstants
-{
+enum D2ClientsConstants {
 	CLIENTS_MAX_UPDATES = 55,
 };
 
-struct D2ClientInfoStrc
-{
-	D2ClientInfoStrc* pSelf;				//0x00
-	int32_t dwClientId;							//0x04
-	uint32_t nFlags;					//0x08
-	const char* szKickMessage;				//0x0C
-	int32_t unk0x10;							//0x10
-	uint32_t dwLastPacketResetTick;		//0x14
-	uint32_t nPacketsPerSecond;			//0x18
-	uint32_t dwNewGameTick;				//0x1C
-	uint32_t dwRemoveTick;				//0x20
-	int32_t unk0x24;							//0x24
-	int32_t unk0x28;							//0x28
-	uint32_t dwHackDetectionPacketTick;	//0x2C
-	uint32_t nACDataCount;				//0x30
-	int32_t unk0x34;							//0x34
-	int32_t unk0x38;							//0x38
-	uint32_t unk0x3C;					//0x3C
+struct D2ClientInfoStrc {
+	D2ClientInfoStrc* pSelf;			// 0x00
+	int32_t dwClientId;					// 0x04
+	uint32_t nFlags;					// 0x08
+	const char* szKickMessage;			// 0x0C
+	int32_t unk0x10;					// 0x10
+	uint32_t dwLastPacketResetTick;		// 0x14
+	uint32_t nPacketsPerSecond;			// 0x18
+	uint32_t dwNewGameTick;				// 0x1C
+	uint32_t dwRemoveTick;				// 0x20
+	int32_t unk0x24;					// 0x24
+	int32_t unk0x28;					// 0x28
+	uint32_t dwHackDetectionPacketTick; // 0x2C
+	uint32_t nACDataCount;				// 0x30
+	int32_t unk0x34;					// 0x34
+	int32_t unk0x38;					// 0x38
+	uint32_t unk0x3C;					// 0x3C
 };
 
-struct D2ClientPlayerDataStrc
-{
-	uint32_t dwInactivityTime;					//0x00
-	uint16_t nHitPoints;						//0x04
-	uint16_t nManaPoints;						//0x06
-	uint16_t nStaminaPoints;					//0x08
-	uint8_t nPotionLifePercent;					//0x0A
-	uint8_t nPotionManaPercent;					//0x0B
-	uint16_t nPosX;								//0x0C
-	uint16_t nPosY;								//0x0E
-	uint16_t nTargetOffsetX;					//0x10
-	uint16_t nTargetOffsetY;					//0x12
-	uint32_t dwBeltGold;						//0x14
-	uint32_t dwExperience;						//0x18
+struct D2ClientPlayerDataStrc {
+	uint32_t dwInactivityTime;	// 0x00
+	uint16_t nHitPoints;		// 0x04
+	uint16_t nManaPoints;		// 0x06
+	uint16_t nStaminaPoints;	// 0x08
+	uint8_t nPotionLifePercent; // 0x0A
+	uint8_t nPotionManaPercent; // 0x0B
+	uint16_t nPosX;				// 0x0C
+	uint16_t nPosY;				// 0x0E
+	uint16_t nTargetOffsetX;	// 0x10
+	uint16_t nTargetOffsetY;	// 0x12
+	uint32_t dwBeltGold;		// 0x14
+	uint32_t dwExperience;		// 0x18
 };
 
-struct D2ClientUnitUpdateSortStrc
-{
-	D2UnitStrc* pUnit;							//0x00
-	int32_t nDistance;							//0x04
-	int32_t nNextIndex;							//0x08
+struct D2ClientUnitUpdateSortStrc {
+	D2UnitStrc* pUnit;	// 0x00
+	int32_t nDistance;	// 0x04
+	int32_t nNextIndex; // 0x08
 };
 
-struct D2ClientKeySkillStrc
-{
-	int16_t nSkill;								//0x00
-	int16_t nHand;								//0x02
-	uint32_t nItemGUID;							//0x04
+struct D2ClientKeySkillStrc {
+	int16_t nSkill;		// 0x00
+	int16_t nHand;		// 0x02
+	uint32_t nItemGUID; // 0x04
 };
 
-struct D2GuildInformationStrc
-{
-	int16_t nGuildFlags;						//0x00
-	uint32_t szGuildTag;						//0x02
-	char szGuildName[28];						//0x06
-	uint8_t nBackgroundColor;					//0x22
-	uint8_t nForegroundColor;					//0x23
-	uint8_t nEmblemType;						//0x24
+struct D2GuildInformationStrc {
+	int16_t nGuildFlags;	  // 0x00
+	uint32_t szGuildTag;	  // 0x02
+	char szGuildName[28];	  // 0x06
+	uint8_t nBackgroundColor; // 0x22
+	uint8_t nForegroundColor; // 0x23
+	uint8_t nEmblemType;	  // 0x24
 };
 
-struct D2ClientStrc
-{
-	uint32_t dwClientId;						//0x000
-	D2ClientState dwClientState;				//0x004
-	uint8_t nClassId;							//0x008
-	uint8_t unk0x09;							//0x009
-	D2PackedClientSaveFlags tSaveFlags;			//0x00A
-	uint8_t nCharTemplate;						//0x00C
-	char szName[16];							//0x00D
-	char szAccount[16];							//0x01D
-	uint8_t unk0x2D[51];						//0x02D
-	int32_t nCharSaveTransactionToken;			//0x060
-	int32_t unk0x64;							//0x064
-	D2ClientInfoStrc* pClientInfo;				//0x068
-	D2CharacterPreviewInfoStrc tCharacterInfo;	//0x06C
-	uint8_t unk0x92[218];						//0x092
-	uint32_t dwUnitType;						//0x16C
-	D2UnitGUID dwUnitGUID;						//0x170
-	D2UnitStrc* pPlayer;						//0x174
-	uint32_t bUnlockCharacter;					//0x178
-	D2SaveHeaderStrc* pSaveHeader;				//0x17C
-	int32_t nSaveHeaderSize;					//0x180
-	uint32_t unk0x184;							//0x184
-	uint32_t nSaveHeaderDataSentBytes;			//0x188
-	DWORD nSaveChecksum;						//0x18C
-	FILETIME nSaveCreationTimestamp;			//0x190
-	DWORD unk0x198[4];							//0x198
-	D2GameStrc* pGame;							//0x1A8
-	uint8_t nAct;								//0x1AC
-	uint8_t pad0x1AD[3];						//0x1AD
-	uint32_t unk0x1B0;							//0x1B0
-	D2ActiveRoomStrc* pRoom;					//0x1B4
+struct D2ClientStrc {
+	uint32_t dwClientId;					   // 0x000
+	D2ClientState dwClientState;			   // 0x004
+	uint8_t nClassId;						   // 0x008
+	uint8_t unk0x09;						   // 0x009
+	D2PackedClientSaveFlags tSaveFlags;		   // 0x00A
+	uint8_t nCharTemplate;					   // 0x00C
+	char szName[16];						   // 0x00D
+	char szAccount[16];						   // 0x01D
+	uint8_t unk0x2D[51];					   // 0x02D
+	int32_t nCharSaveTransactionToken;		   // 0x060
+	int32_t unk0x64;						   // 0x064
+	D2ClientInfoStrc* pClientInfo;			   // 0x068
+	D2CharacterPreviewInfoStrc tCharacterInfo; // 0x06C
+	uint8_t unk0x92[218];					   // 0x092
+	uint32_t dwUnitType;					   // 0x16C
+	D2UnitGUID dwUnitGUID;					   // 0x170
+	D2UnitStrc* pPlayer;					   // 0x174
+	uint32_t bUnlockCharacter;				   // 0x178
+	D2SaveHeaderStrc* pSaveHeader;			   // 0x17C
+	int32_t nSaveHeaderSize;				   // 0x180
+	uint32_t unk0x184;						   // 0x184
+	uint32_t nSaveHeaderDataSentBytes;		   // 0x188
+	DWORD nSaveChecksum;					   // 0x18C
+	FILETIME nSaveCreationTimestamp;		   // 0x190
+	DWORD unk0x198[4];						   // 0x198
+	D2GameStrc* pGame;						   // 0x1A8
+	uint8_t nAct;							   // 0x1AC
+	uint8_t pad0x1AD[3];					   // 0x1AD
+	uint32_t unk0x1B0;						   // 0x1B0
+	D2ActiveRoomStrc* pRoom;				   // 0x1B4
 	struct PacketList {
-		D2PacketDataStrc* pHead;				//0x1B8
-		D2PacketDataStrc* pTail;				//0x1BC
-		D2PacketDataStrc* pPacketDataPool;		//0x1C0
+		D2PacketDataStrc* pHead;		   // 0x1B8
+		D2PacketDataStrc* pTail;		   // 0x1BC
+		D2PacketDataStrc* pPacketDataPool; // 0x1C0
 	} tPacketDataList;
-	uint32_t nSaveHeaderSendFailures;			//0x1C4
-	uint32_t unk0x1C8;							//0x1C8
-	D2ClientUnitUpdateStrc unitUpdate[CLIENTS_MAX_UPDATES]; //0x1CC
-	uint8_t pad0x3BB;							//0x3BB
-	uint32_t nUnitUpdateIndex;					//0x3BC
-	int32_t aLastWarpAttemptsFrame[5];			//0x3C0
-	uint32_t dwFlags;							//0x3D4 D2ClientFlagsEx
-	uint32_t dwLastPacketTick;					//0x3D8
-	D2ClientKeySkillStrc HotkeySkills[16];		//0x3DC
-	uint8_t bSwitchWeapon;						//0x45C
-	uint8_t padding0x45D;						//0x45D
-	D2GuildInformationStrc tGuildInfo;			//0x45E
-	uint8_t padding0x483;						//0x483
-	int32_t nIronGolemItemGUID;					//0x484
-	uint32_t nCreateTime;						//0x488
-	D2ClientPlayerDataStrc clientPlayerData;	//0x48C
-	D2ClientStrc* pNext;						//0x4A8
-	D2ClientStrc* pServerNext;					//0x4AC
-	D2ClientStrc* pServerNextByName;			//0x4B0
-	uint32_t aPingHistory[17];					//0x4B4
-	uint64_t nPingMovingAverage;				//0x4F8
-	uint32_t dwPingsCount;						//0x500
+	uint32_t nSaveHeaderSendFailures;						// 0x1C4
+	uint32_t unk0x1C8;										// 0x1C8
+	D2ClientUnitUpdateStrc unitUpdate[CLIENTS_MAX_UPDATES]; // 0x1CC
+	uint8_t pad0x3BB;										// 0x3BB
+	uint32_t nUnitUpdateIndex;								// 0x3BC
+	int32_t aLastWarpAttemptsFrame[5];						// 0x3C0
+	uint32_t dwFlags;										// 0x3D4 D2ClientFlagsEx
+	uint32_t dwLastPacketTick;								// 0x3D8
+	D2ClientKeySkillStrc HotkeySkills[16];					// 0x3DC
+	uint8_t bSwitchWeapon;									// 0x45C
+	uint8_t padding0x45D;									// 0x45D
+	D2GuildInformationStrc tGuildInfo;						// 0x45E
+	uint8_t padding0x483;									// 0x483
+	int32_t nIronGolemItemGUID;								// 0x484
+	uint32_t nCreateTime;									// 0x488
+	D2ClientPlayerDataStrc clientPlayerData;				// 0x48C
+	D2ClientStrc* pNext;									// 0x4A8
+	D2ClientStrc* pServerNext;								// 0x4AC
+	D2ClientStrc* pServerNextByName;						// 0x4B0
+	uint32_t aPingHistory[17];								// 0x4B4
+	uint64_t nPingMovingAverage;							// 0x4F8
+	uint32_t dwPingsCount;									// 0x500
 #ifdef D2_VERSION_113C
-	uint32_t unk0x504;							//0x504
+	uint32_t unk0x504; // 0x504
 #endif
-	int32_t nExpLoss;							//0x504
-	uint32_t dwLocale;							//0x508
-	uint32_t dwLangId;							//0x50C
+	int32_t nExpLoss;  // 0x504
+	uint32_t dwLocale; // 0x508
+	uint32_t dwLangId; // 0x50C
 #ifdef D2_VERSION_113C
-	uint32_t pad0x514;							//0x514
+	uint32_t pad0x514; // 0x514
 #endif
 };
 
@@ -255,8 +242,8 @@ void __fastcall sub_6FC31EF0(D2ClientStrc* pClient, D2UnitStrc* pPlayer, D2GameS
 void __fastcall sub_6FC32220(D2ClientStrc* pClient);
 // D2Game.0x6FC32260
 int32_t __fastcall CLIENTS_AddPlayerToGame(D2ClientStrc* pClient, D2GameStrc* pGame, int32_t a3, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg);
-//1.10f: D2Game.0x6FC325E0
-//1.13c: D2Game.0x6FC6A9B0
+// 1.10f: D2Game.0x6FC325E0
+// 1.13c: D2Game.0x6FC6A9B0
 D2ClientStrc* __fastcall CLIENTS_AddToGame(D2GameStrc* pGame, int32_t nClientId, uint8_t nClassIdOrCharTemplate, const char* szClientName, const char* szAccount, int32_t nCharSaveTransactionToken, uint32_t nLocale, int32_t a8, int32_t a9);
 // D2Game.0x6FC327E0
 void __fastcall CLIENTS_SetGameData(D2GameStrc* pGame);

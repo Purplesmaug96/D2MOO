@@ -8,7 +8,6 @@ struct D2DrlgLevelStrc;
 
 #pragma pack(1)
 
-
 #pragma pack()
 
 // D2Common.0x6FD84100

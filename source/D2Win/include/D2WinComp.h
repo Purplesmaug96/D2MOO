@@ -1,14 +1,13 @@
 #pragma once
 
-#include <windef.h>
 #include <cstdint>
+#include <windef.h>
 
 #include <D2Gfx.h>
 #include <D2Unicode.h>
 
 #pragma pack(push, 1)
-struct D2CofDataStrc
-{
+struct D2CofDataStrc {
 	uint8_t unk0x00;
 	uint8_t unk0x01;
 	uint8_t unk0x02;
@@ -21,8 +20,7 @@ struct D2CofDataStrc
 	uint32_t unk0x18;
 };
 
-struct D2CofNodeStrc
-{
+struct D2CofNodeStrc {
 	uint32_t unk0x00;
 	uint32_t nMode;
 	uint32_t unk0x08;
@@ -33,19 +31,16 @@ struct D2CofNodeStrc
 	D2CofNodeStrc* unk0x1C;
 };
 
-struct D2CofInfoStrc
-{
+struct D2CofInfoStrc {
 	D2CofNodeStrc* pCofNode;
 	D2CofInfoStrc* pNext;
 };
 
-struct D2GfxInfoStrc
-{
+struct D2GfxInfoStrc {
 	D2CofInfoStrc* pCofInfo;
 };
 
-struct D2CompositeUnitStrc
-{
+struct D2CompositeUnitStrc {
 	uint32_t dwFlags;
 	uint8_t unk0x04;
 	uint8_t unk0x05;
@@ -96,25 +91,19 @@ struct D2CompositeUnitStrc
 };
 #pragma pack(pop)
 
-
 void __stdcall sub_6F8A4C10();
 void __stdcall D2Win_10157();
 D2CompositeUnitStrc* __stdcall D2Win_10147();
-inline void* D2Win_10148(void*)
-{
+inline void* D2Win_10148(void*) {
 	return nullptr;
 }
-inline void sub_6F8A15E0(void*)
-{
+inline void sub_6F8A15E0(void*) {
 }
-inline void sub_6F8A1890(void*, int)
-{
+inline void sub_6F8A1890(void*, int) {
 }
-inline void sub_6F8A1D10(void*)
-{
+inline void sub_6F8A1D10(void*) {
 }
-inline void sub_6F8A2070(void*)
-{
+inline void sub_6F8A2070(void*) {
 }
 void __stdcall D2Win_10142_CompUnitDestroy(D2CompositeUnitStrc* pCompositeUnit, int a2);
 const char* __stdcall D2Win_10160_GetPlayerTitle(int a1, int a2, BOOL bSoftCore);

@@ -2,7 +2,6 @@
 
 #include <Units/Units.h>
 
-
 // D2Game.0x6FCCD2E0 (#10025)
 D2UnitStrc* __stdcall DEBUG_GetUnitFromTypeAndGUID(int32_t nUnitType, int32_t nUnitGUID);
 // D2Game.0x6FCCD310 (#10026)

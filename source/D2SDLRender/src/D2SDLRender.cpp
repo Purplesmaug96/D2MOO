@@ -1,20 +1,20 @@
+#include "D2Gfx.h"
+#include <cassert>
 #include <cstddef>
 #include <malloc.h>
-#include <cassert>
-#include "D2Gfx.h"
 
 #define _D2SDLRENDER_CPP
 #include "D2SDLRender.h"
 
-#include "Cutscene.h"
-#include "Surface.h"
-#include "Perspective.h"
-#include "Options.h"
-#include "Utils.h"
-#include "Draw.h"
-#include "Texture.h"
 #include "Cell.h"
+#include "Cutscene.h"
+#include "Draw.h"
+#include "Options.h"
+#include "Perspective.h"
+#include "Surface.h"
+#include "Texture.h"
 #include "Tile.h"
+#include "Utils.h"
 
 D2GraphicsInterfaceStrc* Interface;
 SDL_Window* window;
@@ -36,11 +36,11 @@ BOOL __fastcall D2SDLRender_pfClose() {
 }
 
 bool D2SDLRender_Init() {
-	#ifdef _WIN32
+#ifdef _WIN32
 	AllocConsole();
 	FILE* fDummy;
 	freopen_s(&fDummy, "CONOUT$", "w", stdout);
-	#endif
+#endif
 
 	FUNC_LOG("D2SDLRender_Init");
 	Interface = (D2GraphicsInterfaceStrc*)malloc(sizeof(D2GraphicsInterfaceStrc));
@@ -105,7 +105,7 @@ bool D2SDLRender_Init() {
 }
 
 extern "C" {
-	D2GraphicsInterfaceStrc* GraphicsInterface() {
-		return Interface;
-	}
+D2GraphicsInterfaceStrc* GraphicsInterface() {
+	return Interface;
+}
 }

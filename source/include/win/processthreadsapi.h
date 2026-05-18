@@ -34,4 +34,3 @@ static inline HRESULT SetThreadDescription(HANDLE hThread, PCWSTR lpThreadDescri
 	printf("Stubbed function SetThreadDescription called\n");
 	return 0;
 }
-

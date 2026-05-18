@@ -1,23 +1,21 @@
 #include "D2Monsters.h"
 
 #include "D2DataTbls.h"
+#include "D2Dungeon.h"
+#include "D2Seed.h"
+#include "D2StatList.h"
+#include "D2States.h"
 #include "Drlg/D2DrlgDrlg.h"
 #include "Drlg/D2DrlgMaze.h"
-#include "D2Dungeon.h"
 #include "Path/Path.h"
-#include "D2Seed.h"
-#include "D2States.h"
-#include "D2StatList.h"
 #include "Units/Units.h"
-#include <D2Lang.h>
 #include <D2BitManip.h>
+#include <D2Lang.h>
 #include <DataTbls/MonsterIds.h>
 
+// TODO: Check names
 
-//TODO: Check names
-
-struct D2UnkHireStrc
-{
+struct D2UnkHireStrc {
 	int field_0;
 	int field_4;
 	int field_8;
@@ -27,22 +25,19 @@ struct D2UnkHireStrc
 	int field_18;
 };
 
-struct D2UnkHireStrc2
-{
+struct D2UnkHireStrc2 {
 	int field_0;
 	int field_4;
 };
 
-struct D2UnkHireStrc3
-{
+struct D2UnkHireStrc3 {
 	int field_0;
 	int field_4;
 	int field_8;
 	int field_C;
 };
 
-struct D2UnkHireStrc4
-{
+struct D2UnkHireStrc4 {
 	int field_0;
 	int field_4;
 	int field_8;
@@ -50,8 +45,7 @@ struct D2UnkHireStrc4
 	int field_10;
 };
 
-struct D2UnkHireStrc5
-{
+struct D2UnkHireStrc5 {
 	int field_0;
 	int field_4;
 	int field_8;
@@ -60,10 +54,8 @@ struct D2UnkHireStrc5
 	int field_14;
 };
 
-
 // D2Common.0x6FDA4C10 (#11082)
-int __fastcall MONSTERS_HirelingInit(BOOL bExpansion, D2UnitStrc* pMonster, int nLowSeed, int nAct, int nDifficulty, D2HirelingInitStrc* pHirelingInit)
-{
+int __fastcall MONSTERS_HirelingInit(BOOL bExpansion, D2UnitStrc* pMonster, int nLowSeed, int nAct, int nDifficulty, D2HirelingInitStrc* pHirelingInit) {
 	D2HirelingTxt* pHirelingTxtRecord = NULL;
 	D2HirelingTxt* pRecord = NULL;
 	int nLevelUps = 0;
@@ -77,19 +69,16 @@ int __fastcall MONSTERS_HirelingInit(BOOL bExpansion, D2UnitStrc* pMonster, int 
 	SEED_InitSeed(&pSeed);
 	SEED_InitLowSeed(&pSeed, nLowSeed);
 
-	while (1)
-	{
+	while (1) {
 		pRecord = DATATBLS_GetNextHirelingTxtRecordFromActAndDifficulty(bExpansion, nAct, nDifficulty, pRecord);
-		if (!pRecord)
-		{
+		if (!pRecord) {
 			break;
 		}
 		pRecords[nEntries] = pRecord;
 		++nEntries;
 	}
 
-	if (nEntries)
-	{
+	if (nEntries) {
 		nRecord = SEED_RollLimitedRandomNumber(&pSeed, nEntries);
 
 		pHirelingTxtRecord = pRecords[nRecord];
@@ -98,73 +87,60 @@ int __fastcall MONSTERS_HirelingInit(BOOL bExpansion, D2UnitStrc* pMonster, int 
 
 		nLevel = STATLIST_UnitGetStatValue(pMonster, STAT_LEVEL, 0);
 		nRand = (int)SEED_RollRandomNumber(&pSeed) % 5;
-		if (nRand >= nLevel - pHirelingTxtRecord->nHirelingLevel)
-		{
+		if (nRand >= nLevel - pHirelingTxtRecord->nHirelingLevel) {
 			nLevelUps = nLevel - pHirelingTxtRecord->nHirelingLevel;
-		}
-		else
-		{
+		} else {
 			nLevelUps = nRand;
 		}
 		pHirelingInit->nLevel = pHirelingTxtRecord->nHirelingLevel + nLevelUps;
 
 		pHirelingInit->nHitpoints = nLevelUps * pHirelingTxtRecord->dwHitpointsPerLvl + pHirelingTxtRecord->dwHitpoints;
-		if (pHirelingInit->nHitpoints <= 40)
-		{
+		if (pHirelingInit->nHitpoints <= 40) {
 			pHirelingInit->nHitpoints = 40;
 		}
 
 		pHirelingInit->nStrength = (nLevelUps * pHirelingTxtRecord->nStrPerLvl >> 3) + pHirelingTxtRecord->nStr;
-		if (pHirelingInit->nStrength <= 10)
-		{
+		if (pHirelingInit->nStrength <= 10) {
 			pHirelingInit->nStrength = 10;
 		}
 
 		pHirelingInit->nDexterity = (nLevelUps * pHirelingTxtRecord->nDexPerLvl >> 3) + pHirelingTxtRecord->nDex;
-		if (pHirelingInit->nDexterity <= 10)
-		{
+		if (pHirelingInit->nDexterity <= 10) {
 			pHirelingInit->nDexterity = 10;
 		}
 
 		pHirelingInit->nGold = pHirelingTxtRecord->nGold * (15 * nLevelUps + 100) / 100;
-		if (pHirelingInit->nGold < pHirelingTxtRecord->nGold)
-		{
+		if (pHirelingInit->nGold < pHirelingTxtRecord->nGold) {
 			pHirelingInit->nGold = pHirelingTxtRecord->nGold;
 		}
 
 		pHirelingInit->nExperience = pHirelingInit->nLevel * pHirelingInit->nLevel * pHirelingTxtRecord->dwExpPerLvl * (pHirelingInit->nLevel + 1);
-		if (pHirelingInit->nExperience <= 0)
-		{
+		if (pHirelingInit->nExperience <= 0) {
 			pHirelingInit->nExperience = 0;
 		}
 
 		pHirelingInit->nDefense = pHirelingTxtRecord->dwDefense + nLevelUps * pHirelingTxtRecord->dwDefensePerLvl;
-		if (pHirelingInit->nDefense <= 0)
-		{
+		if (pHirelingInit->nDefense <= 0) {
 			pHirelingInit->nDefense = 0;
 		}
 
 		pHirelingInit->nMinDamage = pHirelingTxtRecord->nDmgMin + (nLevelUps * pHirelingTxtRecord->nDmgPerLvl >> 3);
-		if (pHirelingInit->nMinDamage <= 0)
-		{
+		if (pHirelingInit->nMinDamage <= 0) {
 			pHirelingInit->nMinDamage = 0;
 		}
 
 		pHirelingInit->nMaxDamage = pHirelingTxtRecord->nDmgMax + (nLevelUps * pHirelingTxtRecord->nDmgPerLvl >> 3);
-		if (pHirelingInit->nMaxDamage <= 1)
-		{
+		if (pHirelingInit->nMaxDamage <= 1) {
 			pHirelingInit->nMaxDamage = 1;
 		}
 
 		pHirelingInit->nShare = pHirelingTxtRecord->dwShare;
-		if (pHirelingInit->nShare <= 0)
-		{
+		if (pHirelingInit->nShare <= 0) {
 			pHirelingInit->nShare = 0;
 		}
 
 		pHirelingInit->nResist = pHirelingTxtRecord->dwResist;
-		if (pHirelingInit->nResist <= 0)
-		{
+		if (pHirelingInit->nResist <= 0) {
 			pHirelingInit->nResist = 0;
 		}
 
@@ -178,59 +154,48 @@ int __fastcall MONSTERS_HirelingInit(BOOL bExpansion, D2UnitStrc* pMonster, int 
 }
 
 // D2Common.0x6FDA4E20
-//TODO: Unknown structs, a2 probably not D2HirelingInitStrc
-BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, uint8_t a3)
-{
-	static const int dword_6FDE4A84[] =
-	{
+// TODO: Unknown structs, a2 probably not D2HirelingInitStrc
+BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, uint8_t a3) {
+	static const int dword_6FDE4A84[] = {
 		0, 2, 4, 0
 	};
 
-	static const int dword_6FDE4A94[] =
-	{
+	static const int dword_6FDE4A94[] = {
 		2, 2, 2, 0, 6
 	};
 
-	static const int dword_6FDE4AA8[] =
-	{
+	static const int dword_6FDE4AA8[] = {
 		0, 2, 4, 0
 	};
 
-	static const int dword_6FDE4AB8[] =
-	{
+	static const int dword_6FDE4AB8[] = {
 		2, 2, 2, 0, 6
 	};
 
-	static const int dword_6FDE4ACC[] =
-	{
+	static const int dword_6FDE4ACC[] = {
 		0, 2, 4, 0
 	};
 
-	static const int dword_6FDE4ADC[] =
-	{
+	static const int dword_6FDE4ADC[] = {
 		2, 2, 2, 0, 12
 	};
 
-	static const int dword_6FDE4AF0[] =
-	{
+	static const int dword_6FDE4AF0[] = {
 		0, 3, 6, 0
 	};
 
-	static const int dword_6FDE4B00[] =
-	{
+	static const int dword_6FDE4B00[] = {
 		3, 3, 6, 0
 	};
 
-	static const D2UnkHireStrc2 stru_6FDE4B10[] =
-	{
+	static const D2UnkHireStrc2 stru_6FDE4B10[] = {
 		{ 150, 3 },
 		{ 300, 9 },
 		{ 600, 15 },
 		{ 0, 0 }
 	};
 
-	static const D2UnkHireStrc3 stru_6FDE4B30[] =
-	{
+	static const D2UnkHireStrc3 stru_6FDE4B30[] = {
 		{ 0, 30, 0, 0 },
 		{ 0, 60, 100, 2 },
 		{ 0, 120, 0, 0 },
@@ -239,8 +204,7 @@ BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, 
 		{ 1, 400, 170, 3 },
 	};
 
-	static const D2UnkHireStrc3 stru_6FDE4B90[] =
-	{
+	static const D2UnkHireStrc3 stru_6FDE4B90[] = {
 		{ 0, 15, 0, 0 },
 		{ 1, 45, 80, 1 },
 		{ 0, 25, 0, 0 },
@@ -249,15 +213,13 @@ BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, 
 		{ 1, 150, 125, 2 },
 	};
 
-	static const D2UnkHireStrc stru_6FDE4D70[] =
-	{
+	static const D2UnkHireStrc stru_6FDE4D70[] = {
 		{ 0, 0, 0, 1, 1, 0, 1 },
 		{ 80, 40, 25, 2, 2, 3, 2 },
 		{ 120, 60, 40, 3, 3, 5, 3 }
 	};
 
-	static const D2UnkHireStrc4 stru_6FDE4C80[] =
-	{
+	static const D2UnkHireStrc4 stru_6FDE4C80[] = {
 		{ 0, 0, 0, 0, 0 },
 		{ 1, 55, 2, 0, 3371 },
 		{ 2, 85, 2, 0, 3372 },
@@ -272,8 +234,7 @@ BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, 
 		{ 11, 130, 1, 3, 3380 },
 	};
 
-	static const D2UnkHireStrc5 stru_6FDE4BF0[] =
-	{
+	static const D2UnkHireStrc5 stru_6FDE4BF0[] = {
 		{ 0, 1, 1, 3, 0, 0 },
 		{ 1, 1, 2, 4, 75, 2 },
 		{ 0, 1, 2, 6, 0, 0 },
@@ -285,8 +246,7 @@ BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, 
 	D2SeedStrc pSeed = {};
 	int nIndex = 0;
 
-	if (nLowSeed && pHirelingInit && a3 <= 2 && pHirelingInit->nId >= 0 && pHirelingInit->nId <= 3)
-	{
+	if (nLowSeed && pHirelingInit && a3 <= 2 && pHirelingInit->nId >= 0 && pHirelingInit->nId <= 3) {
 		pHirelingInit->nFlags = 0;
 
 		SEED_InitSeed(&pSeed);
@@ -308,20 +268,16 @@ BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, 
 		pHirelingInit->field_34 += stru_6FDE4B90[nIndex].field_8;
 
 		nIndex = SEED_RollLimitedRandomNumber(&pSeed, dword_6FDE4ADC[pHirelingInit->nId]) + dword_6FDE4ACC[pHirelingInit->nId];
-		if (pHirelingInit->nId >= 3)
-		{
+		if (pHirelingInit->nId >= 3) {
 			pHirelingInit->nStrength = 0;
 			pHirelingInit->nGold = stru_6FDE4BF0[nIndex].field_0;
-		}
-		else
-		{
+		} else {
 			pHirelingInit->nGold = 0;
 			pHirelingInit->nStrength = stru_6FDE4BF0[nIndex].field_0;
 		}
 		pHirelingInit->nMaxDamage = stru_6FDE4BF0[nIndex].field_8;
 		pHirelingInit->nShare = stru_6FDE4BF0[nIndex].field_C;
-		if (!stru_6FDE4BF0[nIndex].field_4)
-		{
+		if (!stru_6FDE4BF0[nIndex].field_4) {
 			pHirelingInit->nFlags |= 1;
 		}
 		pHirelingInit->nMinDamage += stru_6FDE4BF0[nIndex].field_14;
@@ -334,8 +290,7 @@ BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, 
 		pHirelingInit->nMinDamage += stru_6FDE4C80[nIndex].field_8;
 		pHirelingInit->field_34 += stru_6FDE4C80[nIndex].field_4;
 
-		if (a3)
-		{
+		if (a3) {
 			pHirelingInit->nExperience += stru_6FDE4D70[a3].field_0;
 			pHirelingInit->nDefense += stru_6FDE4D70[a3].field_4;
 			pHirelingInit->nMinDamage += stru_6FDE4D70[a3].field_8;
@@ -352,16 +307,13 @@ BOOL __fastcall D2Common_11081(int nLowSeed, D2HirelingInitStrc* pHirelingInit, 
 }
 
 // D2Common.0x6FDA51A0 (#11085)
-const Unicode* __fastcall MONSTERS_GetHirelingDescString(int nId)
-{
+const Unicode* __fastcall MONSTERS_GetHirelingDescString(int nId) {
 	// D2Common.0x6FDD16E0
-	static const short gnHirelingDescStringIds[9] =
-	{
+	static const short gnHirelingDescStringIds[9] = {
 		0, 3371, 3372, 11090, 11088, 11089, 3377, 3376, 3375
 	};
 
-	if (nId >= 0 && nId < ARRAY_SIZE(gnHirelingDescStringIds) && gnHirelingDescStringIds[nId])
-	{
+	if (nId >= 0 && nId < ARRAY_SIZE(gnHirelingDescStringIds) && gnHirelingDescStringIds[nId]) {
 		return D2LANG_GetStringFromTblIndex(gnHirelingDescStringIds[nId]);
 	}
 
@@ -369,20 +321,15 @@ const Unicode* __fastcall MONSTERS_GetHirelingDescString(int nId)
 }
 
 // D2Common.0x6FDA51C0 (#11086)
-int __fastcall MONSTERS_GetActFromHirelingTxt(BOOL bExpansion, int nClassId, uint16_t nNameId)
-{
+int __fastcall MONSTERS_GetActFromHirelingTxt(BOOL bExpansion, int nClassId, uint16_t nNameId) {
 	D2HirelingTxt* pHirelingTxtRecord = NULL;
 
 	pHirelingTxtRecord = DATATBLS_GetNextHirelingTxtRecordFromClassId(bExpansion, nClassId, NULL);
-	if (pHirelingTxtRecord)
-	{
+	if (pHirelingTxtRecord) {
 		return pHirelingTxtRecord->dwAct - 1;
-	}
-	else
-	{
+	} else {
 		pHirelingTxtRecord = DATATBLS_GetNextHirelingTxtRecordFromNameId(bExpansion, nNameId, NULL);
-		if (pHirelingTxtRecord)
-		{
+		if (pHirelingTxtRecord) {
 			return pHirelingTxtRecord->dwAct - 1;
 		}
 	}
@@ -391,19 +338,16 @@ int __fastcall MONSTERS_GetActFromHirelingTxt(BOOL bExpansion, int nClassId, uin
 }
 
 // D2Common.0x6FDA5200 (#11084)
-int __stdcall MONSTERS_GetHirelingExpForNextLevel(int nLevel, int nExpPerLevel)
-{
+int __stdcall MONSTERS_GetHirelingExpForNextLevel(int nLevel, int nExpPerLevel) {
 	return nExpPerLevel * nLevel * nLevel * (nLevel + 1);
 }
 
 // D2Common.0x6FDA5220 (#11083)
-int __stdcall MONSTERS_GetHirelingResurrectionCost(D2UnitStrc* pHireling)
-{
+int __stdcall MONSTERS_GetHirelingResurrectionCost(D2UnitStrc* pHireling) {
 	int nLevel = STATLIST_UnitGetStatValue(pHireling, STAT_LEVEL, 0);
 	int nCost = 15 * nLevel * nLevel / 2;
 
-	if (nCost > 50000)
-	{
+	if (nCost > 50000) {
 		nCost = 50000;
 	}
 
@@ -411,15 +355,12 @@ int __stdcall MONSTERS_GetHirelingResurrectionCost(D2UnitStrc* pHireling)
 }
 
 // D2Common.0x6FDA5270 (#11068)
-int __stdcall D2COMMON_11068_GetCompInfo(D2UnitStrc* pMonster, int nComponent)
-{
+int __stdcall D2COMMON_11068_GetCompInfo(D2UnitStrc* pMonster, int nComponent) {
 	D2MonStats2Txt* pMonStats2TxtRecord = NULL;
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && nComponent < ARRAY_SIZE(pMonStats2TxtRecord->nComponentChoiceCounts))
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && nComponent < ARRAY_SIZE(pMonStats2TxtRecord->nComponentChoiceCounts)) {
 		pMonStats2TxtRecord = UNITS_GetMonStats2TxtRecordFromMonsterId(pMonster->dwClassId);
-		if (pMonStats2TxtRecord)
-		{
+		if (pMonStats2TxtRecord) {
 			return pMonStats2TxtRecord->nComponentChoiceCounts[nComponent];
 		}
 	}
@@ -428,41 +369,33 @@ int __stdcall D2COMMON_11068_GetCompInfo(D2UnitStrc* pMonster, int nComponent)
 }
 
 // D2Common.0x6FDA52F0 (#11069)
-uint32_t __stdcall D2Common_11069(D2UnitStrc* pMonster, unsigned int nIndex, unsigned int nComponent)
-{
+uint32_t __stdcall D2Common_11069(D2UnitStrc* pMonster, unsigned int nIndex, unsigned int nComponent) {
 	// NOLINTBEGIN(clang-diagnostic-multichar)
-	static uint32_t dword_6FDE4DC8[7] =
-	{
+	static uint32_t dword_6FDE4DC8[7] = {
 		' til', ' til', ' sed', ' sed', ' yvh', ' yvh', ' yvh'
 	};
 
-	static uint32_t dword_6FDE4DE4[3] =
-	{
+	static uint32_t dword_6FDE4DE4[3] = {
 		' til', ' sed', ' yvh'
 	};
 
-	static uint32_t dword_6FDE4DF0[10] =
-	{
+	static uint32_t dword_6FDE4DF0[10] = {
 		' exa', ' exa', ' alf', ' alf', ' xah', ' xah', ' cam', ' cam', ' mcs', 'mcs'
 	};
 
-	static uint32_t dword_6FDE4E18[5] =
-	{
+	static uint32_t dword_6FDE4E18[5] = {
 		0, ' cub', ' grl', ' tik', ' lms'
 	};
 
-	static uint32_t dword_6FDE4E2C[12] =
-	{
+	static uint32_t dword_6FDE4E2C[12] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, ' til', ' sed', ' yvh'
 	};
 
-	static uint32_t dword_6FDE4E5C[3] =
-	{
+	static uint32_t dword_6FDE4E5C[3] = {
 		' til', ' dem', ' yvh'
 	};
 
-	static const uint32_t* off_6FDE4E68[16] =
-	{
+	static const uint32_t* off_6FDE4E68[16] = {
 		dword_6FDE4DC8,
 		dword_6FDE4E5C,
 		dword_6FDE4DE4,
@@ -481,23 +414,19 @@ uint32_t __stdcall D2Common_11069(D2UnitStrc* pMonster, unsigned int nIndex, uns
 		NULL,
 	};
 
-	static uint32_t dword_6FDE4EA8[3] =
-	{
+	static uint32_t dword_6FDE4EA8[3] = {
 		' til', ' sed', ' yvh'
 	};
 
-	static uint32_t dword_6FDE4EB4[11] =
-	{
+	static uint32_t dword_6FDE4EB4[11] = {
 		0, 0, 0, 0, 0, 0, 0, 0, ' til', ' sed', ' yvh'
 	};
 
-	static uint32_t dword_6FDE4EE0[2] =
-	{
+	static uint32_t dword_6FDE4EE0[2] = {
 		' wbs', 0
 	};
 
-	static const uint32_t* off_6FDE4EE8[16] =
-	{
+	static const uint32_t* off_6FDE4EE8[16] = {
 		dword_6FDE4EA8,
 		dword_6FDE4E5C,
 		dword_6FDE4EA8,
@@ -525,41 +454,30 @@ uint32_t __stdcall D2Common_11069(D2UnitStrc* pMonster, unsigned int nIndex, uns
 	int nLevelId = 0;
 	uint32_t dwCode = 0;
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && nIndex < ARRAY_SIZE(pMonStats2TxtRecord->nComponentChoiceCounts))
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && nIndex < ARRAY_SIZE(pMonStats2TxtRecord->nComponentChoiceCounts)) {
 		pMonStats2TxtRecord = UNITS_GetMonStats2TxtRecordFromMonsterId(pMonster->dwClassId);
-		if (pMonStats2TxtRecord && pMonStats2TxtRecord->nComponentChoiceCounts[nIndex] > nComponent)
-		{
+		if (pMonStats2TxtRecord && pMonStats2TxtRecord->nComponentChoiceCounts[nIndex] > nComponent) {
 			dwCode = DATATBLS_GetCodeFromCompCodeTxt(pMonStats2TxtRecord->unk0x26[nIndex].nComposit[nComponent]);
 
 			pRoom = UNITS_GetRoom(pMonster);
-			if (pRoom)
-			{
+			if (pRoom) {
 				nLevelId = DUNGEON_GetLevelIdFromRoom(pRoom);
-				if (DRLG_GetActNoFromLevelId(nLevelId) == ACT_II)
-				{
+				if (DRLG_GetActNoFromLevelId(nLevelId) == ACT_II) {
 					nMonsterId = pMonster->dwClassId;
-					if (nMonsterId >= 0)
-					{
+					if (nMonsterId >= 0) {
 						pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nMonsterId);
-						if (pMonStatsTxtRecord)
-						{
+						if (pMonStatsTxtRecord) {
 							nMonsterId = pMonStatsTxtRecord->nBaseId;
 						}
 
-						if (nMonsterId == MONSTER_SKELETON1)
-						{
+						if (nMonsterId == MONSTER_SKELETON1) {
 							pCode = off_6FDE4E68[nIndex];
-							if (pCode)
-							{
+							if (pCode) {
 								return pCode[nComponent];
 							}
-						}
-						else if (nMonsterId == MONSTER_SK_ARCHER1)
-						{
+						} else if (nMonsterId == MONSTER_SK_ARCHER1) {
 							pCode = off_6FDE4EE8[nIndex];
-							if (pCode)
-							{
+							if (pCode) {
 								return pCode[nComponent];
 							}
 						}
@@ -575,15 +493,12 @@ uint32_t __stdcall D2Common_11069(D2UnitStrc* pMonster, unsigned int nIndex, uns
 }
 
 // D2Common.0x6FDA5450 (#11070)
-int __stdcall D2Common_11070(int nMonsterId, unsigned int nComponent, unsigned int a3)
-{
+int __stdcall D2Common_11070(int nMonsterId, unsigned int nComponent, unsigned int a3) {
 	D2MonStats2Txt* pMonStats2TxtRecord = NULL;
 
-	if (nComponent < ARRAY_SIZE(pMonStats2TxtRecord->nComponentChoiceCounts))
-	{
+	if (nComponent < ARRAY_SIZE(pMonStats2TxtRecord->nComponentChoiceCounts)) {
 		pMonStats2TxtRecord = UNITS_GetMonStats2TxtRecordFromMonsterId(nMonsterId);
-		if (pMonStats2TxtRecord && pMonStats2TxtRecord->nComponentChoiceCounts[nComponent] > a3)
-		{
+		if (pMonStats2TxtRecord && pMonStats2TxtRecord->nComponentChoiceCounts[nComponent] > a3) {
 			return DATATBLS_GetCodeFromCompCodeTxt(pMonStats2TxtRecord->unk0x26[nComponent].nComposit[a3]);
 		}
 	}
@@ -592,18 +507,15 @@ int __stdcall D2Common_11070(int nMonsterId, unsigned int nComponent, unsigned i
 }
 
 // D2Common.0x6FDA54E0 (#11050)
-int __stdcall D2Common_11050(D2UnitStrc* pUnit, int a2)
-{
+int __stdcall D2Common_11050(D2UnitStrc* pUnit, int a2) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 	int nFrameCount = 0;
 	int nCounter = 0;
 	int nFrame = 0;
 	int nStart = 0;
 
-	if (a2)
-	{
-		if (!pUnit->nActionFrame)
-		{
+	if (a2) {
+		if (!pUnit->nActionFrame) {
 			return -1;
 		}
 
@@ -613,37 +525,30 @@ int __stdcall D2Common_11050(D2UnitStrc* pUnit, int a2)
 		nFrame >>= 8;
 
 		nCounter = nStart;
-		while (nCounter <= nFrame)
-		{
-			if (UNITS_GetEventFrameInfo(pUnit, nCounter) == ANIMSEQ_EVENT_MISSILE_ATTACK || UNITS_GetEventFrameInfo(pUnit, nCounter) == ANIMSEQ_EVENT_MELEE_ATTACK)
-			{
+		while (nCounter <= nFrame) {
+			if (UNITS_GetEventFrameInfo(pUnit, nCounter) == ANIMSEQ_EVENT_MISSILE_ATTACK || UNITS_GetEventFrameInfo(pUnit, nCounter) == ANIMSEQ_EVENT_MELEE_ATTACK) {
 				break;
 			}
 
 			++nCounter;
 		}
 
-		if (nCounter > nFrame)
-		{
+		if (nCounter > nFrame) {
 			return -1;
 		}
 
-		if (nCounter <= nStart)
-		{
+		if (nCounter <= nStart) {
 			return -1;
 		}
 	}
 
-	if (!pUnit)
-	{
+	if (!pUnit) {
 		return -1;
 	}
 
 	pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pUnit->dwClassId);
-	if (pMonStatsTxtRecord)
-	{
-		switch (pUnit->dwAnimMode)
-		{
+	if (pMonStatsTxtRecord) {
+		switch (pUnit->dwAnimMode) {
 		case MONMODE_ATTACK1:
 			return pMonStatsTxtRecord->wMissA1;
 
@@ -677,11 +582,9 @@ int __stdcall D2Common_11050(D2UnitStrc* pUnit, int a2)
 }
 
 // D2Common.0x6FDA55E0 (#11052)
-uint8_t __stdcall D2Common_11052(uint8_t a1)
-{
+uint8_t __stdcall D2Common_11052(uint8_t a1) {
 	// D2Common.0x6FDE4F28
-	static const uint8_t byte_6FDE4F28[] =
-	{
+	static const uint8_t byte_6FDE4F28[] = {
 		0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7,
 		8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 14, 14, 14, 14, 15, 15, 15, 15, 0, 0
 	};
@@ -690,24 +593,20 @@ uint8_t __stdcall D2Common_11052(uint8_t a1)
 }
 
 // D2Common.0x6FDA5600 (#11053)
-uint8_t __stdcall D2Common_11053(uint8_t a1)
-{
+uint8_t __stdcall D2Common_11053(uint8_t a1) {
 	// D2Common.0x6FDE4F68
-	static const uint8_t byte_6FDE4F68[] =
-	{
+	static const uint8_t byte_6FDE4F68[] = {
 		0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4,
-		4, 4, 4, 4,	5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0
+		4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0
 	};
 
 	return byte_6FDE4F68[a1];
 }
 
 // D2Common.0x6FDA5620 (#11054)
-uint8_t __stdcall D2Common_11054(uint8_t a1)
-{
+uint8_t __stdcall D2Common_11054(uint8_t a1) {
 	// D2Common.0x6FDE4FA8
-	static const uint8_t byte_6FDE4FA8[] =
-	{
+	static const uint8_t byte_6FDE4FA8[] = {
 		4, 12, 20, 28, 36, 44, 52, 60
 	};
 
@@ -715,17 +614,14 @@ uint8_t __stdcall D2Common_11054(uint8_t a1)
 }
 
 // D2Common.0x6FDA5640 (#11055)
-void __stdcall D2Common_11055(uint8_t a1, int* a2, int* a3)
-{
+void __stdcall D2Common_11055(uint8_t a1, int* a2, int* a3) {
 	// D2Common.0x6FDD1738
-	static const int8_t byte_6FDD1738[] =
-	{
+	static const int8_t byte_6FDD1738[] = {
 		0, -1, -1, -1, 0, 1, 1, 1, 0, -1, -2, -2, -2, -2, -2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -3, -3, -3, 0, 3, 3, 3
 	};
 
 	// D2Common.0x6FDD1758
-	static const int8_t byte_6FDD1758[] =
-	{
+	static const int8_t byte_6FDD1758[] = {
 		-1, -1, 0, 1, 1, 1, 0, -1, -2, -2, -2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -1, -2, -2, -3, -3, 0, 3, 3, 3, 0, -3
 	};
 
@@ -734,12 +630,9 @@ void __stdcall D2Common_11055(uint8_t a1, int* a2, int* a3)
 }
 
 // D2Common.0x6FDA5670 (#11297)
-void __fastcall MONSTERS_SetMonsterNameInMonsterData(D2UnitStrc* pMonster, const Unicode* wszName)
-{
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData)
-	{
-		if (wszName)
-		{
+void __fastcall MONSTERS_SetMonsterNameInMonsterData(D2UnitStrc* pMonster, const Unicode* wszName) {
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData) {
+		if (wszName) {
 			const size_t nStringBufferBytes = (Unicode::strlen(wszName) + 1) * sizeof(Unicode);
 			pMonster->pMonsterData->wszMonName = (Unicode*)D2_ALLOC(nStringBufferBytes);
 			Unicode::strcpy(pMonster->pMonsterData->wszMonName, wszName);
@@ -748,17 +641,13 @@ void __fastcall MONSTERS_SetMonsterNameInMonsterData(D2UnitStrc* pMonster, const
 }
 
 // D2Common.0x6FDA56C0
-BOOL __fastcall MONSTERS_CanBeInTown(D2UnitStrc* pMonster)
-{
+BOOL __fastcall MONSTERS_CanBeInTown(D2UnitStrc* pMonster) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pMonster->dwClassId);
-		if (pMonStatsTxtRecord)
-		{
-			if (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_NPC] || pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_INTOWN] || pMonster->dwFlags & UNITFLAG_ISREVIVE)
-			{
+		if (pMonStatsTxtRecord) {
+			if (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_NPC] || pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_INTOWN] || pMonster->dwFlags & UNITFLAG_ISREVIVE) {
 				return TRUE;
 			}
 		}
@@ -768,41 +657,30 @@ BOOL __fastcall MONSTERS_CanBeInTown(D2UnitStrc* pMonster)
 }
 
 // D2Common.0x6FDA5750 (#11057)
-BOOL __stdcall MONSTERS_IsSandLeaper(D2UnitStrc* pMonster, BOOL bAlwaysReturnFalse)
-{
+BOOL __stdcall MONSTERS_IsSandLeaper(D2UnitStrc* pMonster, BOOL bAlwaysReturnFalse) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 	int nClassId = 0;
 
-	if (bAlwaysReturnFalse)
-	{
+	if (bAlwaysReturnFalse) {
 		return FALSE;
 	}
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		nClassId = pMonster->dwClassId;
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nClassId);
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			nClassId = pMonStatsTxtRecord->nBaseId;
 		}
-	}
-	else
-	{
+	} else {
 		nClassId = -1;
 	}
 
-	if (sgptDataTables->nMonStatsTxtRecordCount > MONSTER_SANDLEAPER1)
-	{
-		if (nClassId == MONSTER_SANDLEAPER1)
-		{
+	if (sgptDataTables->nMonStatsTxtRecordCount > MONSTER_SANDLEAPER1) {
+		if (nClassId == MONSTER_SANDLEAPER1) {
 			return TRUE;
 		}
-	}
-	else
-	{
-		if (nClassId == -1)
-		{
+	} else {
+		if (nClassId == -1) {
 			return TRUE;
 		}
 	}
@@ -811,15 +689,12 @@ BOOL __stdcall MONSTERS_IsSandLeaper(D2UnitStrc* pMonster, BOOL bAlwaysReturnFal
 }
 
 // D2Common.0x6FDA57D0 (#11058)
-BOOL __stdcall MONSTERS_IsDemon(D2UnitStrc* pMonster)
-{
+BOOL __stdcall MONSTERS_IsDemon(D2UnitStrc* pMonster) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pMonster->dwClassId);
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			return (pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_DEMON]) != 0;
 		}
 	}
@@ -828,15 +703,12 @@ BOOL __stdcall MONSTERS_IsDemon(D2UnitStrc* pMonster)
 }
 
 // D2Common.0x6FDA5830 (#11059)
-BOOL __stdcall MONSTERS_IsUndead(D2UnitStrc* pMonster)
-{
+BOOL __stdcall MONSTERS_IsUndead(D2UnitStrc* pMonster) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pMonster->dwClassId);
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			return pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_LUNDEAD] || pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_HUNDEAD];
 		}
 	}
@@ -845,17 +717,13 @@ BOOL __stdcall MONSTERS_IsUndead(D2UnitStrc* pMonster)
 }
 
 // D2Common.0x6FDA58A0 (#11060)
-BOOL __stdcall MONSTERS_IsBoss(D2MonStatsTxt* pMonStatsTxtRecord, D2UnitStrc* pMonster)
-{
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
-		if (!pMonStatsTxtRecord)
-		{
+BOOL __stdcall MONSTERS_IsBoss(D2MonStatsTxt* pMonStatsTxtRecord, D2UnitStrc* pMonster) {
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
+		if (!pMonStatsTxtRecord) {
 			pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pMonster->dwClassId);
 		}
 
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			return pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_BOSS];
 		}
 	}
@@ -864,10 +732,8 @@ BOOL __stdcall MONSTERS_IsBoss(D2MonStatsTxt* pMonStatsTxtRecord, D2UnitStrc* pM
 }
 
 // D2Common.0x6FDA5900 (#11064)
-BOOL __stdcall MONSTERS_IsDead(D2UnitStrc* pMonster)
-{
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+BOOL __stdcall MONSTERS_IsDead(D2UnitStrc* pMonster) {
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		return pMonster->dwAnimMode == MONMODE_DEATH || pMonster->dwAnimMode == MONMODE_DEAD;
 	}
 
@@ -875,64 +741,50 @@ BOOL __stdcall MONSTERS_IsDead(D2UnitStrc* pMonster)
 }
 
 // D2Common.0x6FDA5930 (#11280)
-int __stdcall MONSTERS_GetSpawnMode_XY(D2UnitStrc* pMonster, BOOL bFromMonster, int nSkillId, int nSkillLevel, int* pSpawnMode, int* pX, int* pY)
-{
+int __stdcall MONSTERS_GetSpawnMode_XY(D2UnitStrc* pMonster, BOOL bFromMonster, int nSkillId, int nSkillLevel, int* pSpawnMode, int* pX, int* pY) {
 	D2_MAYBE_UNUSED(nSkillLevel);
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 	D2SkillsTxt* pSkillsTxtRecord = NULL;
 	D2CoordStrc pCoords = {};
 
-	if (bFromMonster && pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (bFromMonster && pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pMonster->dwClassId);
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			UNITS_GetCoords(pMonster, &pCoords);
 
-			if (pX)
-			{
+			if (pX) {
 				*pX = pCoords.nX + pMonStatsTxtRecord->nSpawnX;
 			}
 
-			if (pY)
-			{
+			if (pY) {
 				*pY = pCoords.nY + pMonStatsTxtRecord->nSpawnY;
 			}
 
-			if (pSpawnMode)
-			{
+			if (pSpawnMode) {
 				*pSpawnMode = pMonStatsTxtRecord->nSpawnMode;
-				if (pMonStatsTxtRecord->nSpawnMode < 0 || pMonStatsTxtRecord->nSpawnMode >= 16)
-				{
+				if (pMonStatsTxtRecord->nSpawnMode < 0 || pMonStatsTxtRecord->nSpawnMode >= 16) {
 					*pSpawnMode = MONMODE_NEUTRAL;
 				}
 			}
 
 			return pMonStatsTxtRecord->wSpawn;
 		}
-	}
-	else
-	{
+	} else {
 		pSkillsTxtRecord = DATATBLS_GetSkillsTxtRecord(nSkillId);
-		if (pSkillsTxtRecord && pSkillsTxtRecord->wSummon >= 0 && pSkillsTxtRecord->wSummon < sgptDataTables->nMonStatsTxtRecordCount)
-		{
+		if (pSkillsTxtRecord && pSkillsTxtRecord->wSummon >= 0 && pSkillsTxtRecord->wSummon < sgptDataTables->nMonStatsTxtRecordCount) {
 			UNITS_GetCoords(pMonster, &pCoords);
 
-			if (pX)
-			{
+			if (pX) {
 				*pX = pCoords.nX;
 			}
 
-			if (pY)
-			{
+			if (pY) {
 				*pY = pCoords.nY;
 			}
 
-			if (pSpawnMode)
-			{
+			if (pSpawnMode) {
 				*pSpawnMode = pSkillsTxtRecord->nSumMode;
-				if (pSkillsTxtRecord->nSumMode < 0 || pSkillsTxtRecord->nSumMode >= 16)
-				{
+				if (pSkillsTxtRecord->nSumMode < 0 || pSkillsTxtRecord->nSumMode >= 16) {
 					*pSpawnMode = MONMODE_NEUTRAL;
 				}
 			}
@@ -944,31 +796,25 @@ int __stdcall MONSTERS_GetSpawnMode_XY(D2UnitStrc* pMonster, BOOL bFromMonster, 
 	return -1;
 }
 
-//1.10f: D2Common.0x6FDA5B30 (#11061)
-//1.11: D2Common.0x6FD64390 (#10452)
-//1.14d: 0x0063EFA0
-void __stdcall MONSTERS_GetMinionSpawnInfo(D2UnitStrc* pMonster, int* pId, int* pX, int* pY, int* pSpawnMode, int nDifficulty, int(__fastcall* pfSpawnClassCallback)(D2UnitStrc*))
-{
+// 1.10f: D2Common.0x6FDA5B30 (#11061)
+// 1.11: D2Common.0x6FD64390 (#10452)
+// 1.14d: 0x0063EFA0
+void __stdcall MONSTERS_GetMinionSpawnInfo(D2UnitStrc* pMonster, int* pId, int* pX, int* pY, int* pSpawnMode, int nDifficulty, int(__fastcall* pfSpawnClassCallback)(D2UnitStrc*)) {
 	int nChainId = 0;
 	int nBaseId = 0;
 	D2CoordStrc pCoords = {};
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		nBaseId = MONSTERS_GetBaseIdFromMonsterId(pMonster->dwClassId);
 
-		if (nBaseId < 0 || nBaseId >= sgptDataTables->nMonStatsTxtRecordCount)
-		{
+		if (nBaseId < 0 || nBaseId >= sgptDataTables->nMonStatsTxtRecordCount) {
 			nBaseId = -1;
 		}
-	}
-	else
-	{
+	} else {
 		nBaseId = -1;
 	}
 
-	switch (nBaseId)
-	{
+	switch (nBaseId) {
 	case MONSTER_CROWNEST1:
 		DATATBLS_GetMonsterChainInfo(pMonster ? pMonster->dwClassId : -1, 0, &nChainId);
 		*pId = MONSTERS_GetClassIdFromMonsterChain(MONSTERS_ValidateMonsterId(MONSTER_FOULCROW1), nChainId);
@@ -1019,12 +865,9 @@ void __stdcall MONSTERS_GetMinionSpawnInfo(D2UnitStrc* pMonster, int* pId, int* 
 
 	case MONSTER_EVILHOLE1:
 #ifdef D2_VERSION_HAS_UBERS
-		if (pMonster && pMonster->dwClassId == MONSTER_DEMONHOLE)
-		{
+		if (pMonster && pMonster->dwClassId == MONSTER_DEMONHOLE) {
 			*pId = MONSTERS_ValidateMonsterId(MONSTER_MEGADEMON6);
-		}
-		else
-		{
+		} else {
 			*pId = MONSTERS_ValidateMonsterId(MONSTER_FALLEN1);
 		}
 #else
@@ -1089,14 +932,11 @@ void __stdcall MONSTERS_GetMinionSpawnInfo(D2UnitStrc* pMonster, int* pId, int* 
 	case MONSTER_BAALCRAB:
 		UNITS_GetCoords(pMonster, &pCoords);
 
-		if (*pId == MONSTERS_ValidateMonsterId(MONSTER_BAALCLONE))
-		{
+		if (*pId == MONSTERS_ValidateMonsterId(MONSTER_BAALCLONE)) {
 			*pX = pCoords.nX + SEED_RollLimitedRandomNumber(&pMonster->pSeed, 24) - 12;
 			*pY = pCoords.nY + SEED_RollLimitedRandomNumber(&pMonster->pSeed, 24) - 12;
 			*pSpawnMode = MONMODE_NEUTRAL;
-		}
-		else
-		{
+		} else {
 			*pId = MONSTERS_GetClassIdFromMonsterChain(MONSTERS_ValidateMonsterId(MONSTER_BAALTENTACLE1), nDifficulty + SEED_RollLimitedRandomNumber(&pMonster->pSeed, 2));
 			*pX = pCoords.nX + SEED_RollLimitedRandomNumber(&pMonster->pSeed, 24) - 12;
 			*pY = pCoords.nY + SEED_RollLimitedRandomNumber(&pMonster->pSeed, 24) - 12;
@@ -1114,26 +954,21 @@ void __stdcall MONSTERS_GetMinionSpawnInfo(D2UnitStrc* pMonster, int* pId, int* 
 }
 
 // D2Common.0x6FDA6410 (#11051)
-uint8_t __stdcall MONSTERS_GetMaximalLightRadius(D2UnitStrc* pMonster)
-{
+uint8_t __stdcall MONSTERS_GetMaximalLightRadius(D2UnitStrc* pMonster) {
 	D2ItemsTxt* pItemsTxtRecord = NULL;
 	uint8_t nMaxLightRadius = 0;
 	int nCode = 0;
 	int nItemId = 0;
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData)
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData) {
 		nMaxLightRadius = 0;
 
-		for (int i = 0; i < 16; ++i)
-		{
+		for (int i = 0; i < 16; ++i) {
 			nCode = D2Common_11069(pMonster, i, pMonster->pMonsterData->nComponent[i]);
 
-			if (nCode && nCode != ' til' && nCode != ' dem' && nCode != ' yvh')
-			{
+			if (nCode && nCode != ' til' && nCode != ' dem' && nCode != ' yvh') {
 				pItemsTxtRecord = DATATBLS_GetItemRecordFromItemCode(nCode, &nItemId);
-				if (pItemsTxtRecord && pItemsTxtRecord->nLightRadius > nMaxLightRadius)
-				{
+				if (pItemsTxtRecord && pItemsTxtRecord->nLightRadius > nMaxLightRadius) {
 					nMaxLightRadius = pItemsTxtRecord->nLightRadius;
 				}
 			}
@@ -1146,8 +981,7 @@ uint8_t __stdcall MONSTERS_GetMaximalLightRadius(D2UnitStrc* pMonster)
 }
 
 // D2Common.0x6FDA64B0 (#11063)
-int __stdcall D2Common_11063(D2ActiveRoomStrc* pRoom, int nMonsterId)
-{
+int __stdcall D2Common_11063(D2ActiveRoomStrc* pRoom, int nMonsterId) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 	D2LevelsTxt* pLevelsTxtRecord = NULL;
 	int nMonstersInChain = 0;
@@ -1157,20 +991,15 @@ int __stdcall D2Common_11063(D2ActiveRoomStrc* pRoom, int nMonsterId)
 
 	pLevelsTxtRecord = DATATBLS_GetLevelsTxtRecord(DUNGEON_GetLevelIdFromRoom(pRoom));
 
-	if (pLevelsTxtRecord && pLevelsTxtRecord->nNumNormalMonsters)
-	{
+	if (pLevelsTxtRecord && pLevelsTxtRecord->nNumNormalMonsters) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nMonsterId);
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			nClassId = pMonStatsTxtRecord->nBaseId;
 
 			pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nClassId);
-			if (pMonStatsTxtRecord)
-			{
-				for (int i = 0; i < pLevelsTxtRecord->nNumNormalMonsters; ++i)
-				{
-					if (MONSTERS_GetBaseIdFromMonsterId(pLevelsTxtRecord->wNormalMonsters[i]) == nClassId)
-					{
+			if (pMonStatsTxtRecord) {
+				for (int i = 0; i < pLevelsTxtRecord->nNumNormalMonsters; ++i) {
+					if (MONSTERS_GetBaseIdFromMonsterId(pLevelsTxtRecord->wNormalMonsters[i]) == nClassId) {
 						return pLevelsTxtRecord->wNormalMonsters[i];
 					}
 				}
@@ -1180,11 +1009,9 @@ int __stdcall D2Common_11063(D2ActiveRoomStrc* pRoom, int nMonsterId)
 				nResult = nMonsterId;
 				nNextInClass = pMonStatsTxtRecord->nNextInClass;
 
-				for (int i = 0; i < nMonstersInChain; ++i)
-				{
+				for (int i = 0; i < nMonstersInChain; ++i) {
 					pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nNextInClass);
-					if (!pMonStatsTxtRecord || pMonStatsTxtRecord->nLevel[0] > pLevelsTxtRecord->wMonLvlEx[0] + 1)
-					{
+					if (!pMonStatsTxtRecord || pMonStatsTxtRecord->nLevel[0] > pLevelsTxtRecord->wMonLvlEx[0] + 1) {
 						return nResult;
 					}
 
@@ -1202,15 +1029,12 @@ int __stdcall D2Common_11063(D2ActiveRoomStrc* pRoom, int nMonsterId)
 }
 
 // D2Common.0x6FDA6620 (#11065)
-BOOL __stdcall MONSTERS_IsPrimeEvil(D2UnitStrc* pMonster)
-{
+BOOL __stdcall MONSTERS_IsPrimeEvil(D2UnitStrc* pMonster) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 
-	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pMonster->dwClassId);
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			return pMonStatsTxtRecord->dwMonStatsFlags & gdwBitMasks[MONSTATSFLAGINDEX_PRIMEEVIL];
 		}
 	}
@@ -1219,14 +1043,12 @@ BOOL __stdcall MONSTERS_IsPrimeEvil(D2UnitStrc* pMonster)
 }
 
 // D2Common.0x6FDA6680 (#11066)
-void __stdcall D2Common_11066(D2UnitStrc* pMonster, int* pDirectionX, int* pDirectionY)
-{
+void __stdcall D2Common_11066(D2UnitStrc* pMonster, int* pDirectionX, int* pDirectionY) {
 	// D2Common.0x6FDD1778
-	static const D2CoordStrc dword_6FDD1778[] =
-	{
-		{  0, 1 },
-		{  1, 0 },
-		{  1, 0 },
+	static const D2CoordStrc dword_6FDD1778[] = {
+		{ 0, 1 },
+		{ 1, 0 },
+		{ 1, 0 },
 		{ -1, 0 },
 	};
 
@@ -1245,12 +1067,9 @@ void __stdcall D2Common_11066(D2UnitStrc* pMonster, int* pDirectionX, int* pDire
 }
 
 // D2Common.0x6FDA6730 (#11067)
-int __stdcall MONSTERS_GetHirelingTypeId(D2UnitStrc* pHireling)
-{
-	if (pHireling && pHireling->dwUnitType == UNIT_MONSTER)
-	{
-		switch (pHireling->dwClassId)
-		{
+int __stdcall MONSTERS_GetHirelingTypeId(D2UnitStrc* pHireling) {
+	if (pHireling && pHireling->dwUnitType == UNIT_MONSTER) {
+		switch (pHireling->dwClassId) {
 		case MONSTER_ROGUEHIRE:
 			return 1;
 
@@ -1271,8 +1090,7 @@ int __stdcall MONSTERS_GetHirelingTypeId(D2UnitStrc* pHireling)
 	return 0;
 }
 
-struct D2ClassicStatAdjustmentStrc
-{
+struct D2ClassicStatAdjustmentStrc {
 	D2C_ItemStats nStatID;
 	int nNightmareMultiplier;
 	int nNightmareDivisor;
@@ -1280,30 +1098,25 @@ struct D2ClassicStatAdjustmentStrc
 	int nHellDivisor;
 };
 
-//1.10f: D2Common.0x6FDD179C
-static D2ClassicStatAdjustmentStrc aClassicStatAdjustments[]
-{
-	{STAT_MAXHP, 1, 2, 1, 2},
-	{STAT_ARMORCLASS, 10, 12, 10, 12},
-	{STAT_EXPERIENCE, 10, 17, 10, 26},
+// 1.10f: D2Common.0x6FDD179C
+static D2ClassicStatAdjustmentStrc aClassicStatAdjustments[]{
+	{ STAT_MAXHP, 1, 2, 1, 2 },
+	{ STAT_ARMORCLASS, 10, 12, 10, 12 },
+	{ STAT_EXPERIENCE, 10, 17, 10, 26 },
 };
 
-//1.10f: D2Common.0x6FDA6790 (#11246)
-void __stdcall MONSTERS_ApplyClassicScaling(D2UnitStrc* pMonster, BOOL bExpansion, uint8_t nDifficulty)
-{
+// 1.10f: D2Common.0x6FDA6790 (#11246)
+void __stdcall MONSTERS_ApplyClassicScaling(D2UnitStrc* pMonster, BOOL bExpansion, uint8_t nDifficulty) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 
-	if (!bExpansion && nDifficulty != DIFFMODE_NORMAL && pMonster && pMonster->dwUnitType == UNIT_MONSTER)
-	{
+	if (!bExpansion && nDifficulty != DIFFMODE_NORMAL && pMonster && pMonster->dwUnitType == UNIT_MONSTER) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(pMonster->dwClassId);
-		if (pMonStatsTxtRecord && pMonStatsTxtRecord->nAlign != MONALIGN_GOOD)
-		{
-			for (const auto& rAdjustment : aClassicStatAdjustments)
-			{
+		if (pMonStatsTxtRecord && pMonStatsTxtRecord->nAlign != MONALIGN_GOOD) {
+			for (const auto& rAdjustment : aClassicStatAdjustments) {
 				const int32_t nValue = STATLIST_UnitGetStatValue(pMonster, rAdjustment.nStatID, 0);
 				const int32_t nAdjustedValue = nDifficulty == DIFFMODE_NIGHTMARE
-					? DATATBLS_ApplyRatio(nValue, rAdjustment.nNightmareMultiplier, rAdjustment.nNightmareDivisor)
-					: DATATBLS_ApplyRatio(nValue, rAdjustment.nHellMultiplier, rAdjustment.nHellDivisor);
+												   ? DATATBLS_ApplyRatio(nValue, rAdjustment.nNightmareMultiplier, rAdjustment.nNightmareDivisor)
+												   : DATATBLS_ApplyRatio(nValue, rAdjustment.nHellMultiplier, rAdjustment.nHellDivisor);
 				STATLIST_SetUnitStat(pMonster, rAdjustment.nStatID, nAdjustedValue, 0);
 			}
 			STATLIST_SetUnitStat(pMonster, STAT_LEVEL, 25 * nDifficulty + pMonStatsTxtRecord->nLevel[0], 0);
@@ -1312,12 +1125,10 @@ void __stdcall MONSTERS_ApplyClassicScaling(D2UnitStrc* pMonster, BOOL bExpansio
 }
 
 // D2Common.0x6FDA6920
-int __fastcall MONSTERS_GetBaseIdFromMonsterId(int nMonsterId)
-{
+int __fastcall MONSTERS_GetBaseIdFromMonsterId(int nMonsterId) {
 	D2MonStatsTxt* pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nMonsterId);
 
-	if (pMonStatsTxtRecord)
-	{
+	if (pMonStatsTxtRecord) {
 		return pMonStatsTxtRecord->nBaseId;
 	}
 
@@ -1325,22 +1136,18 @@ int __fastcall MONSTERS_GetBaseIdFromMonsterId(int nMonsterId)
 }
 
 // D2Common.0x6FDA6950
-int __fastcall MONSTERS_GetClassIdFromMonsterChain(int nMonsterId, int nChainId)
-{
+int __fastcall MONSTERS_GetClassIdFromMonsterChain(int nMonsterId, int nChainId) {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
 	int nClassId = 0;
 
 	pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nMonsterId);
-	if (pMonStatsTxtRecord)
-	{
+	if (pMonStatsTxtRecord) {
 		nClassId = pMonStatsTxtRecord->nBaseId;
-		for (int i = 0; i < nChainId; ++i)
-		{
+		for (int i = 0; i < nChainId; ++i) {
 			nClassId = pMonStatsTxtRecord->nNextInClass;
 
 			pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nClassId);
-			if (!pMonStatsTxtRecord)
-			{
+			if (!pMonStatsTxtRecord) {
 				break;
 			}
 		}
@@ -1352,10 +1159,8 @@ int __fastcall MONSTERS_GetClassIdFromMonsterChain(int nMonsterId, int nChainId)
 }
 
 // D2Common.0x6FDA69C0
-int __fastcall MONSTERS_ValidateMonsterId(int nMonsterId)
-{
-	if (nMonsterId >= 0 && nMonsterId < sgptDataTables->nMonStatsTxtRecordCount)
-	{
+int __fastcall MONSTERS_ValidateMonsterId(int nMonsterId) {
+	if (nMonsterId >= 0 && nMonsterId < sgptDataTables->nMonStatsTxtRecordCount) {
 		return nMonsterId;
 	}
 

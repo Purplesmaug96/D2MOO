@@ -7,12 +7,9 @@
 #include "D2Items.h"
 
 // Inlined in both Parsers
-static BOOL DATATBLS_AreStringsEqual(const char* szString1, const char* szString2)
-{
-	for (size_t i = strlen(szString2) + 1; i; --i)
-	{
-		if (*szString1++ != *szString2++)
-		{
+static BOOL DATATBLS_AreStringsEqual(const char* szString1, const char* szString2) {
+	for (size_t i = strlen(szString2) + 1; i; --i) {
+		if (*szString1++ != *szString2++) {
 			return FALSE;
 		}
 	}
@@ -20,19 +17,15 @@ static BOOL DATATBLS_AreStringsEqual(const char* szString1, const char* szString
 	return TRUE;
 }
 
-
 // D2Common.0x6FD523E0
-void __fastcall DATATBLS_CubeMainInputLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
-	if (pRecord && pSrc && *pSrc)
-	{
+void __fastcall DATATBLS_CubeMainInputLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
+	if (pRecord && pSrc && *pSrc) {
 		DATATBLS_CubeMainInputParser(&((D2CubeMainTxt*)pRecord)->pInputItem[nOffset], pSrc, nTxtRow, nOffset);
 	}
 }
 
 // D2Common.0x6FD52410
-BOOL __fastcall DATATBLS_CubeMainInputParser(D2CubeInputItem* pCubeInput, char* szInput, int nTxtRow, int nItemId)
-{
+BOOL __fastcall DATATBLS_CubeMainInputParser(D2CubeInputItem* pCubeInput, char* szInput, int nTxtRow, int nItemId) {
 	D2_MAYBE_UNUSED(nTxtRow);
 	D2_MAYBE_UNUSED(nItemId);
 	char* szInputModifier = NULL;
@@ -41,209 +34,138 @@ BOOL __fastcall DATATBLS_CubeMainInputParser(D2CubeInputItem* pCubeInput, char* 
 	int nBaseItemId = 0;
 	int nLinkId = 0;
 
-	if (*szInput == '"')
-	{
+	if (*szInput == '"') {
 		++szInput;
 	}
 
 	szTemp = szInput;
-	while (*szTemp)
-	{
-		if (*szTemp == '"')
-		{
+	while (*szTemp) {
+		if (*szTemp == '"') {
 			*szTemp = 0;
 		}
 		++szTemp;
 	}
 
-	if (*szInput)
-	{
+	if (*szInput) {
 		szNext = &szInput[strcspn(szInput, ",")];
-		if (*szNext)
-		{
+		if (*szNext) {
 			*szNext = 0;
 			++szNext;
-		}
-		else
-		{
+		} else {
 			szNext = NULL;
 		}
 
-		if (strlen(szInput) <= 4 && !_strcmpi(szInput, "any"))
-		{
+		if (strlen(szInput) <= 4 && !_strcmpi(szInput, "any")) {
 			pCubeInput->wInputFlags |= CUBEFLAG_IN_USEANY;
 			pCubeInput->wItem = -1;
-		}
-		else
-		{
+		} else {
 			nLinkId = -1;
 
-			if (strlen(szInput) <= 4)
-			{
+			if (strlen(szInput) <= 4) {
 				nLinkId = FOG_GetLinkIndex(sgptDataTables->pItemTypesLinker, DATATBLS_StringToCode(szInput), 0);
 			}
 
-			if (nLinkId >= 0)
-			{
+			if (nLinkId >= 0) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_ITEMCODE;
 				pCubeInput->wItem = nLinkId;
-			}
-			else if (strlen(szInput) <= 4 && DATATBLS_GetItemRecordFromItemCode(DATATBLS_StringToCode(szInput), &nBaseItemId))
-			{
+			} else if (strlen(szInput) <= 4 && DATATBLS_GetItemRecordFromItemCode(DATATBLS_StringToCode(szInput), &nBaseItemId)) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_USEANY;
 				pCubeInput->wItem = nBaseItemId;
-			}
-			else
-			{
+			} else {
 				nLinkId = -1;
 
-				if (sgptDataTables->pUniqueItemsLinker)
-				{
+				if (sgptDataTables->pUniqueItemsLinker) {
 					nLinkId = FOG_GetRowFromTxt(sgptDataTables->pUniqueItemsLinker, szInput, 0);
 				}
 
-				if (nLinkId >= 0)
-				{
+				if (nLinkId >= 0) {
 					DATATBLS_GetItemRecordFromItemCode(sgptDataTables->pUniqueItemsTxt[nLinkId].dwBaseItemCode, &nBaseItemId);
 					pCubeInput->wInputFlags |= CUBEFLAG_IN_SPECIAL | CUBEFLAG_IN_USEANY;
 					pCubeInput->nQuality = ITEMQUAL_UNIQUE;
 					pCubeInput->wItemID = nLinkId + 1;
 					pCubeInput->wItem = nBaseItemId;
-				}
-				else
-				{
+				} else {
 					nLinkId = -1;
 
-					if (sgptDataTables->pSetItemsLinker)
-					{
+					if (sgptDataTables->pSetItemsLinker) {
 						nLinkId = FOG_GetRowFromTxt(sgptDataTables->pSetItemsLinker, szInput, 0);
 					}
 
-					if (nLinkId >= 0)
-					{
+					if (nLinkId >= 0) {
 						DATATBLS_GetItemRecordFromItemCode(sgptDataTables->pSetItemsTxt[nLinkId].szItemCode, &nBaseItemId);
 						pCubeInput->wInputFlags |= CUBEFLAG_IN_SPECIAL | CUBEFLAG_IN_USEANY;
 						pCubeInput->nQuality = ITEMQUAL_SET;
 						pCubeInput->wItemID = nLinkId + 1;
 						pCubeInput->wItem = nBaseItemId;
-					}
-					else
-					{
+					} else {
 						return FALSE;
 					}
 				}
 			}
 		}
 
-		while (szNext)
-		{
+		while (szNext) {
 			szInputModifier = szNext;
-			if (!szInputModifier)
-			{
+			if (!szInputModifier) {
 				return TRUE;
 			}
 
 			szNext = &szNext[strcspn(szNext, "=,")];
-			if (*szNext)
-			{
+			if (*szNext) {
 				*szNext = 0;
 				++szNext;
-			}
-			else
-			{
+			} else {
 				szNext = NULL;
 			}
 
-			if (DATATBLS_AreStringsEqual(szInputModifier, "qty"))
-			{
+			if (DATATBLS_AreStringsEqual(szInputModifier, "qty")) {
 				szTemp = szNext;
 				szNext = &szNext[strcspn(szNext, ",")];
-				if (*szNext)
-				{
+				if (*szNext) {
 					*szNext = 0;
 					++szNext;
 					pCubeInput->nQuantity = atoi(szTemp);
-				}
-				else
-				{
+				} else {
 					szNext = NULL;
 					pCubeInput->nQuantity = atoi(szTemp);
 				}
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "low"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "low")) {
 				pCubeInput->nQuality = ITEMQUAL_INFERIOR;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "nor"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "nor")) {
 				pCubeInput->nQuality = ITEMQUAL_NORMAL;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "hiq"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "hiq")) {
 				pCubeInput->nQuality = ITEMQUAL_SUPERIOR;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "mag"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "mag")) {
 				pCubeInput->nQuality = ITEMQUAL_MAGIC;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "set"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "set")) {
 				pCubeInput->nQuality = ITEMQUAL_SET;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "rar"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "rar")) {
 				pCubeInput->nQuality = ITEMQUAL_RARE;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "uni"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "uni")) {
 				pCubeInput->nQuality = ITEMQUAL_UNIQUE;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "crf"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "crf")) {
 				pCubeInput->nQuality = ITEMQUAL_CRAFT;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "tmp"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "tmp")) {
 				pCubeInput->nQuality = ITEMQUAL_TEMPERED;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "nos"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "nos")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_NOSOCKET;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "sock"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "sock")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_SOCKETED;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "noe"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "noe")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_NOETHEREAL;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "eth"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "eth")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_ETHEREAL;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "upg"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "upg")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_UPGRADED;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "bas"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "bas")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_NORMAL;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "exc"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "exc")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_EXCEPTIONAL;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "eli"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "eli")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_ELITE;
-			}
-			else if (DATATBLS_AreStringsEqual(szInputModifier, "nru"))
-			{
+			} else if (DATATBLS_AreStringsEqual(szInputModifier, "nru")) {
 				pCubeInput->wInputFlags |= CUBEFLAG_IN_NORUNES;
-			}
-			else
-			{
+			} else {
 				return TRUE;
 			}
 		}
@@ -253,19 +175,16 @@ BOOL __fastcall DATATBLS_CubeMainInputParser(D2CubeInputItem* pCubeInput, char* 
 }
 
 // D2Common.0x6FD528D0
-void __fastcall DATATBLS_CubeMainOutputLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
-	if (pRecord && pSrc && *pSrc)
-	{
+void __fastcall DATATBLS_CubeMainOutputLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
+	if (pRecord && pSrc && *pSrc) {
 		DATATBLS_CubeMainOutputParser(&((D2CubeMainTxt*)pRecord)->pOutputItem[nOffset], pSrc, nTxtRow, nOffset);
 	}
 }
 
-//1.10f: D2Common.0x6FD52910
-//1.11 : D2Common.0x6FDAD210
-//1.14d: 0x00668A90
-BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam, char* szOutput, int nTxtRow, int nItemId)
-{
+// 1.10f: D2Common.0x6FD52910
+// 1.11 : D2Common.0x6FDAD210
+// 1.14d: 0x00668A90
+BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam, char* szOutput, int nTxtRow, int nItemId) {
 	char* szOutputModifier = NULL;
 	char* szNext = NULL;
 	char* szTemp = NULL;
@@ -274,84 +193,61 @@ BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam
 	int nBaseItemId = 0;
 	int nLinkId = 0;
 
-	if (*szOutput == '"')
-	{
+	if (*szOutput == '"') {
 		++szOutput;
 	}
 
 	szTemp = szOutput;
-	while (*szTemp)
-	{
-		if (*szTemp == '"')
-		{
+	while (*szTemp) {
+		if (*szTemp == '"') {
 			*szTemp = 0;
 		}
 		++szTemp;
 	}
 
 	szNext = &szOutput[strcspn(szOutput, ",")];
-	if (*szNext)
-	{
+	if (*szNext) {
 		*szNext = 0;
 		++szNext;
-	}
-	else
-	{
+	} else {
 		szNext = NULL;
 	}
 
-	if (!_strcmpi(szOutput, "Cow Portal"))
-	{
+	if (!_strcmpi(szOutput, "Cow Portal")) {
 		pCubeOutputParam->nType = CUBEOP_COWPORTAL;
 	}
 #ifdef D2_VERSION_HAS_UBERS
-	else if (!_strcmpi(szOutput, "Pandemonium Portal"))
-	{
+	else if (!_strcmpi(szOutput, "Pandemonium Portal")) {
 		pCubeOutputParam->nType = CUBEOP_UBERDUNGEON;
-	}
-	else if (!_strcmpi(szOutput, "Pandemonium Finale Portal"))
-	{
+	} else if (!_strcmpi(szOutput, "Pandemonium Finale Portal")) {
 		pCubeOutputParam->nType = CUBEOP_UBERTRISTRAM;
 	}
 #endif
-	else if (DATATBLS_AreStringsEqual(szOutput, "usetype"))
-	{
+	else if (DATATBLS_AreStringsEqual(szOutput, "usetype")) {
 		pCubeOutputParam->nType = CUBEOP_USETYPE;
-	}
-	else if (DATATBLS_AreStringsEqual(szOutput, "useitem"))
-	{
+	} else if (DATATBLS_AreStringsEqual(szOutput, "useitem")) {
 		pCubeOutputParam->nType = CUBEOP_USEITEM;
-	}
-	else if (strlen(szOutput) <= 4 && DATATBLS_GetItemRecordFromItemCode(DATATBLS_StringToCode(szOutput), &nBaseItemId))
-	{
+	} else if (strlen(szOutput) <= 4 && DATATBLS_GetItemRecordFromItemCode(DATATBLS_StringToCode(szOutput), &nBaseItemId)) {
 		pCubeOutputParam->nType = CUBEOP_ITEMCODE;
 		pCubeOutputParam->wBaseItemId = nBaseItemId;
-	}
-	else
-	{
+	} else {
 		nLinkId = -1;
 
-		if (strlen(szOutput) <= 4)
-		{
+		if (strlen(szOutput) <= 4) {
 			nLinkId = FOG_GetLinkIndex(sgptDataTables->pItemTypesLinker, DATATBLS_StringToCode(szOutput), 0);
 		}
 
-		if (nLinkId >= 0)
-		{
+		if (nLinkId >= 0) {
 			pCubeOutputParam->nType = CUBEOP_ITEMTYPE;
 			pCubeOutputParam->wBaseItemId = nLinkId;
-		}
-		else
-		{
+		} else {
 			nLinkId = -1;
 
-			if (sgptDataTables->pUniqueItemsLinker)
-			{
+			if (sgptDataTables->pUniqueItemsLinker) {
 				nLinkId = FOG_GetRowFromTxt(sgptDataTables->pUniqueItemsLinker, szOutput, 0);
 			}
 
-			if (nLinkId >= 0)
-			{
+			if (nLinkId >= 0) {
 				DATATBLS_GetItemRecordFromItemCode(sgptDataTables->pUniqueItemsTxt[nLinkId].dwBaseItemCode, &nBaseItemId);
 				pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_SPECIAL;
 				pCubeOutputParam->nType = CUBEOP_ITEMCODE;
@@ -359,18 +255,14 @@ BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam
 				pCubeOutputParam->wItemID = nLinkId + 1;
 				pCubeOutputParam->wBaseItemId = nBaseItemId;
 				pCubeOutputParam->nILvl = (uint8_t)sgptDataTables->pUniqueItemsTxt[nLinkId].wLvl;
-			}
-			else
-			{
+			} else {
 				nLinkId = -1;
 
-				if (sgptDataTables->pSetItemsLinker)
-				{
+				if (sgptDataTables->pSetItemsLinker) {
 					nLinkId = FOG_GetRowFromTxt(sgptDataTables->pSetItemsLinker, szOutput, 0);
 				}
 
-				if (nLinkId >= 0)
-				{
+				if (nLinkId >= 0) {
 					DATATBLS_GetItemRecordFromItemCode(sgptDataTables->pSetItemsTxt[nLinkId].szItemCode, &nBaseItemId);
 					pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_SPECIAL;
 					pCubeOutputParam->nType = CUBEOP_ITEMCODE;
@@ -378,9 +270,7 @@ BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam
 					pCubeOutputParam->wItemID = nLinkId + 1;
 					pCubeOutputParam->wBaseItemId = nBaseItemId;
 					pCubeOutputParam->nILvl = (uint8_t)sgptDataTables->pSetItemsTxt[nLinkId].wLvl;
-				}
-				else
-				{
+				} else {
 					FOG_Trace("Couldn't parse horardric cube output!  (Line:%d  Item:%d)\n", nTxtRow, nItemId);
 					return FALSE;
 				}
@@ -391,170 +281,108 @@ BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam
 	pPrefix = pCubeOutputParam->wPrefixId;
 	pSuffix = pCubeOutputParam->wSuffixId;
 
-	while (szNext)
-	{
+	while (szNext) {
 		szOutputModifier = szNext;
 
 		szNext = &szNext[strcspn(szNext, "=,")];
-		if (*szNext)
-		{
+		if (*szNext) {
 			*szNext = 0;
 			++szNext;
-		}
-		else
-		{
+		} else {
 			szNext = NULL;
 		}
 
-		if (!szOutputModifier)
-		{
+		if (!szOutputModifier) {
 			FOG_Trace("Couldn't parse horardric cube output modifier!  (Line:%d  Item:%d)\n", nTxtRow, nItemId);
 			return TRUE;
 		}
 
-		if (DATATBLS_AreStringsEqual(szOutputModifier, "qty"))
-		{
+		if (DATATBLS_AreStringsEqual(szOutputModifier, "qty")) {
 			szTemp = szNext;
 
 			szNext = &szNext[strcspn(szNext, ",")];
-			if (*szNext)
-			{
+			if (*szNext) {
 				*szNext = 0;
 				++szNext;
-			}
-			else
-			{
+			} else {
 				szNext = NULL;
 			}
 			pCubeOutputParam->nQuantity = atoi(szTemp);
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "pre"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "pre")) {
 			szTemp = szNext;
 
 			szNext = &szNext[strcspn(szNext, ",")];
-			if (*szNext)
-			{
+			if (*szNext) {
 				*szNext = 0;
 				++szNext;
-			}
-			else
-			{
+			} else {
 				szNext = NULL;
 			}
 			*pPrefix = atoi(szTemp);
 			++pPrefix;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "suf"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "suf")) {
 			szTemp = szNext;
 
 			szNext = &szNext[strcspn(szNext, ",")];
-			if (*szNext)
-			{
+			if (*szNext) {
 				*szNext = 0;
 				++szNext;
-			}
-			else
-			{
+			} else {
 				szNext = NULL;
 			}
 			*pSuffix = atoi(szTemp);
 			++pSuffix;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "low"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "low")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_INFERIOR;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "nor"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "nor")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_NORMAL;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "hiq"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "hiq")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_SUPERIOR;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "mag"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "mag")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_MAGIC;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "set"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "set")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_SET;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "rar"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "rar")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_RARE;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "uni"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "uni")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_UNIQUE;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "crf"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "crf")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_CRAFT;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "tmp"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "tmp")) {
 			pCubeOutputParam->nQuality = ITEMQUAL_TEMPERED;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "eth"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "eth")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_ETHEREAL;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "sock"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "sock")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_SOCKET;
 
 			szTemp = szNext;
 
 			szNext = &szNext[strcspn(szNext, ",")];
-			if (*szNext)
-			{
+			if (*szNext) {
 				*szNext = 0;
 				++szNext;
-			}
-			else
-			{
+			} else {
 				szNext = NULL;
 			}
 			pCubeOutputParam->nQuantity = atoi(szTemp);
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "mod"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "mod")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_COPYMODS;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "uns"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "uns")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_UNSOCKET;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "rem"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "rem")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_REMOVE;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "reg"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "reg")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_NORMAL;
 			pCubeOutputParam->nType = CUBEOP_USETYPE;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "exc"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "exc")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_EXCEPTIONAL;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "eli"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "eli")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_ELITE;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "rep"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "rep")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_REPAIR;
-		}
-		else if (DATATBLS_AreStringsEqual(szOutputModifier, "rch"))
-		{
+		} else if (DATATBLS_AreStringsEqual(szOutputModifier, "rch")) {
 			pCubeOutputParam->wItemFlags |= CUBEFLAG_OUT_RECHARGE;
-		}
-		else
-		{
+		} else {
 			FOG_Trace("Couldn't parse horardric cube output modifier '%s'!  (Line:%d  Item:%d)\n", szOutputModifier, nTxtRow, nItemId);
 			return TRUE;
 		}
@@ -564,23 +392,16 @@ BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam
 }
 
 // D2Common.0x6FD52FC0
-void __fastcall DATATBLS_CubeMainParamLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
+void __fastcall DATATBLS_CubeMainParamLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
 	int nValue = 0;
 
-	if (pRecord && pSrc && *pSrc)
-	{
-		if (*pSrc == '-' || *pSrc >= '0' && *pSrc <= '9')
-		{
+	if (pRecord && pSrc && *pSrc) {
+		if (*pSrc == '-' || *pSrc >= '0' && *pSrc <= '9') {
 			*(int*)pRecord = atoi(pSrc);
-		}
-		else
-		{
-			if (sgptDataTables->pItemStatCostLinker)
-			{
+		} else {
+			if (sgptDataTables->pItemStatCostLinker) {
 				nValue = FOG_GetRowFromTxt(sgptDataTables->pItemStatCostLinker, pSrc, 0);
-				if (nValue >= 0)
-				{
+				if (nValue >= 0) {
 					*(int*)pRecord = nValue;
 					return;
 				}
@@ -593,13 +414,11 @@ void __fastcall DATATBLS_CubeMainParamLinker(char* pSrc, void* pRecord, int nOff
 }
 
 // D2Common.0x6FD53030
-void __fastcall DATATBLS_LoadCubeMainTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadCubeMainTxt(HD2ARCHIVE hArchive) {
 	HSFILE pFileHandle = NULL;
 	char szPath[100] = {};
 
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "enabled", TXTFIELD_BYTE, 0, 0, NULL },
 		{ "ladder", TXTFIELD_BYTE, 0, 1, NULL },
 		{ "min diff", TXTFIELD_BYTE, 0, 2, NULL },
@@ -707,14 +526,12 @@ void __fastcall DATATBLS_LoadCubeMainTxt(HD2ARCHIVE hArchive)
 	};
 
 	wsprintfA(szPath, "%s\\%s", "DATA\\GLOBAL\\EXCEL", "cubeserver.bin");
-	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE))
-	{
+	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE)) {
 		FOG_DisplayWarning("Found cubeserver.bin in data path.  This file should only be on the server\n", __FILE__, __LINE__);
 	}
 
 	wsprintfA(szPath, "%s\\%s", "DATA\\GLOBAL\\EXCEL", "cubeserver.txt");
-	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE))
-	{
+	if (ARCHIVE_OpenFile(hArchive, szPath, &pFileHandle, TRUE)) {
 		FOG_DisplayWarning("Found cubeserver.txt in data path.  This file should only be on the server\n", __FILE__, __LINE__);
 	}
 
@@ -722,15 +539,13 @@ void __fastcall DATATBLS_LoadCubeMainTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD54250
-void __fastcall DATATBLS_UnloadCubeMainTxt()
-{
+void __fastcall DATATBLS_UnloadCubeMainTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pCubeMainTxt);
 	sgptDataTables->pCubeMainTxt = NULL;
 }
 
 // D2Common.0x6FD54260 (#11232)
-D2CubeMainTxt* __stdcall DATATBLS_GetCubemainTxtRecord(int nIndex)
-{
+D2CubeMainTxt* __stdcall DATATBLS_GetCubemainTxtRecord(int nIndex) {
 	D2_ASSERT(sgptDataTables->pCubeMainTxt);
 	D2_ASSERT(nIndex < sgptDataTables->nCubeMainTxtRecordCount);
 
@@ -738,7 +553,6 @@ D2CubeMainTxt* __stdcall DATATBLS_GetCubemainTxtRecord(int nIndex)
 }
 
 // D2Common.0x6FD542C0 (#11233)
-int __fastcall DATATBLS_GetCubemainTxtRecordCount()
-{
+int __fastcall DATATBLS_GetCubemainTxtRecordCount() {
 	return sgptDataTables->nCubeMainTxtRecordCount;
 }

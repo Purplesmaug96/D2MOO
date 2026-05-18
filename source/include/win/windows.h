@@ -4,15 +4,17 @@
 #error Including 'windows.h' is disallowed.
 #endif
 
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
-#include <stdarg.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <errno.h>
+#include <stdarg.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/time.h>
+#include <unistd.h>
+
+// clang-format: off
 
 #include "__windows_shim_msvcrt.h"
 
@@ -39,3 +41,5 @@
 #include "winsvc.h"
 #include "winuser.h"
 #include "ws2def.h"
+
+// clang-format: on

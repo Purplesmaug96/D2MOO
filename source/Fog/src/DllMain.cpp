@@ -1,18 +1,15 @@
-#include <Fog.h>
 #include <D2CommonDefinitions.h>
+#include <Fog.h>
 
 #include <process.h>
 
-void UnimplementedOrdinal()
-{
+void UnimplementedOrdinal() {
 	UNIMPLEMENTED();
 }
 
 // NOLINTBEGIN(bugprone-branch-clone)
-BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved)
-{
-	switch (dwReason)
-	{
+BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved) {
+	switch (dwReason) {
 	case DLL_PROCESS_ATTACH:
 		break;
 	case DLL_PROCESS_DETACH:

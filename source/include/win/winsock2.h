@@ -2,24 +2,25 @@
 
 #include "__windows_shim_msvcrt.h"
 
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <netinet/in.h>
 #include <sys/socket.h>
-#include <arpa/inet.h>
 #include <unistd.h>
 
 // #include "ws2def.h"
 
 typedef int SOCKET;
 
-typedef struct {} WSADATA;
+typedef struct {
+} WSADATA;
 typedef WSADATA* LPWSADATA;
 
 #define INVALID_SOCKET 0
 
 enum {
-	SOCKET_ERROR_NONE=0, // Made up
+	SOCKET_ERROR_NONE = 0, // Made up
 	SOCKET_ERROR
 };
 
@@ -42,6 +43,6 @@ static inline uint32_t /* Should be DWORD, but not defined here */ WSAGetLastErr
 	return __winsock2_WSA_LastError;
 }
 
-static inline int __WSAFDIsSet(SOCKET fd, fd_set *fdsetp) {
+static inline int __WSAFDIsSet(SOCKET fd, fd_set* fdsetp) {
 	return FD_ISSET(fd, fdsetp);
 }

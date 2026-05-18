@@ -6,44 +6,40 @@
 
 #pragma pack(1)
 
-struct D2BoundingBoxStrc
-{
-	int32_t nLeft;								//0x00
-	int32_t nBottom;							//0x04
-	int32_t nRight;								//0x08
-	int32_t nTop;								//0x0C
+struct D2BoundingBoxStrc {
+	int32_t nLeft;	 // 0x00
+	int32_t nBottom; // 0x04
+	int32_t nRight;	 // 0x08
+	int32_t nTop;	 // 0x0C
 };
 
 // Size of the unit in subtiles
-enum D2C_CollisionUnitSize
-{
-	COLLISION_UNIT_SIZE_NONE  = 0,
+enum D2C_CollisionUnitSize {
+	COLLISION_UNIT_SIZE_NONE = 0,
 	COLLISION_UNIT_SIZE_POINT = 1, // Occupies 1 subtile in width
 	COLLISION_UNIT_SIZE_SMALL = 2, // Occupies 2 subtiles in width
-	COLLISION_UNIT_SIZE_BIG   = 3, // Occupies 3 subtiles in width
+	COLLISION_UNIT_SIZE_BIG = 3,   // Occupies 3 subtiles in width
 	COLLISION_UNIT_SIZE_COUNT
 };
 
-enum D2C_CollisionPattern
-{
+enum D2C_CollisionPattern {
 	COLLISION_PATTERN_NONE = 0,
 	COLLISION_PATTERN_SMALL_UNIT_PRESENCE = 1,
 	COLLISION_PATTERN_BIG_UNIT_PRESENCE = 2,
 	// Actually linked to whether a monster may be attacked?
-	COLLISION_PATTERN_SMALL_PET_PRESENCE  = 3,
-	COLLISION_PATTERN_BIG_PET_PRESENCE    = 4,
-	COLLISION_PATTERN_SMALL_NO_PRESENCE   = 5,
+	COLLISION_PATTERN_SMALL_PET_PRESENCE = 3,
+	COLLISION_PATTERN_BIG_PET_PRESENCE = 4,
+	COLLISION_PATTERN_SMALL_NO_PRESENCE = 5,
 };
 
-enum D2C_CollisionMaskFlags : uint16_t
-{
+enum D2C_CollisionMaskFlags : uint16_t {
 	COLLIDE_NONE = 0x0000,
-	COLLIDE_WALL = 0x0001,					// 'black space' in arcane sanctuary, cliff walls etc. Effectively blocks player.
-	COLLIDE_VISIBLE = 0x0002,				// tile based obstacles you can't shoot over
-	COLLIDE_MISSILE_BARRIER = 0x0004,		// again used inconsistantly -.- Can guard against Missile / Flying ?
+	COLLIDE_WALL = 0x0001,			  // 'black space' in arcane sanctuary, cliff walls etc. Effectively blocks player.
+	COLLIDE_VISIBLE = 0x0002,		  // tile based obstacles you can't shoot over
+	COLLIDE_MISSILE_BARRIER = 0x0004, // again used inconsistantly -.- Can guard against Missile / Flying ?
 	COLLIDE_NOPLAYER = 0x0008,
-	COLLIDE_PRESET = 0x0010,				// some floors have this set, others don't
-	COLLIDE_BLANK = 0x0020,					// returned if the subtile is invalid
+	COLLIDE_PRESET = 0x0010, // some floors have this set, others don't
+	COLLIDE_BLANK = 0x0020,	 // returned if the subtile is invalid
 	COLLIDE_MISSILE = 0x0040,
 	COLLIDE_PLAYER = 0x0080,
 	COLLIDE_WATER = 0x00C0,
@@ -51,10 +47,10 @@ enum D2C_CollisionMaskFlags : uint16_t
 	COLLIDE_ITEM = 0x0200,
 	COLLIDE_OBJECT = 0x0400,
 	COLLIDE_DOOR = 0x0800,
-	COLLIDE_NO_PATH = 0x1000,				// set for units sometimes, but not always
-	COLLIDE_PET = 0x2000,					// linked to whether a monster that may be attacked is present
+	COLLIDE_NO_PATH = 0x1000, // set for units sometimes, but not always
+	COLLIDE_PET = 0x2000,	  // linked to whether a monster that may be attacked is present
 	COLLIDE_4000 = 0x4000,
-	COLLIDE_CORPSE = 0x8000,				// also used by portals, but dead monsters are mask 0x8000
+	COLLIDE_CORPSE = 0x8000, // also used by portals, but dead monsters are mask 0x8000
 	COLLIDE_ALL_MASK = 0xFFFF,
 	COLLIDE_MASK_INVALID = (COLLIDE_BLANK | COLLIDE_MISSILE_BARRIER | COLLIDE_VISIBLE | COLLIDE_WALL),
 
@@ -76,10 +72,9 @@ enum D2C_CollisionMaskFlags : uint16_t
 
 };
 
-struct D2RoomCollisionGridStrc
-{
-	D2DrlgCoordsStrc pRoomCoords;			//0x00
-	uint16_t* pCollisionMask;					//0x20
+struct D2RoomCollisionGridStrc {
+	D2DrlgCoordsStrc pRoomCoords; // 0x00
+	uint16_t* pCollisionMask;	  // 0x20
 };
 #pragma pack()
 
@@ -163,7 +158,7 @@ int __fastcall COLLISION_TrySetUnitCollisionMask(D2ActiveRoomStrc* pRoom1, int n
 // D2Common.0x6FD451D0 (#10133)
 D2COMMON_DLL_DECL void __fastcall COLLISION_SetUnitCollisionMask(D2ActiveRoomStrc* pRoom1, int nX1, int nY1, D2ActiveRoomStrc* pRoom2, int nX2, int nY2, int nCollisionPattern, uint16_t nCollisionMask);
 // D2Common.0x6FD45210 (#11263)
-//Returns true if a collision with mask was found. pEndCoord will be set to the collision location.
+// Returns true if a collision with mask was found. pEndCoord will be set to the collision location.
 D2COMMON_DLL_DECL BOOL __stdcall COLLISION_RayTrace(D2ActiveRoomStrc* pRoom, D2CoordStrc* pBeginCoord, D2CoordStrc* pEndCoord, uint16_t nCollisionMask);
 // D2Common.0x6FD459D0 (#10135)
 D2COMMON_DLL_DECL D2ActiveRoomStrc* __stdcall COLLISION_GetFreeCoordinatesWithMaxDistance(D2ActiveRoomStrc* pRoom, D2CoordStrc* pSpawnPoint, int nUnitSize, unsigned int nMask, BOOL bAllowNeighborRooms, int nMaxDistance);

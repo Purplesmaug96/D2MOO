@@ -4,15 +4,13 @@
 
 #pragma pack(1)
 
-//Jerhyn Gossip
-struct D2Act2Quest0Strc						//sizeof 0x84
+// Jerhyn Gossip
+struct D2Act2Quest0Strc // sizeof 0x84
 {
-	D2QuestGUIDStrc tPlayerGUIDs;						//0x00
+	D2QuestGUIDStrc tPlayerGUIDs; // 0x00
 };
 
 #pragma pack()
-
-
 
 // D2Game.0x6FC9F350
 void __fastcall ACT2Q0_InitQuestData(D2QuestDataStrc* pQuestData);

@@ -8,7 +8,8 @@
 #include "windef.h"
 #include "winnt.h"
 
-typedef struct {} CRITICAL_SECTION;
+typedef struct {
+} CRITICAL_SECTION;
 typedef CRITICAL_SECTION* LPCRITICAL_SECTION;
 
 static inline void InitializeCriticalSection(LPCRITICAL_SECTION lpCriticalSection) {

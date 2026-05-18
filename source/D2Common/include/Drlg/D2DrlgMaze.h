@@ -11,12 +11,11 @@ struct D2DrlgLevelStrc;
 
 #pragma pack(1)
 
-struct D2MazeLevelIdStrc
-{
-	int32_t nLevelPrestId1;					//0x00
-	int32_t nLevelPrestId2;					//0x04
-	int32_t nPickedFile;					//0x08
-	int32_t nDirection;						//0x0C
+struct D2MazeLevelIdStrc {
+	int32_t nLevelPrestId1; // 0x00
+	int32_t nLevelPrestId2; // 0x04
+	int32_t nPickedFile;	// 0x08
+	int32_t nDirection;		// 0x0C
 };
 
 #pragma pack()
@@ -35,7 +34,7 @@ void __fastcall DRLGMAZE_InitLevelData(D2DrlgLevelStrc* pLevel);
 void __fastcall DRLGMAZE_GenerateLevel(D2DrlgLevelStrc* pLevel);
 // D2Common.0x6FD79E10
 void __fastcall DRLGMAZE_SetPickedFileAndPresetId(D2DrlgRoomStrc* pDrlgRoom, int nLevelPrest, int nPickedFile, BOOL bResetFlag);
-//D2Commo.0x6FD79E40
+// D2Commo.0x6FD79E40
 D2DrlgRoomStrc* __fastcall DRLGMAZE_ReplaceRoomPreset(D2DrlgLevelStrc* pLevel, int nLevelPrestId1, int nLevelPrestId2, int nPickedFile, BOOL bResetFlag);
 // D2Common.0x6FD79EA0
 D2DrlgRoomStrc* __fastcall DRLGMAZE_AddAdjacentMazeRoom(D2DrlgRoomStrc* pDrlgRoom, int nDirection, int bMergeRooms);

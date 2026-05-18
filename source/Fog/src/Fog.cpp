@@ -16,9 +16,9 @@ int __fastcall FOG_IsExpansion() {
 const char* __cdecl FOG_csprintf(char* szDest, const char* szFormat, ...) {
 	va_list args;
 
-    va_start(args, szFormat);
+	va_start(args, szFormat);
 
-    vsprintf(szDest, szFormat, args);
+	vsprintf(szDest, szFormat, args);
 
-    return szDest;
+	return szDest;
 }

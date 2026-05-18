@@ -2,7 +2,6 @@
 
 #include <Units/Units.h>
 
-
 // D2Game.0x6FC7AB50
 void __fastcall PARTYSCREEN_ToggleLootability(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, int32_t nParam, int32_t* pFailure);
 // D2Game.0x6FC7AC20

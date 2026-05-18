@@ -1,36 +1,32 @@
 #pragma once
 
-#include <Units/Units.h>
 #include <Units/UnitFinds.h>
+#include <Units/Units.h>
 
 #pragma pack(1)
 
 using ObeliskPowerUpFunction = int32_t(__fastcall*)(D2GameStrc*, D2UnitStrc*, int32_t);
 
-struct D2ObeliskPowerUpStrc
-{
-	ObeliskPowerUpFunction pPowerUpCallback;//0x00
-	uint32_t nChance;						//0x04
-	int32_t nValue;							//0x08
+struct D2ObeliskPowerUpStrc {
+	ObeliskPowerUpFunction pPowerUpCallback; // 0x00
+	uint32_t nChance;						 // 0x04
+	int32_t nValue;							 // 0x08
 };
 
-
-struct D2ObjOperateFnStrc
-{
-	D2GameStrc* pGame;						//0x00
-	D2UnitStrc* pObject;					//0x04
-	D2UnitStrc* pPlayer;					//0x08
-	D2ObjectControlStrc* pObjectregion;		//0x0C
-	int32_t nObjectIdx;						//0x10
+struct D2ObjOperateFnStrc {
+	D2GameStrc* pGame;					// 0x00
+	D2UnitStrc* pObject;				// 0x04
+	D2UnitStrc* pPlayer;				// 0x08
+	D2ObjectControlStrc* pObjectregion; // 0x0C
+	int32_t nObjectIdx;					// 0x10
 };
 using ObjOperateFunction = int32_t(__fastcall*)(D2ObjOperateFnStrc*, int32_t);
 
-using ObjShrineFunction = void(__fastcall* )(D2ObjOperateFnStrc* pOp, D2ShrinesTxt* pShrinesTxtRecord);
-struct D2ShrineTableStrc
-{
-	ObjShrineFunction pfShrineCallback;		//0x00
-	int32_t unk0x04;						//0x04
-	int32_t unk0x08;						//0x08
+using ObjShrineFunction = void(__fastcall*)(D2ObjOperateFnStrc* pOp, D2ShrinesTxt* pShrinesTxtRecord);
+struct D2ShrineTableStrc {
+	ObjShrineFunction pfShrineCallback; // 0x00
+	int32_t unk0x04;					// 0x04
+	int32_t unk0x08;					// 0x08
 };
 
 #pragma pack()
@@ -93,12 +89,12 @@ void __fastcall D2GAME_OBJECTS_TrapHandler3_6FC75D90(D2GameStrc* pGame, D2UnitSt
 void __fastcall D2GAME_OBJECTS_TrapHandler4_6FC75E20(D2GameStrc* pGame, D2UnitStrc* pUnit);
 // D2Game.0x6FC75EB0
 void __fastcall sub_6FC75EB0(D2ObjOperateFnStrc* pOp);
-//Inlined in OBJECTS_OperateFunction04_Chest
+// Inlined in OBJECTS_OperateFunction04_Chest
 __forceinline void __fastcall OBJECTS_ChestEnd(D2ObjOperateFnStrc* pOp, int32_t nType);
 // D2Game.0x6FC76030
 int32_t __fastcall OBJECTS_OperateFunction04_Chest(D2ObjOperateFnStrc* pOp, int32_t nOperate);
 // D2Game.0x6FC764B0
-void __fastcall  D2GAME_SetTrapCallback_6FC764B0(D2ObjOperateFnStrc* pOp, uint8_t nTrapType);
+void __fastcall D2GAME_SetTrapCallback_6FC764B0(D2ObjOperateFnStrc* pOp, uint8_t nTrapType);
 // D2Game.0x6FC76570
 int32_t __fastcall OBJECTS_OperateFunction17_Obelisk(D2ObjOperateFnStrc* pOp, int32_t nOperate);
 // D2Game.0x6FC766B0

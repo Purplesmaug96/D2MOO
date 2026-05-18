@@ -1,24 +1,22 @@
 #pragma once
 
-#include <D2BasicTypes.h>
 #include <Archive.h>
+#include <D2BasicTypes.h>
 
 struct D2ActiveRoomStrc;
 
 #pragma pack(1)
-struct D2CollisionFieldStrc
-{
-	int32_t nWidth;							//0x00
-	int32_t nHeight;						//0x04
-	int32_t nArea;							//0x08
-	int32_t nCenterX;						//0x0C
-	int32_t nCenterY;						//0x10
+struct D2CollisionFieldStrc {
+	int32_t nWidth;	  // 0x00
+	int32_t nHeight;  // 0x04
+	int32_t nArea;	  // 0x08
+	int32_t nCenterX; // 0x0C
+	int32_t nCenterY; // 0x10
 };
 
-struct D2FieldStrc
-{
-	int32_t nX;								//0x00
-	int32_t nY;								//0x04
+struct D2FieldStrc {
+	int32_t nX; // 0x00
+	int32_t nY; // 0x04
 };
 #pragma pack()
 
@@ -46,4 +44,3 @@ D2COMMON_DLL_DECL int __stdcall D2Common_11097(D2FieldStrc* pField, int nX, int 
 D2COMMON_DLL_DECL int __stdcall D2Common_11098(D2FieldStrc* pField, int* pX, int* pY);
 // D2Common.0x6FD52360 (#11099)
 D2COMMON_DLL_DECL BOOL __stdcall D2Common_11099(D2FieldStrc* pField, D2ActiveRoomStrc* pRoom, int nX, int nY, uint16_t fMask);
-

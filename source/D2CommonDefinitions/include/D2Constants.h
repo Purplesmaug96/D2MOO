@@ -2,14 +2,12 @@
 
 #include <cstdint>
 
-enum D2HarcodedConstants
-{
+enum D2HarcodedConstants {
 	HARDCODEDCST_MAX_LEVEL = 99, // Should be using DATATBLS_GetMaxLevel instead
 	DEFAULT_FRAMES_PER_SECOND = 25
 };
 
-enum D2GameTypeMode
-{
+enum D2GameTypeMode {
 	MODE_LOCAL = 0,
 	MODE_CLOSED = 1,
 	MODE_TCPIP = 2,
@@ -24,8 +22,7 @@ enum D2GameResolutionMode // DISPLAY_RES in original game
 	D2GAMERES_1344x700 = 3, // Not actually supported ?
 };
 
-enum D2C_SaveMagicHeaders : uint32_t
-{
+enum D2C_SaveMagicHeaders : uint32_t {
 	D2SMAGIC_HEADER = 0xAA55AA55,
 	D2SMAGIC_QUESTINFO = 0x576F6F21,
 	D2SMAGIC_WPINFO = 0x5753,
@@ -37,36 +34,31 @@ enum D2C_SaveMagicHeaders : uint32_t
 	D2SMAGIC_IRONGOLEM = 0x6B66
 };
 
-enum D2InteractStates
-{
+enum D2InteractStates {
 	INTERACT_NONE = 0,
-	INTERACT_TALKING = 1,   //the menu is open
-	INTERACT_TRADE = 2,   //your trading
+	INTERACT_TALKING = 1, // the menu is open
+	INTERACT_TRADE = 2,	  // your trading
 };
 
-enum D2C_TransactionTypes
-{
+enum D2C_TransactionTypes {
 	TRANSACTIONTYPE_BUY = 0,
 	TRANSACTIONTYPE_SELL = 1,
 	TRANSACTIONTYPE_GAMBLE = 2,
 	TRANSACTIONTYPE_REPAIR = 3,
 };
 
-#ifndef CONSTANTS_LEVELS //Pseudo-Macro to group all constants
+#ifndef CONSTANTS_LEVELS // Pseudo-Macro to group all constants
 
-
-enum D2C_WarpTileTypes
-{
-	WARPTILE_TOWNENTRY = 0x00, 		//Town Entry & Non-Town Waypoint (0)
-	WARPTILE_TOWNENTRY2 = 0x05, 	//Town Entry 2 (5)
-	WARPTILE_CORPSELOC = 0x0A, 		//Corpse Location (10)
-	WARPTILE_MAPENTRY = 0x0B, 		//Map Entry & Portal Location (11)
-	WARPTILE_TPLOC = 0x0C, 			//Town Portal Location (12)
-	WARPTILE_TOWNWP = 0x0D			//Town Waypoint (13)
+enum D2C_WarpTileTypes {
+	WARPTILE_TOWNENTRY = 0x00,	// Town Entry & Non-Town Waypoint (0)
+	WARPTILE_TOWNENTRY2 = 0x05, // Town Entry 2 (5)
+	WARPTILE_CORPSELOC = 0x0A,	// Corpse Location (10)
+	WARPTILE_MAPENTRY = 0x0B,	// Map Entry & Portal Location (11)
+	WARPTILE_TPLOC = 0x0C,		// Town Portal Location (12)
+	WARPTILE_TOWNWP = 0x0D		// Town Waypoint (13)
 };
 
-enum D2C_TownLevels
-{
+enum D2C_TownLevels {
 	D2TOWN_ROGUECAMP = 1,
 	D2TOWN_LUTGHOL = 40,
 	D2TOWN_KURAST = 75,
@@ -75,16 +67,14 @@ enum D2C_TownLevels
 	D2TOWN_NULL = 0
 };
 
-enum D2C_Difficulties
-{
+enum D2C_Difficulties {
 	DIFFMODE_NORMAL,
 	DIFFMODE_NIGHTMARE,
 	DIFFMODE_HELL,
 	NUM_DIFFICULTIES
 };
 
-enum D2C_Acts
-{
+enum D2C_Acts {
 	ACT_I,
 	ACT_II,
 	ACT_III,
@@ -93,19 +83,16 @@ enum D2C_Acts
 	NUM_ACTS
 };
 
-
 #endif // CONSTANTS_LEVELS
 
-enum D2SaveCharType
-{
+enum D2SaveCharType {
 	CHARTYPE_HARDCORE = 0x24,
 	CHARTYPE_SOFTCORE = 0x28
 };
 
-#ifndef CONSTANTS_DATATABLES //Pseudo-Macro to group all constants
+#ifndef CONSTANTS_DATATABLES // Pseudo-Macro to group all constants
 
-enum D2C_TxtLinkerIndexTypes
-{
+enum D2C_TxtLinkerIndexTypes {
 	TXTLINKER_NONE,
 	TXTLINKER_PLAYERCLASS,
 	TXTLINKER_BODYLOCS,
@@ -151,8 +138,7 @@ enum D2C_TxtLinkerIndexTypes
 	TXTLINKER_INVALID
 };
 
-enum D2C_ItemsTxtArmorComps
-{
+enum D2C_ItemsTxtArmorComps {
 	TXTARMORCOMP_RARM,
 	TXTARMORCOMP_LARM,
 	TXTARMORCOMP_TORSO,
@@ -161,8 +147,7 @@ enum D2C_ItemsTxtArmorComps
 	TXTARMORCOMP_LSPAD,
 };
 
-enum D2Vendors
-{
+enum D2Vendors {
 	VENDOR_AKARA,
 	VENDOR_GHEED,
 	VENDOR_CHARSI,
@@ -183,91 +168,86 @@ enum D2Vendors
 };
 #endif // CONSTANTS_DATATABLES
 
-#ifndef CONSTANTS_UI //Pseudo-Macro to group all constants
-enum D2C_UIvars
-{
-	UI_GAME = 0x00,				//Game
-	UI_INVENTORY = 0x01,		//Player Inventory
-	UI_STATSCREEN = 0x02,		//Player Stat Screen
-	UI_MINISKILL = 0x03,		//Skill Selection
-	UI_SKILLTREE = 0x04,		//Player Skill Tree
-	UI_CHATBOX = 0x05,			//Chat Box
-	UI_NEWSTATS = 0x06,			//Red NewStats Button
-	UI_NEWSKILLS = 0x07,		//Red NewSkills Button
-	UI_NPCMENU = 0x08,			//NPC options menu
-	UI_ESCMENU = 0x09,			//Esc Menu
-	UI_AUTOMAP = 0x0A,			//Automap
-	UI_CONFIG = 0x0B,			//Key Configuration Menu
-	UI_NPCSHOP = 0x0C,			//NPC Trade
-	UI_HOLDALT = 0x0D,			//Alt Items Highlight
-	UI_ANVIL = 0x0E,			//Anvil
-	UI_QUESTSCREEN = 0x0F,		//Quest Screen
-	UI_INISCROLL = 0x10,		//Inifuss Tree Scroll
-	UI_QUESTLOG = 0x11,			//Quest Log Red Button
+#ifndef CONSTANTS_UI // Pseudo-Macro to group all constants
+enum D2C_UIvars {
+	UI_GAME = 0x00,		   // Game
+	UI_INVENTORY = 0x01,   // Player Inventory
+	UI_STATSCREEN = 0x02,  // Player Stat Screen
+	UI_MINISKILL = 0x03,   // Skill Selection
+	UI_SKILLTREE = 0x04,   // Player Skill Tree
+	UI_CHATBOX = 0x05,	   // Chat Box
+	UI_NEWSTATS = 0x06,	   // Red NewStats Button
+	UI_NEWSKILLS = 0x07,   // Red NewSkills Button
+	UI_NPCMENU = 0x08,	   // NPC options menu
+	UI_ESCMENU = 0x09,	   // Esc Menu
+	UI_AUTOMAP = 0x0A,	   // Automap
+	UI_CONFIG = 0x0B,	   // Key Configuration Menu
+	UI_NPCSHOP = 0x0C,	   // NPC Trade
+	UI_HOLDALT = 0x0D,	   // Alt Items Highlight
+	UI_ANVIL = 0x0E,	   // Anvil
+	UI_QUESTSCREEN = 0x0F, // Quest Screen
+	UI_INISCROLL = 0x10,   // Inifuss Tree Scroll
+	UI_QUESTLOG = 0x11,	   // Quest Log Red Button
 	UI_UNKNOWN18 = 0x12,
 	UI_HIRICONS = 0x13,
-	UI_WAYPOINT = 0x14,			//Waypoint Screen
-	UI_MINIPANEL = 0x15,		//CtrlPnl7 Mini Popop Menu
-	UI_PARTYSCREEN = 0x16,		//Multiplayer Party Screen			
-	UI_MPTRADE = 0x17,			//Multiplayer Trade
-	UI_MSGLOG = 0x18,			//Messages Log
-	UI_STASH = 0x19,			//Player Stash
-	UI_CUBE = 0x1A,				//Horadric Cube
-	UI_STEEGSTONE = 0x1B,		//Guild Steeg Stone
-	UI_GUILDVAULT = 0x1C,		//Guild Vault
+	UI_WAYPOINT = 0x14,	   // Waypoint Screen
+	UI_MINIPANEL = 0x15,   // CtrlPnl7 Mini Popop Menu
+	UI_PARTYSCREEN = 0x16, // Multiplayer Party Screen
+	UI_MPTRADE = 0x17,	   // Multiplayer Trade
+	UI_MSGLOG = 0x18,	   // Messages Log
+	UI_STASH = 0x19,	   // Player Stash
+	UI_CUBE = 0x1A,		   // Horadric Cube
+	UI_STEEGSTONE = 0x1B,  // Guild Steeg Stone
+	UI_GUILDVAULT = 0x1C,  // Guild Vault
 	UI_UNKNOWN29 = 0x1D,
 	UI_UNKNOWN30 = 0x1E,
-	UI_BELTROWS = 0x1F,			//Belt Rows Popup
+	UI_BELTROWS = 0x1F, // Belt Rows Popup
 	UI_UNKNOWN32 = 0x20,
-	UI_HELPSCREEN = 0x21,		//Help Screen
-	UI_HELPBUTTON = 0x22,		//Help Button
-	UI_HIREICONS = 0x23,		//Party Icons
-	UI_MERCINV = 0x24,			//Mercenary Inventory
-	UI_RECIPESCROLL = 0x25		//Unused Recipe Scroll
+	UI_HELPSCREEN = 0x21,  // Help Screen
+	UI_HELPBUTTON = 0x22,  // Help Button
+	UI_HIREICONS = 0x23,   // Party Icons
+	UI_MERCINV = 0x24,	   // Mercenary Inventory
+	UI_RECIPESCROLL = 0x25 // Unused Recipe Scroll
 };
 
-enum D2C_UiStates
-{
+enum D2C_UiStates {
 	UI_TURNON = 0,
 	UI_TURNOFF = 1,
 	UI_TOGGLE = 2,
 };
 
-enum D2C_GlobalUiStates
-{
+enum D2C_GlobalUiStates {
 	UISTATE_NONE,
 	UISTATE_RIGHT,
 	UISTATE_LEFT,
 	UISTATE_BOTH,
 };
 
-enum D2C_AutomapCells
-{
-	MAPIMGCELL_REDCROSS = 221,				//Red Cross
-	MAPIMGCELL_HAMMER = 302,				//Hammer
-	MAPIMGCELL_CAINCAGE = 303,				//Cain Tristram Cage
-	MAPIMGCELL_MEPHORB = 305,				//Travincal Compelling Orb
-	MAPIMGCELL_DIABSEAL = 306,				//Chaos Sanctuary Seals
-	MAPIMGCELL_WAYPOINT = 307,				//Waypoint
-	MAPIMGCELL_WELL = 309,					//Well
-	MAPIMGCELL_SHRINE = 310,				//Shrine
-	MAPIMGCELL_FALLCAMPFLAG = 312,			//Fallen Camps Skull Flag
-	MAPIMGCELL_INITREE = 313,				//Tree of Inifuss
-	MAPIMGCELL_CAINROCK = 314,				//Cairn Stone
-	MAPIMGCELL_GIDBINN = 315,				//Gidbinn
-	MAPIMGCELL_QHAMMER = 316,				//Horadric Hammer
-	MAPIMGCELL_BLUECROSS = 317,				//Blue Cross
-	MAPIMGCELL_QCHEST = 318,				//Quest Sparky Chest
-	MAPIMGCELL_STASH = 319,					//Your Stash
-	MAPIMGCELL_ARCANEPORTAL = 339,			//Arcane Blue Portal
-	MAPIMGCELL_ROGUEFIRE = 405,				//Rogue Camp Fire
-	MAPIMGCELL_BOOK = 427,					//Book (stony field and Horazon?)
-	MAPIMGCELL_PLACEHOLDER = 1176,			//Unknown Placeholder Reveal Code
-	MAPIMGCELL_BARRITOWER = 1258			//Barricaded Towers Act 5
+enum D2C_AutomapCells {
+	MAPIMGCELL_REDCROSS = 221,	   // Red Cross
+	MAPIMGCELL_HAMMER = 302,	   // Hammer
+	MAPIMGCELL_CAINCAGE = 303,	   // Cain Tristram Cage
+	MAPIMGCELL_MEPHORB = 305,	   // Travincal Compelling Orb
+	MAPIMGCELL_DIABSEAL = 306,	   // Chaos Sanctuary Seals
+	MAPIMGCELL_WAYPOINT = 307,	   // Waypoint
+	MAPIMGCELL_WELL = 309,		   // Well
+	MAPIMGCELL_SHRINE = 310,	   // Shrine
+	MAPIMGCELL_FALLCAMPFLAG = 312, // Fallen Camps Skull Flag
+	MAPIMGCELL_INITREE = 313,	   // Tree of Inifuss
+	MAPIMGCELL_CAINROCK = 314,	   // Cairn Stone
+	MAPIMGCELL_GIDBINN = 315,	   // Gidbinn
+	MAPIMGCELL_QHAMMER = 316,	   // Horadric Hammer
+	MAPIMGCELL_BLUECROSS = 317,	   // Blue Cross
+	MAPIMGCELL_QCHEST = 318,	   // Quest Sparky Chest
+	MAPIMGCELL_STASH = 319,		   // Your Stash
+	MAPIMGCELL_ARCANEPORTAL = 339, // Arcane Blue Portal
+	MAPIMGCELL_ROGUEFIRE = 405,	   // Rogue Camp Fire
+	MAPIMGCELL_BOOK = 427,		   // Book (stony field and Horazon?)
+	MAPIMGCELL_PLACEHOLDER = 1176, // Unknown Placeholder Reveal Code
+	MAPIMGCELL_BARRITOWER = 1258   // Barricaded Towers Act 5
 };
 
-enum D2C_StringColorCodes
-{
+enum D2C_StringColorCodes {
 	STRCOLOR_WHITE,
 	STRCOLOR_RED,
 	STRCOLOR_LIGHTGREEN,
@@ -283,29 +263,26 @@ enum D2C_StringColorCodes
 	STRCOLOR_DARKGREEN2
 };
 
-enum D2C_UiButtonModes
-{
+enum D2C_UiButtonModes {
 	BTNMODE_ENABLED,
 	BTNMODE_PRESSED,
 	BTNMODE_DISABLED,
 };
 
-enum D2C_ButtonActions
-{
-	TRADEBTN_CANCEL = 2, 
-	TRADEBTN_PERFORM = 3, 
-	TRADEBTN_ACCEPT = 4, 
-	TRADEBTN_GREENCHECK = 7, 
-	TRADEBTN_SENDGOLD = 8, 
-	TRADEBTN_CLOSESTASH = 18, 
-	TRADEBTN_STASHWITHDRAW = 19, 
-	TRADEBTN_STASHDEPOSIT = 20, 
-	TRADEBTN_CLOSECUBE = 23, 
+enum D2C_ButtonActions {
+	TRADEBTN_CANCEL = 2,
+	TRADEBTN_PERFORM = 3,
+	TRADEBTN_ACCEPT = 4,
+	TRADEBTN_GREENCHECK = 7,
+	TRADEBTN_SENDGOLD = 8,
+	TRADEBTN_CLOSESTASH = 18,
+	TRADEBTN_STASHWITHDRAW = 19,
+	TRADEBTN_STASHDEPOSIT = 20,
+	TRADEBTN_CLOSECUBE = 23,
 	TRADEBTN_TRANSMUTE = 24
 };
 
-enum D2C_D2WinMenuEntryTypes
-{
+enum D2C_D2WinMenuEntryTypes {
 	MENUENTRY_EDITBOX = 0x01,
 	MENUENTRY_IMAGE = 0x02,
 	MENUENTRY_ANIMATION = 0x03,
@@ -320,14 +297,12 @@ enum D2C_D2WinMenuEntryTypes
 	MENUENTRY_ACCOUNTLIST = 0x0C,
 };
 
-enum D2C_MenuImageLoadType
-{
+enum D2C_MenuImageLoadType {
 	MENUIMGTYPE_DC6,
 	MENUIMGTYPE_DCC,
 };
 
-enum D2C_NpcMenuIdx
-{
+enum D2C_NpcMenuIdx {
 	NPCMENUIDX_AKARA,
 	NPCMENUIDX_ATMA,
 	NPCMENUIDX_CAIN1,
@@ -378,8 +353,7 @@ enum D2C_NpcMenuIdx
 	NPCMENUIDX_ANCIENTSTATUE3,
 };
 
-enum D2C_VendorInventoryModes
-{
+enum D2C_VendorInventoryModes {
 	VENDORMODE_NONE = 0,
 	VENDORMODE_TRADE = 1,
 	VENDORMODE_BUY = 2,
@@ -399,9 +373,8 @@ enum D2C_VendorInventoryModes
 };
 #endif // CONSTANTS_UI
 
-#ifndef CONSTANTS_STRINGS //Pseudo-Macro to group all constants
-enum D2C_Language
-{
+#ifndef CONSTANTS_STRINGS // Pseudo-Macro to group all constants
+enum D2C_Language {
 	LANGUAGE_ENGLISH = 0,
 	LANGUAGE_SPANISH = 1,
 	LANGUAGE_GERMAN = 2,
@@ -423,48 +396,43 @@ enum D2C_Language
 	NUM_LANGUAGES,
 };
 
-enum D2C_StringTablesHcidx
-{
+enum D2C_StringTablesHcidx {
 	STRTABLE_STRING,
 	STRTABLE_PATCHSTRING,
 	STRTABLE_EXPSTRING,
 };
 #endif // CONSTANTS_STRINGS
 
-#ifndef CONSTANTS_ARENA //Pseudo-Macro to group all constants
-enum D2C_PvpFlags
-{
-	PVPFLAG_INVITEYOU = 0x01,		// Player Invites you
-	PVPFLAG_YOUINVITE = 0x02,		// You invited this player
-	PVPFLAG_HOSTILEYOU = 0x04,		// This player has declared hostility towards you
-	PVPFLAG_YOUHOSTILE = 0x08,		// You declared hostility towards this player
-	PVPFLAG_ISALLIED = 0x10,		// Player is allied but not with you
-	PVPFLAG_ALLIEDWITHYOU = 0x20	// You are allied with this player
+#ifndef CONSTANTS_ARENA // Pseudo-Macro to group all constants
+enum D2C_PvpFlags {
+	PVPFLAG_INVITEYOU = 0x01,	 // Player Invites you
+	PVPFLAG_YOUINVITE = 0x02,	 // You invited this player
+	PVPFLAG_HOSTILEYOU = 0x04,	 // This player has declared hostility towards you
+	PVPFLAG_YOUHOSTILE = 0x08,	 // You declared hostility towards this player
+	PVPFLAG_ISALLIED = 0x10,	 // Player is allied but not with you
+	PVPFLAG_ALLIEDWITHYOU = 0x20 // You are allied with this player
 };
 
-enum D2C_ArenaMatchTypes
-{
+enum D2C_ArenaMatchTypes {
 	D2ARENAMATCH_DEATHMATCH,
 	D2ARENAMATCH_TEAMDEATHMATCH,
 	D2ARENAMATCH_CAPTURETHEFLAG,
 	D2ARENAMATCH_KINGOFTHEHILL,
 };
 
-enum D2Killtypes
-{
-	KILLTYPE_SUICIDE = 0, 
-	KILLTYPE_PVP_KILL, 
-	KILLTYPE_PVP2, 
-	KILLTYPE_PVM_KILL, 
-	KILLTYPE_NVM, 
-	KILLTYPE_MVP_KILL, 
-	KILLTYPE, 
+enum D2Killtypes {
+	KILLTYPE_SUICIDE = 0,
+	KILLTYPE_PVP_KILL,
+	KILLTYPE_PVP2,
+	KILLTYPE_PVM_KILL,
+	KILLTYPE_NVM,
+	KILLTYPE_MVP_KILL,
+	KILLTYPE,
 };
 #endif // CONSTANTS_ARENA
 
-#ifndef CONSTANTS_PACKETS //Pseudo-Macro to group all constants
-enum D2C_SRV2CLT5A_TYPES
-{
+#ifndef CONSTANTS_PACKETS // Pseudo-Macro to group all constants
+enum D2C_SRV2CLT5A_TYPES {
 	EVENTTYPE_DISCONNECT,
 	EVENTTYPE_DROPERROR,
 	EVENTTYPE_PLAYERJOIN,
@@ -486,8 +454,7 @@ enum D2C_SRV2CLT5A_TYPES
 	EVENTTYPE_DIABLOCLONE,
 };
 
-enum D2C_SRV2CLT77_PARAMS
-{
+enum D2C_SRV2CLT77_PARAMS {
 	UPDATEUI_ASKTOTRADE = 0,
 	UPDATEUI_ASKEDTOTRADE = 1,
 	UPDATEUI_ACCEPTTRADE = 5,
@@ -503,8 +470,7 @@ enum D2C_SRV2CLT77_PARAMS
 	UPDATEUI_OPENCUBE = 21
 };
 
-enum D2C_SRV2CLT9C_9D_PARAMS
-{
+enum D2C_SRV2CLT9C_9D_PARAMS {
 	ITEMACTION_ADDTOGROUND = 0,
 	ITEMACTION_GROUNDTOCURSOR,
 	ITEMACTION_DROPTOGROUND,
@@ -531,8 +497,7 @@ enum D2C_SRV2CLT9C_9D_PARAMS
 	ITEMACTION_WEAPONSWITCH
 };
 
-enum D2C_ChatMessageTypes
-{
+enum D2C_ChatMessageTypes {
 	CHAT_NONE,
 	CHAT_PLAYERMESSAGE,
 	CHAT_RECEIVEDWHISPER,
@@ -544,9 +509,8 @@ enum D2C_ChatMessageTypes
 };
 #endif // CONSTANTS_PACKETS
 
-#ifndef CONSTANTS_QUESTS //Pseudo-Macro to group all constants
-enum D2C_OriginalQuestFlags
-{
+#ifndef CONSTANTS_QUESTS // Pseudo-Macro to group all constants
+enum D2C_OriginalQuestFlags {
 	QFLAG_REWARDGRANTED,
 	QFLAG_REWARDPENDING,
 	QFLAG_STARTED,
@@ -565,31 +529,28 @@ enum D2C_OriginalQuestFlags
 	QFLAG_COMPLETEDBEFORE,
 };
 
-//enum D2C_QuestStates
+// enum D2C_QuestStates
 //{
 //	QSTATE_QUESTCOMPLETED,
 //	QSTATE_QUESTDONE,
 //	QSTATE_QUESTNOTSTARTED,
 //	QSTATE_QUESTSTARTEDNOTCOMPLETED,
-//};
+// };
 
-
-//enum D2QuestFilterEvents
+// enum D2QuestFilterEvents
 //{
 //	QUESTEVENT_STATUSUPDATE = 0,
 //	QUESTEVENT_NPCINIT = 1,
 //	QUESTEVENT_QUESTINIT = 2
-//};
+// };
 
-enum D2ScrollMenus
-{
+enum D2ScrollMenus {
 	SCROLLMENU_MESSAGE = 0,
 	SCROLLMENU_MENU = 1,
 	SCROLLMENU_NONE = 2
 };
 
-enum D2QuestEvents
-{
+enum D2QuestEvents {
 	QUESTEVENT_NPCACTIVATE = 0,
 	QUESTEVENT_NPCDEACTIVATE = 2,
 	QUESTEVENT_CHANGEDLEVEL = 3,
@@ -603,8 +564,7 @@ enum D2QuestEvents
 	QUESTEVENT_PLAYERJOINEDGAME = 14
 };
 
-enum D2QuestAlert
-{
+enum D2QuestAlert {
 	QALERT_DEFAULT = 0x00,
 	QALERT_MESSAGE = 0x01,
 	QALERT_SOUND = 0x02,

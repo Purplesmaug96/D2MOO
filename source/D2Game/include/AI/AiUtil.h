@@ -1,20 +1,18 @@
 #pragma once
 
 #include "AiGeneral.h"
-#include <Units/Units.h>
 #include "AiStates.h"
+#include <Units/Units.h>
 
 #pragma pack(push, 1)
-struct D2BaalThroneAiCallbackArgStrc
-{
+struct D2BaalThroneAiCallbackArgStrc {
 	D2UnitStrc* pTarget;
 	int32_t nDistance;
 	int32_t unk0x08;
 	int32_t nMaxDistance;
 };
 
-struct D2UnkAiCallbackArgStrc
-{
+struct D2UnkAiCallbackArgStrc {
 	D2UnitStrc* pTarget;
 	int32_t nDistance;
 	int32_t unk0x08;
@@ -24,60 +22,52 @@ struct D2UnkAiCallbackArgStrc
 	int32_t nAlternativeDistance;
 };
 
-struct D2UnkAiCallbackArgStrc2
-{
+struct D2UnkAiCallbackArgStrc2 {
 	D2UnitStrc* pTarget;
 	int32_t nDistance;
 	D2UnitStrc* pAlternativeTarget;
 	int32_t nAlternativeDistance;
 };
 
-struct D2AiCallback7ArgStrc
-{
+struct D2AiCallback7ArgStrc {
 	D2UnitStrc* pTarget;
 	int32_t nDistance;
 	D2UnitStrc* unk0x08;
 };
 
-struct D2AiCallback11ArgStrc
-{
+struct D2AiCallback11ArgStrc {
 	D2UnitStrc* pTarget;
 	int32_t nDistance;
 	D2UnitStrc* unk0x08;
 };
 
-struct D2DoorObjectAiCallbackArgStrc
-{
+struct D2DoorObjectAiCallbackArgStrc {
 	D2UnitStrc* pDoor;
 	int32_t nDistance;
 };
 
-struct D2FallenShamanAiCallbackArgStrc
-{
+struct D2FallenShamanAiCallbackArgStrc {
 	D2UnitStrc* pTarget;
 	int32_t nCounter;
 	int32_t nDistance;
 	int32_t nMaxDistance;
 };
 
-struct D2VileMotherAiCallbackArgStrc
-{
+struct D2VileMotherAiCallbackArgStrc {
 	int32_t nLastInClass;
 	int32_t nMaxDistance;
 	int32_t nCounter;
 };
 
-struct UnkAiStrc5
-{
+struct UnkAiStrc5 {
 	int32_t nMaxDistance;
 };
 
 #ifdef D2_VERSION_HAS_UBERS
-struct D2UbersAiCallbackArgStrc
-{
+struct D2UbersAiCallbackArgStrc {
 	int32_t nUberMephisto; // BOOL
-	int32_t nUberDiablo; // BOOL
-	int32_t nUberBaal; // BOOL
+	int32_t nUberDiablo;   // BOOL
+	int32_t nUberBaal;	   // BOOL
 	int32_t nDistance;
 	int32_t nOtherMonsters;
 	int32_t nDiabloSpawner;
@@ -87,8 +77,7 @@ struct D2UbersAiCallbackArgStrc
 #endif
 #pragma pack(pop)
 
-
-//Inlined in D2Game.0x6FCF1210 and D2Game.0x6FCF1310
+// Inlined in D2Game.0x6FCF1210 and D2Game.0x6FCF1310
 int32_t __fastcall AIUTIL_GetDistanceToCoordinatesWithSize(D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nSize);
 // D2Game.0x6FCF1210
 int32_t __fastcall AIUTIL_GetDistanceToCoordinates_FullUnitSize(D2UnitStrc* pTarget, D2UnitStrc* pSource);
@@ -121,9 +110,9 @@ D2UnitStrc* __fastcall sub_6FCF1DC0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 // D2Game.0x6FCF1E30
 D2UnitStrc* __fastcall sub_6FCF1E30(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg);
 // D2Game.0x6FCF1E80
-D2UnitStrc* __fastcall sub_6FCF1E80(D2GameStrc* pGame, D2UnitStrc* pUnit, void* a3, D2UnitStrc* (__fastcall* a4)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*), int32_t nCallbackId);
+D2UnitStrc* __fastcall sub_6FCF1E80(D2GameStrc* pGame, D2UnitStrc* pUnit, void* a3, D2UnitStrc*(__fastcall* a4)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*), int32_t nCallbackId);
 #ifdef D2_VERSION_HAS_UBERS
-//1.14d: 0x005DD140
+// 1.14d: 0x005DD140
 D2UnitStrc* __fastcall AIUTIL_TargetCallback_Ubers(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg);
 #endif
 // D2Game.0x6FCF20E0
@@ -135,9 +124,9 @@ int32_t __fastcall sub_6FCF27B0(D2UnitStrc* pUnit, D2UnitStrc** ppTarget, int32_
 // D2Game.0x6FCF2920
 int32_t __fastcall sub_6FCF2920(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3, int32_t a4, D2UnitStrc** ppUnit, int32_t* pDistance);
 // D2Game.0x6FCF2B80
-D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentRooms(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArg, D2UnitStrc* (__fastcall* pfCallback)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*));
+D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentRooms(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArg, D2UnitStrc*(__fastcall* pfCallback)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*));
 // D2Game.0x6FCF2C00
-D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentActiveRooms(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArg, D2UnitStrc* (__fastcall* pfCallback)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*));
+D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentActiveRooms(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArg, D2UnitStrc*(__fastcall* pfCallback)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*));
 // D2Game.0x6FCF2CC0
 D2UnitStrc* __fastcall sub_6FCF2CC0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t* pDistance, int32_t* pInMeleeRange);
 // D2Game.0x6FCF2DF0

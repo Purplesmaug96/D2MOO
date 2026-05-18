@@ -57,7 +57,7 @@ D2LANG_DLL_DECL D2C_Language STRTABLE_GetLanguage();
  * 1.14c: Game.0x00523510
  */
 D2LANG_DLL_DECL void __stdcall STR_GroupIntDigits(
-		Unicode* pUnicode, int nValue, int nMaxLength);
+	Unicode* pUnicode, int nValue, int nMaxLength);
 
 /**
  * Converts a unsigned integer value into a into a null-terminated UCS-2
@@ -75,4 +75,4 @@ D2LANG_DLL_DECL void __stdcall STR_GroupIntDigits(
  * 1.14c: Game.0x005228A0
  */
 D2LANG_DLL_DECL void __stdcall STR_GroupUintDigits(
-		Unicode* pUnicode, unsigned int dwValue, int nMaxLength);
+	Unicode* pUnicode, unsigned int dwValue, int nMaxLength);

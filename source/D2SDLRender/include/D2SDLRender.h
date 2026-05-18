@@ -7,7 +7,6 @@
 
 #include "D2Gfx.h"
 
-
 #ifndef _D2SDLRENDER_CPP
 extern D2GraphicsInterfaceStrc Interface;
 extern SDL_Window* window;
@@ -123,8 +122,10 @@ static inline void _FUNC_ASSERT(const char* condBuf, const char* file, const int
 	exit(1);
 }
 
-#define FUNC_ASSERT(cond) \
-    do { if (!(cond)) _FUNC_ASSERT(#cond, __FILE__, __LINE__); } while (0)
-
+#define FUNC_ASSERT(cond)                            \
+	do {                                             \
+		if (!(cond))                                 \
+			_FUNC_ASSERT(#cond, __FILE__, __LINE__); \
+	} while (0)
 
 bool D2SDLRender_Init();

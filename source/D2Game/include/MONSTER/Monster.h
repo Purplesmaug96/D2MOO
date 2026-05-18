@@ -1,8 +1,7 @@
 #pragma once
 
-#include <Units/Units.h>
 #include "MonsterRegion.h"
-
+#include <Units/Units.h>
 
 // D2Game.0x6FC601C0
 void __fastcall MONSTER_SetAiState(D2UnitStrc* pMonster, int32_t nAiState);
@@ -32,7 +31,7 @@ void __fastcall MONSTER_UpdateAiCallbackEvent(D2GameStrc* pGame, D2UnitStrc* pMo
 void __fastcall MONSTER_DeleteEvents(D2GameStrc* pGame, D2UnitStrc* pMonster);
 // D2Game.0x6FC60E70
 int32_t __fastcall MONSTER_GetHpBonus(int32_t nPlayerCount);
-//Inlined in D2Game.0x6FC60E90
+// Inlined in D2Game.0x6FC60E90
 int32_t __fastcall MONSTER_GetExperienceBonus(int32_t nPlayerCount);
 // D2Game.0x6FC60E90
 void __fastcall MONSTER_GetPlayerCountBonus(D2GameStrc* pGame, D2PlayerCountBonusStrc* pPlayerCountBonus, D2ActiveRoomStrc* pRoom, D2UnitStrc* pMonster);

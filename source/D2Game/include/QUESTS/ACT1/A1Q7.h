@@ -6,8 +6,6 @@
 
 #pragma pack()
 
-
-
 // D2Game.0x6FC9EF40
 void __fastcall ACT1Q7_InitQuestData(D2QuestDataStrc* pQuestData);
 // D2Game.0x6FC9EFA0

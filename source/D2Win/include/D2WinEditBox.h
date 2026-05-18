@@ -2,41 +2,36 @@
 
 #include "D2WinControlHeader.h"
 
-#include <D2Unicode.h>
 #include "Font.h"
+#include <D2Unicode.h>
 
-
-enum D2EditBoxFlags
-{
+enum D2EditBoxFlags {
 	EDITBOX_PASSWORD = 0x00000001,
 };
 
-
 #pragma pack(push, 1)
-struct D2WinEditBoxStrc
-{
-	D2WinControlStrc controlHeader;					//0x00
-	int32_t field_40;								//0x40
-	int32_t field_44;								//0x44
-	int32_t field_48;								//0x48
-	int32_t field_4C;								//0x4C
-	int32_t field_50;								//0x50
-	int32_t field_54;								//0x54
-	int32_t nTextLength;							//0x58
-	Unicode wszText[256];							//0x258
-	int32_t field_25C;								//0x25C
-	uint32_t dwEditBoxFlags;						//0x260
-	int32_t field_264;								//0x264
-	int32_t field_268;								//0x268
-	void(__stdcall* field_26C)(int32_t);			//0x26C
-	Font eFont;										//0x270
-	int32_t nTextColor;								//0x274
-	D2WinEditBoxStrc* pNext;						//0x278
-	D2WinEditBoxStrc* pPrevious;					//0x27C
-	int32_t field_280;								//0x280
+struct D2WinEditBoxStrc {
+	D2WinControlStrc controlHeader;		 // 0x00
+	int32_t field_40;					 // 0x40
+	int32_t field_44;					 // 0x44
+	int32_t field_48;					 // 0x48
+	int32_t field_4C;					 // 0x4C
+	int32_t field_50;					 // 0x50
+	int32_t field_54;					 // 0x54
+	int32_t nTextLength;				 // 0x58
+	Unicode wszText[256];				 // 0x258
+	int32_t field_25C;					 // 0x25C
+	uint32_t dwEditBoxFlags;			 // 0x260
+	int32_t field_264;					 // 0x264
+	int32_t field_268;					 // 0x268
+	void(__stdcall* field_26C)(int32_t); // 0x26C
+	Font eFont;							 // 0x270
+	int32_t nTextColor;					 // 0x274
+	D2WinEditBoxStrc* pNext;			 // 0x278
+	D2WinEditBoxStrc* pPrevious;		 // 0x27C
+	int32_t field_280;					 // 0x280
 };
 #pragma pack(pop)
-
 
 // D2Win.0x6F8A6C80
 D2WinEditBoxStrc* __fastcall D2Win_10070_EDITBOX_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, int32_t a5, int32_t a6, D2CellFileStrc* pCellFile, int32_t a8, int32_t(__stdcall* a9)(SMSGHANDLER_PARAMS*), int32_t nEditBoxFlags, int32_t a11);

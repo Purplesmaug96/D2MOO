@@ -4,9 +4,9 @@
 #include <winnt.h>
 #include <winuser.h>
 
-#include <stdint.h>
 #include <D2Constants.h>
 #include <DisplayType.h>
+#include <stdint.h>
 
 struct D2CellFileStrc;
 struct D2WinEditBoxStrc;
@@ -18,7 +18,6 @@ struct D2WinControlStrc;
 
 extern POINT gMousePosition_6F8FE234;
 extern int32_t dword_6F8FE254;
-
 
 // D2Win.0x6F8ACC60 (#10000)
 D2WIN_DLL_DECL BOOL __stdcall D2Win_CreateWindow(HINSTANCE hInstance, DisplayType nRenderMode, BOOL bWindowed, BOOL bCompress);
@@ -45,7 +44,7 @@ D2WIN_DLL_DECL int __stdcall BACKGROUND_SetCellFile(D2CellFileStrc* pCellFile);
 // D2Win.0x6F8ACF50 (#10011)
 D2WIN_DLL_DECL int __stdcall CURSOR_SetCellFile(D2CellFileStrc* pCellFile);
 // D2Win.0x6F8ACF70 (#10010)
-D2WIN_DLL_DECL void __stdcall D2Win_10010(int(*a1)());
+D2WIN_DLL_DECL void __stdcall D2Win_10010(int (*a1)());
 // D2Win.0x6F8ACF80 (#10009)
 D2WIN_DLL_DECL int __stdcall D2Win_10009();
 // D2Win.0x6F8ACF90 (#10008)
@@ -63,7 +62,7 @@ signed int __stdcall CONTROL_RemoveFromList(D2WinControlStrc* pControl);
 // D2Win.0x6F8AD260 (#10017)
 D2WIN_DLL_DECL D2WinControlStrc* __stdcall CONTROL_Create(D2WinControlInitStrc* pControlInit);
 // D2Win.0x6F8AD450 (#10018)
-D2WIN_DLL_DECL int __stdcall CONTROL_Destroy(void*a1);
+D2WIN_DLL_DECL int __stdcall CONTROL_Destroy(void* a1);
 // D2Win.0x6F8AD570 (#10025)
 D2WIN_DLL_DECL void __fastcall D2Win_10025_CONTROL_ToggleFirstFlag(D2WinControlStrc* pControl, int bSet);
 // D2Win.0x6F8AD5A0 (#10024)

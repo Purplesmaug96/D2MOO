@@ -1,11 +1,9 @@
-#include <DataTbls/InvTbls.h>
 #include <D2DataTbls.h>
+#include <DataTbls/InvTbls.h>
 
 // D2Common.0x6FD542D0
-void __fastcall DATATBLS_LoadInventoryTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadInventoryTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "invLeft", TXTFIELD_DWORD, 0, 0, NULL },
 		{ "invRight", TXTFIELD_DWORD, 0, 4, NULL },
 		{ "invTop", TXTFIELD_DWORD, 0, 8, NULL },
@@ -86,15 +84,12 @@ void __fastcall DATATBLS_LoadInventoryTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD54F10
-void __fastcall DATATBLS_UnloadInventoryTxt()
-{
+void __fastcall DATATBLS_UnloadInventoryTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pInventoryTxt);
 }
 
 // D2Common.0x6FD54F20 (#10635)
-void __stdcall DATATBLS_GetInventoryRect(int nInventoryTxtId, int bHigherRes, D2InvRectStrc* pInvRect)
-{
-
+void __stdcall DATATBLS_GetInventoryRect(int nInventoryTxtId, int bHigherRes, D2InvRectStrc* pInvRect) {
 	D2_ASSERT(sgptDataTables->pInventoryTxt);
 
 	const int nIndex = nInventoryTxtId + 16 * bHigherRes;
@@ -109,8 +104,7 @@ void __stdcall DATATBLS_GetInventoryRect(int nInventoryTxtId, int bHigherRes, D2
 }
 
 // D2Common.0x6FD54FB0 (#10636)
-void __stdcall DATATBLS_GetInventoryGridInfo(int nInventoryTxtId, int bHigherRes, D2InventoryGridInfoStrc* pInventoryGridInfo)
-{
+void __stdcall DATATBLS_GetInventoryGridInfo(int nInventoryTxtId, int bHigherRes, D2InventoryGridInfoStrc* pInventoryGridInfo) {
 	D2InventoryTxt* pInventoryTxtRecord = NULL;
 	int nIndex = nInventoryTxtId + 16 * bHigherRes;
 
@@ -123,8 +117,7 @@ void __stdcall DATATBLS_GetInventoryGridInfo(int nInventoryTxtId, int bHigherRes
 }
 
 // D2Common.0x6FD55030 (#10637)
-void __stdcall DATATBLS_GetInventoryComponentGrid(int nInventoryTxtId, int bHigherRes, D2InvCompGridStrc* pInvCompGrid, int nComponent)
-{
+void __stdcall DATATBLS_GetInventoryComponentGrid(int nInventoryTxtId, int bHigherRes, D2InvCompGridStrc* pInvCompGrid, int nComponent) {
 	int nIndex = nInventoryTxtId + 16 * bHigherRes;
 
 	D2_ASSERT(sgptDataTables->pInventoryTxt);

@@ -2,13 +2,13 @@
 
 #include "__windows_shim_msvcrt.h"
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 typedef struct {
-	int left; // X of top-left
-	int top; // Y of top-left
-	int right; // X of down-right
+	int left;	// X of top-left
+	int top;	// Y of top-left
+	int right;	// X of down-right
 	int bottom; // Y of down-right
 } RECT;
 
@@ -56,7 +56,7 @@ typedef const wchar_t* PCWSTR;
 #ifdef UNICODE
 typedef LPWSTR LPTSTR;
 typedef LPCWSTR LPCTSTR;
- #else
+#else
 typedef LPSTR LPTSTR;
 typedef LPCSTR LPCTSTR;
 #endif

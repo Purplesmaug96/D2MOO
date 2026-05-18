@@ -1,10 +1,9 @@
 #pragma once
 
-#include <Units/Units.h>
 #include "MonsterRegion.h"
+#include <Units/Units.h>
 
 struct D2UnkMonCreateStrc2;
-
 
 // D2Game.0x6FC62020
 void __stdcall sub_6FC62020(D2SeedStrc* pSeed, D2MonRegDataStrc* pMonRegData, int32_t nCount);

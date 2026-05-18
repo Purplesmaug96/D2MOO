@@ -9,16 +9,14 @@
 #include <D2Gfx.h>
 #include <Texture.h>
 
-#include <Fog.h>
 #include <D2BitManip.h>
+#include <Fog.h>
 
 #include "D2WinMain.h"
 #include "D2WinTextBox.h"
 
-
 // D2Win.0x6F8AF040 (#10063)
-D2WinScrollBarStrc* __fastcall SCROLLBAR_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, D2CellFileStrc* pCellFile, int32_t(__stdcall* a6)(SMSGHANDLER_PARAMS*))
-{
+D2WinScrollBarStrc* __fastcall SCROLLBAR_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, D2CellFileStrc* pCellFile, int32_t(__stdcall* a6)(SMSGHANDLER_PARAMS*)) {
 	D2WinScrollBarStrc* pScrollBar = D2_CALLOC_STRC(D2WinScrollBarStrc);
 
 	pScrollBar->controlHeader.nType = D2WIN_SCROLLBAR;
@@ -39,22 +37,19 @@ D2WinScrollBarStrc* __fastcall SCROLLBAR_Create(int32_t nX, int32_t nY, int32_t 
 }
 
 // D2Win.0x6F8B1BF0 (#10064)
-int32_t __fastcall SCROLLBAR_Destroy(D2WinControlStrc* pControl)
-{
+int32_t __fastcall SCROLLBAR_Destroy(D2WinControlStrc* pControl) {
 	return CONTROL_RemoveFromList(pControl);
 }
 
 // D2Win.0x6F8AF100 (#10065)
-int32_t __fastcall SCROLLBAR_GetMaxSteps(D2WinScrollBarStrc* pScrollBar)
-{
+int32_t __fastcall SCROLLBAR_GetMaxSteps(D2WinScrollBarStrc* pScrollBar) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
 	return pScrollBar->nMaxSteps;
 }
 
 // D2Win.0x6F8AF130 (#10066)
-int32_t __fastcall SCROLLBAR_SetMaxSteps(D2WinScrollBarStrc* pScrollBar, int32_t nMaxSteps)
-{
+int32_t __fastcall SCROLLBAR_SetMaxSteps(D2WinScrollBarStrc* pScrollBar, int32_t nMaxSteps) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
 	pScrollBar->nMaxSteps = std::max(nMaxSteps, 0);
@@ -63,8 +58,7 @@ int32_t __fastcall SCROLLBAR_SetMaxSteps(D2WinScrollBarStrc* pScrollBar, int32_t
 }
 
 // D2Win.0x6F8AF170 (#10068)
-int32_t __fastcall SCROLLBAR_SetCurrentStep(D2WinScrollBarStrc* pScrollBar, int32_t nCurrentStep)
-{
+int32_t __fastcall SCROLLBAR_SetCurrentStep(D2WinScrollBarStrc* pScrollBar, int32_t nCurrentStep) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
 	pScrollBar->nCurrentStep = std::min(nCurrentStep, pScrollBar->nMaxSteps);
@@ -73,16 +67,14 @@ int32_t __fastcall SCROLLBAR_SetCurrentStep(D2WinScrollBarStrc* pScrollBar, int3
 }
 
 // D2Win.0x6F8AF1B0 (#10067)
-int32_t __fastcall SCROLLBAR_GetCurrentStep(D2WinScrollBarStrc* pScrollBar)
-{
+int32_t __fastcall SCROLLBAR_GetCurrentStep(D2WinScrollBarStrc* pScrollBar) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
 	return pScrollBar->nCurrentStep;
 }
 
 // D2Win.0x6F8AF1E0 (#10069)
-int32_t __fastcall SCROLLBAR_SetTextBox(D2WinScrollBarStrc* pScrollBar, D2WinTextBoxStrc* pTextBox)
-{
+int32_t __fastcall SCROLLBAR_SetTextBox(D2WinScrollBarStrc* pScrollBar, D2WinTextBoxStrc* pTextBox) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
 	pScrollBar->pTextBox = pTextBox;
@@ -90,35 +82,28 @@ int32_t __fastcall SCROLLBAR_SetTextBox(D2WinScrollBarStrc* pScrollBar, D2WinTex
 }
 
 // D2Win.0x6F8AF240
-int32_t __fastcall sub_6F8AF240(SMSGHANDLER_PARAMS* pMsg, D2WinScrollBarStrc* pScrollBar, int32_t a3)
-{
+int32_t __fastcall sub_6F8AF240(SMSGHANDLER_PARAMS* pMsg, D2WinScrollBarStrc* pScrollBar, int32_t a3) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
-	if (pScrollBar->bIsStepIndicatorDragged)
-	{
+	if (pScrollBar->bIsStepIndicatorDragged) {
 		return 0;
 	}
 
-	if (a3 > 0)
-	{
+	if (a3 > 0) {
 		pScrollBar->bIsUpperArrowPressed = 1;
 		--pScrollBar->nCurrentStep;
-	}
-	else if (a3 < 0)
-	{
+	} else if (a3 < 0) {
 		pScrollBar->bIsLowerArrowPressed = 1;
 		++pScrollBar->nCurrentStep;
 	}
 
 	pScrollBar->nCurrentStep = D2Clamp(pScrollBar->nCurrentStep, 0, pScrollBar->nMaxSteps);
 
-	if (pScrollBar->pTextBox)
-	{
+	if (pScrollBar->pTextBox) {
 		D2Win_10053(pScrollBar->pTextBox, pScrollBar->nCurrentStep);
 	}
 
-	if (pScrollBar->field_5C)
-	{
+	if (pScrollBar->field_5C) {
 		pScrollBar->field_5C(pMsg);
 	}
 
@@ -126,46 +111,39 @@ int32_t __fastcall sub_6F8AF240(SMSGHANDLER_PARAMS* pMsg, D2WinScrollBarStrc* pS
 }
 
 // D2Win.0x6F8AF2D0 (#10202)
-void __fastcall D2Win_10202(D2WinScrollBarStrc* pScrollBar, int32_t nPosition)
-{
+void __fastcall D2Win_10202(D2WinScrollBarStrc* pScrollBar, int32_t nPosition) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
 	pScrollBar->field_50 = nPosition;
 }
 
 // D2Win.0x6F8AF300 (#10201)
-int32_t __fastcall D2Win_10201(D2WinScrollBarStrc* pScrollBar)
-{
+int32_t __fastcall D2Win_10201(D2WinScrollBarStrc* pScrollBar) {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
 	return pScrollBar->field_50;
 }
 
 // D2Win.0x6F8AF330
-int32_t __fastcall SCROLLBAR_Draw(D2WinControlStrc* pControl)
-{
+int32_t __fastcall SCROLLBAR_Draw(D2WinControlStrc* pControl) {
 	D2WinScrollBarStrc* pScrollBar = (D2WinScrollBarStrc*)pControl;
 
 	D2_ASSERT(pScrollBar);
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
-	if (!(pScrollBar->controlHeader.dwFlags & gdwBitMasks[2]) || !(pScrollBar->controlHeader.dwFlags & gdwBitMasks[0]))
-	{
+	if (!(pScrollBar->controlHeader.dwFlags & gdwBitMasks[2]) || !(pScrollBar->controlHeader.dwFlags & gdwBitMasks[0])) {
 		return 0;
 	}
 
-	if (!pScrollBar->nMaxSteps)
-	{
+	if (!pScrollBar->nMaxSteps) {
 		return 1;
 	}
 
-	if (!D2Win_IsMouseButtonPressed())
-	{
+	if (!D2Win_IsMouseButtonPressed()) {
 		pScrollBar->bIsStepIndicatorDragged = 0;
 	}
 
-	if (pScrollBar->bIsStepIndicatorDragged)
-	{
+	if (pScrollBar->bIsStepIndicatorDragged) {
 		SMSGHANDLER_PARAMS msg = {};
 
 		msg.hWindow = (HWND)pScrollBar;
@@ -183,8 +161,7 @@ int32_t __fastcall SCROLLBAR_Draw(D2WinControlStrc* pControl)
 
 	gfxData.nFrame = 5;
 
-	for (int32_t i = 10; i < pScrollBar->controlHeader.nHeight - 10; i += 10)
-	{
+	for (int32_t i = 10; i < pScrollBar->controlHeader.nHeight - 10; i += 10) {
 		nY -= 10;
 		TEXTURE_CelDraw(&gfxData, pScrollBar->controlHeader.nImageX, nY, -1, DRAWMODE_NORMAL, 0);
 	}
@@ -199,32 +176,27 @@ int32_t __fastcall SCROLLBAR_Draw(D2WinControlStrc* pControl)
 		pScrollBar->controlHeader.nImageY + pScrollBar->nCurrentStep * (pScrollBar->controlHeader.nHeight - 30) / pScrollBar->nMaxSteps - pScrollBar->controlHeader.nHeight + 19,
 		-1,
 		DRAWMODE_NORMAL,
-		0
-	);
+		0);
 
 	return 1;
 }
 
 // D2Win.0x6F8AF4D0
-int32_t __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
-{
+int32_t __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg) {
 	D2WinScrollBarStrc* pScrollBar = (D2WinScrollBarStrc*)pMsg->hWindow;
 
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
-	if (pMsg->nMessage != WM_LBUTTONDOWN || !(pScrollBar->controlHeader.dwFlags & gdwBitMasks[2]) || !(pScrollBar->controlHeader.dwFlags & gdwBitMasks[0]))
-	{
+	if (pMsg->nMessage != WM_LBUTTONDOWN || !(pScrollBar->controlHeader.dwFlags & gdwBitMasks[2]) || !(pScrollBar->controlHeader.dwFlags & gdwBitMasks[0])) {
 		return 1;
 	}
 
-	if (!pScrollBar->nMaxSteps)
-	{
+	if (!pScrollBar->nMaxSteps) {
 		return 1;
 	}
 
 	const int32_t nMouseX = gMousePosition_6F8FE234.x - pScrollBar->controlHeader.nImageX;
-	if (nMouseX < 0 || nMouseX > pScrollBar->controlHeader.nWidth)
-	{
+	if (nMouseX < 0 || nMouseX > pScrollBar->controlHeader.nWidth) {
 		return 0;
 	}
 
@@ -233,51 +205,36 @@ int32_t __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 	const int32_t v12 = (v9 * pScrollBar->nCurrentStep) / pScrollBar->nMaxSteps + 10;
 
 	const int32_t nMouseY = gMousePosition_6F8FE234.y + pScrollBar->controlHeader.nHeight - pScrollBar->controlHeader.nImageY;
-	if (nMouseY >= v12 && nMouseY <= v12 + 10)
-	{
+	if (nMouseY >= v12 && nMouseY <= v12 + 10) {
 		pScrollBar->bIsStepIndicatorDragged = 1;
 	}
 
-	if (nMouseY < 11 && !pScrollBar->bIsLowerArrowPressed && !pScrollBar->bIsStepIndicatorDragged)
-	{
+	if (nMouseY < 11 && !pScrollBar->bIsLowerArrowPressed && !pScrollBar->bIsStepIndicatorDragged) {
 		pScrollBar->bIsUpperArrowPressed = 1;
 		--pScrollBar->nCurrentStep;
-	}
-	else if (nMouseY > pScrollBar->controlHeader.nHeight - 10 && !pScrollBar->bIsUpperArrowPressed && !pScrollBar->bIsStepIndicatorDragged)
-	{
+	} else if (nMouseY > pScrollBar->controlHeader.nHeight - 10 && !pScrollBar->bIsUpperArrowPressed && !pScrollBar->bIsStepIndicatorDragged) {
 		pScrollBar->bIsLowerArrowPressed = 1;
 		++pScrollBar->nCurrentStep;
-	}
-	else if (!pScrollBar->bIsLowerArrowPressed && !pScrollBar->bIsUpperArrowPressed)
-	{
-		if (pScrollBar->bIsStepIndicatorDragged)
-		{
+	} else if (!pScrollBar->bIsLowerArrowPressed && !pScrollBar->bIsUpperArrowPressed) {
+		if (pScrollBar->bIsStepIndicatorDragged) {
 			pScrollBar->nCurrentStep = pScrollBar->nMaxSteps * (nMouseY - 11) / v9;
-		}
-		else
-		{
+		} else {
 			int32_t nStep = pScrollBar->field_50;
-			if (!nStep)
-			{
+			if (!nStep) {
 				int32_t nDivisor = v9 / 10;
-				if (!nDivisor)
-				{
+				if (!nDivisor) {
 					nDivisor = 1;
 				}
 
 				nStep = pScrollBar->nMaxSteps / nDivisor;
-				if (!nStep)
-				{
+				if (!nStep) {
 					nStep = 1;
 				}
 			}
 
-			if (nMouseY < v12)
-			{
+			if (nMouseY < v12) {
 				pScrollBar->nCurrentStep -= nStep;
-			}
-			else if (nMouseY > v12 + 10)
-			{
+			} else if (nMouseY > v12 + 10) {
 				pScrollBar->nCurrentStep += nStep;
 			}
 		}
@@ -285,18 +242,15 @@ int32_t __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 
 	pScrollBar->nCurrentStep = D2Clamp(pScrollBar->nCurrentStep, 0, pScrollBar->nMaxSteps);
 
-	if (pScrollBar->pTextBox)
-	{
+	if (pScrollBar->pTextBox) {
 		D2Win_10053(pScrollBar->pTextBox, pScrollBar->nCurrentStep);
 	}
 
-	if (pScrollBar->field_5C)
-	{
+	if (pScrollBar->field_5C) {
 		pScrollBar->field_5C(pMsg);
 	}
 
-	if (pScrollBar->controlHeader.field_34)
-	{
+	if (pScrollBar->controlHeader.field_34) {
 		return pScrollBar->controlHeader.field_34(pMsg);
 	}
 
@@ -304,14 +258,12 @@ int32_t __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 }
 
 // D2Win.0x6F8AF6B0
-int32_t __stdcall SCROLLBAR_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg)
-{
+int32_t __stdcall SCROLLBAR_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg) {
 	D2WinScrollBarStrc* pScrollBar = (D2WinScrollBarStrc*)pMsg->hWindow;
 
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
 
-	if (pScrollBar->bIsUpperArrowPressed || pScrollBar->bIsLowerArrowPressed || pScrollBar->bIsStepIndicatorDragged)
-	{
+	if (pScrollBar->bIsUpperArrowPressed || pScrollBar->bIsLowerArrowPressed || pScrollBar->bIsStepIndicatorDragged) {
 		pScrollBar->bIsUpperArrowPressed = 0;
 		pScrollBar->bIsLowerArrowPressed = 0;
 		pScrollBar->bIsStepIndicatorDragged = 0;

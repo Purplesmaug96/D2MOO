@@ -2,11 +2,11 @@
 
 #include "__windows_shim_msvcrt.h"
 
-#include <time.h>
 #include <stdio.h>
+#include <time.h>
 
-#include "windef.h"
 #include "minwinbase.h"
+#include "windef.h"
 
 #include <timeapi.h>
 
@@ -17,9 +17,9 @@ typedef struct {
 
 static inline DWORD GetVersion() {
 	printf("Stubbed function GetVersion called\n");
-    // Windows 10: major version 10, minor version 0
-    // Format: low byte = major, next byte = minor, high word = build
-    return (10) | (0 << 8) | (19045 << 16);
+	// Windows 10: major version 10, minor version 0
+	// Format: low byte = major, next byte = minor, high word = build
+	return (10) | (0 << 8) | (19045 << 16);
 }
 
 #define VER_PLATFORM_WIN32_NT 0
@@ -29,7 +29,9 @@ static inline BOOL GetVersionExA(OSVERSIONINFOA* verInfo) {
 }
 
 static inline void GetSystemTime(SYSTEMTIME* lpSystemTime) {
-	if (lpSystemTime == NULL) {return;}
+	if (lpSystemTime == NULL) {
+		return;
+	}
 	tm time;
 	asctime(&time);
 

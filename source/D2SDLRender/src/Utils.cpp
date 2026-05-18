@@ -2,8 +2,8 @@
 
 #include "D2SDLRender.h"
 
-#include "Utils.h"
 #include "Options.h"
+#include "Utils.h"
 
 // No idea what this is supposed to do, but returning TRUE gets it to keep running, so.
 BOOL __fastcall D2SDLRender_Detect(HINSTANCE hInst) {

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <Units/Units.h>
 #include "AiGeneral.h"
-
+#include <Units/Units.h>
 
 // D2Game.0x6FCCD450
 void __fastcall AIBAAL_CountLivingMinions(D2UnitStrc* pUnit, void* ppUnitArg, void* pCounterArg);
@@ -11,7 +10,7 @@ void __fastcall D2GAME_AI_Unk135_140_6FCCD470(D2GameStrc* pGame, D2UnitStrc* pUn
 // D2Game.0x6FCCD520
 void __fastcall AITHINK_Fn135_BaalCrab(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiTickParamStrc* pAiTickParam);
 #ifdef D2_VERSION_HAS_UBERS
-//1.14d: 0x005FD200
+// 1.14d: 0x005FD200
 void __fastcall AITHINK_Fn145_UberBaal(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiTickParamStrc* pAiTickParam);
 #endif
 // D2Game.0x6FCCD630

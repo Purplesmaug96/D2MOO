@@ -4,12 +4,9 @@
 
 #include <wingdi.h>
 
-
 #pragma pack(push, 1)
-struct D2ShadowLightGammaPaletteStrc
-{
-	union
-	{
+struct D2ShadowLightGammaPaletteStrc {
+	union {
 		struct
 		{
 			PALETTEENTRY shadowsPalette[32][64];
@@ -22,13 +19,12 @@ struct D2ShadowLightGammaPaletteStrc
 };
 #pragma pack(pop)
 
-
 // D2Win.0x6F8AE550
 int32_t __fastcall D2Win_10177(uint8_t nAct);
 // D2Win.0x6F8AE5E0
 int32_t __fastcall sub_6F8AE5E0(const char* szDatFileName, const char* szPL2FileName);
 // D2Win.0x6F8AE930
-uint8_t*__fastcall D2Win_10175_GetPL2Shift(int32_t nIndex);
+uint8_t* __fastcall D2Win_10175_GetPL2Shift(int32_t nIndex);
 // D2Win.0x6F8AE940
 void __stdcall D2Win_10179();
 // D2Win.0x6F8AE9A0

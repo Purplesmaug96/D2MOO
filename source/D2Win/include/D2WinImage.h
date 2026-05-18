@@ -4,36 +4,31 @@
 
 #include <DrawMode.h>
 
-
 #pragma pack(push, 1)
-struct D2WinImageClickRectStrc
-{
-	int32_t nX;										//0x00
-	int32_t nY;										//0x04
-	int32_t nWidth;									//0x08
-	int32_t nHeight;								//0x0C
-	int32_t(__stdcall* pCallback)(SMSGHANDLER_PARAMS*);	//0x14
+struct D2WinImageClickRectStrc {
+	int32_t nX;											// 0x00
+	int32_t nY;											// 0x04
+	int32_t nWidth;										// 0x08
+	int32_t nHeight;									// 0x0C
+	int32_t(__stdcall* pCallback)(SMSGHANDLER_PARAMS*); // 0x14
 };
 
-struct D2WinImageStrc
-{
-	D2WinControlStrc controlHeader;					//0x00
-	int32_t nFrame;									//0x40
-	DrawMode eDrawMode;								//0x44
-	D2WinImageClickRectStrc* pClickRect;			//0x48
-	int32_t field_4C;								//0x4C
-	int32_t field_50;								//0x50
+struct D2WinImageStrc {
+	D2WinControlStrc controlHeader;		 // 0x00
+	int32_t nFrame;						 // 0x40
+	DrawMode eDrawMode;					 // 0x44
+	D2WinImageClickRectStrc* pClickRect; // 0x48
+	int32_t field_4C;					 // 0x4C
+	int32_t field_50;					 // 0x50
 };
 
-struct D2WinImage2Strc
-{
-	D2WinControlStrc controlHeader;					//0x00
-	int32_t nFrame;									//0x40
-	DrawMode eDrawMode;								//0x44
-	D2WinImageClickRectStrc* pClickRect;			//0x48
+struct D2WinImage2Strc {
+	D2WinControlStrc controlHeader;		 // 0x00
+	int32_t nFrame;						 // 0x40
+	DrawMode eDrawMode;					 // 0x44
+	D2WinImageClickRectStrc* pClickRect; // 0x48
 };
 #pragma pack(pop)
-
 
 // D2Win.0x6F8ABA90
 D2WinImage2Strc* __fastcall IMAGE2_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, D2CellFileStrc* pCellFile, int32_t(__stdcall* a6)(SMSGHANDLER_PARAMS*), D2WinImageClickRectStrc* pClickRect, int32_t(__stdcall* pfHandleVirtualKeyInput)(SMSGHANDLER_PARAMS*));

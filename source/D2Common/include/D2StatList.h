@@ -8,28 +8,27 @@ struct D2GameStrc;
 
 #pragma pack(1)
 
-enum D2C_ItemStats
-{
+enum D2C_ItemStats {
 	STAT_INVALID = -1,
-	STAT_STRENGTH = 0, 					// 000
-	STAT_ENERGY, 						// 001
-	STAT_DEXTERITY, 					// 002
-	STAT_VITALITY, 						// 003
-	STAT_STATPTS, 						// 004
-	STAT_SKILLPTS, 						// 005
-	STAT_HITPOINTS, 					// 006
-	STAT_MAXHP, 						// 007
-	STAT_MANA, 							// 008
-	STAT_MAXMANA, 						// 009
-	STAT_STAMINA, 						// 00A
-	STAT_MAXSTAMINA, 					// 00B
-	STAT_LEVEL, 						// 00C
-	STAT_EXPERIENCE, 					// 00D
-	STAT_GOLD, 							// 00E
-	STAT_GOLDBANK, 						// 00F
-	STAT_ITEM_ARMOR_PERCENT, 			// 010
-	STAT_ITEM_MAXDAMAGE_PERCENT, 		// 011
-	STAT_ITEM_MINDAMAGE_PERCENT, 		// 012
+	STAT_STRENGTH = 0,			 // 000
+	STAT_ENERGY,				 // 001
+	STAT_DEXTERITY,				 // 002
+	STAT_VITALITY,				 // 003
+	STAT_STATPTS,				 // 004
+	STAT_SKILLPTS,				 // 005
+	STAT_HITPOINTS,				 // 006
+	STAT_MAXHP,					 // 007
+	STAT_MANA,					 // 008
+	STAT_MAXMANA,				 // 009
+	STAT_STAMINA,				 // 00A
+	STAT_MAXSTAMINA,			 // 00B
+	STAT_LEVEL,					 // 00C
+	STAT_EXPERIENCE,			 // 00D
+	STAT_GOLD,					 // 00E
+	STAT_GOLDBANK,				 // 00F
+	STAT_ITEM_ARMOR_PERCENT,	 // 010
+	STAT_ITEM_MAXDAMAGE_PERCENT, // 011
+	STAT_ITEM_MINDAMAGE_PERCENT, // 012
 	STAT_TOHIT,
 	STAT_TOBLOCK,
 	STAT_MINDAMAGE,
@@ -372,8 +371,7 @@ enum D2C_ItemStats
 	STAT_PASSIVE_MAG_PIERCE,
 };
 
-enum D2C_PropertyModes
-{
+enum D2C_PropertyModes {
 	PROPMODE_AFFIX,
 	PROPMODE_GRADE,
 	PROPMODE_GEM,
@@ -384,15 +382,13 @@ enum D2C_PropertyModes
 	PROPMODE_UNUSED
 };
 
-enum D2C_PropertySets
-{
+enum D2C_PropertySets {
 	PROPSET_WEAPON,
 	PROPSET_HELM,
 	PROPSET_SHIELD,
 };
 
-enum D2C_StatlistFlags : uint32_t
-{
+enum D2C_StatlistFlags : uint32_t {
 	STATLIST_BASE = 0x0,
 	STATLIST_BASIC = 0x1,
 	STATLIST_NEWLENGTH = 0x2,
@@ -411,21 +407,18 @@ enum D2C_StatlistFlags : uint32_t
 	STATLIST_EXTENDED = 0x80000000,
 };
 
-
-struct D2SLayerStatIdStrc
-{
+struct D2SLayerStatIdStrc {
 	// We can not use a struct as function parameters here as it has a different effect when using the __fastcall calling convetion.
 	// Instead we just use D2SLayerStatIdStrc::PackedType so that we may easily change it later
 	using PackedType = int32_t;
 
-	union
-	{
+	union {
 		struct
 		{
-			uint16_t nLayer;				//0x00
-			uint16_t nStat;					//0x02
+			uint16_t nLayer; // 0x00
+			uint16_t nStat;	 // 0x02
 		};
-		PackedType nPackedValue;			//0x00
+		PackedType nPackedValue; // 0x00
 	};
 
 	static D2SLayerStatIdStrc Make(uint16_t wLayer, uint16_t wStatId) { return { wLayer, wStatId }; }
@@ -437,68 +430,62 @@ struct D2SLayerStatIdStrc
 	}
 };
 
-struct D2StatStrc : D2SLayerStatIdStrc
-{
-	int32_t nValue;							//0x04
+struct D2StatStrc : D2SLayerStatIdStrc {
+	int32_t nValue; // 0x04
 };
 
-struct D2StatsArrayStrc
-{
-	D2StatStrc* pStat;						//0x00 An Array[wStatCount]
-	uint16_t nStatCount;					//0x04
-	uint16_t nCapacity;						//0x06
+struct D2StatsArrayStrc {
+	D2StatStrc* pStat;	 // 0x00 An Array[wStatCount]
+	uint16_t nStatCount; // 0x04
+	uint16_t nCapacity;	 // 0x06
 	static const int nGrowthAmount = 4;
 	static const int nShrinkThreshold = 8;
 };
 
-struct D2ModStatsArrayStrc
-{
-	D2SLayerStatIdStrc* pStat;				//0x00 An Array[wStatCount]
-	uint16_t nStatCount;					//0x04
-	uint16_t nCapacity;						//0x06
+struct D2ModStatsArrayStrc {
+	D2SLayerStatIdStrc* pStat; // 0x00 An Array[wStatCount]
+	uint16_t nStatCount;	   // 0x04
+	uint16_t nCapacity;		   // 0x06
 	static const int nGrowthAmount = 4;
 	static const int nShrinkThreshold = 8;
 };
 
 using StatListRemoveCallback = void(__fastcall*)(D2UnitStrc* pUnit, int32_t nState, struct D2StatListStrc* pStatList);
 
-struct D2StatListStrc
-{
-	void* pMemPool;							//0x00
-	D2UnitStrc* pUnit;						//0x04
-	uint32_t dwOwnerType;					//0x08
-	uint32_t dwOwnerId;						//0x0C
-	uint32_t dwFlags;						//0x10 D2C_StatlistFlags
-	uint32_t dwStateNo;						//0x14
-	int32_t dwExpireFrame;					//0x18
-	uint32_t dwSkillNo;						//0x1C
-	uint32_t dwSLvl;						//0x20
-	D2StatsArrayStrc Stats;					//0x24
-	D2StatListStrc* pPrevLink;				//0x2C
-	D2StatListStrc* pNextLink;				//0x30
-	D2StatListStrc* pParent;				//0x34
-	StatListRemoveCallback fpStatRemove;	//0x38
+struct D2StatListStrc {
+	void* pMemPool;						 // 0x00
+	D2UnitStrc* pUnit;					 // 0x04
+	uint32_t dwOwnerType;				 // 0x08
+	uint32_t dwOwnerId;					 // 0x0C
+	uint32_t dwFlags;					 // 0x10 D2C_StatlistFlags
+	uint32_t dwStateNo;					 // 0x14
+	int32_t dwExpireFrame;				 // 0x18
+	uint32_t dwSkillNo;					 // 0x1C
+	uint32_t dwSLvl;					 // 0x20
+	D2StatsArrayStrc Stats;				 // 0x24
+	D2StatListStrc* pPrevLink;			 // 0x2C
+	D2StatListStrc* pNextLink;			 // 0x30
+	D2StatListStrc* pParent;			 // 0x34
+	StatListRemoveCallback fpStatRemove; // 0x38
 };
 
 using StatListValueChangeFunc = void(__fastcall*)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, int32_t, int32_t, int32_t);
 
-struct D2StatListExStrc : public D2StatListStrc
-{
-	D2StatListStrc* pMyLastList;			//0x3C
-	D2StatListStrc* pMyStats;				//0x40
-	D2UnitStrc* pOwner;						//0x44
-	D2StatsArrayStrc FullStats;				//0x48
-	D2ModStatsArrayStrc ModStats;			//0x50
-	uint32_t* StatFlags;					//0x58 8bytes per states
-	StatListValueChangeFunc pfOnValueChanged;		//0x5C
-	D2GameStrc* pGame;						//0x60
+struct D2StatListExStrc : public D2StatListStrc {
+	D2StatListStrc* pMyLastList;			  // 0x3C
+	D2StatListStrc* pMyStats;				  // 0x40
+	D2UnitStrc* pOwner;						  // 0x44
+	D2StatsArrayStrc FullStats;				  // 0x48
+	D2ModStatsArrayStrc ModStats;			  // 0x50
+	uint32_t* StatFlags;					  // 0x58 8bytes per states
+	StatListValueChangeFunc pfOnValueChanged; // 0x5C
+	D2GameStrc* pGame;						  // 0x60
 };
 #pragma pack()
 
 // Helper function
 inline D2StatListExStrc* STATLIST_StatListExCast(D2StatListStrc* pStatList) {
-	if (pStatList->dwFlags & STATLIST_EXTENDED)
-	{
+	if (pStatList->dwFlags & STATLIST_EXTENDED) {
 		return static_cast<D2StatListExStrc*>(pStatList);
 	}
 	return nullptr;
@@ -571,8 +558,8 @@ D2COMMON_DLL_DECL void __stdcall STATLIST_SetStatIfListIsValid(D2StatListStrc* p
 // D2Common.0x6FDB7930 (#11294)
 D2COMMON_DLL_DECL BOOL __stdcall STATLIST_SetBaseStat(D2StatListStrc* pStatList, int nStatId, int nValue, uint16_t nLayer, D2UnitStrc* pUnit);
 // D2Common.0x6FDB7A90 (#11295)
-D2COMMON_DLL_DECL //Duplicate of STATLIST_SetBaseStat#11294
-void __stdcall STATLIST_SetBaseStat2(D2StatListStrc* pStatList, int nStatId, int nValue, uint16_t nLayer, D2UnitStrc* pUnit);
+D2COMMON_DLL_DECL // Duplicate of STATLIST_SetBaseStat#11294
+	void __stdcall STATLIST_SetBaseStat2(D2StatListStrc* pStatList, int nStatId, int nValue, uint16_t nLayer, D2UnitStrc* pUnit);
 // D2Common.0x6FDB7AB0 (#10517)
 D2COMMON_DLL_DECL void __stdcall STATLIST_SetUnitStat(D2UnitStrc* pUnit, int nStatId, int nValue, uint16_t nLayer);
 // D2Common.0x6FDB7B00 (#10518)
@@ -633,7 +620,7 @@ uint32_t* __stdcall D2COMMON_STATES_GetStatFlags_6FDB8A90(D2UnitStrc* pUnit);
 uint32_t* __stdcall D2COMMON_STATES_GetListGfxFlags_6FDB8AC0(D2UnitStrc* pUnit);
 // D2Common.0x6FDB8B10 (#10516)
 D2COMMON_DLL_DECL // If nFrame == 0 (client), decrements dwExpireFrame, otherwise only frees the expired lists
-void __stdcall STATLIST_UpdateStatListsExpiration(D2UnitStrc* pUnit, int nFrame);
+	void __stdcall STATLIST_UpdateStatListsExpiration(D2UnitStrc* pUnit, int nFrame);
 // D2Common.0x6FDB8BA0 (#11268)
 D2COMMON_DLL_DECL int __stdcall STATLIST_GetFullStatsDataFromUnit(D2UnitStrc* pUnit, D2StatStrc* pOutStatBuffer, int nBufferSize);
 // D2Common.0x6FDB8C00 (#11243)

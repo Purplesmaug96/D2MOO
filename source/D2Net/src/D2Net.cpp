@@ -4,39 +4,33 @@
 
 #include <Fog.h>
 
-#include <winnt.h>
 #include <sysinfoapi.h>
+#include <winnt.h>
 
 #ifndef _WIN32
 #include "__windows_shim_local_wsa_lasterror.h"
 #endif
 
-#pragma warning (disable: 28159)
-
+#pragma warning(disable : 28159)
 
 int32_t dword_6FC0B264;
 
-
 // D2Net.0x6FC01A00
-int32_t __stdcall sub_6FC01A00()
-{
+int32_t __stdcall sub_6FC01A00() {
 	return dword_6FC0B264 == 1 || dword_6FC0B264 == 2;
 }
 
 // D2Net.0x6FC01A20
-void __fastcall sub_6FC01A20(int32_t a1)
-{
+void __fastcall sub_6FC01A20(int32_t a1) {
 	dword_6FC0B264 = a1;
 }
 
 // D2Net.0x6FC01A30
-int32_t __fastcall NET_DequeueFirstPacketFromList(CRITICAL_SECTION* pCriticalSection, D2PacketStrc** ppPacketList, uint8_t* pBuffer, uint32_t nBufferSize)
-{
+int32_t __fastcall NET_DequeueFirstPacketFromList(CRITICAL_SECTION* pCriticalSection, D2PacketStrc** ppPacketList, uint8_t* pBuffer, uint32_t nBufferSize) {
 	D2_LOCK(pCriticalSection);
 
 	D2PacketStrc* pPacket = *ppPacketList;
-	if (!pPacket || (dword_6FC0B264 == 2 && GetTickCount() - pPacket->dwTickCount < 500))
-	{
+	if (!pPacket || (dword_6FC0B264 == 2 && GetTickCount() - pPacket->dwTickCount < 500)) {
 		D2_UNLOCK(pCriticalSection);
 		return -1;
 	}
@@ -54,12 +48,10 @@ int32_t __fastcall NET_DequeueFirstPacketFromList(CRITICAL_SECTION* pCriticalSec
 }
 
 // D2Net.0x6FC01AE0
-int32_t __fastcall NET_FreePacketList(CRITICAL_SECTION* pCriticalSection, D2PacketStrc** ppPacketList)
-{
+int32_t __fastcall NET_FreePacketList(CRITICAL_SECTION* pCriticalSection, D2PacketStrc** ppPacketList) {
 	D2_LOCK(pCriticalSection);
 
-	for (D2PacketStrc* i = *ppPacketList; *ppPacketList; i = *ppPacketList)
-	{
+	for (D2PacketStrc* i = *ppPacketList; *ppPacketList; i = *ppPacketList) {
 		*ppPacketList = i->pNext;
 		D2_FREE(i);
 	}

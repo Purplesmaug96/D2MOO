@@ -7,15 +7,15 @@
 #include "windef.h"
 
 typedef union {
-//   struct {
-//     DWORD LowPart;
-//     LONG  HighPart;
-//   } DUMMYSTRUCTNAME;
-  struct {
-    DWORD LowPart;
-    LONG  HighPart;
-  } u;
-  long long QuadPart;
+	//   struct {
+	//     DWORD LowPart;
+	//     LONG  HighPart;
+	//   } DUMMYSTRUCTNAME;
+	struct {
+		DWORD LowPart;
+		LONG HighPart;
+	} u;
+	long long QuadPart;
 } LARGE_INTEGER;
 
 typedef void* HANDLE;
@@ -47,30 +47,30 @@ typedef HANDLE HICON;
 typedef HANDLE HCURSOR;
 typedef HANDLE HBRUSH;
 
-
-typedef struct {} SECURITY_ATTRIBUTES;
+typedef struct {
+} SECURITY_ATTRIBUTES;
 typedef SECURITY_ATTRIBUTES* LPSECURITY_ATTRIBUTES;
 
 typedef int32_t HRESULT;
 
-typedef DWORD (__stdcall *LPTHREAD_START_ROUTINE) (LPVOID lpThreadParameter);
+typedef DWORD(__stdcall* LPTHREAD_START_ROUTINE)(LPVOID lpThreadParameter);
 
-static inline long InterlockedIncrement(long volatile *Addend) {
+static inline long InterlockedIncrement(long volatile* Addend) {
 	*Addend++;
 	return *Addend;
 }
 
-static inline long long InterlockedIncrement64(long long volatile *Addend) {
+static inline long long InterlockedIncrement64(long long volatile* Addend) {
 	*Addend++;
 	return *Addend;
 }
 
-static inline long InterlockedDecrement(long volatile *Addend) {
+static inline long InterlockedDecrement(long volatile* Addend) {
 	*Addend--;
 	return *Addend;
 }
 
-static inline long long InterlockedDecrement64(long long volatile *Addend) {
+static inline long long InterlockedDecrement64(long long volatile* Addend) {
 	*Addend--;
 	return *Addend;
 }
@@ -78,8 +78,7 @@ static inline long long InterlockedDecrement64(long long volatile *Addend) {
 // InterlockedCompareExchange taken from this issue: https://github.com/itsmattkc/dotnet9x/issues/19
 
 // Reimplemented
-static inline LONG InterlockedCompareExchange(LONG volatile *dest,  LONG xchg,  LONG compare)
-{
+static inline LONG InterlockedCompareExchange(LONG volatile* dest, LONG xchg, LONG compare) {
 	LONG temp = *dest;
 
 	if (compare == *dest) {

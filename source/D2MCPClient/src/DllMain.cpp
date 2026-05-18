@@ -1,14 +1,12 @@
-#include <windef.h>
 #include <process.h>
+#include <windef.h>
 #include <winnt.h>
 
 #include <cstdint>
 
 // NOLINTBEGIN(bugprone-branch-clone)
-BOOL __stdcall DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
-{
-	switch (fdwReason)
-	{
+BOOL __stdcall DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+	switch (fdwReason) {
 	case DLL_PROCESS_ATTACH:
 		break;
 	case DLL_PROCESS_DETACH:

@@ -28,12 +28,12 @@
 
 #include "Archive.h"
 
+#include <libloaderapi.h>
+#include <limits.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 #include <winbase.h>
-#include <libloaderapi.h>
 #include <winerror.h>
 #define __WINDOWS_SHIM_LASTERROR_LOCAL // This doesn't work for some reason??
 #ifdef __windows_shim
@@ -51,14 +51,11 @@
  * 1.13c: Inline
  * 1.14c: Game.0x00514B24
  */
-BOOL __fastcall ARCHIVE_OpenFile(HD2ARCHIVE hArchive, const char* szFilePath, HSFILE* phFile, BOOL bFileNotFoundLogSkipped)
-{
+BOOL __fastcall ARCHIVE_OpenFile(HD2ARCHIVE hArchive, const char* szFilePath, HSFILE* phFile, BOOL bFileNotFoundLogSkipped) {
 	BOOL bFileOpenSucceeded = FOG_FOpenFile(szFilePath, phFile);
-	if (!bFileOpenSucceeded)
-	{
+	if (!bFileOpenSucceeded) {
 		DWORD dwLastError = GetLastError();
-		if (!bFileNotFoundLogSkipped || dwLastError != ERROR_FILE_NOT_FOUND)
-		{
+		if (!bFileNotFoundLogSkipped || dwLastError != ERROR_FILE_NOT_FOUND) {
 			FOG_Trace("Error opening file: %s", szFilePath);
 		}
 
@@ -75,8 +72,7 @@ BOOL __fastcall ARCHIVE_OpenFile(HD2ARCHIVE hArchive, const char* szFilePath, HS
  * 1.13c: Inline
  * 1.14c: Game.0x00514B60
  */
-void __fastcall ARCHIVE_CloseFile(HD2ARCHIVE hArchive, HSFILE hFile)
-{
+void __fastcall ARCHIVE_CloseFile(HD2ARCHIVE hArchive, HSFILE hFile) {
 	D2_ASSERT(hFile != nullptr);
 	FOG_FCloseFile(hFile);
 }
@@ -89,13 +85,11 @@ void __fastcall ARCHIVE_CloseFile(HD2ARCHIVE hArchive, HSFILE hFile)
  * 1.14c: Game.0x00514B87
  * D2XBeta: D2Server.dll.0x10009C76
  */
-uint32_t __fastcall ARCHIVE_GetFileSize(HD2ARCHIVE hArchive, HSFILE hFile, size_t* pdwFileSizeHigh)
-{
+uint32_t __fastcall ARCHIVE_GetFileSize(HD2ARCHIVE hArchive, HSFILE hFile, size_t* pdwFileSizeHigh) {
 	D2_ASSERT(hFile != nullptr);
 
 	size_t dwFileSize = FOG_FGetFileSize(hFile, pdwFileSizeHigh);
-	if (dwFileSize == 0)
-	{
+	if (dwFileSize == 0) {
 		char szArchivePath[MAX_PATH];
 		SFileGetFileName(hFile, szArchivePath, 260);
 		FOG_DisplayError(3, szArchivePath, __FILE__, __LINE__);
@@ -113,13 +107,11 @@ uint32_t __fastcall ARCHIVE_GetFileSize(HD2ARCHIVE hArchive, HSFILE hFile, size_
  * Static library; may be defined in multiple places than ones listed:
  * 1.10: D2CMP.0x6FE0047A
  */
-uint32_t __fastcall ARCHIVE_SetFilePointer(HD2ARCHIVE hArchive, HSFILE hFile, int32_t lDistanceToMove, int32_t* lpDistanceToMoveHigh, uint32_t dwMoveMethod)
-{
+uint32_t __fastcall ARCHIVE_SetFilePointer(HD2ARCHIVE hArchive, HSFILE hFile, int32_t lDistanceToMove, int32_t* lpDistanceToMoveHigh, uint32_t dwMoveMethod) {
 	D2_ASSERT(hFile != nullptr);
 
 	uint32_t result = FOG_FSetFilePointer(hFile, lDistanceToMove, lpDistanceToMoveHigh, dwMoveMethod);
-	if (result == INVALID_SET_FILE_POINTER)
-	{
+	if (result == INVALID_SET_FILE_POINTER) {
 		char szArchivePath[MAX_PATH];
 		SFileGetFileName(hFile, szArchivePath, 260);
 		FOG_DisplayError(3, szArchivePath, __FILE__, __LINE__);
@@ -135,14 +127,12 @@ uint32_t __fastcall ARCHIVE_SetFilePointer(HD2ARCHIVE hArchive, HSFILE hFile, in
  * 1.13c: D2Lang.0x6FC07C00
  * 1.14c: Game.0x00514C61
  */
-void __fastcall ARCHIVE_ReadFileToBuffer(HD2ARCHIVE hArchive, HSFILE hFile, void* pBuffer, size_t dwBytesToRead)
-{
+void __fastcall ARCHIVE_ReadFileToBuffer(HD2ARCHIVE hArchive, HSFILE hFile, void* pBuffer, size_t dwBytesToRead) {
 	D2_ASSERT(hFile != nullptr);
 
 	size_t dwBytes;
 	BOOL bFileReadSuccess = FOG_FReadFile(hFile, pBuffer, dwBytesToRead, (int*)&dwBytes, 0, 0, 0);
-	if (!bFileReadSuccess)
-	{
+	if (!bFileReadSuccess) {
 		char szArchivePath[MAX_PATH];
 		SFileGetFileName(hFile, szArchivePath, sizeof(szArchivePath));
 		FOG_DisplayError(3, szArchivePath, __FILE__, __LINE__);
@@ -161,58 +151,48 @@ void __fastcall ARCHIVE_ReadFileToBuffer(HD2ARCHIVE hArchive, HSFILE hFile, void
  * 1.13c: D2Lang.0x6FC07EF0
  * 1.14c: Game.0x00514D55
  */
-void* __fastcall ARCHIVE_AllocateBufferAndReadFile(HD2ARCHIVE hArchive, const char* szFilePath, size_t* pdwBytesWritten, const char* szSrcPath, int nLine)
-{
+void* __fastcall ARCHIVE_AllocateBufferAndReadFile(HD2ARCHIVE hArchive, const char* szFilePath, size_t* pdwBytesWritten, const char* szSrcPath, int nLine) {
 	HSFILE hFile;
 
 	BOOL bOpenFileSucceeded = ARCHIVE_OpenFile(hArchive, szFilePath, &hFile, FALSE);
-	if (!bOpenFileSucceeded)
-	{
+	if (!bOpenFileSucceeded) {
 		return nullptr;
 	}
 
 	size_t dwFileSizeHigh;
 	size_t dwFileSize = ARCHIVE_GetFileSize(hArchive, hFile, &dwFileSizeHigh);
 	void* pBuffer = FOG_Alloc(dwFileSize + 800, szSrcPath, nLine, 0);
-	if (pBuffer == nullptr)
-	{
+	if (pBuffer == nullptr) {
 		return nullptr;
 	}
 
 	ARCHIVE_ReadFileToBuffer(hArchive, hFile, pBuffer, dwFileSize);
 	ARCHIVE_CloseFile(hArchive, hFile);
 
-	if (pdwBytesWritten != nullptr)
-	{
+	if (pdwBytesWritten != nullptr) {
 		*pdwBytesWritten = dwFileSize;
 	}
 
 	return pBuffer;
 }
 
-//1.10f: D2Win.0x6F8B24B1
-int __fastcall ARCHIVE_FindAndOpenArchiveFromCDRom(LPSTR szOutPath, LPCSTR szFileName, int nPriority, HSARCHIVE* phArchive)
-{
+// 1.10f: D2Win.0x6F8B24B1
+int __fastcall ARCHIVE_FindAndOpenArchiveFromCDRom(LPSTR szOutPath, LPCSTR szFileName, int nPriority, HSARCHIVE* phArchive) {
 	CHAR Buffer[MAX_PATH];
 	DWORD nLength = GetLogicalDriveStringsA(MAX_PATH, Buffer);
-	if (!nLength || nLength > MAX_PATH)
-	{
+	if (!nLength || nLength > MAX_PATH) {
 		return FALSE;
 	}
 
-	while (*szFileName == '\\')
-	{
+	while (*szFileName == '\\') {
 		++szFileName;
 	}
 
-	for(const char* pCurrentDriveStr = Buffer; *pCurrentDriveStr != '\0'; pCurrentDriveStr = &pCurrentDriveStr[strlen(pCurrentDriveStr) + 1])
-	{
-		if (GetDriveTypeA(pCurrentDriveStr) == DRIVE_CDROM)
-		{
+	for (const char* pCurrentDriveStr = Buffer; *pCurrentDriveStr != '\0'; pCurrentDriveStr = &pCurrentDriveStr[strlen(pCurrentDriveStr) + 1]) {
+		if (GetDriveTypeA(pCurrentDriveStr) == DRIVE_CDROM) {
 			lstrcpyA(szOutPath, pCurrentDriveStr);
 			lstrcatA(szOutPath, szFileName);
-			if (SFileOpenArchive(szOutPath, nPriority, 2, phArchive))
-			{
+			if (SFileOpenArchive(szOutPath, nPriority, 2, phArchive)) {
 				return TRUE;
 			}
 		}
@@ -220,59 +200,50 @@ int __fastcall ARCHIVE_FindAndOpenArchiveFromCDRom(LPSTR szOutPath, LPCSTR szFil
 	return FALSE;
 }
 
-//1.10f: D2Win.0x6F8B2419
-HSARCHIVE __fastcall ARCHIVE_FindAndOpenArchive(LPSTR szOutPath, LPCSTR szModuleName, LPCSTR szFileName, const char* szLabel, int nPriority, BOOL bSomething)
-{
+// 1.10f: D2Win.0x6F8B2419
+HSARCHIVE __fastcall ARCHIVE_FindAndOpenArchive(LPSTR szOutPath, LPCSTR szModuleName, LPCSTR szFileName, const char* szLabel, int nPriority, BOOL bSomething) {
 	D2_MAYBE_UNUSED(szModuleName); // __thiscall => __fastcall, unused.
 	uint32_t bFileOpenFlags = bSomething ? 3 : 2;
 	HSARCHIVE hArchiveFile;
 	lstrcpyA(szOutPath, szFileName);
-	if (SFileOpenArchive(szOutPath, nPriority, bFileOpenFlags, &hArchiveFile))
-	{
+	if (SFileOpenArchive(szOutPath, nPriority, bFileOpenFlags, &hArchiveFile)) {
 		return hArchiveFile;
 	}
-	if (!GetModuleFileNameA(0, szOutPath, MAX_PATH))
-	{
+	if (!GetModuleFileNameA(0, szOutPath, MAX_PATH)) {
 		*szOutPath = 0;
 	}
 
-	char* pLastBackslash =  strrchr(szOutPath, '\\');
-	if (pLastBackslash)
-	{
+	char* pLastBackslash = strrchr(szOutPath, '\\');
+	if (pLastBackslash) {
 		*(pLastBackslash + 1) = 0;
 	}
 
 	SStrNCat(szOutPath, szFileName, INT_MAX);
-	if (SFileOpenArchive(szOutPath, nPriority, bFileOpenFlags, &hArchiveFile))
-	{
+	if (SFileOpenArchive(szOutPath, nPriority, bFileOpenFlags, &hArchiveFile)) {
 		return hArchiveFile;
 	}
-	if (ARCHIVE_FindAndOpenArchiveFromCDRom(szOutPath, szFileName, nPriority, &hArchiveFile) != 0)
-	{
+	if (ARCHIVE_FindAndOpenArchiveFromCDRom(szOutPath, szFileName, nPriority, &hArchiveFile) != 0) {
 		return hArchiveFile;
 	}
 	return NULL;
 }
 
-//1.10f: D2Win.0x6F8B2399
-D2ArchiveHandleStrc* __fastcall ARCHIVE_LoadMPQFile(const char* szModuleName, const char* szFileName, const char* szLabel, int a4, HANDLE hFile, ARCHIVE_ShowMessageFunctionPtr pfShowMessage, int nPriority)
-{
+// 1.10f: D2Win.0x6F8B2399
+D2ArchiveHandleStrc* __fastcall ARCHIVE_LoadMPQFile(const char* szModuleName, const char* szFileName, const char* szLabel, int a4, HANDLE hFile, ARCHIVE_ShowMessageFunctionPtr pfShowMessage, int nPriority) {
 	D2ArchiveHandleStrc* pMpqHandle = D2_ALLOC_STRC(D2ArchiveHandleStrc);
 	pMpqHandle->hArchive = NULL;
-	while (1)
-	{
+	while (1) {
 		pMpqHandle->hArchive = ARCHIVE_FindAndOpenArchive(pMpqHandle->szPath, szFileName, szModuleName, szLabel, nPriority, hFile != 0);
-		if (pMpqHandle->hArchive)
-		{
+		if (pMpqHandle->hArchive) {
 			printf("Successfully loaded %s\n", szFileName);
 			return pMpqHandle;
 		}
 		printf("Failed to load %s\n", szFileName);
-		if (!pfShowMessage || !pfShowMessage())
+		if (!pfShowMessage || !pfShowMessage()) {
 			break;
+		}
 		Sleep(100);
-		if (pMpqHandle->hArchive)
-		{
+		if (pMpqHandle->hArchive) {
 			return pMpqHandle;
 		}
 	}
@@ -280,11 +251,9 @@ D2ArchiveHandleStrc* __fastcall ARCHIVE_LoadMPQFile(const char* szModuleName, co
 	return nullptr;
 }
 
-//1.10f: D2Win.0x6F8B2548
-void __fastcall ARCHIVE_UnloadMPQFile(D2ArchiveHandleStrc* pMPQHandle)
-{
-	if (pMPQHandle->hArchive)
-	{
+// 1.10f: D2Win.0x6F8B2548
+void __fastcall ARCHIVE_UnloadMPQFile(D2ArchiveHandleStrc* pMPQHandle) {
+	if (pMPQHandle->hArchive) {
 		SFileCloseArchive(pMPQHandle->hArchive);
 	}
 	pMPQHandle->hArchive = 0;

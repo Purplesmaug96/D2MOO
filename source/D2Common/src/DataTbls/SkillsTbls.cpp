@@ -1,73 +1,50 @@
 #include "D2DataTbls.h"
 
 #include <Archive.h>
-#include <File.h>
 #include <Calc.h>
+#include <File.h>
 #include <Storm.h>
 
 // D2Common.0x6FD498D0
-int __fastcall DATATBLS_MapSkillsTxtKeywordToNumber(char* szKey)
-{
-	if (0 == SStrCmpI(szKey, "min", 32))
-	{
+int __fastcall DATATBLS_MapSkillsTxtKeywordToNumber(char* szKey) {
+	if (0 == SStrCmpI(szKey, "min", 32)) {
 		return 0;
-	}
-	else if (0 == SStrCmpI(szKey, "max", 32))
-	{
+	} else if (0 == SStrCmpI(szKey, "max", 32)) {
 		return 1;
-	}
-	else if (0 == SStrCmpI(szKey, "rand", 32))
-	{
+	} else if (0 == SStrCmpI(szKey, "rand", 32)) {
 		return 2;
-	}
-	else if (0 == SStrCmpI(szKey, "skill", 32))
-	{
+	} else if (0 == SStrCmpI(szKey, "skill", 32)) {
 		return 3;
-	}
-	else if (0 == SStrCmpI(szKey, "miss", 32))
-	{
+	} else if (0 == SStrCmpI(szKey, "miss", 32)) {
 		return 4;
-	}
-	else if (0 == SStrCmpI(szKey, "stat", 32))
-	{
+	} else if (0 == SStrCmpI(szKey, "stat", 32)) {
 		return 5;
-	}
-	else if (0 == SStrCmpI(szKey, "sklvl", 32))
-	{
+	} else if (0 == SStrCmpI(szKey, "sklvl", 32)) {
 		return 6;
-	}
-	else
-	{
+	} else {
 		return -1;
 	}
 }
 
 // D2Common.0x6FD49980
-//TODO: Find a name
-int __fastcall sub_6FD49980(int nValue)
-{
+// TODO: Find a name
+int __fastcall sub_6FD49980(int nValue) {
 	return (nValue == 6) + 2;
 }
 
 // D2Common.0x6FD49990
-//TODO: Find a name
-int __fastcall sub_6FD49990(char* szText, int* a2, int a3, int nKeywordNumber)
-{
+// TODO: Find a name
+int __fastcall sub_6FD49990(char* szText, int* a2, int a3, int nKeywordNumber) {
 	D2TxtLinkStrc* pLinker = sgptDataTables->pSkillCalcLinker;
 	char szCode[4] = {};
 	int nRow = 0;
 
-	if (a3 == 1)
-	{
-		switch (nKeywordNumber)
-		{
-		case 3:
-		{
-			if (sgptDataTables->pSkillsLinker)
-			{
+	if (a3 == 1) {
+		switch (nKeywordNumber) {
+		case 3: {
+			if (sgptDataTables->pSkillsLinker) {
 				nRow = FOG_GetRowFromTxt(sgptDataTables->pSkillsLinker, szText, 0);
-				if (nRow >= 0)
-				{
+				if (nRow >= 0) {
 					*a2 = 1;
 					return nRow;
 				}
@@ -76,13 +53,10 @@ int __fastcall sub_6FD49990(char* szText, int* a2, int a3, int nKeywordNumber)
 			pLinker = sgptDataTables->pSkillCalcLinker;
 			break;
 		}
-		case 4:
-		{
-			if (sgptDataTables->pMissilesLinker)
-			{
+		case 4: {
+			if (sgptDataTables->pMissilesLinker) {
 				nRow = FOG_GetRowFromTxt(sgptDataTables->pMissilesLinker, szText, 0);
-				if (nRow >= 0)
-				{
+				if (nRow >= 0) {
 					*a2 = 1;
 					return nRow;
 				}
@@ -91,46 +65,34 @@ int __fastcall sub_6FD49990(char* szText, int* a2, int a3, int nKeywordNumber)
 			pLinker = sgptDataTables->pMissileCalcLinker;
 			break;
 		}
-		case 5:
-		{
-			if (sgptDataTables->pItemStatCostLinker)
-			{
+		case 5: {
+			if (sgptDataTables->pItemStatCostLinker) {
 				nRow = FOG_GetRowFromTxt(sgptDataTables->pItemStatCostLinker, szText, 0);
-				if (nRow >= 0)
-				{
+				if (nRow >= 0) {
 					*a2 = 1;
 					return nRow;
 				}
 			}
 
-			if (SStrCmpI(szText, "base", 32) != 0)
-			{
-				if (SStrCmpI(szText, "mod", 32) != 0)
-				{
-					bool isAcc = SStrCmpI(szText, "accr", 32) == 0; //Seems unused / unneeded
+			if (SStrCmpI(szText, "base", 32) != 0) {
+				if (SStrCmpI(szText, "mod", 32) != 0) {
+					bool isAcc = SStrCmpI(szText, "accr", 32) == 0; // Seems unused / unneeded
 					D2_MAYBE_UNUSED(isAcc);
 					*a2 = 0;
 					return 0;
-				}
-				else
-				{
+				} else {
 					*a2 = 0;
 					return 2;
 				}
-			}
-			else
-			{
+			} else {
 				*a2 = 0;
 				return 1;
 			}
 		}
-		case 6:
-		{
-			if (sgptDataTables->pSkillsLinker)
-			{
+		case 6: {
+			if (sgptDataTables->pSkillsLinker) {
 				nRow = FOG_GetRowFromTxt(sgptDataTables->pSkillsLinker, szText, 0);
-				if (nRow >= 0)
-				{
+				if (nRow >= 0) {
 					*a2 = 1;
 					return nRow;
 				}
@@ -144,39 +106,27 @@ int __fastcall sub_6FD49990(char* szText, int* a2, int a3, int nKeywordNumber)
 		}
 	}
 
-	if (szText[0])
-	{
+	if (szText[0]) {
 		szCode[0] = szText[0];
-		if (szText[1])
-		{
+		if (szText[1]) {
 			szCode[1] = szText[1];
-			if (szText[2])
-			{
+			if (szText[2]) {
 				szCode[2] = szText[2];
-				if (szText[3])
-				{
+				if (szText[3]) {
 					szCode[3] = szText[3];
-				}
-				else
-				{
+				} else {
 					szCode[3] = ' ';
 				}
-			}
-			else
-			{
+			} else {
 				szCode[2] = ' ';
 				szCode[3] = ' ';
 			}
-		}
-		else
-		{
+		} else {
 			szCode[1] = ' ';
 			szCode[2] = ' ';
 			szCode[3] = ' ';
 		}
-	}
-	else
-	{
+	} else {
 		szCode[0] = ' ';
 		szCode[1] = ' ';
 		szCode[2] = ' ';
@@ -190,8 +140,7 @@ int __fastcall sub_6FD49990(char* szText, int* a2, int a3, int nKeywordNumber)
 }
 
 // D2Common.0x6FD49D20
-void __fastcall DATATBLS_SkillCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
+void __fastcall DATATBLS_SkillCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
 	unsigned int nNewSize = 0;
 	unsigned int nSizeEx = 0;
 	unsigned int nSize = 0;
@@ -199,31 +148,23 @@ void __fastcall DATATBLS_SkillCalcLinker(char* pSrc, void* pRecord, int nOffset,
 	FOGASTNodeStrc* pCode = nullptr;
 	FOGASTNodeStrc pBuffer[1024] = {};
 
-	if (pRecord)
-	{
-		if (pSrc)
-		{
+	if (pRecord) {
+		if (pSrc) {
 			nBufferSize = DATATBLS_CompileExpression(pSrc, pBuffer, sizeof(pBuffer), DATATBLS_MapSkillsTxtKeywordToNumber, sub_6FD49980, sub_6FD49990);
-			if (nBufferSize > 0)
-			{
+			if (nBufferSize > 0) {
 				nSize = sgptDataTables->nSkillsCodeSize;
 				nSizeEx = sgptDataTables->nSkillsCodeSizeEx;
 				pCode = sgptDataTables->pSkillsCode;
 
-				if (sgptDataTables->nSkillsCodeSize + nBufferSize < sgptDataTables->nSkillsCodeSizeEx)
-				{
+				if (sgptDataTables->nSkillsCodeSize + nBufferSize < sgptDataTables->nSkillsCodeSizeEx) {
 					memcpy(&pCode[nSize], pBuffer, nBufferSize);
 					sgptDataTables->nSkillsCodeSize += nBufferSize;
 					*(int*)((char*)pRecord + nOffset) = nSize;
-				}
-				else
-				{
-					while (1)
-					{
+				} else {
+					while (1) {
 						nNewSize = nSizeEx + 1024;
 						sgptDataTables->nSkillsCodeSizeEx = nNewSize;
-						if (nNewSize >= 0x7FFFFFFF)
-						{
+						if (nNewSize >= 0x7FFFFFFF) {
 							break;
 						}
 
@@ -232,8 +173,7 @@ void __fastcall DATATBLS_SkillCalcLinker(char* pSrc, void* pRecord, int nOffset,
 						nSizeEx = sgptDataTables->nSkillsCodeSizeEx;
 						sgptDataTables->pSkillsCode = pCode;
 
-						if (sgptDataTables->nSkillsCodeSize + nBufferSize < sgptDataTables->nSkillsCodeSizeEx)
-						{
+						if (sgptDataTables->nSkillsCodeSize + nBufferSize < sgptDataTables->nSkillsCodeSizeEx) {
 							memcpy(&pCode[nSize], pBuffer, nBufferSize);
 							sgptDataTables->nSkillsCodeSize += nBufferSize;
 							*(int*)((char*)pRecord + nOffset) = nSize;
@@ -242,22 +182,17 @@ void __fastcall DATATBLS_SkillCalcLinker(char* pSrc, void* pRecord, int nOffset,
 					}
 					*(int*)((char*)pRecord + nOffset) = 0;
 				}
-			}
-			else
-			{
+			} else {
 				*(int*)((char*)pRecord + nOffset) = -1;
 			}
-		}
-		else
-		{
+		} else {
 			*(int*)((char*)pRecord + nOffset) = -1;
 		}
 	}
 }
 
 // D2Common.0x6FD49E40
-void __fastcall DATATBLS_SkillDescCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
+void __fastcall DATATBLS_SkillDescCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
 	unsigned int nNewSize = 0;
 	unsigned int nSizeEx = 0;
 	unsigned int nSize = 0;
@@ -265,31 +200,23 @@ void __fastcall DATATBLS_SkillDescCalcLinker(char* pSrc, void* pRecord, int nOff
 	FOGASTNodeStrc* pCode = nullptr;
 	FOGASTNodeStrc pBuffer[1024] = {};
 
-	if (pRecord)
-	{
-		if (pSrc)
-		{
+	if (pRecord) {
+		if (pSrc) {
 			nBufferSize = DATATBLS_CompileExpression(pSrc, pBuffer, sizeof(pBuffer), DATATBLS_MapSkillsTxtKeywordToNumber, sub_6FD49980, sub_6FD49990);
-			if (nBufferSize > 0)
-			{
+			if (nBufferSize > 0) {
 				nSize = sgptDataTables->nSkillDescCodeSize;
 				nSizeEx = sgptDataTables->nSkillDescCodeSizeEx;
 				pCode = sgptDataTables->pSkillDescCode;
 
-				if (sgptDataTables->nSkillDescCodeSize + nBufferSize < sgptDataTables->nSkillDescCodeSizeEx)
-				{
+				if (sgptDataTables->nSkillDescCodeSize + nBufferSize < sgptDataTables->nSkillDescCodeSizeEx) {
 					memcpy(&pCode[nSize], pBuffer, nBufferSize);
 					sgptDataTables->nSkillDescCodeSize += nBufferSize;
 					*(int*)((char*)pRecord + nOffset) = nSize;
-				}
-				else
-				{
-					while (1)
-					{
+				} else {
+					while (1) {
 						nNewSize = nSizeEx + 1024;
 						sgptDataTables->nSkillDescCodeSizeEx = nNewSize;
-						if (nNewSize >= 0x7FFFFFFF)
-						{
+						if (nNewSize >= 0x7FFFFFFF) {
 							break;
 						}
 
@@ -298,8 +225,7 @@ void __fastcall DATATBLS_SkillDescCalcLinker(char* pSrc, void* pRecord, int nOff
 						nSizeEx = sgptDataTables->nSkillDescCodeSizeEx;
 						sgptDataTables->pSkillDescCode = pCode;
 
-						if (sgptDataTables->nSkillDescCodeSize + nBufferSize < sgptDataTables->nSkillDescCodeSizeEx)
-						{
+						if (sgptDataTables->nSkillDescCodeSize + nBufferSize < sgptDataTables->nSkillDescCodeSizeEx) {
 							memcpy(&pCode[nSize], pBuffer, nBufferSize);
 							sgptDataTables->nSkillDescCodeSize += nBufferSize;
 							*(int*)((char*)pRecord + nOffset) = nSize;
@@ -308,22 +234,17 @@ void __fastcall DATATBLS_SkillDescCalcLinker(char* pSrc, void* pRecord, int nOff
 					}
 					*(int*)((char*)pRecord + nOffset) = 0;
 				}
-			}
-			else
-			{
+			} else {
 				*(int*)((char*)pRecord + nOffset) = -1;
 			}
-		}
-		else
-		{
+		} else {
 			*(int*)((char*)pRecord + nOffset) = -1;
 		}
 	}
 }
 
 // D2Common.0x6FD49F60
-void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive) {
 	D2PetTypeTxt* pPetTypeTxtRecord = NULL;
 	D2TxtLinkStrc* pSkillDescLinker = NULL;
 	D2TxtLinkStrc* pMonStatsLinker = NULL;
@@ -337,20 +258,17 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 	uint8_t nClass = 0;
 	char szFileName[260] = {};
 
-	D2BinFieldStrc pTmpMonStatsTbl[] =
-	{
+	D2BinFieldStrc pTmpMonStatsTbl[] = {
 		{ "Id", TXTFIELD_NAMETOINDEX, 0, 0, &pMonStatsLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
-	D2BinFieldStrc pTmpSkillDescTbl[] =
-	{
+	D2BinFieldStrc pTmpSkillDescTbl[] = {
 		{ "skilldesc", TXTFIELD_NAMETOINDEX, 0, 0, &pSkillDescLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
-	D2BinFieldStrc pSkillTbl[] =
-	{
+	D2BinFieldStrc pSkillTbl[] = {
 		{ "skill", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pSkillsLinker },
 		{ "charclass", TXTFIELD_CODETOBYTE, 0, 12, &sgptDataTables->pPlayerClassLinker },
 		{ "skilldesc", TXTFIELD_NAMETOWORD, 0, 404, &pSkillDescLinker },
@@ -592,8 +510,7 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
-	D2BinFieldStrc pSkillDescTbl[] =
-	{
+	D2BinFieldStrc pSkillDescTbl[] = {
 		{ "skilldesc", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pSkillDescLinker },
 		{ "skillpage", TXTFIELD_BYTE, 0, 2, NULL },
 		{ "skillrow", TXTFIELD_BYTE, 0, TXTFIELD_WORD, NULL },
@@ -710,8 +627,7 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
-	if (sgptDataTables->bCompileTxt)
-	{
+	if (sgptDataTables->bCompileTxt) {
 		pRangeLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 
 		FOG_10215(pRangeLinker, 'enon');
@@ -731,8 +647,7 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->pSkillsLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pSkillsTxt = (D2SkillsTxt*)DATATBLS_CompileTxt(hArchive, "skills", pSkillTbl, &sgptDataTables->nSkillsTxtRecordCount, sizeof(D2SkillsTxt));
-	if (sgptDataTables->nSkillsTxtRecordCount >= 32767)
-	{
+	if (sgptDataTables->nSkillsTxtRecordCount >= 32767) {
 		FOG_DisplayWarning("Skills table exceeded maximum number of entries.", __FILE__, __LINE__);
 	}
 
@@ -740,49 +655,37 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->pSkillDescLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pSkillDescTxt = (D2SkillDescTxt*)DATATBLS_CompileTxt(hArchive, "skilldesc", pSkillDescTbl, &sgptDataTables->nSkillDescTxtRecordCount, sizeof(D2SkillDescTxt));
-	if (sgptDataTables->nSkillDescTxtRecordCount >= 32767)
-	{
+	if (sgptDataTables->nSkillDescTxtRecordCount >= 32767) {
 		FOG_DisplayWarning("SkillDesc table exceeded maximum number of entries.", __FILE__, __LINE__);
 	}
 
-	if (sgptDataTables->bCompileTxt)
-	{
+	if (sgptDataTables->bCompileTxt) {
 		FOG_FreeLinker(pRangeLinker);
 		FOG_FreeLinker(pMonStatsLinker);
 
-		if (pTmpMonStatsTxt)
-		{
-			if (DATATBLS_LoadFromBin)
-			{
+		if (pTmpMonStatsTxt) {
+			if (DATATBLS_LoadFromBin) {
 				D2_FREE_POOL(nullptr, (char*)pTmpMonStatsTxt - 4);
 
-			}
-			else
-			{
+			} else {
 				D2_FREE_POOL(nullptr, pTmpMonStatsTxt);
 			}
 		}
 
 		FOG_FreeLinker(pSkillDescLinker);
 
-		if (pTmpSkillDescTxt)
-		{
-			if (DATATBLS_LoadFromBin)
-			{
+		if (pTmpSkillDescTxt) {
+			if (DATATBLS_LoadFromBin) {
 				D2_FREE_POOL(nullptr, (char*)pTmpSkillDescTxt - 4);
-			}
-			else
-			{
+			} else {
 				D2_FREE_POOL(nullptr, pTmpSkillDescTxt);
 			}
 		}
 
-		if (sgptDataTables->bCompileTxt && sgptDataTables->pSkillsCode)
-		{
+		if (sgptDataTables->bCompileTxt && sgptDataTables->pSkillsCode) {
 			wsprintfA(szFileName, "%s\\%s.bin", "DATA\\GLOBAL\\EXCEL", "skillscode");
 			fopen_s(&pSkillsCodeBin, szFileName, "wb");
-			if (pSkillsCodeBin)
-			{
+			if (pSkillsCodeBin) {
 				FileLockAndWrite(sgptDataTables->pSkillsCode, sgptDataTables->nSkillsCodeSize, 1u, pSkillsCodeBin);
 				fclose(pSkillsCodeBin);
 			}
@@ -796,12 +699,10 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->nSkillsCodeSizeEx = dwSize;
 	sgptDataTables->nSkillsCodeSize = dwSize;
 
-	if (sgptDataTables->bCompileTxt && sgptDataTables->pSkillDescCode)
-	{
+	if (sgptDataTables->bCompileTxt && sgptDataTables->pSkillDescCode) {
 		wsprintfA(szFileName, "%s\\%s.bin", "DATA\\GLOBAL\\EXCEL", "skilldesccode");
 		fopen_s(&pSkillDescCodeBin, szFileName, "wb");
-		if (pSkillDescCodeBin)
-		{
+		if (pSkillDescCodeBin) {
 			FileLockAndWrite(sgptDataTables->pSkillDescCode, sgptDataTables->nSkillDescCodeSize, 1, pSkillDescCodeBin);
 			fclose(pSkillDescCodeBin);
 		}
@@ -815,16 +716,13 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 
 	sgptDataTables->nClassSkillCount = (int*)D2_CALLOC_POOL(NULL, 7 * sizeof(int));
 
-	for (int i = 0; i < sgptDataTables->nSkillsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nSkillsTxtRecordCount; ++i) {
 		nClass = sgptDataTables->pSkillsTxt[i].nCharClass;
-		if (nClass >= 0 && nClass < 7)
-		{
+		if (nClass >= 0 && nClass < 7) {
 			++sgptDataTables->nClassSkillCount[nClass];
 		}
 
-		if (sgptDataTables->pSkillsTxt[i].nPassiveState >= 0)
-		{
+		if (sgptDataTables->pSkillsTxt[i].nPassiveState >= 0) {
 			++sgptDataTables->nPassiveSkills;
 		}
 	}
@@ -832,10 +730,8 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 	nHighestClassSkillCount = 0;
 	sgptDataTables->nHighestClassSkillCount = 0;
 
-	for (int i = 0; i < 7; ++i)
-	{
-		if (sgptDataTables->nClassSkillCount[i] > nHighestClassSkillCount)
-		{
+	for (int i = 0; i < 7; ++i) {
+		if (sgptDataTables->nClassSkillCount[i] > nHighestClassSkillCount) {
 			nHighestClassSkillCount = sgptDataTables->nClassSkillCount[i];
 			sgptDataTables->nHighestClassSkillCount = sgptDataTables->nClassSkillCount[i];
 		}
@@ -848,27 +744,22 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pPassiveSkills = (uint16_t*)D2_CALLOC_POOL(NULL, sizeof(uint16_t) * sgptDataTables->nPassiveSkills);
 
 	sgptDataTables->nPassiveSkills = 0;
-	for (int i = 0; i < sgptDataTables->nSkillsTxtRecordCount; ++i)
-	{
+	for (int i = 0; i < sgptDataTables->nSkillsTxtRecordCount; ++i) {
 		nClass = sgptDataTables->pSkillsTxt[i].nCharClass;
-		if (nClass >= 0 && nClass < 7)
-		{
+		if (nClass >= 0 && nClass < 7) {
 			sgptDataTables->nClassSkillList[sgptDataTables->nClassSkillCount[nClass] + sgptDataTables->nHighestClassSkillCount * nClass] = i;
 			++sgptDataTables->nClassSkillCount[nClass];
 		}
 
-		if (sgptDataTables->pSkillsTxt[i].nPassiveState >= 0)
-		{
+		if (sgptDataTables->pSkillsTxt[i].nPassiveState >= 0) {
 			sgptDataTables->pPassiveSkills[sgptDataTables->nPassiveSkills] = i;
 			++sgptDataTables->nPassiveSkills;
 		}
 
 		nPetType = sgptDataTables->pSkillsTxt[i].nPetType;
-		if (nPetType >= 0 && nPetType < sgptDataTables->nPetTypeTxtRecordCount)
-		{
+		if (nPetType >= 0 && nPetType < sgptDataTables->nPetTypeTxtRecordCount) {
 			pPetTypeTxtRecord = &sgptDataTables->pPetTypeTxt[nPetType];
-			if (pPetTypeTxtRecord->nSkillCount < ARRAY_SIZE(pPetTypeTxtRecord->wSkillIds))
-			{
+			if (pPetTypeTxtRecord->nSkillCount < ARRAY_SIZE(pPetTypeTxtRecord->wSkillIds)) {
 				pPetTypeTxtRecord->wSkillIds[pPetTypeTxtRecord->nSkillCount] = i;
 				++pPetTypeTxtRecord->nSkillCount;
 			}
@@ -877,38 +768,32 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD4E350
-void __fastcall DATATBLS_UnloadSkills_SkillDescTxt()
-{
-	if (sgptDataTables->nClassSkillCount)
-	{
+void __fastcall DATATBLS_UnloadSkills_SkillDescTxt() {
+	if (sgptDataTables->nClassSkillCount) {
 		D2_FREE_POOL(nullptr, sgptDataTables->nClassSkillCount);
 		sgptDataTables->nClassSkillCount = 0;
 	}
 
-	if (sgptDataTables->nClassSkillList)
-	{
+	if (sgptDataTables->nClassSkillList) {
 		D2_FREE_POOL(nullptr, sgptDataTables->nClassSkillList);
 		sgptDataTables->nClassSkillList = 0;
 	}
 	sgptDataTables->nHighestClassSkillCount = 0;
 
-	if (sgptDataTables->pPassiveSkills)
-	{
+	if (sgptDataTables->pPassiveSkills) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pPassiveSkills);
 		sgptDataTables->pPassiveSkills = NULL;
 	}
 	sgptDataTables->nPassiveSkills = 0;
 
-	if (sgptDataTables->pSkillsCode)
-	{
+	if (sgptDataTables->pSkillsCode) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pSkillsCode);
 		sgptDataTables->pSkillsCode = NULL;
 	}
 	sgptDataTables->nSkillsCodeSize = 0;
 	sgptDataTables->nSkillsCodeSizeEx = 0;
 
-	if (sgptDataTables->pSkillDescCode)
-	{
+	if (sgptDataTables->pSkillDescCode) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pSkillDescCode);
 		sgptDataTables->pSkillDescCode = NULL;
 	}
@@ -928,23 +813,19 @@ void __fastcall DATATBLS_UnloadSkills_SkillDescTxt()
 	sgptDataTables->nSkillDescTxtRecordCount = 0;
 }
 
-//1.10f: Inlined at various places
-//1.13c: D2Common.0x6FD51250
-D2SkillsTxt* __fastcall DATATBLS_GetSkillsTxtRecord(int nSkillId)
-{
-	if (nSkillId >= 0 && nSkillId < sgptDataTables->nSkillsTxtRecordCount)
-	{
+// 1.10f: Inlined at various places
+// 1.13c: D2Common.0x6FD51250
+D2SkillsTxt* __fastcall DATATBLS_GetSkillsTxtRecord(int nSkillId) {
+	if (nSkillId >= 0 && nSkillId < sgptDataTables->nSkillsTxtRecordCount) {
 		return &sgptDataTables->pSkillsTxt[nSkillId];
 	}
 
 	return NULL;
 }
 
-//Inlined at various places
-D2SkillDescTxt* __fastcall DATATBLS_GetSkillDescTxtRecord(int nSkillDesc)
-{
-	if (nSkillDesc >= 0 && nSkillDesc < sgptDataTables->nSkillDescTxtRecordCount)
-	{
+// Inlined at various places
+D2SkillDescTxt* __fastcall DATATBLS_GetSkillDescTxtRecord(int nSkillDesc) {
+	if (nSkillDesc >= 0 && nSkillDesc < sgptDataTables->nSkillDescTxtRecordCount) {
 		return &sgptDataTables->pSkillDescTxt[nSkillDesc];
 	}
 

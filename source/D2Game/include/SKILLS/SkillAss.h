@@ -1,13 +1,11 @@
 #pragma once
 
 #include <D2StatList.h>
-#include <Units/Units.h>
-#include <Units/UnitFinds.h>
 #include <UNIT/SUnitDmg.h>
-
+#include <Units/UnitFinds.h>
+#include <Units/Units.h>
 
 struct D2AuraCallbackStrc;
-
 
 // D2Game.0x6FCF5090
 int32_t __fastcall SKILLS_SrvSt22_PsychicHammer(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel);
@@ -62,7 +60,8 @@ void __fastcall sub_6FCF77E0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2DamageStrc*
 // D2Game.0x6FCF7AD0
 int32_t __fastcall SKILLS_SrvSt24_DragonTalon(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel);
 // D2Game.0x6FCF7BC0
-void __fastcall sub_6FCF7BC0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, D2SkillsTxt* pSkillsTxtRecordArg, int32_t nSkillId, int32_t nSkillLevel, int32_t bKnockback);;
+void __fastcall sub_6FCF7BC0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, D2SkillsTxt* pSkillsTxtRecordArg, int32_t nSkillId, int32_t nSkillLevel, int32_t bKnockback);
+;
 // D2Game.0x6FCF7CE0
 void __fastcall sub_6FCF7CE0(D2GameStrc* pGame, D2DamageStrc* pDamage, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nSkillId, int32_t nSkillLevel);
 // D2Game.0x6FCF8110

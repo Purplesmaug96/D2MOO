@@ -5,17 +5,17 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "winnt.h"
 #include "windef.h"
+#include "winnt.h"
 
 typedef struct _SERVICE_STATUS {
-  DWORD dwServiceType;
-  DWORD dwCurrentState;
-  DWORD dwControlsAccepted;
-  DWORD dwWin32ExitCode;
-  DWORD dwServiceSpecificExitCode;
-  DWORD dwCheckPoint;
-  DWORD dwWaitHint;
+	DWORD dwServiceType;
+	DWORD dwCurrentState;
+	DWORD dwControlsAccepted;
+	DWORD dwWin32ExitCode;
+	DWORD dwServiceSpecificExitCode;
+	DWORD dwCheckPoint;
+	DWORD dwWaitHint;
 } SERVICE_STATUS;
 
 typedef uint32_t SERVICE_STATUS_HANDLE; // No idea if is correct
@@ -69,11 +69,11 @@ static inline SC_HANDLE CreateServiceA(SC_HANDLE hSCManager, LPCSTR lpServiceNam
 }
 
 typedef struct {
-  LPSTR                    lpServiceName;
-  /*LPSERVICE_MAIN_FUNCTIONA*/ void* lpServiceProc;
+	LPSTR lpServiceName;
+	/*LPSERVICE_MAIN_FUNCTIONA*/ void* lpServiceProc;
 } SERVICE_TABLE_ENTRYA;
 
-static inline BOOL StartServiceCtrlDispatcherA(SERVICE_TABLE_ENTRYA *lpServiceStartTable) {
+static inline BOOL StartServiceCtrlDispatcherA(SERVICE_TABLE_ENTRYA* lpServiceStartTable) {
 	printf("Stubbed function StartServiceCtrlDispatcherA called\n");
 	return FALSE;
 }

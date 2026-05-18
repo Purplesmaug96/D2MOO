@@ -34,307 +34,301 @@
 #include "Fog.h"
 
 BOOL __fastcall Unicode::isWordEnd(const Unicode* str, size_t index) {
-  if (index == 0) {
-    return FALSE;
-  }
+	if (index == 0) {
+		return FALSE;
+	}
 
-  return ::isalnum(str[index].ch)
-      && !::isalnum(str[index + 1].ch);
+	return ::isalnum(str[index].ch) && !::isalnum(str[index + 1].ch);
 }
 
 void __cdecl Unicode::sprintf(
-    int buffer_size,
-    Unicode* buffer,
-    const Unicode* format,
-    ...) {
+	int buffer_size,
+	Unicode* buffer,
+	const Unicode* format,
+	...) {
+	if (format == NULL) {
+		return;
+	}
 
-  if (format == NULL) {
-    return;
-  }
+	int i_buffer = 0;
+	buffer[0].ch = L'\0';
 
-  int i_buffer = 0;
-  buffer[0].ch = L'\0';
+	va_list args;
+	va_start(args, format);
 
-  va_list args;
-  va_start(args, format);
+	Unicode percent_sign[2] = { L'%' };
 
-  Unicode percent_sign[2] = { L'%' };
+	for (int i_format = 0; format[i_format].ch != L'\0'; i_format += 2) {
+		unsigned short conversion_specifier = L'\0';
+		Unicode* strstr_result = Unicode::strstr(&format[i_format], percent_sign);
+		if (strstr_result != NULL) {
+			conversion_specifier = strstr_result[1];
+		}
 
-  for (int i_format = 0; format[i_format].ch != L'\0'; i_format += 2) {
-    unsigned short conversion_specifier = L'\0';
-    Unicode* strstr_result = Unicode::strstr(&format[i_format], percent_sign);
-    if (strstr_result != NULL) {
-      conversion_specifier = strstr_result[1];
-    }
+		/*
+		 * Copy format into buffer up to where the % is found, or if % not
+		 * found, then copy the remaining string.
+		 */
+		while (&format[i_format] != strstr_result && format[i_format].ch != L'\0' && i_buffer < buffer_size) {
+			buffer[i_buffer] = format[i_format];
 
-    /*
-     * Copy format into buffer up to where the % is found, or if % not
-     * found, then copy the remaining string.
-     */
-    while (&format[i_format] != strstr_result
-        && format[i_format].ch != L'\0'
-        && i_buffer < buffer_size) {
+			++i_format;
+			++i_buffer;
+		}
 
-      buffer[i_buffer] = format[i_format];
+		if (i_buffer >= buffer_size) {
+			buffer[i_buffer - 1].ch = L'\0';
+			va_end(args);
+			return;
+		}
 
-      ++i_format;
-      ++i_buffer;
-    }
+		if (format[i_format].ch == L'\0') {
+			buffer[i_buffer].ch = L'\0';
+			va_end(args);
+			return;
+		}
 
-    if (i_buffer >= buffer_size) {
-      buffer[i_buffer - 1].ch = L'\0';
-      va_end(args);
-      return;
-    }
+		D2_ASSERT(strstr_result != NULL);
 
-    if (format[i_format].ch == L'\0') {
-      buffer[i_buffer].ch = L'\0';
-      va_end(args);
-      return;
-    }
+		switch (conversion_specifier) {
+		case L'\0': {
+			/*
+			 * No conversion specifier found or % is the last character.
+			 */
+			Unicode::strcpy(&buffer[i_buffer], percent_sign);
+			va_end(args);
+			return;
+		}
 
-    D2_ASSERT(strstr_result != NULL);
+		case L'%': {
+			if (i_buffer + 1 >= buffer_size) {
+				va_end(args);
+				return;
+			}
 
-    switch (conversion_specifier) {
-      case L'\0': {
-        /*
-         * No conversion specifier found or % is the last character.
-         */
-        Unicode::strcpy(&buffer[i_buffer], percent_sign);
-        va_end(args);
-        return;
-      }
+			Unicode::strcpy(&buffer[i_buffer], percent_sign);
+			++i_buffer;
 
-      case L'%': {
-        if (i_buffer + 1 >= buffer_size) {
-          va_end(args);
-          return;
-        }
+			break;
+		}
 
-        Unicode::strcpy(&buffer[i_buffer], percent_sign);
-        ++i_buffer;
+		case L'd':
+		case L'u': {
+			char itoa_buffer[16];
 
-        break;
-      }
+			if (conversion_specifier == L'd') {
+				::_itoa(va_arg(args, int), itoa_buffer, 10); // NOLINT(clang-diagnostic-deprecated-declarations)
+			} else {
+				::_ultoa(va_arg(args, unsigned int), itoa_buffer, 10); // NOLINT(clang-diagnostic-deprecated-declarations)
+			}
 
-      case L'd':
-      case L'u': {
-        char itoa_buffer[16];
+			Unicode itoa_unicode[15];
+			Unicode::toUnicode(itoa_unicode, itoa_buffer, 15);
 
-        if (conversion_specifier == L'd') {
-          ::_itoa(va_arg(args, int), itoa_buffer, 10); // NOLINT(clang-diagnostic-deprecated-declarations)
-        } else {
-          ::_ultoa(va_arg(args, unsigned int), itoa_buffer, 10); // NOLINT(clang-diagnostic-deprecated-declarations)
-        }
+			int itoa_length;
+			for (itoa_length = 0;
+				 itoa_unicode[itoa_length].ch != L'\0';
+				 ++itoa_length) {
+				/* Left empty on purpose. */
+			}
 
-        Unicode itoa_unicode[15];
-        Unicode::toUnicode(itoa_unicode, itoa_buffer, 15);
+			if ((i_buffer + itoa_length + 1) >= buffer_size) {
+				va_end(args);
+				return;
+			}
 
-        int itoa_length;
-        for (itoa_length = 0;
-            itoa_unicode[itoa_length].ch != L'\0';
-            ++itoa_length) {
-          /* Left empty on purpose. */
-        }
+			Unicode::strcpy(&buffer[i_buffer], itoa_unicode);
+			i_buffer += itoa_length;
 
-        if ((i_buffer + itoa_length + 1) >= buffer_size) {
-          va_end(args);
-          return;
-        }
+			break;
+		}
 
-        Unicode::strcpy(&buffer[i_buffer], itoa_unicode);
-        i_buffer += itoa_length;
+		case L's': {
+			const Unicode* arg_string = va_arg(args, const Unicode*);
+			if (arg_string == NULL || arg_string[0].ch == L'\0') {
+				buffer[i_buffer] = L'\0';
+				va_end(args);
+				return;
+			}
 
-        break;
-      }
+			const int arg_s_length = Unicode::strlen(arg_string);
 
-      case L's': {
-        const Unicode* arg_string = va_arg(args, const Unicode*);
-        if (arg_string == NULL || arg_string[0].ch == L'\0') {
-          buffer[i_buffer] = L'\0';
-          va_end(args);
-          return;
-        }
+			if (arg_s_length == 0 || (i_buffer + arg_s_length) >= buffer_size) {
+				Unicode::strncat(
+					&buffer[i_buffer],
+					arg_string,
+					buffer_size - (i_buffer + 1));
+				va_end(args);
+				return;
+			}
 
-        const int arg_s_length = Unicode::strlen(arg_string);
+			for (int i_arg_s = 0;; ++i_arg_s) {
+				buffer[i_buffer + i_arg_s] = arg_string[i_arg_s];
 
-        if (arg_s_length == 0 || (i_buffer + arg_s_length) >= buffer_size) {
-          Unicode::strncat(
-              &buffer[i_buffer],
-              arg_string,
-              buffer_size - (i_buffer + 1));
-          va_end(args);
-          return;
-        }
+				if (arg_string[i_arg_s + 1] == L'\0') {
+					break;
+				}
+			}
 
-        for (int i_arg_s = 0; ; ++i_arg_s) {
-          buffer[i_buffer + i_arg_s] = arg_string[i_arg_s];
+			i_buffer += arg_s_length;
 
-          if (arg_string[i_arg_s + 1] == L'\0') {
-            break;
-          }
-        }
+			break;
+		}
 
-        i_buffer += arg_s_length;
+		default: {
+			FOG_DisplayHalt(
+				"Unknown format specifier in Unicode::sprintf",
+				__FILE__,
+				__LINE__);
+			exit(-1);
+		}
+		}
+	}
 
-        break;
-      }
-
-      default: {
-        FOG_DisplayHalt(
-            "Unknown format specifier in Unicode::sprintf",
-            __FILE__,
-            __LINE__);
-        exit(-1);
-      }
-    }
-  }
-
-  va_end(args);
+	va_end(args);
 }
 
 Unicode* __fastcall Unicode::strcat(Unicode* dest, const Unicode* src) {
-  size_t i = 0;
-  while (dest[i].ch != L'\0') {
-    ++i;
-  }
+	size_t i = 0;
+	while (dest[i].ch != L'\0') {
+		++i;
+	}
 
-  Unicode::strcpy(&dest[i], src);
+	Unicode::strcpy(&dest[i], src);
 
-  return dest;
+	return dest;
 }
 
 Unicode* __fastcall Unicode::strchr(const Unicode* str, Unicode ch) {
-  for (size_t i = 0; str[i].ch != L'\0'; ++i) {
-    if (str[i].ch == ch.ch) {
-      return (Unicode*)&str[i];
-    }
-  }
+	for (size_t i = 0; str[i].ch != L'\0'; ++i) {
+		if (str[i].ch == ch.ch) {
+			return (Unicode*)&str[i];
+		}
+	}
 
-  return NULL;
+	return NULL;
 }
 
 int __fastcall Unicode::strcmp(const Unicode* str1, const Unicode* str2) {
-  /*
-   * This loop does not run beyond the end of either string. If the
-   * end of only one string is reached, then a comparison between '\0'
-   * to a different character is made, and a return is guaranteed to
-   * happen.
-   */
-  for (size_t i = 0; (str1[i].ch != L'\0') || (str2[i].ch != L'\0'); ++i) {
-    if (str1[i].ch < str2[i].ch) {
-      return -1;
-    } else if (str1[i].ch > str2[i].ch) {
-      return 1;
-    }
-  }
+	/*
+	 * This loop does not run beyond the end of either string. If the
+	 * end of only one string is reached, then a comparison between '\0'
+	 * to a different character is made, and a return is guaranteed to
+	 * happen.
+	 */
+	for (size_t i = 0; (str1[i].ch != L'\0') || (str2[i].ch != L'\0'); ++i) {
+		if (str1[i].ch < str2[i].ch) {
+			return -1;
+		} else if (str1[i].ch > str2[i].ch) {
+			return 1;
+		}
+	}
 
-  return 0;
+	return 0;
 }
 
 Unicode* __fastcall Unicode::strcpy(Unicode* dest, const Unicode* src) {
-  size_t i = 0;
-  do {
-    dest[i].ch = src[i].ch;
-  } while (src[i++].ch != L'\0');
+	size_t i = 0;
+	do {
+		dest[i].ch = src[i].ch;
+	} while (src[i++].ch != L'\0');
 
-  return dest;
+	return dest;
 }
 
 int __fastcall Unicode::stricmp(const Unicode* str1, const Unicode* str2) {
-  /*
-   * This loop does not run beyond the end of either string. If the
-   * end of only one string is reached, then a comparison between '\0'
-   * to a different character is made, and a return is guaranteed to
-   * happen.
-   */
-  for (size_t i = 0; (str1[i].ch != L'\0') || (str2[i].ch != L'\0'); ++i) {
-    Unicode ch1_upper = str1[i].toUpper();
-    Unicode ch2_upper = str2[i].toUpper();
+	/*
+	 * This loop does not run beyond the end of either string. If the
+	 * end of only one string is reached, then a comparison between '\0'
+	 * to a different character is made, and a return is guaranteed to
+	 * happen.
+	 */
+	for (size_t i = 0; (str1[i].ch != L'\0') || (str2[i].ch != L'\0'); ++i) {
+		Unicode ch1_upper = str1[i].toUpper();
+		Unicode ch2_upper = str2[i].toUpper();
 
-    if (ch1_upper.ch < ch2_upper.ch) {
-      return -1;
-    } else if (ch1_upper.ch > ch2_upper.ch) {
-      return 1;
-    }
-  }
+		if (ch1_upper.ch < ch2_upper.ch) {
+			return -1;
+		} else if (ch1_upper.ch > ch2_upper.ch) {
+			return 1;
+		}
+	}
 
-  return 0;
+	return 0;
 }
 
 int __fastcall Unicode::strnicmp(const Unicode* str1, const Unicode* str2, size_t count) {
-    /*
-     * This loop does not run beyond the end of either string. If the
-     * end of only one string is reached, then a comparison between '\0'
-     * to a different character is made, and a return is guaranteed to
-     * happen.
-     */
-    for (size_t i = 0; (str1[i].ch != L'\0') || (str2[i].ch != L'\0') && count != 0; ++i, count--) {
-        Unicode ch1_upper = str1[i].toUpper();
-        Unicode ch2_upper = str2[i].toUpper();
+	/*
+	 * This loop does not run beyond the end of either string. If the
+	 * end of only one string is reached, then a comparison between '\0'
+	 * to a different character is made, and a return is guaranteed to
+	 * happen.
+	 */
+	for (size_t i = 0; (str1[i].ch != L'\0') || (str2[i].ch != L'\0') && count != 0; ++i, count--) {
+		Unicode ch1_upper = str1[i].toUpper();
+		Unicode ch2_upper = str2[i].toUpper();
 
-        if (ch1_upper.ch < ch2_upper.ch) {
-            return -1;
-        }
-        else if (ch1_upper.ch > ch2_upper.ch) {
-            return 1;
-        }
-    }
+		if (ch1_upper.ch < ch2_upper.ch) {
+			return -1;
+		} else if (ch1_upper.ch > ch2_upper.ch) {
+			return 1;
+		}
+	}
 
-    return 0;
+	return 0;
 }
 
 int __fastcall Unicode::strlen(const Unicode* str) {
-  if (str == NULL) {
-    return 0;
-  }
+	if (str == NULL) {
+		return 0;
+	}
 
-  int i = 0;
-  while ((str++)->ch != L'\0') {
-    ++i;
-  }
+	int i = 0;
+	while ((str++)->ch != L'\0') {
+		++i;
+	}
 
-  return i;
+	return i;
 }
 
 Unicode* __fastcall Unicode::strncat(
-    Unicode* dest,
-    const Unicode* src,
-    int count) {
-  int i_dest = 0;
-  while (dest[i_dest].ch != L'\0') {
-    ++i_dest;
-  }
+	Unicode* dest,
+	const Unicode* src,
+	int count) {
+	int i_dest = 0;
+	while (dest[i_dest].ch != L'\0') {
+		++i_dest;
+	}
 
-  int i_src;
-  for (i_src = 0; i_src != count && src[i_src].ch != L'\0'; ++i_src) {
-    dest[i_dest + i_src] = src[i_src];
-  }
+	int i_src;
+	for (i_src = 0; i_src != count && src[i_src].ch != L'\0'; ++i_src) {
+		dest[i_dest + i_src] = src[i_src];
+	}
 
-  dest[i_dest + i_src] = L'\0';
+	dest[i_dest + i_src] = L'\0';
 
-  return dest;
+	return dest;
 }
 
 int __fastcall Unicode::strncmp(
-    const Unicode* str1,
-    const Unicode* str2,
-    size_t count) {
-  /*
-   * Vanilla bug: If one string is a prefix of the other string, then
-   * the loop ends early and 0 is returned.
-   */
-  for (size_t i = 0;
-      (str1[i].ch != L'\0') && (str2[i].ch != L'\0') && (i < count);
-      ++i) {
-    if (str1[i].ch < str2[i].ch) {
-      return -1;
-    } else if (str1[i].ch > str2[i].ch) {
-      return 1;
-    }
-  }
+	const Unicode* str1,
+	const Unicode* str2,
+	size_t count) {
+	/*
+	 * Vanilla bug: If one string is a prefix of the other string, then
+	 * the loop ends early and 0 is returned.
+	 */
+	for (size_t i = 0;
+		 (str1[i].ch != L'\0') && (str2[i].ch != L'\0') && (i < count);
+		 ++i) {
+		if (str1[i].ch < str2[i].ch) {
+			return -1;
+		} else if (str1[i].ch > str2[i].ch) {
+			return 1;
+		}
+	}
 
-  return 0;
+	return 0;
 }
 
 /**
@@ -347,60 +341,57 @@ int __fastcall Unicode::strncmp(
  * ?strncpy@Unicode@@SIPAU1@PAU1@PBU1@H@Z
  */
 Unicode* __fastcall Unicode::strncpy(
-    Unicode* dest, const Unicode* src, int count)
-{
-  // Copy src into dest, up to count characters.
-  Unicode* current_dest = dest;
-  for (; (count--) != 0 && src->ch != L'\0'; ++current_dest, ++src)
-  {
-    current_dest->ch = src->ch;
-  }
+	Unicode* dest, const Unicode* src, int count) {
+	// Copy src into dest, up to count characters.
+	Unicode* current_dest = dest;
+	for (; (count--) != 0 && src->ch != L'\0'; ++current_dest, ++src) {
+		current_dest->ch = src->ch;
+	}
 
-  // Fill remaining characters as null-terminator.
-  for (; count != -1; ++current_dest, --count)
-  {
-    current_dest->ch = L'\0';
-  }
+	// Fill remaining characters as null-terminator.
+	for (; count != -1; ++current_dest, --count) {
+		current_dest->ch = L'\0';
+	}
 
-  return dest;
+	return dest;
 }
 
 Unicode* __fastcall Unicode::strstr(
-    const Unicode* str,
-    const Unicode* substr) {
-  if (str == NULL || substr == NULL) {
-    return NULL;
-  }
+	const Unicode* str,
+	const Unicode* substr) {
+	if (str == NULL || substr == NULL) {
+		return NULL;
+	}
 
-  size_t i_str;
-  for (i_str = 0; ; ++i_str) {
-    for (; str[i_str].ch != substr[0].ch; ++i_str) {
-      if (str[i_str].ch == L'\0') {
-        return NULL;
-      }
-    }
+	size_t i_str;
+	for (i_str = 0;; ++i_str) {
+		for (; str[i_str].ch != substr[0].ch; ++i_str) {
+			if (str[i_str].ch == L'\0') {
+				return NULL;
+			}
+		}
 
-    if (str[i_str].ch == '\0') {
-      return NULL;
-    }
+		if (str[i_str].ch == '\0') {
+			return NULL;
+		}
 
-    size_t i_substr;
-    for (i_substr = 0;
-        str[i_str + i_substr].ch == substr[i_substr].ch;
-        ++i_substr) {
-      if (str[i_str + i_substr].ch == L'\0') {
-        break;
-      }
+		size_t i_substr;
+		for (i_substr = 0;
+			 str[i_str + i_substr].ch == substr[i_substr].ch;
+			 ++i_substr) {
+			if (str[i_str + i_substr].ch == L'\0') {
+				break;
+			}
 
-      if (substr[i_substr].ch == L'\0') {
-        return (Unicode*)&str[i_str];
-      }
-    }
+			if (substr[i_substr].ch == L'\0') {
+				return (Unicode*)&str[i_str];
+			}
+		}
 
-    if (substr[i_substr].ch == L'\0') {
-      return (Unicode*)&str[i_str];
-    }
-  }
+		if (substr[i_substr].ch == L'\0') {
+			return (Unicode*)&str[i_str];
+		}
+	}
 
-  return (Unicode*)&str[i_str];
+	return (Unicode*)&str[i_str];
 }

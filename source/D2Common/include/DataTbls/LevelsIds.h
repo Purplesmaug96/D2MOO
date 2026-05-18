@@ -1,7 +1,6 @@
-#pragma once 
+#pragma once
 
-enum D2C_Levels
-{
+enum D2C_Levels {
 	LEVEL_NONE = 0,
 	LEVEL_ROGUEENCAMPMENT = 1,
 	LEVEL_BLOODMOOR,
@@ -143,8 +142,7 @@ enum D2C_Levels
 #endif
 };
 
-enum D2C_LvlPrestIds
-{
+enum D2C_LvlPrestIds {
 	LVLPREST_NONE, // PRESET_DEF_NONE in the original game
 	LVLPREST_ACT1_TOWN_1,
 	LVLPREST_ACT1_TOWN_1_TRANSITION_E,
@@ -1237,8 +1235,7 @@ enum D2C_LvlPrestIds
 	LVLPREST_ACT5_BAAL_ENTRANCE,
 };
 
-enum D2C_LvlSubIds
-{
+enum D2C_LvlSubIds {
 	LVLSUB_ACT1_BORDER_CLIFFS,
 	LVLSUB_ACT1_BORDER_MIDDLE,
 	LVLSUB_ACT1_BORDER_CORNER,
@@ -1254,8 +1251,7 @@ enum D2C_LvlSubIds
 	LVLSUB_ACT5_BARRICADE,
 };
 
-enum D2C_LvlTypes
-{
+enum D2C_LvlTypes {
 	LVLTYPE_NONE,
 	LVLTYPE_ACT1_TOWN,
 	LVLTYPE_ACT1_WILDERNESS,

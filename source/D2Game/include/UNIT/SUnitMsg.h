@@ -2,7 +2,6 @@
 
 #include <Units/Units.h>
 
-
 // D2Game.0x6FCC5520
 void __fastcall D2GAME_SUNITMSG_FirstFn_6FCC5520(D2GameStrc* pGame, D2UnitStrc* pUnit, D2ClientStrc* pClient);
 // D2Game.0x6FCC58E0

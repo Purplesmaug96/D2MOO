@@ -42,14 +42,13 @@ void* __fastcall FOG_AllocPool(void* pMemPool, int nSize, const char* szFile, in
 	return pMem;
 }
 
-
 // Fog.#10046
 void __fastcall FOG_FreePool(void* pMemPool, void* pFree, const char* szFile, int nLine, int n0) {
 	free(pFree);
 }
 
 // Fog.#10047
-void* __fastcall FOG_ReallocPool(void* pMemPool, void* pMemory, int nSize, const char* szFile, int nLine, int n0)  {
+void* __fastcall FOG_ReallocPool(void* pMemPool, void* pMemory, int nSize, const char* szFile, int nLine, int n0) {
 	void* pMem = realloc(pMemory, nSize);
 
 	if (pMem == NULL) {

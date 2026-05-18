@@ -2,12 +2,11 @@
 
 #include <Units/Units.h>
 
-
 // D2Game.0x6FCBA690
 void __fastcall PLAYERLIST_FreePlayerLists(D2GameStrc* pGame, D2UnitStrc* pPlayer);
 // D2Game.0x6FCBA6E0
 void __fastcall PLAYERLIST_IterateCallback_FreePlayerList(D2GameStrc* pGame, D2UnitStrc* pPlayer, void* pArg);
-//Inlined in some functions
+// Inlined in some functions
 D2PlayerListStrc* __fastcall PLAYERLIST_GetPlayerListRecordFromUnitGUID(D2UnitStrc* pPlayer, int32_t nUnitGUID);
 // D2Game.0x6FCBA750
 void __fastcall PLAYERLIST_AllocPlayerList(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2);

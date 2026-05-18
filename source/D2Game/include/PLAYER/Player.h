@@ -1,8 +1,7 @@
 #pragma once
 
-#include <Units/Units.h>
 #include <D2DataTbls.h>
-
+#include <Units/Units.h>
 
 // D2Game.0x6FC7B550
 void __fastcall PLAYER_Create(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t nPlayerGUID);
@@ -28,8 +27,8 @@ void __fastcall PLAYER_ResetBusyState(D2UnitStrc* pUnit);
 void __fastcall PLAYER_StopInteractions(D2GameStrc* pGame, D2UnitStrc* pUnit);
 // D2Game.0x6FC7BEC0
 void __fastcall sub_6FC7BEC0(D2GameStrc* pGame, D2UnitStrc* pUnit);
-//1.10f: D2Game.0x6FC7BFC0
-//1.13c: D2Game.0x6FC57B10
+// 1.10f: D2Game.0x6FC7BFC0
+// 1.13c: D2Game.0x6FC57B10
 void __fastcall sub_6FC7BFC0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nPlayerGUID, D2CoordStrc* pCoord);
 // D2Game.0x6FC7C0C0
 void __fastcall PLAYER_SetUniqueIdInPlayerData(D2UnitStrc* pPlayer, int32_t nUnitGUID);

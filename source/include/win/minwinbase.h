@@ -4,7 +4,8 @@
 
 #include "windef.h"
 
-typedef struct {} OVERLAPPED;
+typedef struct {
+} OVERLAPPED;
 typedef OVERLAPPED* LPOVERLAPPED;
 
 typedef struct _SYSTEMTIME {

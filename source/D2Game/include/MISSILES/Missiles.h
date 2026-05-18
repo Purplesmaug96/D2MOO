@@ -2,7 +2,6 @@
 
 #include <Units/Units.h>
 
-
 // D2Game.0x6FC552A0
 void __fastcall MISSILES_RemoveAll(D2GameStrc* pGame);
 // D2Game.0x6FC552F0

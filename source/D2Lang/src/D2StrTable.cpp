@@ -63,13 +63,11 @@ static bool gbTableLanguageInitialized = false;
  */
 static D2C_Language gnTableLanguage = LANGUAGE_ENGLISH;
 
-inline static void GroupCStrDigits(Unicode* pUnicode, const char* pcSrc, int nMaxLength)
-{
+inline static void GroupCStrDigits(Unicode* pUnicode, const char* pcSrc, int nMaxLength) {
 	int nBufferLength = strlen(pcSrc);
 
 	int nUnicodeLength = ((nBufferLength - 1) / 3) + nBufferLength;
-	if (nBufferLength == 0 || nUnicodeLength <= 0 || nUnicodeLength >= nMaxLength - 1)
-	{
+	if (nBufferLength == 0 || nUnicodeLength <= 0 || nUnicodeLength >= nMaxLength - 1) {
 		Unicode asteriskStr[2];
 		Unicode::toUnicode(asteriskStr, "*", 2);
 		Unicode::strcpy(pUnicode, asteriskStr);
@@ -82,20 +80,17 @@ inline static void GroupCStrDigits(Unicode* pUnicode, const char* pcSrc, int nMa
 	// insertion index.
 	// i = destination index (naming is to preserve accurate assert msg)
 	// j = source index
-	for (int i = nUnicodeLength, j = nBufferLength; j > 0; --i, --j)
-	{
+	for (int i = nUnicodeLength, j = nBufferLength; j > 0; --i, --j) {
 		D2_ASSERT(i);
 
 		pUnicode[i - 1] = pcSrc[j - 1];
 		++nDistanceToComma;
-		if (nDistanceToComma < 3)
-		{
+		if (nDistanceToComma < 3) {
 			continue;
 		}
 
 		// Inefficient: Calls strlen again.
-		if (strlen(pcSrc) <= 3 || i - 1 <= 0)
-		{
+		if (strlen(pcSrc) <= 3 || i - 1 <= 0) {
 			continue;
 		}
 
@@ -111,20 +106,17 @@ inline static void GroupCStrDigits(Unicode* pUnicode, const char* pcSrc, int nMa
  * 1.13c: D2Lang.0x6FC09290 (#10009)
  * 1.14c: Game.0x00522610
  */
-D2C_Language STRTABLE_GetLanguage()
-{
-	if (gbTableLanguageInitialized)
-	{
+D2C_Language STRTABLE_GetLanguage() {
+	if (gbTableLanguageInitialized) {
 		return gnTableLanguage;
 	}
 	gbTableLanguageInitialized = true;
 	// Read locale from file.
-	unsigned char* pBuffer = (unsigned char*) ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(ghArchive, "data\\local\\use", nullptr);
+	unsigned char* pBuffer = (unsigned char*)ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(ghArchive, "data\\local\\use", nullptr);
 	gnTableLanguage = static_cast<D2C_Language>(*pBuffer);
 	D2_FREE(pBuffer);
 
-	if (gnTableLanguage >= NUM_LANGUAGES)
-	{
+	if (gnTableLanguage >= NUM_LANGUAGES) {
 		gnTableLanguage = LANGUAGE_ENGLISH;
 	}
 
@@ -137,12 +129,10 @@ D2C_Language STRTABLE_GetLanguage()
  * 1.13c: D2Lang.0x6FC09BC0 (#10002)
  * 1.14c: Game.0x00523510
  */
-void __stdcall STR_GroupIntDigits(Unicode* pUnicode, int nValue, int nMaxLength)
-{
+void __stdcall STR_GroupIntDigits(Unicode* pUnicode, int nValue, int nMaxLength) {
 	D2_ASSERT(nMaxLength > 2);
 
-	if (nValue < 0)
-	{
+	if (nValue < 0) {
 		pUnicode[0] = L'-';
 		++pUnicode;
 		nMaxLength -= 1;
@@ -161,8 +151,7 @@ void __stdcall STR_GroupIntDigits(Unicode* pUnicode, int nValue, int nMaxLength)
  * 1.13c: D2Lang.0x6FC09A80 (#10006)
  * 1.14c: Game.0x005228A0
  */
-void __stdcall STR_GroupUintDigits(Unicode* pUnicode, unsigned int dwValue, int nMaxLength)
-{
+void __stdcall STR_GroupUintDigits(Unicode* pUnicode, unsigned int dwValue, int nMaxLength) {
 	D2_ASSERT(nMaxLength > 2);
 
 	char chBuffer[64];

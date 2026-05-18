@@ -5,8 +5,7 @@
 
 #pragma pack(1)
 
-enum D2Composits
-{
+enum D2Composits {
 	COMPOSIT_HEAD,
 	COMPOSIT_TORSO,
 	COMPOSIT_LEGS,
@@ -26,8 +25,7 @@ enum D2Composits
 	NUM_COMPONENTS,
 };
 
-enum D2WeaponClasses
-{
+enum D2WeaponClasses {
 	WEAPONCLASS_HTH, // Hand To Hand (Bare fists)
 	WEAPONCLASS_BOW, // Bow (All Bow class weapons)
 	WEAPONCLASS_1HS, // One-Handed: Swing (axes, swords, flails, maces, hammers, clubs and wands)
@@ -46,10 +44,9 @@ enum D2WeaponClasses
 
 };
 
-struct D2CompositStrc
-{
-	int32_t nWeaponClassCode;					//0x00
-	int32_t nWeaponClassId;						//0x04
+struct D2CompositStrc {
+	int32_t nWeaponClassCode; // 0x00
+	int32_t nWeaponClassId;	  // 0x04
 };
 
 #pragma pack()

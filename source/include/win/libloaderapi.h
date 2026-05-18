@@ -2,31 +2,30 @@
 
 #include "__windows_shim_msvcrt.h"
 
+#include <dlfcn.h>
+#include <malloc.h>
 #include <string.h>
 #include <sys/time.h>
-#include <malloc.h>
-#include <dlfcn.h>
 #include <unistd.h>
 
+#include "process.h"
 #include "windef.h"
 #include "winnt.h"
-#include "process.h"
 
 // Source - https://stackoverflow.com/a/4031835
 // Posted by Fred Foo, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-05-15, License - CC BY-SA 2.5
 
-static inline char *__windows_shim_program_path() {
-    char *path = (char*)malloc(MAX_PATH);
-    if (path != NULL) {
-        if (readlink("/proc/self/exe", path, MAX_PATH) == -1) {
-            free(path);
-            path = NULL;
-        }
-    }
-    return path;
+static inline char* __windows_shim_program_path() {
+	char* path = (char*)malloc(MAX_PATH);
+	if (path != NULL) {
+		if (readlink("/proc/self/exe", path, MAX_PATH) == -1) {
+			free(path);
+			path = NULL;
+		}
+	}
+	return path;
 }
-
 
 static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD nSize) {
 	if (hModule == NULL) {
@@ -55,15 +54,13 @@ static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {
 		printf("Failed to load dynamic lib '%s'.\n", lib->name);
 		free(lib);
 		return NULL;
-	}
-	else {
+	} else {
 		printf("Successfully loaded dynamic lib '%s'.\n", lib->name);
-		BOOL (__stdcall* DllMain)(HINSTANCE, DWORD, void*) = (BOOL (__stdcall*)(HINSTANCE, DWORD, void*))GetProcAddress(lib, "DllMain");
+		BOOL(__stdcall * DllMain)(HINSTANCE, DWORD, void*) = (BOOL(__stdcall*)(HINSTANCE, DWORD, void*))GetProcAddress(lib, "DllMain");
 
 		if (DllMain(lib, DLL_PROCESS_ATTACH, NULL)) {
 			printf("Successfully called DllMain.\n");
-		}
-		else {
+		} else {
 			printf("Call to DllMain failed.\n");
 		}
 	}
@@ -80,8 +77,7 @@ static inline FARPROC GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
 
 	if (ret == NULL) {
 		printf("Failed to load symbol '%s' from '%s'.\n", lpProcName, hModule->name);
-	}
-	else {
+	} else {
 		printf("Successfully loaded symbol '%s' from '%s'.\n", lpProcName, hModule->name);
 	}
 
@@ -99,8 +95,7 @@ static inline BOOL FreeLibrary(HMODULE hModule) {
 		printf("Successfully closed hModule->dlHandle from dynamic lib '%s'.\n", hModule->name);
 		free(hModule);
 		return TRUE;
-	}
-	else {
+	} else {
 		printf("Failed to free dynamic lib '%s' - hModule->dlHandle is NULL.\n", hModule->name);
 		return FALSE;
 	}

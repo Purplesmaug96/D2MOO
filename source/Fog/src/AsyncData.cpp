@@ -12,10 +12,10 @@ BOOL __fastcall FOG_MPQSetConfig(uint32_t dwDirectAccessFlags, int bEnableSeekOp
 	// undefined4 uStack_8;
 	// undefined4 uStack_4;
 
-						/* 0x11590  10101   */
+	/* 0x11590  10101   */
 	SFileSetBasePath(gFileBasePath);
 	SFileEnableDirectAccess((HANDLE)dwDirectAccessFlags);
-	SFileSetIoErrorMode(0,0);
+	SFileSetIoErrorMode(0, 0);
 	SFileEnableSeekOptimization(bEnableSeekOptimization);
 	// uStack_4 = 0x8000;
 	gFileDirectAccessFlags = dwDirectAccessFlags;
@@ -28,6 +28,6 @@ BOOL __fastcall FOG_MPQSetConfig(uint32_t dwDirectAccessFlags, int bEnableSeekOp
 
 // Fog.#10117
 BOOL FOG_UseDirect() {
-                    /* 0x11a10  10117   */
+	/* 0x11a10  10117   */
 	return gFileDirectAccessFlags;
 }

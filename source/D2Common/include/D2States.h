@@ -5,14 +5,12 @@
 
 #pragma pack(1)
 
-enum D2C_StateTransformTypes
-{
+enum D2C_StateTransformTypes {
 	TRANSFORMTYPE_PLAYER = 1,
 	TRANSFORMTYPE_MONSTER = 2,
 };
 
-enum D2C_States
-{
+enum D2C_States {
 	STATE_NONE = 0,
 	STATE_FREEZE,
 	STATE_POISON,
@@ -202,8 +200,7 @@ enum D2C_States
 #endif
 };
 
-enum D2C_StateMasks
-{
+enum D2C_StateMasks {
 	STATEMASK_NOSEND,
 	STATEMASK_AURA,
 	STATEMASK_HIDE,

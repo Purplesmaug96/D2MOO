@@ -1,11 +1,9 @@
 #pragma once
 
-#include <Units/Units.h>
 #include <UNIT/SUnitDmg.h>
-
+#include <Units/Units.h>
 
 struct D2AuraCallbackStrc;
-
 
 // D2Game.0x6FD156F0
 int32_t __fastcall SKILLS_DoInferno(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel, int32_t nMissileId);

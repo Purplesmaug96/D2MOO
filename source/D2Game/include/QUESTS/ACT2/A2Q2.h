@@ -4,25 +4,23 @@
 
 #pragma pack(1)
 
-//HoradricStaff
-struct D2Act2Quest2Strc						//sizeof 0x30
+// HoradricStaff
+struct D2Act2Quest2Strc // sizeof 0x30
 {
-	int unused0x00[5];						//0x00
-	int nItemDropCount;						//0x14
-	int nBaseStaffs;						//0x18
-	int nCubedStaffs;						//0x1C
-	int nHoradricCubes;						//0x20
-	int nAmulets;							//0x24
-	uint8_t bHoradricScrollDropped;			//0x28
-	uint8_t bCubeDropped;					//0x29
-	uint8_t bStaffCubed;					//0x2A
-	uint8_t unk0x2B;						//0x2B TODO
-	int nPlayerGUID;						//0x2C
+	int unused0x00[5];				// 0x00
+	int nItemDropCount;				// 0x14
+	int nBaseStaffs;				// 0x18
+	int nCubedStaffs;				// 0x1C
+	int nHoradricCubes;				// 0x20
+	int nAmulets;					// 0x24
+	uint8_t bHoradricScrollDropped; // 0x28
+	uint8_t bCubeDropped;			// 0x29
+	uint8_t bStaffCubed;			// 0x2A
+	uint8_t unk0x2B;				// 0x2B TODO
+	int nPlayerGUID;				// 0x2C
 };
 
 #pragma pack()
-
-
 
 // D2Game.0x6FCA01F0
 bool __fastcall ACT2Q2_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNpcId, D2UnitStrc* pPlayer, D2BitBufferStrc* pQuestFlags, D2UnitStrc* pNPC);

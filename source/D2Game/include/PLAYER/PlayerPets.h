@@ -2,9 +2,7 @@
 
 #include <Units/Units.h>
 
-
-enum D2PetTypes
-{
+enum D2PetTypes {
 	PETTYPE_NONE,
 	PETTYPE_SINGLE,
 	PETTYPE_VALKYRIE,
@@ -26,7 +24,6 @@ enum D2PetTypes
 	PETTYPE_PETTRAP,
 	PETTYPE_HYDRA,
 };
-
 
 // D2Game.0x6FC7CAF0
 void __fastcall PLAYERPETS_AllocPetList(D2GameStrc* pGame, D2UnitStrc* pPlayer);

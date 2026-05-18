@@ -2,32 +2,29 @@
 
 #include "D2Dungeon.h"
 #include "D2StatList.h"
-#include "Units/Units.h"
 #include "Path/Path.h"
+#include "Units/Units.h"
 
-
-//TODO: Find names (used by Path Functions)
+// TODO: Find names (used by Path Functions)
 int dword_6FDD2580;
 int dword_6FDD2584;
 
 // D2Common.0x6FDBCF10 (#11279)
-int __stdcall UNITROOM_AddUnitToRoomEx(D2UnitStrc* pUnit, D2ActiveRoomStrc* pRoom, int nUnused)
-{
+int __stdcall UNITROOM_AddUnitToRoomEx(D2UnitStrc* pUnit, D2ActiveRoomStrc* pRoom, int nUnused) {
 	D2_MAYBE_UNUSED(nUnused);
 
 	D2_ASSERT(pUnit);
 	D2_ASSERT(pRoom);
 
-	//Note: tRoomCoord is unused but filled in the original code
-	//D2DrlgCoordsStrc tRoomCoord = {};
-	//DUNGEON_GetRoomCoordinates(pRoom, &tRoomCoord);
+	// Note: tRoomCoord is unused but filled in the original code
+	// D2DrlgCoordsStrc tRoomCoord = {};
+	// DUNGEON_GetRoomCoordinates(pRoom, &tRoomCoord);
 
 	D2CoordStrc tCoord = {};
 	UNITS_GetCoords(pUnit, &tCoord);
 	D2_ASSERT(DungeonTestRoomGame(pRoom, tCoord.nX, tCoord.nY));
 
-	for (D2UnitStrc* i = pRoom->pUnitFirst; i; i = i->pRoomNext)
-	{
+	for (D2UnitStrc* i = pRoom->pUnitFirst; i; i = i->pRoomNext) {
 		D2_ASSERTM(pUnit != i, "Unit being added to a room it is already in");
 	}
 
@@ -38,8 +35,7 @@ int __stdcall UNITROOM_AddUnitToRoomEx(D2UnitStrc* pUnit, D2ActiveRoomStrc* pRoo
 
 	UNITROOM_RefreshUnit(pUnit);
 
-	if (pUnit->dwUnitType == UNIT_PLAYER || (pUnit->dwUnitType == UNIT_MONSTER && STATLIST_GetUnitAlignment(pUnit) == UNIT_ALIGNMENT_GOOD))
-	{
+	if (pUnit->dwUnitType == UNIT_PLAYER || (pUnit->dwUnitType == UNIT_MONSTER && STATLIST_GetUnitAlignment(pUnit) == UNIT_ALIGNMENT_GOOD)) {
 		DUNGEON_IncreaseAlliedCountOfRoom(pRoom);
 	}
 
@@ -47,20 +43,16 @@ int __stdcall UNITROOM_AddUnitToRoomEx(D2UnitStrc* pUnit, D2ActiveRoomStrc* pRoo
 }
 
 // D2Common.0x6FDBD100 (#10384)
-int __stdcall UNITROOM_AddUnitToRoom(D2UnitStrc* pUnit, D2ActiveRoomStrc* pRoom)
-{
+int __stdcall UNITROOM_AddUnitToRoom(D2UnitStrc* pUnit, D2ActiveRoomStrc* pRoom) {
 	return UNITROOM_AddUnitToRoomEx(pUnit, pRoom, 1);
 }
 
 // D2Common.0x6FDBD120 (#10385)
-void __stdcall UNITROOM_RefreshUnit(D2UnitStrc* pUnit)
-{
-
+void __stdcall UNITROOM_RefreshUnit(D2UnitStrc* pUnit) {
 	D2_ASSERT(pUnit);
 
 	D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
-	if (pRoom && !D2Common_10084(pRoom) && !(pUnit->dwFlags & UNITFLAG_ISLINKREFRESHMSG))
-	{
+	if (pRoom && !D2Common_10084(pRoom) && !(pUnit->dwFlags & UNITFLAG_ISLINKREFRESHMSG)) {
 		pUnit->dwFlags |= UNITFLAG_ISLINKREFRESHMSG;
 
 		D2UnitStrc** ppUnitFirst = DUNGEON_GetUnitUpdateListFromRoom(pRoom, TRUE);
@@ -72,8 +64,7 @@ void __stdcall UNITROOM_RefreshUnit(D2UnitStrc* pUnit)
 }
 
 // D2Common.0x6FDBD1B0 (#10388)
-void __stdcall UNITROOM_SortUnitListByTargetY(D2ActiveRoomStrc* pRoom)
-{
+void __stdcall UNITROOM_SortUnitListByTargetY(D2ActiveRoomStrc* pRoom) {
 	D2UnitStrc** ppUnitFirst = NULL;
 	D2UnitStrc** ppUnit = NULL;
 	D2UnitStrc* pPreviousUnit = NULL;
@@ -85,29 +76,20 @@ void __stdcall UNITROOM_SortUnitListByTargetY(D2ActiveRoomStrc* pRoom)
 	pUnit = *ppUnit;
 	ppUnitFirst = ppUnit;
 
-	if (pUnit)
-	{
+	if (pUnit) {
 		pNextUnit = pUnit->pRoomNext;
-		do
-		{
+		do {
 			bContinue = false;
 
-			while (pNextUnit)
-			{
-				if (UNITS_GetClientCoordY(pUnit) <= UNITS_GetClientCoordY(pNextUnit))
-				{
+			while (pNextUnit) {
+				if (UNITS_GetClientCoordY(pUnit) <= UNITS_GetClientCoordY(pNextUnit)) {
 					pPreviousUnit = pUnit;
 					pUnit = pNextUnit;
 					pNextUnit = pNextUnit->pRoomNext;
-				}
-				else
-				{
-					if (pPreviousUnit)
-					{
+				} else {
+					if (pPreviousUnit) {
 						pPreviousUnit->pRoomNext = pNextUnit;
-					}
-					else
-					{
+					} else {
 						*ppUnitFirst = pNextUnit;
 					}
 
@@ -118,19 +100,16 @@ void __stdcall UNITROOM_SortUnitListByTargetY(D2ActiveRoomStrc* pRoom)
 					bContinue = true;
 				}
 			}
-		}
-		while (bContinue);
+		} while (bContinue);
 	}
 }
 
-//1.00:  D2Common.0x1006D1E0 (#10385)
-//1.10f: D2Common.0x6FDBD250 (#10390)
-void __stdcall UNITROOM_UpdatePath(D2UnitStrc* pUnit)
-{
+// 1.00:  D2Common.0x1006D1E0 (#10385)
+// 1.10f: D2Common.0x6FDBD250 (#10390)
+void __stdcall UNITROOM_UpdatePath(D2UnitStrc* pUnit) {
 	D2_ASSERT(pUnit);
 
-	switch (pUnit->dwUnitType)
-	{
+	switch (pUnit->dwUnitType) {
 	case UNIT_PLAYER:
 	case UNIT_MONSTER:
 	case UNIT_MISSILE:
@@ -142,8 +121,7 @@ void __stdcall UNITROOM_UpdatePath(D2UnitStrc* pUnit)
 
 		pUnit->pDynamicPath->dwPathPoints = 0;
 
-		if (pUnit->pDynamicPath->pRoom)
-		{
+		if (pUnit->pDynamicPath->pRoom) {
 			pUnit->pDynamicPath->pPreviousRoom = pUnit->pDynamicPath->pRoom;
 			UNITROOM_RemoveUnitFromRoom(pUnit->pDynamicPath->pUnit);
 			pUnit->pDynamicPath->dwFlags |= PATH_CURRENT_ROOM_INVALID;
@@ -153,8 +131,7 @@ void __stdcall UNITROOM_UpdatePath(D2UnitStrc* pUnit)
 	case UNIT_OBJECT:
 	case UNIT_ITEM:
 	case UNIT_TILE:
-		if (pUnit->pStaticPath->pRoom)
-		{
+		if (pUnit->pStaticPath->pRoom) {
 			UNITROOM_RemoveUnitFromRoom(pUnit);
 			pUnit->pStaticPath->pRoom = NULL;
 		}
@@ -165,14 +142,12 @@ void __stdcall UNITROOM_UpdatePath(D2UnitStrc* pUnit)
 }
 
 // D2Common.0x6FDBD2B0 (#10391)
-void __stdcall UNITROOM_ClearUpdateQueue(D2ActiveRoomStrc* pRoom)
-{
+void __stdcall UNITROOM_ClearUpdateQueue(D2ActiveRoomStrc* pRoom) {
 	D2UnitStrc** ppChangeUnit = NULL;
 	D2UnitStrc* pNextChangeUnit = NULL;
 
 	ppChangeUnit = DUNGEON_GetUnitUpdateListFromRoom(pRoom, FALSE);
-	while (*ppChangeUnit)
-	{
+	while (*ppChangeUnit) {
 		pNextChangeUnit = (*ppChangeUnit)->pChangeNextUnit;
 		(*ppChangeUnit)->dwFlags &= ~UNITFLAG_ISLINKREFRESHMSG;
 		(*ppChangeUnit)->pChangeNextUnit = NULL;
@@ -183,8 +158,7 @@ void __stdcall UNITROOM_ClearUpdateQueue(D2ActiveRoomStrc* pRoom)
 }
 
 // D2Common.0x6FDBD300 (#10386)
-void __stdcall UNITROOM_RemoveUnitFromRoom(D2UnitStrc* pUnit)
-{
+void __stdcall UNITROOM_RemoveUnitFromRoom(D2UnitStrc* pUnit) {
 	D2UnitStrc** ppRoomUnit = NULL;
 	D2UnitStrc* pPreviousUnit = NULL;
 	D2UnitStrc* pRoomUnit = NULL;
@@ -194,39 +168,30 @@ void __stdcall UNITROOM_RemoveUnitFromRoom(D2UnitStrc* pUnit)
 	D2_ASSERT(pUnit);
 
 	pRoom = UNITS_GetRoom(pUnit);
-	if (pRoom)
-	{
+	if (pRoom) {
 		ppRoomUnit = DUNGEON_GetUnitListFromRoom(pRoom);
 		pRoomUnit = *ppRoomUnit;
 
-		if (pRoomUnit)
-		{
-			while (pRoomUnit != pUnit)
-			{
+		if (pRoomUnit) {
+			while (pRoomUnit != pUnit) {
 				pPreviousUnit = pRoomUnit;
 				pRoomUnit = pRoomUnit->pRoomNext;
-				if (!pRoomUnit)
-				{
+				if (!pRoomUnit) {
 					break;
 				}
 			}
 
-			if (pRoomUnit)
-			{
+			if (pRoomUnit) {
 				bReset = true;
-				if (pPreviousUnit)
-				{
+				if (pPreviousUnit) {
 					pPreviousUnit->pRoomNext = pRoomUnit->pRoomNext;
-				}
-				else
-				{
+				} else {
 					*ppRoomUnit = pRoomUnit->pRoomNext;
 				}
 
 				pRoomUnit->pRoomNext = NULL;
 
-				if (pUnit->dwUnitType == UNIT_PLAYER || pUnit->dwUnitType == UNIT_MONSTER && STATLIST_GetUnitAlignment(pUnit) == UNIT_ALIGNMENT_GOOD)
-				{
+				if (pUnit->dwUnitType == UNIT_PLAYER || pUnit->dwUnitType == UNIT_MONSTER && STATLIST_GetUnitAlignment(pUnit) == UNIT_ALIGNMENT_GOOD) {
 					DUNGEON_DecreaseAlliedCountOfRoom(pRoom);
 				}
 			}
@@ -234,8 +199,7 @@ void __stdcall UNITROOM_RemoveUnitFromRoom(D2UnitStrc* pUnit)
 
 		UNITROOM_RemoveUnitFromUpdateQueue(pUnit);
 		pUnit->dwFlags &= ~UNITFLAG_ISLINKREFRESHMSG;
-		if (bReset)
-		{
+		if (bReset) {
 			UNITS_ResetRoom(pUnit);
 		}
 	}
@@ -243,8 +207,7 @@ void __stdcall UNITROOM_RemoveUnitFromRoom(D2UnitStrc* pUnit)
 }
 
 // D2Common.0x6FDBD400 (#10387)
-void __stdcall UNITROOM_RemoveUnitFromUpdateQueue(D2UnitStrc* pUnit)
-{
+void __stdcall UNITROOM_RemoveUnitFromUpdateQueue(D2UnitStrc* pUnit) {
 	D2UnitStrc** ppChangeUnit = NULL;
 	D2UnitStrc* pPreviousChangeUnit = NULL;
 	D2UnitStrc* pChangeUnit = NULL;
@@ -253,32 +216,24 @@ void __stdcall UNITROOM_RemoveUnitFromUpdateQueue(D2UnitStrc* pUnit)
 	D2_ASSERT(pUnit);
 
 	pRoom = UNITS_GetRoom(pUnit);
-	if (pRoom)
-	{
+	if (pRoom) {
 		ppChangeUnit = DUNGEON_GetUnitUpdateListFromRoom(pRoom, FALSE);
 		pChangeUnit = *ppChangeUnit;
 
-		if (pChangeUnit)
-		{
-			while (pChangeUnit != pUnit)
-			{
+		if (pChangeUnit) {
+			while (pChangeUnit != pUnit) {
 				pPreviousChangeUnit = pChangeUnit;
 				pChangeUnit = pChangeUnit->pChangeNextUnit;
-				if (!pChangeUnit)
-				{
+				if (!pChangeUnit) {
 					return;
 				}
 			}
 
-			if (pChangeUnit)
-			{
-				if (pPreviousChangeUnit)
-				{
+			if (pChangeUnit) {
+				if (pPreviousChangeUnit) {
 					pPreviousChangeUnit->pChangeNextUnit = pChangeUnit->pChangeNextUnit;
 					pChangeUnit->pChangeNextUnit = NULL;
-				}
-				else
-				{
+				} else {
 					*ppChangeUnit = pChangeUnit->pChangeNextUnit;
 					pChangeUnit->pChangeNextUnit = NULL;
 				}
@@ -289,26 +244,21 @@ void __stdcall UNITROOM_RemoveUnitFromUpdateQueue(D2UnitStrc* pUnit)
 }
 
 // D2Common.0x6FDBD4C0 (#10389)
-BOOL __stdcall UNITROOM_IsUnitInRoom(D2ActiveRoomStrc* pRoom, D2UnitStrc* pUnit)
-{
+BOOL __stdcall UNITROOM_IsUnitInRoom(D2ActiveRoomStrc* pRoom, D2UnitStrc* pUnit) {
 	D2UnitStrc* pRoomUnit = NULL;
 
 	D2_ASSERT(pUnit);
 
-	if (!pRoom)
-	{
+	if (!pRoom) {
 		return FALSE;
 	}
 
 	pRoomUnit = *DUNGEON_GetUnitListFromRoom(pRoom);
-	if (pRoomUnit != pUnit)
-	{
-		while (pRoomUnit)
-		{
+	if (pRoomUnit != pUnit) {
+		while (pRoomUnit) {
 			pRoomUnit = pRoomUnit->pRoomNext;
 
-			if (pRoomUnit == pUnit)
-			{
+			if (pRoomUnit == pUnit) {
 				return TRUE;
 			}
 		}

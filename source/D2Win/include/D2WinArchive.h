@@ -1,12 +1,11 @@
 #pragma once
 
-#include <winnt.h>
-#include <D2BasicTypes.h>
 #include <Archive.h>
+#include <D2BasicTypes.h>
 #include <D2Config.h>
+#include <winnt.h>
 
 struct D2CellFileStrc;
-
 
 // D2Win.0x6F8A59C0 (#10039)
 D2WIN_DLL_DECL D2CellFileStrc* __fastcall ARCHIVE_LoadCellFile(const char* szFile, int32_t nType);

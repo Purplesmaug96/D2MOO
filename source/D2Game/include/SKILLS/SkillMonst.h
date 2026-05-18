@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Units/Units.h>
 #include <DataTbls/SkillsTbls.h>
+#include <Units/Units.h>
 
 // D2Game.0x6FD061C0
 int32_t __fastcall SKILLS_SrvSt42_FireHit(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel);

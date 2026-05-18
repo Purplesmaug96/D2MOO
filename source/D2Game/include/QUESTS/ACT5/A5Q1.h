@@ -4,23 +4,21 @@
 
 #pragma pack(1)
 
-//Siege
-struct D2Act5Quest1Strc						//sizeof 0x18
+// Siege
+struct D2Act5Quest1Strc // sizeof 0x18
 {
-	D2MapAIStrc* pLarzukMapAI;					//0x00
-	D2ActiveRoomStrc* pRoom;							//0x04
-	uint8_t bLarzukStartActivated;					//0x08
-	uint8_t unused0x09[7];							//0x09
-	int nLarzukGUID;							//0x10
-	uint8_t unused0x14;							//0x14
-	uint8_t bLarzukSpawned;						//0x15
-	uint8_t bLarzukEndActivated;					//0x16
-	uint8_t bLarzukMapAIChanged;					//0x17
+	D2MapAIStrc* pLarzukMapAI;	   // 0x00
+	D2ActiveRoomStrc* pRoom;	   // 0x04
+	uint8_t bLarzukStartActivated; // 0x08
+	uint8_t unused0x09[7];		   // 0x09
+	int nLarzukGUID;			   // 0x10
+	uint8_t unused0x14;			   // 0x14
+	uint8_t bLarzukSpawned;		   // 0x15
+	uint8_t bLarzukEndActivated;   // 0x16
+	uint8_t bLarzukMapAIChanged;   // 0x17
 };
 
 #pragma pack()
-
-
 
 // D2Game.0x6FCB1200
 void __fastcall ACT5Q1_UnitIterate_SetPrimaryGoalDone(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData);
@@ -64,5 +62,5 @@ void __fastcall OBJECTS_InitFunction71_LarzukStandard(D2ObjInitFnStrc* pOp);
 void __fastcall ACT5Q1_OnSiegeBossActivated(D2GameStrc* pGame, D2UnitStrc* pUnit);
 //
 void __fastcall ACT5Q1_Callback10_PlayerLeavesGame(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg);
-//Inlined in D2Game.0x6FC975A0
+// Inlined in D2Game.0x6FC975A0
 void __fastcall ACT5Q1_ChangeLarzukMapAI(D2GameStrc* pGame, D2UnitStrc* pUnit, D2MapAIStrc* pMapAi);

@@ -3,65 +3,44 @@
 #include <Storm.h>
 
 // D2Common.0x6FD62EA0
-int __fastcall DATATBLS_MapMissilesTxtKeywordToNumber(char* szKey)
-{
-	if (!SStrCmpI(szKey, "min", 32))
-	{
+int __fastcall DATATBLS_MapMissilesTxtKeywordToNumber(char* szKey) {
+	if (!SStrCmpI(szKey, "min", 32)) {
 		return 0;
-	}
-	else if (!SStrCmpI(szKey, "max", 32))
-	{
+	} else if (!SStrCmpI(szKey, "max", 32)) {
 		return 1;
-	}
-	else if (!SStrCmpI(szKey, "rand", 32))
-	{
+	} else if (!SStrCmpI(szKey, "rand", 32)) {
 		return 2;
-	}
-	else if (!SStrCmpI(szKey, "skill", 32))
-	{
+	} else if (!SStrCmpI(szKey, "skill", 32)) {
 		return 3;
-	}
-	else if (!SStrCmpI(szKey, "miss", 32))
-	{
+	} else if (!SStrCmpI(szKey, "miss", 32)) {
 		return 4;
-	}
-	else
-	{
+	} else {
 		return -1;
 	}
 }
 
 // D2Common.0x6FD62F20
-//TODO: Find a name
-int __fastcall sub_6FD62F20(char* szText, int* a2, int a3, int nKeywordNumber)
-{
+// TODO: Find a name
+int __fastcall sub_6FD62F20(char* szText, int* a2, int a3, int nKeywordNumber) {
 	D2TxtLinkStrc* pLinker = sgptDataTables->pMissileCalcLinker;
 	char szCode[4] = {};
 	int nRow = 0;
 
-	if (a3 == 1)
-	{
-		if (nKeywordNumber == 3)
-		{
-			if (sgptDataTables->iSkillCode)
-			{
+	if (a3 == 1) {
+		if (nKeywordNumber == 3) {
+			if (sgptDataTables->iSkillCode) {
 				nRow = FOG_GetRowFromTxt(sgptDataTables->iSkillCode, szText, 0);
-				if (nRow >= 0)
-				{
+				if (nRow >= 0) {
 					*a2 = 1;
 					return nRow;
 				}
 
 				pLinker = sgptDataTables->pSkillCalcLinker;
 			}
-		}
-		else if (nKeywordNumber == 4)
-		{
-			if (sgptDataTables->pMissilesLinker)
-			{
+		} else if (nKeywordNumber == 4) {
+			if (sgptDataTables->pMissilesLinker) {
 				nRow = FOG_GetRowFromTxt(sgptDataTables->pMissilesLinker, szText, 0);
-				if (nRow >= 0)
-				{
+				if (nRow >= 0) {
 					*a2 = 1;
 					return nRow;
 				}
@@ -71,39 +50,27 @@ int __fastcall sub_6FD62F20(char* szText, int* a2, int a3, int nKeywordNumber)
 		}
 	}
 
-	if (szText[0])
-	{
+	if (szText[0]) {
 		szCode[0] = szText[0];
-		if (szText[1])
-		{
+		if (szText[1]) {
 			szCode[1] = szText[1];
-			if (szText[2])
-			{
+			if (szText[2]) {
 				szCode[2] = szText[2];
-				if (szText[3])
-				{
+				if (szText[3]) {
 					szCode[3] = szText[3];
-				}
-				else
-				{
+				} else {
 					szCode[3] = ' ';
 				}
-			}
-			else
-			{
+			} else {
 				szCode[2] = ' ';
 				szCode[3] = ' ';
 			}
-		}
-		else
-		{
+		} else {
 			szCode[1] = ' ';
 			szCode[2] = ' ';
 			szCode[3] = ' ';
 		}
-	}
-	else
-	{
+	} else {
 		szCode[0] = ' ';
 		szCode[1] = ' ';
 		szCode[2] = ' ';
@@ -117,37 +84,27 @@ int __fastcall sub_6FD62F20(char* szText, int* a2, int a3, int nKeywordNumber)
 }
 
 // D2Common.0x6FD630F0
-void __fastcall DATATBLS_MissileCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
-{
+void __fastcall DATATBLS_MissileCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
 	int nBufferSize = 0;
 	FOGASTNodeStrc pBuffer[1024] = {};
 
-	if (pRecord)
-	{
-		if (pSrc)
-		{
+	if (pRecord) {
+		if (pSrc) {
 			nBufferSize = DATATBLS_CompileExpression(pSrc, pBuffer, sizeof(pBuffer), DATATBLS_MapMissilesTxtKeywordToNumber, NULL, sub_6FD62F20);
-			if (nBufferSize > 0)
-			{
+			if (nBufferSize > 0) {
 				*(uint32_t*)((char*)pRecord + nOffset) = DATATBLS_AppendMemoryBuffer((char**)&sgptDataTables->pMissCode, (int*)&sgptDataTables->nMissCodeSize, &sgptDataTables->nMissCodeSizeEx, pBuffer, nBufferSize);
-			}
-			else
-			{
+			} else {
 				*(uint32_t*)((char*)pRecord + nOffset) = -1;
 			}
-		}
-		else
-		{
+		} else {
 			*(uint32_t*)((char*)pRecord + nOffset) = -1;
 		}
 	}
 }
 
 // D2Common.0x6FD63180
-void __fastcall DATATBLS_LoadMissilesTxt(HD2ARCHIVE hArchive)
-{
-	D2BinFieldStrc pTbl[] =
-	{
+void __fastcall DATATBLS_LoadMissilesTxt(HD2ARCHIVE hArchive) {
+	D2BinFieldStrc pTbl[] = {
 		{ "Missile", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pMissilesLinker },
 		{ "LastCollide", TXTFIELD_BIT, 0, 4, NULL },
 		{ "Explosion", TXTFIELD_BIT, 1, 4, NULL },
@@ -300,19 +257,14 @@ void __fastcall DATATBLS_LoadMissilesTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pMissilesLinker = (D2TxtLinkStrc*)FOG_AllocLinker(__FILE__, __LINE__);
 	sgptDataTables->pMissilesTxt = (D2MissilesTxt*)DATATBLS_CompileTxt(hArchive, "missiles", pTbl, &sgptDataTables->nMissilesTxtRecordCount, sizeof(D2MissilesTxt));
 
-	for (int i = 0; i < sgptDataTables->nMissilesTxtRecordCount; ++i)
-	{
-		if (sgptDataTables->pMissilesTxt[i].nCollideType > 8)
-		{
+	for (int i = 0; i < sgptDataTables->nMissilesTxtRecordCount; ++i) {
+		if (sgptDataTables->pMissilesTxt[i].nCollideType > 8) {
 			FOG_Trace("Range error in entry %d in table '%s' field '%s'.  Value must be between %d and %d.", i, "missiles", "CollideType", 0, 8);
 		}
 
-		if (sgptDataTables->pMissilesTxt[i].nCollideType < 0)
-		{
+		if (sgptDataTables->pMissilesTxt[i].nCollideType < 0) {
 			sgptDataTables->pMissilesTxt[i].nCollideType = 0;
-		}
-		else if (sgptDataTables->pMissilesTxt[i].nCollideType > 8)
-		{
+		} else if (sgptDataTables->pMissilesTxt[i].nCollideType > 8) {
 			sgptDataTables->pMissilesTxt[i].nCollideType = 8;
 		}
 	}
@@ -321,24 +273,20 @@ void __fastcall DATATBLS_LoadMissilesTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD64B80
-void __fastcall DATATBLS_UnloadMissilesTxt()
-{
-	if (sgptDataTables->pMissCode)
-	{
+void __fastcall DATATBLS_UnloadMissilesTxt() {
+	if (sgptDataTables->pMissCode) {
 		D2_FREE_POOL(nullptr, sgptDataTables->pMissCode);
 		sgptDataTables->pMissCode = NULL;
 	}
 	sgptDataTables->nMissCodeSize = 0;
 	sgptDataTables->nMissCodeSizeEx = 0;
 
-	if (sgptDataTables->pMissilesTxt)
-	{
+	if (sgptDataTables->pMissilesTxt) {
 		DATATBLS_UnloadBin(sgptDataTables->pMissilesTxt);
 		sgptDataTables->pMissilesTxt = NULL;
 	}
 
-	if (sgptDataTables->pMissilesLinker)
-	{
+	if (sgptDataTables->pMissilesLinker) {
 		FOG_FreeLinker(sgptDataTables->pMissilesLinker);
 		sgptDataTables->pMissilesLinker = NULL;
 	}
@@ -346,23 +294,19 @@ void __fastcall DATATBLS_UnloadMissilesTxt()
 }
 
 // D2Common.0x6FD64BE0 (#10590)
-int __stdcall DATATBLS_GetMissileVelocityFromMissilesTxt(int nMissileId, int nLevel)
-{
+int __stdcall DATATBLS_GetMissileVelocityFromMissilesTxt(int nMissileId, int nLevel) {
 	D2MissilesTxt* pMissilesTxtRecord = DATATBLS_GetMissilesTxtRecord(nMissileId);
 
-	if (pMissilesTxtRecord)
-	{
+	if (pMissilesTxtRecord) {
 		return pMissilesTxtRecord->nVel + nLevel * pMissilesTxtRecord->nVelLev / 8;
 	}
 
 	return 0;
 }
 
-//Inlined at various places
-D2MissilesTxt* __fastcall DATATBLS_GetMissilesTxtRecord(int nMissileId)
-{
-	if (nMissileId >= 0 && nMissileId < sgptDataTables->nMissilesTxtRecordCount)
-	{
+// Inlined at various places
+D2MissilesTxt* __fastcall DATATBLS_GetMissilesTxtRecord(int nMissileId) {
+	if (nMissileId >= 0 && nMissileId < sgptDataTables->nMissilesTxtRecordCount) {
 		return &sgptDataTables->pMissilesTxt[nMissileId];
 	}
 

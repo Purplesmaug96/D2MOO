@@ -8,12 +8,12 @@
 #include "winnt.h"
 
 typedef struct {
-  DWORD  cbSize;
-  HWND   hWnd;
-  UINT   uCallbackMessage;
-  UINT   uEdge;
-  RECT   rc;
-  LPARAM lParam;
+	DWORD cbSize;
+	HWND hWnd;
+	UINT uCallbackMessage;
+	UINT uEdge;
+	RECT rc;
+	LPARAM lParam;
 } _AppBarData;
 
 static inline uintptr_t SHAppBarMessage(DWORD dwMessage, _AppBarData* pData) {

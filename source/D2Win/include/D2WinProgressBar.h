@@ -2,15 +2,12 @@
 
 #include "D2WinControlHeader.h"
 
-
 #pragma pack(push, 1)
-struct D2WinProgressBarStrc
-{
-	D2WinControlStrc controlHeader;					//0x00
-	float fProgress;								//0x40
+struct D2WinProgressBarStrc {
+	D2WinControlStrc controlHeader; // 0x00
+	float fProgress;				// 0x40
 };
 #pragma pack(pop)
-
 
 // D2Win.0x6F8AEED0
 D2WinProgressBarStrc* __fastcall PROGRESSBAR_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight);

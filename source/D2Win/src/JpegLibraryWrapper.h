@@ -6,8 +6,7 @@
 #include <ijl.h>
 #endif
 
-struct D2MooJpegProperties
-{
+struct D2MooJpegProperties {
 	const char* szFileName;
 	int nWidth;
 	int nHeight;

@@ -1,7 +1,6 @@
 #pragma once
 
-enum D2C_MissilesHcIdx
-{
+enum D2C_MissilesHcIdx {
 	MISSILE_ARROW,
 	MISSILE_JAVELIN,
 	MISSILE_BIGHEAD1,

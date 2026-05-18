@@ -9,21 +9,19 @@ struct D2StatListStrc;
 
 #pragma pack(1)
 
-enum D2C_ItemQualities
-{
-	ITEMQUAL_INFERIOR = 0x01, 	//0x01 Inferior
-	ITEMQUAL_NORMAL = 0x02, 	//0x02 Normal
-	ITEMQUAL_SUPERIOR = 0x03, 	//0x03 Superior
-	ITEMQUAL_MAGIC = 0x04, 		//0x04 Magic
-	ITEMQUAL_SET = 0x05, 		//0x05 Set
-	ITEMQUAL_RARE = 0x06, 		//0x06 Rare
-	ITEMQUAL_UNIQUE = 0x07, 	//0x07 Unique
-	ITEMQUAL_CRAFT = 0x08, 		//0x08 Crafted
-	ITEMQUAL_TEMPERED = 0x09	//0x09 Tempered
+enum D2C_ItemQualities {
+	ITEMQUAL_INFERIOR = 0x01, // 0x01 Inferior
+	ITEMQUAL_NORMAL = 0x02,	  // 0x02 Normal
+	ITEMQUAL_SUPERIOR = 0x03, // 0x03 Superior
+	ITEMQUAL_MAGIC = 0x04,	  // 0x04 Magic
+	ITEMQUAL_SET = 0x05,	  // 0x05 Set
+	ITEMQUAL_RARE = 0x06,	  // 0x06 Rare
+	ITEMQUAL_UNIQUE = 0x07,	  // 0x07 Unique
+	ITEMQUAL_CRAFT = 0x08,	  // 0x08 Crafted
+	ITEMQUAL_TEMPERED = 0x09  // 0x09 Tempered
 };
 
-enum D2C_ItemTypes
-{
+enum D2C_ItemTypes {
 	ITEMTYPE_NONE_1 = 0,
 	ITEMTYPE_NONE_2,
 	ITEMTYPE_SHIELD,
@@ -132,19 +130,17 @@ enum D2C_ItemTypes
 	ITEMTYPE_CLUESCROLL
 };
 
-enum D2C_ItemModes
-{
-	IMODE_STORED, 		//Item is in Storage (inventory, cube, Stash?)
-	IMODE_EQUIP, 		//Item is Equippped
-	IMODE_INBELT, 		//Item is in Belt Rows
-	IMODE_ONGROUND, 	//Item is on Ground
-	IMODE_ONCURSOR, 	//Item is on Cursor
-	IMODE_DROPPING, 	//Item is Being Dropped
-	IMODE_SOCKETED		//Item is Socketed in another Item
+enum D2C_ItemModes {
+	IMODE_STORED,	// Item is in Storage (inventory, cube, Stash?)
+	IMODE_EQUIP,	// Item is Equippped
+	IMODE_INBELT,	// Item is in Belt Rows
+	IMODE_ONGROUND, // Item is on Ground
+	IMODE_ONCURSOR, // Item is on Cursor
+	IMODE_DROPPING, // Item is Being Dropped
+	IMODE_SOCKETED	// Item is Socketed in another Item
 };
 
-enum D2C_ItemFlags
-{
+enum D2C_ItemFlags {
 	IFLAG_NEWITEM = 0x00000001,
 	IFLAG_TARGET = 0x00000002,
 	IFLAG_TARGETING = 0x00000004,
@@ -175,16 +171,14 @@ enum D2C_ItemFlags
 	IFLAG_ITEM = 0x08000000
 };
 
-enum D2C_UniqueItemFlags
-{
+enum D2C_UniqueItemFlags {
 	UNIQUEITEM_ENABLED = 0x00000001,
 	UNIQUEITEM_NOLIMIT = 0x00000002,
 	UNIQUEITEM_CARRY1 = 0x00000004,
 	UNIQUEITEM_LADDER = 0x00000008,
 };
 
-enum D2C_ItemDropFlags
-{
+enum D2C_ItemDropFlags {
 	ITEMDROPFLAG_HELLBOVINE = 0x00000001,
 	ITEMDROPFLAG_NEVERETH = 0x00000002,
 	ITEMDROPFLAG_ALWAYSETH = 0x00000004,
@@ -194,23 +188,21 @@ enum D2C_ItemDropFlags
 	ITEMDROPFLAG_SUPERIOR = 0x00000040,
 };
 
-enum D2C_ItemCmdFlags
-{
+enum D2C_ItemCmdFlags {
 	ITEMCMDFLAG_DELETE = 0x00000020,
 };
 
-struct D2ItemSaveStrc
-{
-	int32_t nClassId;							//0x00
-	uint16_t nX;								//0x04
-	uint16_t nY;								//0x06
-	uint8_t nAnimMode;							//0x08
-	uint8_t pad0x09[3];							//0x09
-	uint32_t dwFlags;							//0x0C
-	uint8_t nStorePage;							//0x10
-	uint8_t nBodyloc;							//0x11
-	uint8_t pad0x12[2];							//0x12
-	int32_t nItemFileIndex;						//0x14
+struct D2ItemSaveStrc {
+	int32_t nClassId;		// 0x00
+	uint16_t nX;			// 0x04
+	uint16_t nY;			// 0x06
+	uint8_t nAnimMode;		// 0x08
+	uint8_t pad0x09[3];		// 0x09
+	uint32_t dwFlags;		// 0x0C
+	uint8_t nStorePage;		// 0x10
+	uint8_t nBodyloc;		// 0x11
+	uint8_t pad0x12[2];		// 0x12
+	int32_t nItemFileIndex; // 0x14
 };
 #pragma pack()
 
@@ -459,14 +451,14 @@ D2COMMON_DLL_DECL BOOL __stdcall ITEMS_IsSocketFiller(D2UnitStrc* pItem);
 // D2Common.0x6FD9D9E0 (#10822) Retrieves the runes.txt record based on the socketed items
 D2COMMON_DLL_DECL const D2RunesTxt* __stdcall ITEMS_GetRunesTxtRecordFromItem(const D2UnitStrc* pItem);
 // D2Common.0x6FD9DBA0 (#10729)
-D2COMMON_DLL_DECL //Checks if the given item has a type equivalent to a given item type
-BOOL __stdcall ITEMS_CheckItemTypeIdByItemId(int nItemId, int nItemType);
+D2COMMON_DLL_DECL // Checks if the given item has a type equivalent to a given item type
+	BOOL __stdcall ITEMS_CheckItemTypeIdByItemId(int nItemId, int nItemType);
 // D2Common.0x6FD9DC80 (#10730)
-D2COMMON_DLL_DECL //Checks if the given item types are equivalent
-BOOL __stdcall ITEMS_CheckType(int nItemType1, int nItemType2);
+D2COMMON_DLL_DECL // Checks if the given item types are equivalent
+	BOOL __stdcall ITEMS_CheckType(int nItemType1, int nItemType2);
 // D2Common.0x6FD9DCE0 (#10731)
-D2COMMON_DLL_DECL //Checks if the given item has a type equivalent to a given item type
-BOOL __stdcall ITEMS_CheckItemTypeId(const D2UnitStrc* pItem, int nItemType);
+D2COMMON_DLL_DECL // Checks if the given item has a type equivalent to a given item type
+	BOOL __stdcall ITEMS_CheckItemTypeId(const D2UnitStrc* pItem, int nItemType);
 // D2Common.0x6FD9DDD0 (#10803)
 D2COMMON_DLL_DECL int __stdcall ITEMS_CheckBitField1Flag1(int nItemId);
 // D2Common.0x6FD9DE10 (#10802)
@@ -565,7 +557,7 @@ void __fastcall ITEMS_SetDefenseOrDamage(D2UnitStrc* pItem, int nStat);
 void __fastcall ITEMS_ReadStatFromItemBitstream(D2BitBufferStrc* pBuffer, D2StatListStrc* pStatList, D2ItemStatCostTxt* pItemStatCostTxtRecord, int nStatId, uint32_t dwVersion, int n109);
 // D2Common.0x6FDA2BA0 (#10881)
 D2COMMON_DLL_DECL size_t __stdcall ITEMS_SerializeItemToBitstream(D2UnitStrc* pItem, uint8_t* pBitstream, size_t nSize, BOOL bServer, BOOL bSaveItemInv, BOOL bGamble);
-//Inlined in D2Common.0x6FDA2C00
+// Inlined in D2Common.0x6FDA2C00
 void __fastcall ITEMS_SerializeItemCompact(D2UnitStrc* pItem, D2BitBufferStrc* pBuffer, D2ItemsTxt* pItemsTxtRecord, BOOL bServer);
 // D2Common.0x6FDA2C00
 size_t __fastcall ITEMS_SerializeItem(D2UnitStrc* pItem, D2BitBufferStrc* pBuffer, BOOL bServer, BOOL bSaveItemInv, BOOL bGamble);

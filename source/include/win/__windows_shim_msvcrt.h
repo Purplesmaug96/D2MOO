@@ -1,17 +1,17 @@
 #pragma once
 
-#include <stdio.h>
 #include <assert.h>
-#include <string.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <__windows_shim_arch_helper.h>
 
 #ifdef __ANDROID__
-    #include <android/log.h>
-    #define printf(...) __android_log_print(ANDROID_LOG_INFO, "D2MOO", __VA_ARGS__)
+#include <android/log.h>
+#define printf(...) __android_log_print(ANDROID_LOG_INFO, "D2MOO", __VA_ARGS__)
 #endif
 
 // Greatly increases comilation time
@@ -89,76 +89,75 @@ static inline char * _ui64tow(unsigned long long value, char *buffer, int radix)
 // Taken from geeksforgeeks - https://www.geeksforgeeks.org/c/implement-itoa/
 
 // A utility function to reverse a string
-static inline void __windows_shim_reverse(char str[], int length)
-{
-    int start = 0;
-    int end = length - 1;
-    while (start < end) {
-        char temp = str[start];
-        str[start] = str[end];
-        str[end] = temp;
-        end--;
-        start++;
-    }
+static inline void __windows_shim_reverse(char str[], int length) {
+	int start = 0;
+	int end = length - 1;
+	while (start < end) {
+		char temp = str[start];
+		str[start] = str[end];
+		str[end] = temp;
+		end--;
+		start++;
+	}
 }
 // Implementation of citoa()
-static inline char* __windows_shim_itoa(int num, char* str, int base)
-{
-    int i = 0;
-    bool isNegative = false;
+static inline char* __windows_shim_itoa(int num, char* str, int base) {
+	int i = 0;
+	bool isNegative = false;
 
-    /* Handle 0 explicitly, otherwise empty string is
-     * printed for 0 */
-    if (num == 0) {
-        str[i++] = '0';
-        str[i] = '\0';
-        return str;
-    }
+	/* Handle 0 explicitly, otherwise empty string is
+	 * printed for 0 */
+	if (num == 0) {
+		str[i++] = '0';
+		str[i] = '\0';
+		return str;
+	}
 
-    // In standard itoa(), negative numbers are handled
-    // only with base 10. Otherwise numbers are
-    // considered unsigned.
-    if (num < 0 && base == 10) {
-        isNegative = true;
-        num = -num;
-    }
+	// In standard itoa(), negative numbers are handled
+	// only with base 10. Otherwise numbers are
+	// considered unsigned.
+	if (num < 0 && base == 10) {
+		isNegative = true;
+		num = -num;
+	}
 
-    // Process individual digits
-    while (num != 0) {
-        int rem = num % base;
-        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
-        num = num / base;
-    }
+	// Process individual digits
+	while (num != 0) {
+		int rem = num % base;
+		str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+		num = num / base;
+	}
 
-    // If number is negative, append '-'
-    if (isNegative)
-        str[i++] = '-';
+	// If number is negative, append '-'
+	if (isNegative) {
+		str[i++] = '-';
+	}
 
-    str[i] = '\0'; // Append string terminator
+	str[i] = '\0'; // Append string terminator
 
-    // Reverse the string
-    __windows_shim_reverse(str, i);
+	// Reverse the string
+	__windows_shim_reverse(str, i);
 
-    return str;
+	return str;
 }
 
-static inline char * _itoa(int value, char *buffer, int radix) {
+static inline char* _itoa(int value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _ltoa(long value, char *buffer, int radix) {
+static inline char* _ltoa(long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _ultoa(unsigned long value, char *buffer, int radix) {
+static inline char* _ultoa(unsigned long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _i64toa(long long value, char *buffer, int radix) {
+static inline char* _i64toa(long long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _ui64toa(unsigned long long value, char *buffer, int radix) {
+static inline char* _ui64toa(unsigned long long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
@@ -167,23 +166,23 @@ static inline char * _ui64toa(unsigned long long value, char *buffer, int radix)
 
 // Wide
 
-static inline char * _itow(int value, char *buffer, int radix) {
+static inline char* _itow(int value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _ltow(long value, char *buffer, int radix) {
+static inline char* _ltow(long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _ultow(unsigned long value, char *buffer, int radix) {
+static inline char* _ultow(unsigned long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _i64tow(long long value, char *buffer, int radix) {
+static inline char* _i64tow(long long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
-static inline char * _ui64tow(unsigned long long value, char *buffer, int radix) {
+static inline char* _ui64tow(unsigned long long value, char* buffer, int radix) {
 	return __windows_shim_itoa(value, buffer, radix);
 }
 
@@ -201,51 +200,51 @@ static inline void _unlock_file(FILE* file) {
 // Posted by Alex B, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-05-08, License - CC BY-SA 2.5
 
-static inline int fopen_s(FILE **f, const char *name, const char *mode) {
+static inline int fopen_s(FILE** f, const char* name, const char* mode) {
 	int ret = 0;
-    assert(f);
-    *f = fopen(name, mode);
-    // Can't be sure about 1-to-1 mapping of errno and MS' errno_t
+	assert(f);
+	*f = fopen(name, mode);
+	// Can't be sure about 1-to-1 mapping of errno and MS' errno_t
 
-    // if (!*f)
-    //     ret = errno;
-    return ret;
+	// if (!*f)
+	//     ret = errno;
+	return ret;
 }
 
-static inline int strcpy_s(char *dest, size_t dest_size, const char *src) {
+static inline int strcpy_s(char* dest, size_t dest_size, const char* src) {
 	strncpy(dest, src, dest_size);
 	return 1; // Assumed success return
 }
 
-static inline int strncpy_s(char *dest, size_t dest_size, const char *src, size_t count) {
+static inline int strncpy_s(char* dest, size_t dest_size, const char* src, size_t count) {
 	strncpy(dest, src, dest_size < count ? dest_size : count);
 	return 1; // Assumed success return
 }
 
-static inline int sprintf_s(char *buffer, size_t sizeOfBuffer, const char *format, ...) {
-    int result;
-    va_list args;
+static inline int sprintf_s(char* buffer, size_t sizeOfBuffer, const char* format, ...) {
+	int result;
+	va_list args;
 
-    va_start(args, format);
+	va_start(args, format);
 
-    result = vsprintf(buffer, format, args);
+	result = vsprintf(buffer, format, args);
 
-    va_end(args);
+	va_end(args);
 
-    return result;
+	return result;
 }
 
-static inline int sprintf_s(char *buffer, const char *format, ...) {
-    int result;
-    va_list args;
+static inline int sprintf_s(char* buffer, const char* format, ...) {
+	int result;
+	va_list args;
 
-    va_start(args, format);
+	va_start(args, format);
 
-    result = vsprintf(buffer, format, args);
+	result = vsprintf(buffer, format, args);
 
-    va_end(args);
+	va_end(args);
 
-    return result;
+	return result;
 }
 
 // #define strcpy_s strcpy
@@ -254,35 +253,43 @@ static inline int sprintf_s(char *buffer, const char *format, ...) {
 
 #if __windows_shim_arch == __windows_shim_arch_x86 && defined(__windows_shim_BitScanReverse_x86_intrin)
 
-static unsigned char _BitScanReverse(uint32_t * Index, uint32_t Mask) {
-	if (Mask == 0) return 0;
+static unsigned char _BitScanReverse(uint32_t* Index, uint32_t Mask) {
+	if (Mask == 0) {
+		return 0;
+	}
 	*Index = _bit_scan_reverse(Mask);
 	return 1;
 }
 
-static unsigned char _BitScanReverse64(uint32_t * Index, uint64_t Mask) {
-	if (Mask == 0) return 0;
+static unsigned char _BitScanReverse64(uint32_t* Index, uint64_t Mask) {
+	if (Mask == 0) {
+		return 0;
+	}
 	*Index = _bit_scan_reverse(Mask);
 	return 1;
 }
 
 #else
 
-static unsigned char _BitScanReverse(uint32_t * Index, uint32_t Mask) {
-    if (Mask == 0) return 0;
-    *Index = (uint32_t)(31 - __builtin_clz(Mask));
-    return 1;
+static unsigned char _BitScanReverse(uint32_t* Index, uint32_t Mask) {
+	if (Mask == 0) {
+		return 0;
+	}
+	*Index = (uint32_t)(31 - __builtin_clz(Mask));
+	return 1;
 }
 
-static unsigned char _BitScanReverse64(uint32_t * Index, uint64_t Mask) {
-    if (Mask == 0) return 0;
-    *Index = (uint64_t)(63 - __builtin_clzll(Mask));
-    return 1;
+static unsigned char _BitScanReverse64(uint32_t* Index, uint64_t Mask) {
+	if (Mask == 0) {
+		return 0;
+	}
+	*Index = (uint64_t)(63 - __builtin_clzll(Mask));
+	return 1;
 }
 
 #endif
 
-static inline char *_strrev(char *str) {
+static inline char* _strrev(char* str) {
 	const unsigned int str_len = strlen(str);
 	char* tmp = (char*)malloc(str_len);
 

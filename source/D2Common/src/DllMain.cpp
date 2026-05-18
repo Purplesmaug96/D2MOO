@@ -1,20 +1,18 @@
-#include <windef.h>
-#include <process.h>
-#include <winnt.h>
 #include <libloaderapi.h>
+#include <process.h>
+#include <windef.h>
+#include <winnt.h>
 
 #include <Imports/DllBases.h>
 
 #ifdef _WIN32
 
-HMODULE delayedD2CMPDllBaseGet()
-{
+HMODULE delayedD2CMPDllBaseGet() {
 	static HMODULE DLLBASE_D2CMP = LoadLibraryA("D2CMP.dll");
 	return DLLBASE_D2CMP;
 }
 
-HMODULE delayedD2LANGDllBaseGet()
-{
+HMODULE delayedD2LANGDllBaseGet() {
 	static HMODULE DLLBASE_D2LANG = LoadLibraryA("D2Lang.dll");
 	return DLLBASE_D2LANG;
 }
@@ -26,14 +24,12 @@ HMODULE delayedFOGDllBaseGet() {
 
 #else
 
-HMODULE delayedD2CMPDllBaseGet()
-{
+HMODULE delayedD2CMPDllBaseGet() {
 	static HMODULE DLLBASE_D2CMP = LoadLibraryA("libD2CMP.so");
 	return DLLBASE_D2CMP;
 }
 
-HMODULE delayedD2LANGDllBaseGet()
-{
+HMODULE delayedD2LANGDllBaseGet() {
 	static HMODULE DLLBASE_D2LANG = LoadLibraryA("libD2Lang.so");
 	return DLLBASE_D2LANG;
 }
@@ -46,10 +42,8 @@ HMODULE delayedFOGDllBaseGet() {
 #endif
 
 // NOLINTBEGIN(bugprone-branch-clone)
-BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved)
-{
-	switch (dwReason)
-	{
+BOOL __stdcall DllMain(HINSTANCE hModule, DWORD dwReason, void* lpReserved) {
+	switch (dwReason) {
 	case DLL_PROCESS_ATTACH:
 		break;
 	case DLL_PROCESS_DETACH:

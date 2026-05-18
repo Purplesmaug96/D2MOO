@@ -5,8 +5,7 @@
 
 #pragma pack()
 
-enum D2AnimSeqEvent : uint8_t
-{
+enum D2AnimSeqEvent : uint8_t {
 	ANIMSEQ_EVENT_NONE,
 	ANIMSEQ_EVENT_MELEE_ATTACK,
 	ANIMSEQ_EVENT_MISSILE_ATTACK,
@@ -15,26 +14,23 @@ enum D2AnimSeqEvent : uint8_t
 
 };
 
-struct D2AnimSeqTxt
-{
-	uint16_t wSequence;					//0x00
-	uint8_t nMode;						//0x02
-	uint8_t nFrame;						//0x03
-	uint8_t nDir;						//0x04
-	D2AnimSeqEvent nEvent;				//0x05
+struct D2AnimSeqTxt {
+	uint16_t wSequence;	   // 0x00
+	uint8_t nMode;		   // 0x02
+	uint8_t nFrame;		   // 0x03
+	uint8_t nDir;		   // 0x04
+	D2AnimSeqEvent nEvent; // 0x05
 };
 
-struct D2AnimSeqRecordStrc
-{
-	D2AnimSeqTxt* pAnimSeqTxtRecord;	//0x00
-	int32_t nSeqFramesCount;			//0x04
-	int32_t nFramesCount;				//0x08
+struct D2AnimSeqRecordStrc {
+	D2AnimSeqTxt* pAnimSeqTxtRecord; // 0x00
+	int32_t nSeqFramesCount;		 // 0x04
+	int32_t nFramesCount;			 // 0x08
 };
 
-//TODO: Find a better name
-struct D2PlayerWeaponSequencesStrc
-{
-	D2AnimSeqRecordStrc weaponRecords[NUM_WEAPON_CLASSES];		//0x00
+// TODO: Find a better name
+struct D2PlayerWeaponSequencesStrc {
+	D2AnimSeqRecordStrc weaponRecords[NUM_WEAPON_CLASSES]; // 0x00
 };
 
 #pragma pack()

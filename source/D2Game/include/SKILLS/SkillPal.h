@@ -1,12 +1,10 @@
 #pragma once
 
 #include <D2StatList.h>
-#include <Units/Units.h>
 #include <UNIT/SUnitDmg.h>
-
+#include <Units/Units.h>
 
 struct D2AuraCallbackStrc;
-
 
 // D2Game.0x6FD18330
 int32_t __fastcall SKILLS_SrvSt29_Sacrifice(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel);

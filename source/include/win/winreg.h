@@ -5,8 +5,8 @@
 #include <string.h>
 
 #include "windef.h"
-#include "winnt.h"
 #include "winerror.h"
+#include "winnt.h"
 
 #ifdef __windows_shim_has_jsonc
 
@@ -14,17 +14,17 @@
 
 #endif
 
-#define HKEY_CLASSES_ROOT                   ((HKEY)0)
-#define HKEY_CURRENT_USER                   ((HKEY)1)
-#define HKEY_LOCAL_MACHINE                  ((HKEY)2)
-#define HKEY_USERS                          ((HKEY)3)
-#define HKEY_PERFORMANCE_DATA               ((HKEY)4)
-#define HKEY_PERFORMANCE_TEXT               ((HKEY)5)
-#define HKEY_PERFORMANCE_NLSTEXT            ((HKEY)6)
+#define HKEY_CLASSES_ROOT ((HKEY)0)
+#define HKEY_CURRENT_USER ((HKEY)1)
+#define HKEY_LOCAL_MACHINE ((HKEY)2)
+#define HKEY_USERS ((HKEY)3)
+#define HKEY_PERFORMANCE_DATA ((HKEY)4)
+#define HKEY_PERFORMANCE_TEXT ((HKEY)5)
+#define HKEY_PERFORMANCE_NLSTEXT ((HKEY)6)
 
-#define HKEY_CURRENT_CONFIG                 ((HKEY)7)
-#define HKEY_DYN_DATA                       ((HKEY)8)
-#define HKEY_CURRENT_USER_LOCAL_SETTINGS    ((HKEY)9)
+#define HKEY_CURRENT_CONFIG ((HKEY)7)
+#define HKEY_DYN_DATA ((HKEY)8)
+#define HKEY_CURRENT_USER_LOCAL_SETTINGS ((HKEY)9)
 
 /*
 
@@ -40,115 +40,113 @@ typedef __windows_shim_struct_HKEY* HKEY;
 
 */
 
-static inline const char* __windows_shim_pathSeparatedHKeyClassesRoot[] = {"HKEY_CLASSES_ROOT", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyClassesRoot[] = { "HKEY_CLASSES_ROOT", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyClassesRoot = {
-    .path = (char*)"HKEY_CLASSES_ROOT",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyClassesRoot,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_CLASSES_ROOT",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyClassesRoot,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyCurrentUser[] = {"HKEY_CURRENT_USER", NULL};
-
+static inline const char* __windows_shim_pathSeparatedHKeyCurrentUser[] = { "HKEY_CURRENT_USER", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyCurrentUser = {
-    .path = (char*)"HKEY_CURRENT_USER",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentUser,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_CURRENT_USER",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentUser,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyLocalMachine[] = {"HKEY_LOCAL_MACHINE", NULL};
-
+static inline const char* __windows_shim_pathSeparatedHKeyLocalMachine[] = { "HKEY_LOCAL_MACHINE", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyLocalMachine = {
-    .path = (char*)"HKEY_LOCAL_MACHINE",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyLocalMachine,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_LOCAL_MACHINE",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyLocalMachine,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyUsers[] = {"HKEY_USERS", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyUsers[] = { "HKEY_USERS", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyUsers = {
-    .path = (char*)"HKEY_USERS",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyUsers,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_USERS",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyUsers,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyPerformanceData[] = {"HKEY_PERFORMANCE_DATA", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyPerformanceData[] = { "HKEY_PERFORMANCE_DATA", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyPerformanceData = {
-    .path = (char*)"HKEY_PERFORMANCE_DATA",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceData,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_PERFORMANCE_DATA",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceData,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyPerformanceText[] = {"HKEY_PERFORMANCE_TEXT", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyPerformanceText[] = { "HKEY_PERFORMANCE_TEXT", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyPerformanceText = {
-    .path = (char*)"HKEY_PERFORMANCE_TEXT",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceText,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_PERFORMANCE_TEXT",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceText,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyPerformanceNLSText[] = {"HKEY_PERFORMANCE_NLSTEXT", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyPerformanceNLSText[] = { "HKEY_PERFORMANCE_NLSTEXT", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyPerformanceNLSText = {
-    .path = (char*)"HKEY_PERFORMANCE_NLSTEXT",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceNLSText,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_PERFORMANCE_NLSTEXT",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyPerformanceNLSText,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyCurrentConfig[] = {"HKEY_CURRENT_CONFIG", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyCurrentConfig[] = { "HKEY_CURRENT_CONFIG", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyCurrentConfig = {
-    .path = (char*)"HKEY_CURRENT_CONFIG",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentConfig,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_CURRENT_CONFIG",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentConfig,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyDynData[] = {"HKEY_DYN_DATA", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyDynData[] = { "HKEY_DYN_DATA", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyDynData = {
-    .path = (char*)"HKEY_DYN_DATA",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyDynData,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_DYN_DATA",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyDynData,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
-static inline const char* __windows_shim_pathSeparatedHKeyCurrentUserLocalSettings[] = {"HKEY_CURRENT_USER_LOCAL_SETTINGS", NULL};
+static inline const char* __windows_shim_pathSeparatedHKeyCurrentUserLocalSettings[] = { "HKEY_CURRENT_USER_LOCAL_SETTINGS", NULL };
 
 static inline const __windows_shim_struct_HKEY __windows_shim_hKeyCurrentUserLocalSettings = {
-    .path = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS",
-    .pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentUserLocalSettings,
-    .name = NULL,
-    .type = -1,
-    .value = 0,
+	.path = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS",
+	.pathSeperated = (char**)__windows_shim_pathSeparatedHKeyCurrentUserLocalSettings,
+	.name = NULL,
+	.type = -1,
+	.value = 0,
 	.parent = NULL
 };
 
@@ -168,14 +166,13 @@ static inline const __windows_shim_struct_HKEY* __windows_shim_hKeysLookup[10] =
 static inline HKEY __windows_shim_GetHKey(const HKEY hKey) {
 	if ((uintptr_t)hKey > 6) {
 		return hKey;
-	}
-	else {
+	} else {
 		return (HKEY)__windows_shim_hKeysLookup[(uintptr_t)hKey];
 	}
 }
 
 static inline HKEY __windows_shim_GetInstancedBuiltinHKey(const int id) {
-	char* pathSeparatedhKey[] = {NULL, NULL};
+	char* pathSeparatedhKey[] = { NULL, NULL };
 	HKEY hKey = (HKEY)malloc(sizeof(__windows_shim_struct_HKEY));
 
 	hKey->path = (char*)"HKEY_PERFORMANCE_NLSTEXT";
@@ -185,48 +182,48 @@ static inline HKEY __windows_shim_GetInstancedBuiltinHKey(const int id) {
 	hKey->value = 0;
 
 	switch (id) {
-		case 0:
-			pathSeparatedhKey[0] = (char*)"HKEY_CLASSES_ROOT";
-			hKey->path = (char*)"HKEY_CLASSES_ROOT";
-			break;
-		case 1:
-			pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_USER";
-			hKey->path = (char*)"HKEY_CURRENT_USER";
-			break;
-		case 2:
-			pathSeparatedhKey[0] = (char*)"HKEY_LOCAL_MACHINE";
-			hKey->path = (char*)"HKEY_LOCAL_MACHINE";
-			break;
-		case 3:
-			pathSeparatedhKey[0] = (char*)"HKEY_USERS";
-			hKey->path = (char*)"HKEY_USERS";
-			break;
-		case 4:
-			pathSeparatedhKey[0] = (char*)"HKEY_PERFORMANCE_DATA";
-			hKey->path = (char*)"HKEY_PERFORMANCE_DATA";
-			break;
-		case 5:
-			pathSeparatedhKey[0] = (char*)"HKEY_PERFORMANCE_TEXT";
-			hKey->path = (char*)"HKEY_PERFORMANCE_TEXT";
-			break;
-		case 6:
-			pathSeparatedhKey[0] = (char*)"HKEY_PERFORMANCE_NLSTEXT";
-			hKey->path = (char*)"HKEY_PERFORMANCE_NLSTEXT";
-			break;
-		case 7:
-			pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_CONFIG";
-			hKey->path = (char*)"HKEY_CURRENT_CONFIG";
-			break;
-		case 8:
-			pathSeparatedhKey[0] = (char*)"HKEY_DYN_DATA";
-			hKey->path = (char*)"HKEY_DYN_DATA";
-			break;
-		case 9:
-			pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS";
-			hKey->path = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS";
-			break;
-		default:
-			return NULL;
+	case 0:
+		pathSeparatedhKey[0] = (char*)"HKEY_CLASSES_ROOT";
+		hKey->path = (char*)"HKEY_CLASSES_ROOT";
+		break;
+	case 1:
+		pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_USER";
+		hKey->path = (char*)"HKEY_CURRENT_USER";
+		break;
+	case 2:
+		pathSeparatedhKey[0] = (char*)"HKEY_LOCAL_MACHINE";
+		hKey->path = (char*)"HKEY_LOCAL_MACHINE";
+		break;
+	case 3:
+		pathSeparatedhKey[0] = (char*)"HKEY_USERS";
+		hKey->path = (char*)"HKEY_USERS";
+		break;
+	case 4:
+		pathSeparatedhKey[0] = (char*)"HKEY_PERFORMANCE_DATA";
+		hKey->path = (char*)"HKEY_PERFORMANCE_DATA";
+		break;
+	case 5:
+		pathSeparatedhKey[0] = (char*)"HKEY_PERFORMANCE_TEXT";
+		hKey->path = (char*)"HKEY_PERFORMANCE_TEXT";
+		break;
+	case 6:
+		pathSeparatedhKey[0] = (char*)"HKEY_PERFORMANCE_NLSTEXT";
+		hKey->path = (char*)"HKEY_PERFORMANCE_NLSTEXT";
+		break;
+	case 7:
+		pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_CONFIG";
+		hKey->path = (char*)"HKEY_CURRENT_CONFIG";
+		break;
+	case 8:
+		pathSeparatedhKey[0] = (char*)"HKEY_DYN_DATA";
+		hKey->path = (char*)"HKEY_DYN_DATA";
+		break;
+	case 9:
+		pathSeparatedhKey[0] = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS";
+		hKey->path = (char*)"HKEY_CURRENT_USER_LOCAL_SETTINGS";
+		break;
+	default:
+		return NULL;
 	}
 
 	return hKey;
@@ -253,12 +250,10 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 		if (lpSubKey[i] == '/') { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
 			lptmpSubKey[i] = '/';
 			cntElements++;
-		}
-		else if (lpSubKey[i] == '\\') { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
+		} else if (lpSubKey[i] == '\\') { // If lpSubKey == "\\", then lptmpSubKey[i] = "/"
 			lptmpSubKey[i] = '/';
 			cntElements++;
-		}
-		else {
+		} else {
 			lptmpSubKey[i] = lpSubKey[i];
 		}
 	}
@@ -283,8 +278,7 @@ static inline char** __windows_shim_HKeyPathSeperate(char* lpSubKey, char** lpNe
 			l = i + 1;
 			k++;
 			// printf("A\n");
-		}
-		else {
+		} else {
 			j++;
 			// printf("B\n");
 		}
@@ -315,10 +309,7 @@ static inline bool __windows_shim_readJson(HKEY hKey) {
 	return false;
 }
 
-
 #endif
-
-
 
 #define KEY_QUERY_VALUE 0
 
@@ -334,12 +325,10 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 	if (lpSubKey == NULL || strlen(lpSubKey) == 0) {
 		if ((uintptr_t)hKey > 6) {
 			*phkResult = hKey;
-		}
-		else {
+		} else {
 			*phkResult = __windows_shim_GetInstancedBuiltinHKey((uintptr_t)hKey);
 		}
-	}
-	else {
+	} else {
 		HKEY tmpHKey;
 		tmpHKey = __windows_shim_GetHKey(hKey);
 
@@ -354,8 +343,7 @@ static inline LSTATUS RegOpenKeyA(HKEY hKey, LPCSTR lpSubKey, HKEY* phkResult) {
 			newHKey->name = (char*)malloc(strlen(newHKey->pathSeperated[cntElements - 1]) + 1);
 			newHKey->name[strlen(newHKey->pathSeperated[cntElements - 1])] = '\0';
 			strcpy(newHKey->name, newHKey->pathSeperated[cntElements - 1]);
-		}
-		else {
+		} else {
 			newHKey->name = (char*)"UNKNOWN";
 		}
 		newHKey->type = -1;
@@ -392,7 +380,7 @@ static inline LSTATUS RegEnumValueA(HKEY hKey, DWORD dwIndex, LPSTR lpValueName,
 	return 0;
 }
 
-static inline LSTATUS RegSetValueExA(HKEY hKey, LPCSTR lpValueName, DWORD Reserved, DWORD dwType, const BYTE *lpData, DWORD cbData) {
+static inline LSTATUS RegSetValueExA(HKEY hKey, LPCSTR lpValueName, DWORD Reserved, DWORD dwType, const BYTE* lpData, DWORD cbData) {
 	printf("Stubbed function RegSetValueExA called\n");
 	return 0;
 }

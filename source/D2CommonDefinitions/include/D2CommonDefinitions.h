@@ -15,5 +15,3 @@
 #endif
 
 #define D2_MAX_PATH 260
-
-

@@ -5,18 +5,15 @@
 #include "D2DataTbls.h"
 #include "D2Inventory.h"
 #include "D2Items.h"
-#include <D2BitManip.h>
 #include "D2Monsters.h"
 #include "D2Skills.h"
 #include "Units/Units.h"
+#include <D2BitManip.h>
 
-
-//TODO: Find names
-
+// TODO: Find names
 
 // D2Common.0x6FDCE260
-static const D2CompositStrc stru_6FDCE260[] =
-{
+static const D2CompositStrc stru_6FDCE260[] = {
 	{ ' sh1', WEAPONCLASS_1HS },
 	{ ' th1', WEAPONCLASS_1HT },
 	{ ' wob', WEAPONCLASS_BOW },
@@ -32,21 +29,16 @@ static const D2CompositStrc stru_6FDCE260[] =
 	{ ' 2th', WEAPONCLASS_HT2 },
 };
 
-
-
 // D2Common.0x6FD466C0 (#10884)
-void __stdcall D2Common_10884_COMPOSIT_unk(D2UnitStrc* pUnit, int nClass, int nMode, int nUnitType, D2InventoryStrc* pInventory, char* szPath, int* pWeaponClassCode, BOOL bAddPathPrefix, int a9)
-{
-	static const D2CompositStrc stru_6FDD6088[] =
-	{
+void __stdcall D2Common_10884_COMPOSIT_unk(D2UnitStrc* pUnit, int nClass, int nMode, int nUnitType, D2InventoryStrc* pInventory, char* szPath, int* pWeaponClassCode, BOOL bAddPathPrefix, int a9) {
+	static const D2CompositStrc stru_6FDD6088[] = {
 		{ '  hg', PLRMODE_SEQUENCE },
 		{ '  hg', PLRMODE_KNOCKBACK },
 	};
 	static const int dword_6FDD6098 = ARRAY_SIZE(stru_6FDD6088);
 
-	static const D2CompositStrc stru_6FDD609C[] =
-	{
-		{'  hg', MONMODE_KNOCKBACK },
+	static const D2CompositStrc stru_6FDD609C[] = {
+		{ '  hg', MONMODE_KNOCKBACK },
 	};
 	static const int dword_6FDD60A4 = ARRAY_SIZE(stru_6FDD609C);
 
@@ -60,88 +52,64 @@ void __stdcall D2Common_10884_COMPOSIT_unk(D2UnitStrc* pUnit, int nClass, int nM
 	char szClass[4] = {};
 	char szMode[4] = {};
 
-	if (nUnitType == UNIT_PLAYER)
-	{
+	if (nUnitType == UNIT_PLAYER) {
 		dwClassToken = *(uint32_t*)&DATATBLS_GetPlrModeTypeTxtRecord(nClass, 0)->szToken[0];
 		dwModeToken = *(uint32_t*)&DATATBLS_GetPlrModeTypeTxtRecord(nMode, 1)->szToken[0];
 
-		if (a9)
-		{
-			if (nMode && nMode != PLRMODE_DEAD)
-			{
+		if (a9) {
+			if (nMode && nMode != PLRMODE_DEAD) {
 				*pWeaponClassCode = COMPOSIT_GetWeaponClassCode(pUnit, UNIT_PLAYER, nClass, nMode, pInventory, &nWeaponClassId);
-			}
-			else
-			{
+			} else {
 				*pWeaponClassCode = ' hth';
 			}
 		}
 
-		for (int i = 0; i < dword_6FDD6098; ++i)
-		{
-			if (nMode == stru_6FDD6088[i].nWeaponClassId)
-			{
+		for (int i = 0; i < dword_6FDD6098; ++i) {
+			if (nMode == stru_6FDD6088[i].nWeaponClassId) {
 				dwModeToken = stru_6FDD6088[i].nWeaponClassCode;
 			}
 		}
 
-		if (nMode == PLRMODE_THROW)
-		{
-			if (*pWeaponClassCode != ' sh1' && *pWeaponClassCode != ' th1' && *pWeaponClassCode != ' sj1' && *pWeaponClassCode != ' tj1' && *pWeaponClassCode != ' ss1' && *pWeaponClassCode != ' ts1')
-			{
+		if (nMode == PLRMODE_THROW) {
+			if (*pWeaponClassCode != ' sh1' && *pWeaponClassCode != ' th1' && *pWeaponClassCode != ' sj1' && *pWeaponClassCode != ' tj1' && *pWeaponClassCode != ' ss1' && *pWeaponClassCode != ' ts1') {
 				*pWeaponClassCode = ' hth';
 			}
 		}
 
 		szPathPrefix = "DATA\\GLOBAL\\CHARS";
-	}
-	else if (nUnitType == UNIT_MONSTER)
-	{
+	} else if (nUnitType == UNIT_MONSTER) {
 		pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nClass);
-		if (pMonStatsTxtRecord)
-		{
+		if (pMonStatsTxtRecord) {
 			dwClassToken = pMonStatsTxtRecord->dwCode;
 			dwModeToken = DATATBLS_GetMonModeTxtRecord(nMode, 1)->dwToken;
 
-			if (nMode && nMode != MONMODE_DEAD)
-			{
+			if (nMode && nMode != MONMODE_DEAD) {
 				*pWeaponClassCode = COMPOSIT_GetWeaponClassCode(pUnit, UNIT_MONSTER, nClass, nMode, pInventory, &nWeaponClassId);
-			}
-			else
-			{
+			} else {
 				pMonStats2TxtRecord = UNITS_GetMonStats2TxtRecord(pMonStatsTxtRecord->wMonStatsEx);
-				if (pMonStats2TxtRecord && pMonStats2TxtRecord->dwFlags & gdwBitMasks[MONSTATS2FLAGINDEX_COMPOSITEDEATH])
-				{
+				if (pMonStats2TxtRecord && pMonStats2TxtRecord->dwFlags & gdwBitMasks[MONSTATS2FLAGINDEX_COMPOSITEDEATH]) {
 					*pWeaponClassCode = COMPOSIT_GetWeaponClassCode(pUnit, UNIT_MONSTER, nClass, nMode, pInventory, &nWeaponClassId);
-				}
-				else
-				{
+				} else {
 					*pWeaponClassCode = ' hth';
 				}
 			}
 
-			for (int i = 0; i < dword_6FDD60A4; ++i)
-			{
-				if (nMode == stru_6FDD609C[i].nWeaponClassId)
-				{
+			for (int i = 0; i < dword_6FDD60A4; ++i) {
+				if (nMode == stru_6FDD609C[i].nWeaponClassId) {
 					dwModeToken = stru_6FDD609C[i].nWeaponClassCode;
 				}
 			}
 
 			szPathPrefix = "DATA\\GLOBAL\\MONSTERS";
 		}
-	}
-	else if (nUnitType == UNIT_OBJECT)
-	{
+	} else if (nUnitType == UNIT_OBJECT) {
 		dwClassToken = *(uint32_t*)&DATATBLS_GetObjModeTypeTxtRecord(nClass, 0)->szToken[0];
 		dwModeToken = *(uint32_t*)&DATATBLS_GetObjModeTypeTxtRecord(nMode, 1)->szToken[0];
 
 		*pWeaponClassCode = COMPOSIT_GetWeaponClassCode(pUnit, UNIT_OBJECT, nClass, nMode, pInventory, &nWeaponClassId);
 
 		szPathPrefix = "DATA\\GLOBAL\\OBJECTS";
-	}
-	else
-	{
+	} else {
 		return;
 	}
 
@@ -169,19 +137,15 @@ void __stdcall D2Common_10884_COMPOSIT_unk(D2UnitStrc* pUnit, int nClass, int nM
 	szMode[2] &= ((szMode[2] == ' ') - 1);
 	szMode[3] = 0;
 
-	if (bAddPathPrefix)
-	{
+	if (bAddPathPrefix) {
 		wsprintfA(szPath, "%s\\%s\\COF\\%s%s%s.COF", szPathPrefix, szClass, szClass, szMode, szWeaponClass);
-	}
-	else
-	{
+	} else {
 		wsprintfA(szPath, "%s%s%s", szClass, szMode, szWeaponClass);
 	}
 }
 
 // D2Common.0x6FD46BC0 (#10885)
-void __stdcall D2Common_10885_COMPOSIT_unk(D2UnitStrc* pUnit, char* szPath, int* pWeaponClassCode, BOOL bAddPathPrefix, int a5, D2InventoryStrc* pInventory, int nAnimMode)
-{
+void __stdcall D2Common_10885_COMPOSIT_unk(D2UnitStrc* pUnit, char* szPath, int* pWeaponClassCode, BOOL bAddPathPrefix, int a5, D2InventoryStrc* pInventory, int nAnimMode) {
 	int nClass = 0;
 	int nType = 0;
 	int nMode = 0;
@@ -194,8 +158,7 @@ void __stdcall D2Common_10885_COMPOSIT_unk(D2UnitStrc* pUnit, char* szPath, int*
 
 	D2COMMON_11013_ConvertMode(pUnit, &nType, &nClass, &nMode, __FILE__, __LINE__);
 
-	if (nAnimMode != -1)
-	{
+	if (nAnimMode != -1) {
 		nMode = nAnimMode;
 	}
 
@@ -203,12 +166,9 @@ void __stdcall D2Common_10885_COMPOSIT_unk(D2UnitStrc* pUnit, char* szPath, int*
 }
 
 // D2Common.0x6FD46C60 (#10886)
-int __stdcall COMPOSIT_GetWeaponClassIdFromCode(int nWeaponClassCode)
-{
-	for (int i = 0; i < ARRAY_SIZE(stru_6FDCE260); ++i)
-	{
-		if (stru_6FDCE260[i].nWeaponClassCode == nWeaponClassCode)
-		{
+int __stdcall COMPOSIT_GetWeaponClassIdFromCode(int nWeaponClassCode) {
+	for (int i = 0; i < ARRAY_SIZE(stru_6FDCE260); ++i) {
+		if (stru_6FDCE260[i].nWeaponClassCode == nWeaponClassCode) {
 			return stru_6FDCE260[i].nWeaponClassId;
 		}
 	}
@@ -217,8 +177,7 @@ int __stdcall COMPOSIT_GetWeaponClassIdFromCode(int nWeaponClassCode)
 }
 
 // D2Common.0x6FD46C90 (#10887)
-int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int nClass, int nMode, D2InventoryStrc* pInventory, int* pWeaponClassId)
-{
+int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int nClass, int nMode, D2InventoryStrc* pInventory, int* pWeaponClassId) {
 	D2MonStats2Txt* pMonStats2TxtRecord = NULL;
 	D2CharStatsTxt* pCharStatsTxtRecord = NULL;
 	D2UnitStrc* pSecondaryWeapon = NULL;
@@ -231,33 +190,24 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 	int nWeaponClassCode = 0;
 	uint8_t nComposit = 0;
 
-	if (nUnitType == UNIT_PLAYER)
-	{
+	if (nUnitType == UNIT_PLAYER) {
 		pItem = 0;
-		if (pInventory)
-		{
+		if (pInventory) {
 			pItem = INVENTORY_GetItemFromBodyLoc(pInventory, BODYLOC_RARM);
-			if (pItem && ITEMS_CanBeEquipped(pItem))
-			{
-				if (pItem->dwUnitType != UNIT_ITEM)
-				{
+			if (pItem && ITEMS_CanBeEquipped(pItem)) {
+				if (pItem->dwUnitType != UNIT_ITEM) {
 					return 0;
 				}
 
 				nComposit = ITEMS_GetComponent(pItem);
 			}
 
-			if (nComposit != COMPOSIT_RIGHTHAND && nComposit != COMPOSIT_LEFTHAND)
-			{
+			if (nComposit != COMPOSIT_RIGHTHAND && nComposit != COMPOSIT_LEFTHAND) {
 				pItem = INVENTORY_GetItemFromBodyLoc(pInventory, BODYLOC_LARM);
-				if (pItem)
-				{
-					if (ITEMS_CanBeEquipped(pItem))
-					{
+				if (pItem) {
+					if (ITEMS_CanBeEquipped(pItem)) {
 						nComposit = ITEMS_GetComponent(pItem);
-					}
-					else
-					{
+					} else {
 						pItem = NULL;
 					}
 				}
@@ -266,64 +216,46 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 
 		pCharStatsTxtRecord = UNITS_GetCharStatsTxtRecord(nClass);
 
-		if (nMode && nMode != PLRMODE_DEAD && pItem && (nComposit == COMPOSIT_RIGHTHAND || nComposit == COMPOSIT_LEFTHAND))
-		{
+		if (nMode && nMode != PLRMODE_DEAD && pItem && (nComposit == COMPOSIT_RIGHTHAND || nComposit == COMPOSIT_LEFTHAND)) {
 			pRightHandItem = INVENTORY_GetItemFromBodyLoc(pInventory, BODYLOC_RARM);
-			if (!ITEMS_CanBeEquipped(pRightHandItem))
-			{
+			if (!ITEMS_CanBeEquipped(pRightHandItem)) {
 				pRightHandItem = NULL;
 			}
 
 			pLeftHandItem = INVENTORY_GetItemFromBodyLoc(pInventory, BODYLOC_LARM);
-			if (!ITEMS_CanBeEquipped(pLeftHandItem))
-			{
+			if (!ITEMS_CanBeEquipped(pLeftHandItem)) {
 				pLeftHandItem = NULL;
 			}
 
-			if (nClass == PCLASS_BARBARIAN)
-			{
-				if (ITEMS_CheckItemTypeId(pRightHandItem, ITEMTYPE_WEAPON) && ITEMS_CheckItemTypeId(pLeftHandItem, ITEMTYPE_WEAPON))
-				{
+			if (nClass == PCLASS_BARBARIAN) {
+				if (ITEMS_CheckItemTypeId(pRightHandItem, ITEMTYPE_WEAPON) && ITEMS_CheckItemTypeId(pLeftHandItem, ITEMTYPE_WEAPON)) {
 					pPrimaryWeapon = INVENTORY_GetLeftHandWeapon(pInventory);
-					if (!pPrimaryWeapon)
-					{
+					if (!pPrimaryWeapon) {
 						INVENTORY_UpdateWeaponGUIDOnInsert(pInventory, pRightHandItem);
 						pPrimaryWeapon = pRightHandItem;
 					}
 
 					nPrimaryWeaponClassId = ITEMS_GetWeaponClassId(pPrimaryWeapon);
-					if (pRightHandItem == pPrimaryWeapon)
-					{
+					if (pRightHandItem == pPrimaryWeapon) {
 						pSecondaryWeapon = pLeftHandItem;
-					}
-					else
-					{
+					} else {
 						pSecondaryWeapon = pRightHandItem;
 					}
 
 					nSecondaryWeaponClassId = ITEMS_GetWeaponClassId(pSecondaryWeapon);
-					if (nPrimaryWeaponClassId == WEAPONCLASS_1HS)
-					{
-						if (nSecondaryWeaponClassId == WEAPONCLASS_1HS)
-						{
+					if (nPrimaryWeaponClassId == WEAPONCLASS_1HS) {
+						if (nSecondaryWeaponClassId == WEAPONCLASS_1HS) {
 							*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' ss1');
 							return ' ss1';
-						}
-						else if (nSecondaryWeaponClassId == WEAPONCLASS_1HT)
-						{
+						} else if (nSecondaryWeaponClassId == WEAPONCLASS_1HT) {
 							*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' sj1');
 							return ' sj1';
 						}
-					}
-					else if (nPrimaryWeaponClassId == WEAPONCLASS_1HT)
-					{
-						if (nSecondaryWeaponClassId == WEAPONCLASS_1HT)
-						{
+					} else if (nPrimaryWeaponClassId == WEAPONCLASS_1HT) {
+						if (nSecondaryWeaponClassId == WEAPONCLASS_1HT) {
 							*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' tj1');
 							return ' tj1';
-						}
-						else if (nSecondaryWeaponClassId == WEAPONCLASS_1HS)
-						{
+						} else if (nSecondaryWeaponClassId == WEAPONCLASS_1HS) {
 							*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' ts1');
 							return ' ts1';
 						}
@@ -332,24 +264,18 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 					*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' ss1');
 					return ' ss1';
 				}
-			}
-			else if (nClass == PCLASS_ASSASSIN)
-			{
-				if (ITEMS_CheckItemTypeId(pRightHandItem, ITEMTYPE_WEAPON) && ITEMS_CheckItemTypeId(pLeftHandItem, ITEMTYPE_WEAPON))
-				{
+			} else if (nClass == PCLASS_ASSASSIN) {
+				if (ITEMS_CheckItemTypeId(pRightHandItem, ITEMTYPE_WEAPON) && ITEMS_CheckItemTypeId(pLeftHandItem, ITEMTYPE_WEAPON)) {
 					*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' 2th');
 					return ' 2th';
 				}
 			}
 
-			if (INVENTORY_GetWieldType(pUnit, pInventory) == 2)
-			{
+			if (INVENTORY_GetWieldType(pUnit, pInventory) == 2) {
 				nWeaponClassCode = ITEMS_Get2HandWeaponClassCode(pItem);
 				*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(nWeaponClassCode);
 				return nWeaponClassCode;
-			}
-			else
-			{
+			} else {
 				nWeaponClassCode = ITEMS_GetWeaponClassCode(pItem);
 				*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(nWeaponClassCode);
 				return nWeaponClassCode;
@@ -358,28 +284,22 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 
 		*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(pCharStatsTxtRecord->dwBaseWClass);
 		return pCharStatsTxtRecord->dwBaseWClass;
-	}
-	else if (nUnitType == UNIT_MONSTER)
-	{
+	} else if (nUnitType == UNIT_MONSTER) {
 		pMonStats2TxtRecord = UNITS_GetMonStats2TxtRecordFromMonsterId(nClass);
 
-		if (!pMonStats2TxtRecord)
-		{
+		if (!pMonStats2TxtRecord) {
 			*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' hth');
 			return ' hth';
 		}
 
-		if ((nMode == MONMODE_DEATH || nMode == MONMODE_DEAD) && !(pMonStats2TxtRecord->dwFlags & gdwBitMasks[MONSTATS2FLAGINDEX_COMPOSITEDEATH]))
-		{
+		if ((nMode == MONMODE_DEATH || nMode == MONMODE_DEAD) && !(pMonStats2TxtRecord->dwFlags & gdwBitMasks[MONSTATS2FLAGINDEX_COMPOSITEDEATH])) {
 			*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' hth');
 			return ' hth';
 		}
 
 		*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(pMonStats2TxtRecord->nBaseW);
 		return pMonStats2TxtRecord->nBaseW;
-	}
-	else if (nUnitType == UNIT_OBJECT)
-	{
+	} else if (nUnitType == UNIT_OBJECT) {
 		*pWeaponClassId = COMPOSIT_GetWeaponClassIdFromCode(' hth');
 		return ' hth';
 	}
@@ -389,51 +309,42 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 }
 
 // D2Common.0x6FD47150 (#10888)
-int __stdcall COMPOSIT_GetWeaponClassId(D2UnitStrc* pUnit, D2InventoryStrc* pInventory, int* pWeaponClassId, int nAnimMode, BOOL a5)
-{
+int __stdcall COMPOSIT_GetWeaponClassId(D2UnitStrc* pUnit, D2InventoryStrc* pInventory, int* pWeaponClassId, int nAnimMode, BOOL a5) {
 	int nClass = 0;
 	int nType = 0;
 	int nMode = 0;
 
-	if (pUnit)
-	{
+	if (pUnit) {
 		nClass = pUnit->dwClassId;
 		nType = pUnit->dwUnitType;
 		nMode = nAnimMode;
 
-		if (nAnimMode == -1)
-		{
+		if (nAnimMode == -1) {
 			nMode = UNITS_GetAnimOrSeqMode(pUnit);
 			nAnimMode = nMode;
 		}
 
-		if (pUnit->dwFlagEx & UNITFLAGEX_ISSHAPESHIFTED)
-		{
+		if (pUnit->dwFlagEx & UNITFLAGEX_ISSHAPESHIFTED) {
 			D2COMMON_11013_ConvertMode(pUnit, &nType, &nClass, &nAnimMode, __FILE__, __LINE__);
 
-			if (a5)
-			{
+			if (a5) {
 				nMode = nAnimMode;
 			}
 		}
 
 		return COMPOSIT_GetWeaponClassCode(pUnit, nType, nClass, nMode, pInventory, pWeaponClassId);
-	}
-	else
-	{
+	} else {
 		return ' hth';
 	}
 }
 
 // D2Common.0x6FD47200 (#10889)
-BOOL __stdcall COMPOSIT_IsArmorComponent(int nComponent)
-{
+BOOL __stdcall COMPOSIT_IsArmorComponent(int nComponent) {
 	return nComponent == COMPOSIT_TORSO || nComponent == COMPOSIT_LEGS || nComponent == COMPOSIT_RIGHTARM || nComponent == COMPOSIT_LEFTARM || nComponent == COMPOSIT_SPECIAL1 || nComponent == COMPOSIT_SPECIAL2;
 }
 
 // D2Common.0x6FD47230 (#10890)
-BOOL __stdcall COMPOSIT_IsWeaponBowOrXBow(D2UnitStrc* pUnit)
-{
+BOOL __stdcall COMPOSIT_IsWeaponBowOrXBow(D2UnitStrc* pUnit) {
 	int nWeaponClassId = 0;
 	int nClass = 0;
 	int nType = 0;
@@ -443,8 +354,7 @@ BOOL __stdcall COMPOSIT_IsWeaponBowOrXBow(D2UnitStrc* pUnit)
 	nClass = pUnit->dwClassId;
 	nMode = UNITS_GetAnimOrSeqMode(pUnit);
 
-	if (pUnit->dwFlagEx & UNITFLAGEX_ISSHAPESHIFTED)
-	{
+	if (pUnit->dwFlagEx & UNITFLAGEX_ISSHAPESHIFTED) {
 		D2COMMON_11013_ConvertMode(pUnit, &nType, &nClass, &nMode, __FILE__, __LINE__);
 	}
 
@@ -454,13 +364,11 @@ BOOL __stdcall COMPOSIT_IsWeaponBowOrXBow(D2UnitStrc* pUnit)
 }
 
 // D2Common.0x6FD472E0 (#10891)
-//Note: value returned in eax register (32bits), can't change return type to uint8_t
-unsigned __stdcall COMPOSIT_GetArmorTypeFromComponent(int nComponent, uint8_t* pArmorComponents)
-{
+// Note: value returned in eax register (32bits), can't change return type to uint8_t
+unsigned __stdcall COMPOSIT_GetArmorTypeFromComponent(int nComponent, uint8_t* pArmorComponents) {
 	D2_ASSERT(nComponent < NUM_COMPONENTS);
 
-	switch (nComponent)
-	{
+	switch (nComponent) {
 	case COMPOSIT_TORSO:
 		return pArmorComponents[2];
 

@@ -5,7 +5,6 @@
 
 #pragma pack(1)
 
-
 #pragma pack()
 
 // D2Common.0x6FD8B8A0 (#10038)
@@ -40,7 +39,7 @@ D2COMMON_DLL_DECL BOOL __stdcall DUNGEON_DoRoomsTouchOrOverlap(D2ActiveRoomStrc*
 D2COMMON_DLL_DECL BOOL __stdcall DUNGEON_AreTileCoordinatesInsideRoom(D2ActiveRoomStrc* pRoom, int nX, int nY);
 // D2Common.0x6FD8BE90 (#10048)
 D2COMMON_DLL_DECL int __stdcall DUNGEON_CheckRoomsOverlapping_BROKEN(D2ActiveRoomStrc* pPrimary, D2ActiveRoomStrc* pSecondary);
-//D2Commmon.0x6FD8BF00 (#10051)
+// D2Commmon.0x6FD8BF00 (#10051)
 D2COMMON_DLL_DECL D2ActiveRoomStrc* __stdcall DUNGEON_FindRoomByTileCoordinates(D2DrlgActStrc* pAct, int nX, int nY);
 // D2Common.0x6FD8BF50 (#10050)
 D2COMMON_DLL_DECL D2ActiveRoomStrc* __stdcall DUNGEON_GetAdjacentRoomByTileCoordinates(D2ActiveRoomStrc* pRoom, int nX, int nY);
@@ -64,7 +63,7 @@ D2COMMON_DLL_DECL D2ActiveRoomStrc* __stdcall DUNGEON_FindActSpawnLocationEx(D2D
 D2COMMON_DLL_DECL D2UnitStrc* __stdcall DUNGEON_GetFirstUnitInRoom(D2ActiveRoomStrc* pRoom);
 // D2Common.0x6FD8C4E0 (#10100)
 D2COMMON_DLL_DECL void __stdcall DUNGEON_IncreaseAlliedCountOfRoom(D2ActiveRoomStrc* pRoom);
-//D2Comon.0x6FD8C4F0 (#10036)
+// D2Comon.0x6FD8C4F0 (#10036)
 D2COMMON_DLL_DECL int __stdcall DUNGEON_GetAlliedCountFromRoom(D2ActiveRoomStrc* pRoom);
 // D2Common.0x6FD8C510 (#10101)
 D2COMMON_DLL_DECL void __stdcall DUNGEON_DecreaseAlliedCountOfRoom(D2ActiveRoomStrc* pRoom);
@@ -225,37 +224,29 @@ D2COMMON_DLL_DECL void __stdcall DUNGEON_ClientSubileDrawPositionToGameCoords(in
 D2COMMON_DLL_DECL void __stdcall DUNGEON_GameToClientSubtileDrawPositionCoords(int nX, int nY, int* pX, int* pY);
 
 // Helper function, official name coming from D2Common.0x6FDBCF10
-inline bool DungeonTestRoomGame(const D2ActiveRoomStrc* pRoom, int nX, int nY)
-{
-	return nX >= pRoom->tCoords.nSubtileX && nX < (pRoom->tCoords.nSubtileX + pRoom->tCoords.nSubtileWidth)
-        && nY >= pRoom->tCoords.nSubtileY && nY < (pRoom->tCoords.nSubtileY + pRoom->tCoords.nSubtileHeight);
-
+inline bool DungeonTestRoomGame(const D2ActiveRoomStrc* pRoom, int nX, int nY) {
+	return nX >= pRoom->tCoords.nSubtileX && nX < (pRoom->tCoords.nSubtileX + pRoom->tCoords.nSubtileWidth) && nY >= pRoom->tCoords.nSubtileY && nY < (pRoom->tCoords.nSubtileY + pRoom->tCoords.nSubtileHeight);
 }
 // Helper function
-inline D2ActiveRoomStrc* __fastcall DUNGEON_GetRoomAtPosition(D2ActiveRoomStrc* pRoom, int32_t nSubtileX, int32_t nSubtileY)
-{
-    if (!pRoom)
-    {
-        return nullptr;
-    }
+inline D2ActiveRoomStrc* __fastcall DUNGEON_GetRoomAtPosition(D2ActiveRoomStrc* pRoom, int32_t nSubtileX, int32_t nSubtileY) {
+	if (!pRoom) {
+		return nullptr;
+	}
 
-    if (DungeonTestRoomGame(pRoom, nSubtileX , nSubtileY))
-    {
-        return pRoom;
-    }
+	if (DungeonTestRoomGame(pRoom, nSubtileX, nSubtileY)) {
+		return pRoom;
+	}
 
-    D2ActiveRoomStrc** ppRoomList = nullptr;
-    int32_t nNumRooms = 0;
-    DUNGEON_GetAdjacentRoomsListFromRoom(pRoom, &ppRoomList, &nNumRooms);
+	D2ActiveRoomStrc** ppRoomList = nullptr;
+	int32_t nNumRooms = 0;
+	DUNGEON_GetAdjacentRoomsListFromRoom(pRoom, &ppRoomList, &nNumRooms);
 
-    for (int32_t i = 0; i < nNumRooms; ++i)
-    {
-        D2ActiveRoomStrc* pAdjacentRoom = ppRoomList[i];
-        if (pAdjacentRoom && DungeonTestRoomGame(pAdjacentRoom, nSubtileX, nSubtileY))
-        {
-            return pAdjacentRoom;
-        }
-    }
+	for (int32_t i = 0; i < nNumRooms; ++i) {
+		D2ActiveRoomStrc* pAdjacentRoom = ppRoomList[i];
+		if (pAdjacentRoom && DungeonTestRoomGame(pAdjacentRoom, nSubtileX, nSubtileY)) {
+			return pAdjacentRoom;
+		}
+	}
 
-    return nullptr;
+	return nullptr;
 }

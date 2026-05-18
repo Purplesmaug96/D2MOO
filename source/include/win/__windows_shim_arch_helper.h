@@ -35,7 +35,7 @@
 #define __windows_shim_arch_detailed_M68K 19
 #define __windows_shim_arch_detailed_UNKNOWN 20
 
-//Get current architecture, detectx nearly every architecture. Coded by Freak
+// Get current architecture, detectx nearly every architecture. Coded by Freak
 #if defined(__x86_64__) || defined(_M_X64)
 #define __windows_shim_arch __windows_shim_arch_x86
 #define __windows_shim_arch_detailed __windows_shim_arch_detailed_x86_64

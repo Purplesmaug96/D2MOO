@@ -10,7 +10,6 @@ static_assert(offsetof(D2ConfigStrc, szGamePassword) == 0x23F, "");
 static_assert(offsetof(D2ConfigStrc, bSkipToBNet) == 0x357, "");
 static_assert(offsetof(D2ConfigStrc, bShownLogo) == 0x359, "");
 
-
 static_assert(offsetof(D2ConfigStrc, szCurrentChannelName) == 0x35B, "");
 static_assert(offsetof(D2ConfigStrc, szDefaultChannelName) == 0x37B, "");
 static_assert(offsetof(D2ConfigStrc, nComponents) == 0x39B, "");
@@ -20,7 +19,5 @@ static_assert(offsetof(D2ConfigStrc, nAccountPasswordHash) == 0x3BD, "");
 static_assert(offsetof(D2ConfigStrc, nSaveFlags) == 0x3C5, "");
 static_assert(sizeof(D2ConfigStrc) == 0x3C7, "");
 
-
 static_assert(sizeof(D2CmdArgStrc) == 0x3C, "Check D2CmdArgStrc matches original size");
 #endif
-

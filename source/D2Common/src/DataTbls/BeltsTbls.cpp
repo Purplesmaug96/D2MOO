@@ -1,12 +1,9 @@
 #include "D2DataTbls.h"
 
-
 // D2Common.0x6FD48880
-void __fastcall DATATBLS_LoadBeltsTxt(HD2ARCHIVE hArchive)
-{
+void __fastcall DATATBLS_LoadBeltsTxt(HD2ARCHIVE hArchive) {
 	int nRecordCount = 0;
-	D2BinFieldStrc pTbl[] =
-	{
+	D2BinFieldStrc pTbl[] = {
 		{ "numboxes", TXTFIELD_BYTE, 0, 4, NULL },
 		{ "box1left", TXTFIELD_DWORD, 0, 8, NULL },
 		{ "box1right", TXTFIELD_DWORD, 0, 12, NULL },
@@ -81,21 +78,18 @@ void __fastcall DATATBLS_LoadBeltsTxt(HD2ARCHIVE hArchive)
 }
 
 // D2Common.0x6FD493A0
-void __fastcall DATATBLS_UnloadBeltsTxt()
-{
+void __fastcall DATATBLS_UnloadBeltsTxt() {
 	DATATBLS_UnloadBin(gpBeltsTxtTable);
 }
 
 // D2Common.0x6FD493B0 (#10638)
-void __stdcall DATATBLS_GetBeltsTxtRecord(int nIndex, int bHigherRes, D2BeltsTxt* pRecord)
-{
+void __stdcall DATATBLS_GetBeltsTxtRecord(int nIndex, int bHigherRes, D2BeltsTxt* pRecord) {
 	D2_ASSERT(gpBeltsTxtTable);
 	*pRecord = gpBeltsTxtTable[nIndex + BELT_IDX_COUNT_PER_RESOLUTION * bHigherRes];
 }
 
 // D2Common.0x6FD49420 (#10639)
-void __stdcall DATATBLS_GetInvRectFromBeltsTxt(int nIndex, int bHigherRes, D2InvRectStrc* pInvRect, int nBoxId)
-{
+void __stdcall DATATBLS_GetInvRectFromBeltsTxt(int nIndex, int bHigherRes, D2InvRectStrc* pInvRect, int nBoxId) {
 	D2BeltsTxt* ptBeltsTxtRecord = NULL;
 
 	D2_ASSERT(gpBeltsTxtTable);

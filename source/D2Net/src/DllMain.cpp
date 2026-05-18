@@ -1,5 +1,5 @@
-#include <windef.h>
 #include <process.h>
+#include <windef.h>
 #include <winnt.h>
 
 #include <cstdint>
@@ -8,10 +8,8 @@ extern int32_t dword_6FC0B264;
 
 // NOLINTBEGIN(bugprone-branch-clone)
 // D2Net.0x6FC01B40
-BOOL __stdcall DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
-{
-	switch (fdwReason)
-	{
+BOOL __stdcall DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+	switch (fdwReason) {
 	case DLL_PROCESS_ATTACH:
 		dword_6FC0B264 = 0;
 		break;

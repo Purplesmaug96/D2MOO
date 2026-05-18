@@ -4,42 +4,38 @@
 
 #include <windef.h>
 
-
 struct D2UnitStrc;
 struct D2InventoryGridInfoStrc;
 
 #pragma pack(1)
 
-struct D2InvRectStrc
-{
-	int32_t nLeft;		//0x00
-	int32_t nRight;		//0x04
-	int32_t nTop;		//0x08
-	int32_t nBottom;	//0x0C
+struct D2InvRectStrc {
+	int32_t nLeft;	 // 0x00
+	int32_t nRight;	 // 0x04
+	int32_t nTop;	 // 0x08
+	int32_t nBottom; // 0x0C
 };
 
-enum D2C_PlayerBodyLocs
-{
-	BODYLOC_NONE,		//Not Equipped
-	BODYLOC_HEAD,		//Helm
-	BODYLOC_NECK,		//Amulet
-	BODYLOC_TORSO,		//Body Armor
-	BODYLOC_RARM,		//Right-Hand
-	BODYLOC_LARM,		//Left-Hand
-	BODYLOC_RRIN,		//Right Ring
-	BODYLOC_LRIN,		//Left Ring
-	BODYLOC_BELT,		//Belt
-	BODYLOC_FEET,		//Boots
-	BODYLOC_GLOVES,		//Gloves
-	BODYLOC_SWRARM,		//Right-Hand on Switch
-	BODYLOC_SWLARM,		//Left-Hand on Switch
+enum D2C_PlayerBodyLocs {
+	BODYLOC_NONE,	// Not Equipped
+	BODYLOC_HEAD,	// Helm
+	BODYLOC_NECK,	// Amulet
+	BODYLOC_TORSO,	// Body Armor
+	BODYLOC_RARM,	// Right-Hand
+	BODYLOC_LARM,	// Left-Hand
+	BODYLOC_RRIN,	// Right Ring
+	BODYLOC_LRIN,	// Left Ring
+	BODYLOC_BELT,	// Belt
+	BODYLOC_FEET,	// Boots
+	BODYLOC_GLOVES, // Gloves
+	BODYLOC_SWRARM, // Right-Hand on Switch
+	BODYLOC_SWLARM, // Left-Hand on Switch
 	NUM_BODYLOC
 };
 
 #define D2C_InventoryHeader 0x1020304
 
-enum D2C_ItemInvPage
-{
+enum D2C_ItemInvPage {
 	INVPAGE_INVENTORY = 0,
 	INVPAGE_EQUIP = 1,
 	INVPAGE_TRADE = 2,
@@ -49,8 +45,7 @@ enum D2C_ItemInvPage
 	INVPAGE_NULL = 255
 };
 
-enum D2C_InventoryRecords
-{
+enum D2C_InventoryRecords {
 	// 640x420
 	INVENTORYRECORD_AMAZON,
 	INVENTORYRECORD_SORCERESS,
@@ -89,80 +84,72 @@ enum D2C_InventoryRecords
 	INVENTORYRECORD_ASSASSIN2
 };
 
-enum D2C_NodePages
-{
+enum D2C_NodePages {
 	NODEPAGE_STORAGE = 1,
 	NODEPAGE_BELTSLOTS = 2,
 	NODEPAGE_EQUIP = 3
 };
 
-enum D2C_InventoryGrids
-{
+enum D2C_InventoryGrids {
 	INVGRID_BODYLOC,
 	INVGRID_BELT,
 	INVGRID_INVENTORY,
 };
 
-enum D2TradeStates
-{
+enum D2TradeStates {
 	TRADESTATE_OTHERNOROOM,
 	TRADESTATE_SELFNOROOM,
 };
 
-struct D2InventoryGridStrc
-{
-	D2UnitStrc* pItem;						//0x00
-	D2UnitStrc* pLastItem;					//0x04
-	uint8_t nGridWidth;						//0x08
-	uint8_t nGridHeight;					//0x09
-	uint16_t pad0x0A;						//0x0A
-	D2UnitStrc** ppItems;					//0x0C
+struct D2InventoryGridStrc {
+	D2UnitStrc* pItem;	   // 0x00
+	D2UnitStrc* pLastItem; // 0x04
+	uint8_t nGridWidth;	   // 0x08
+	uint8_t nGridHeight;   // 0x09
+	uint16_t pad0x0A;	   // 0x0A
+	D2UnitStrc** ppItems;  // 0x0C
 };
 
-struct D2CorpseStrc
-{
-	uint32_t unk0x00;						//0x00
-	uint32_t dwUnitId;						//0x04
-	uint32_t unk0x08;						//0x08
-	D2CorpseStrc* pNextCorpse;				//0x0C
+struct D2CorpseStrc {
+	uint32_t unk0x00;		   // 0x00
+	uint32_t dwUnitId;		   // 0x04
+	uint32_t unk0x08;		   // 0x08
+	D2CorpseStrc* pNextCorpse; // 0x0C
 };
 
-struct D2InventoryNodeStrc
-{
-	int32_t nItemId;						//0x00
-	D2InventoryNodeStrc* pNext;				//0x04
+struct D2InventoryNodeStrc {
+	int32_t nItemId;			// 0x00
+	D2InventoryNodeStrc* pNext; // 0x04
 };
 
-struct D2InventoryStrc
-{
-	uint32_t dwSignature;					//0x00
-	void* pMemPool;							//0x04
-	D2UnitStrc* pOwner;						//0x08
-	D2UnitStrc* pFirstItem;					//0x0C
-	D2UnitStrc* pLastItem;					//0x10
-	D2InventoryGridStrc* pGrids;			//0x14
-	int32_t nGridCount;						//0x18
-	D2UnitGUID dwLeftItemGUID;				//0x1C
-	D2UnitStrc* pCursorItem;				//0x20
-	D2UnitGUID dwOwnerGuid;					//0x24
-	uint32_t dwItemCount;					//0x28
-	D2InventoryNodeStrc* pFirstNode;		//0x2C
-	D2InventoryNodeStrc* pLastNode;			//0x30
-	D2CorpseStrc* pFirstCorpse;				//0x34
-	D2CorpseStrc* pLastCorpse;				//0x38
-	int32_t nCorpseCount;					//0x3C
+struct D2InventoryStrc {
+	uint32_t dwSignature;			 // 0x00
+	void* pMemPool;					 // 0x04
+	D2UnitStrc* pOwner;				 // 0x08
+	D2UnitStrc* pFirstItem;			 // 0x0C
+	D2UnitStrc* pLastItem;			 // 0x10
+	D2InventoryGridStrc* pGrids;	 // 0x14
+	int32_t nGridCount;				 // 0x18
+	D2UnitGUID dwLeftItemGUID;		 // 0x1C
+	D2UnitStrc* pCursorItem;		 // 0x20
+	D2UnitGUID dwOwnerGuid;			 // 0x24
+	uint32_t dwItemCount;			 // 0x28
+	D2InventoryNodeStrc* pFirstNode; // 0x2C
+	D2InventoryNodeStrc* pLastNode;	 // 0x30
+	D2CorpseStrc* pFirstCorpse;		 // 0x34
+	D2CorpseStrc* pLastCorpse;		 // 0x38
+	int32_t nCorpseCount;			 // 0x3C
 };
 
-struct D2ItemExtraDataStrc
-{
-	D2InventoryStrc* pParentInv;			//0x00
-	D2UnitStrc* pPreviousItem;				//0x04
-	D2UnitStrc* pNextItem;					//0x08
-	char nNodePos;							//0x0C
-	char nNodePosOther;						//0x0D
-	uint16_t unk0x0E;						//0x0E
-	D2UnitStrc* pPreviousGridItem;			//0x10
-	D2UnitStrc* pNextGridItem;				//0x14
+struct D2ItemExtraDataStrc {
+	D2InventoryStrc* pParentInv;   // 0x00
+	D2UnitStrc* pPreviousItem;	   // 0x04
+	D2UnitStrc* pNextItem;		   // 0x08
+	char nNodePos;				   // 0x0C
+	char nNodePosOther;			   // 0x0D
+	uint16_t unk0x0E;			   // 0x0E
+	D2UnitStrc* pPreviousGridItem; // 0x10
+	D2UnitStrc* pNextGridItem;	   // 0x14
 };
 #pragma pack()
 
@@ -330,7 +317,7 @@ int __fastcall sub_6FD91D50(D2UnitStrc* pPlayer, int a2, int nBodyLoc, D2UnitStr
 BOOL __fastcall sub_6FD91E80(D2UnitStrc* pUnit, D2UnitStrc* pItem1, D2UnitStrc* pItem2);
 // D2Common.0x6FD92080 (#10304)
 D2COMMON_DLL_DECL D2UnitStrc* __stdcall INVENTORY_GetNextItem(D2UnitStrc* pItem);
-//Inlined at various places
+// Inlined at various places
 D2UnitStrc* __stdcall INVENTORY_GetNextGridItem(D2UnitStrc* pItem);
 // D2Common.0x6FD920C0 (#10305)
 D2COMMON_DLL_DECL D2UnitStrc* __stdcall INVENTORY_UnitIsItem(D2UnitStrc* pItem);

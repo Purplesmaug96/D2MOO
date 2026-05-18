@@ -35,8 +35,7 @@
 #include <Fog.h>
 
 #pragma pack(push, 1)
-struct D2ArchiveHandleStrc
-{
+struct D2ArchiveHandleStrc {
 	HSARCHIVE hArchive;
 	char szPath[MAX_PATH];
 };
@@ -127,9 +126,9 @@ void* __fastcall ARCHIVE_AllocateBufferAndReadFile(HD2ARCHIVE hArchive, const ch
 
 #define ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(hArchive, szFilePath, pBytesWritten) ARCHIVE_AllocateBufferAndReadFile(hArchive, szFilePath, pBytesWritten, __FILE__, __LINE__)
 
-using ARCHIVE_ShowMessageFunctionPtr = BOOL (__stdcall*)();
+using ARCHIVE_ShowMessageFunctionPtr = BOOL(__stdcall*)();
 
-//1.10f: D2Win.0x6F8B2399
+// 1.10f: D2Win.0x6F8B2399
 D2ArchiveHandleStrc* __fastcall ARCHIVE_LoadMPQFile(const char* szModuleName, const char* szFileName, const char* szLabel, int a4, HANDLE hFile, ARCHIVE_ShowMessageFunctionPtr pfShowMessage, int nPriority);
-//1.10f: D2Win.0x6F8B2548
+// 1.10f: D2Win.0x6F8B2548
 void __fastcall ARCHIVE_UnloadMPQFile(D2ArchiveHandleStrc* pMPQHandle);

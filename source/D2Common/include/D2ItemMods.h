@@ -1,29 +1,25 @@
 #pragma once
 
 #include "D2CommonDefinitions.h"
-#include <Units/Missile.h>
 #include <DataTbls/ItemsTbls.h>
+#include <Units/Missile.h>
 
 struct D2StatListStrc;
 
 #pragma pack(1)
 
-
 typedef BOOL(__fastcall* PROPERTYASSIGN)(int32_t, D2UnitStrc*, D2UnitStrc*, const D2PropertyStrc*, int32_t, int32_t, int32_t, int32_t, D2UnitStrc*);
 
 typedef int32_t(__fastcall* PROPERTYASSIGNFN)(int32_t, D2UnitStrc*, D2UnitStrc*, const D2PropertyStrc*, int32_t, int16_t, int32_t, int32_t, int32_t, int32_t, D2UnitStrc*);
 
-struct D2PropertyAssignStrc
-{
-	PROPERTYASSIGN pfAssign;			//0x00
-	int32_t nStatId;					//0x04
+struct D2PropertyAssignStrc {
+	PROPERTYASSIGN pfAssign; // 0x00
+	int32_t nStatId;		 // 0x04
 };
 
-
-struct D2ItemCalcStrc
-{
-	D2UnitStrc* pUnit;					//0x00
-	D2UnitStrc* pItem;					//0x04
+struct D2ItemCalcStrc {
+	D2UnitStrc* pUnit; // 0x00
+	D2UnitStrc* pItem; // 0x04
 };
 
 #pragma pack()

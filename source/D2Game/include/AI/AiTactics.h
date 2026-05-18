@@ -2,15 +2,12 @@
 
 #include <Units/Units.h>
 
-
 #pragma pack(push, 1)
-struct UnkAiStrc1
-{
+struct UnkAiStrc1 {
 	D2UnitStrc* pTarget;
 	int32_t nDistance;
 };
 #pragma pack(pop)
-
 
 // D2Game.0x6FCCF9D0
 D2UnitStrc* __fastcall sub_6FCCF9D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiControlStrc* pAiControl, int32_t* pDistance, int32_t* pCombat);

@@ -5,15 +5,12 @@
 #include <D2Constants.h>
 #include <winuser.h>
 
-
 #pragma pack(push, 1)
-struct D2WindowPlacementStrc
-{
-	HWND hWnd;								//0x00
-	WINDOWPLACEMENT windowPlacement;		//0x04
+struct D2WindowPlacementStrc {
+	HWND hWnd;						 // 0x00
+	WINDOWPLACEMENT windowPlacement; // 0x04
 };
 #pragma pack(pop)
-
 
 // D2Gfx.0x6FA74450 (#10023)
 D2GFX_DLL_DECL int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolution);
