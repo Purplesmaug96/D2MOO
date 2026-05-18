@@ -6,8 +6,8 @@ public class MainActivity extends SDLActivity {
     static {
         // Explicitly load SDL2 first
         System.loadLibrary("SDL2");
-        
-        // This is a native hook trick: By letting Android handle the load natively 
+
+        // This is a native hook trick: By letting Android handle the load natively
         // through the base context wrapper, it forces visibility flags to align.
         System.loadLibrary("Game");
     }
@@ -16,6 +16,13 @@ public class MainActivity extends SDLActivity {
     protected String getMainFunction() {
         // Explicitly defining this overrides the default fallback behaviors in some SDL versions
         return "SDL_main";
+    }
+
+	@Override
+	protected String[] getArguments() {
+        return new String[] {
+			"-3dfx"
+		};
     }
 
     @Override

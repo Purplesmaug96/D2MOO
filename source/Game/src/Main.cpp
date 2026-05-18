@@ -126,7 +126,7 @@ const char *lpszD2Module[] = {
 	"libD2Client.so",
 	"libD2Server.so",
 	"libD2Multi.so",
-	"../D2Launch/libD2Launch.so",
+	"libD2Launch.so",
 #if D2_HAS_MULTILAN
 	"libD2MultiLAN.so",
 #endif

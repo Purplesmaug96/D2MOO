@@ -42,7 +42,7 @@ constexpr const char* gszDriverDllNames[NUMBER_OF_DISPLAYTYPES] = {
 	"",
 	"libD2DDraw.so",
 #ifdef D2_GLIDE_AS_SDLRENDERER
-	"../D2SDLRender/libD2SDLRender.so",
+	"libD2SDLRender.so",
 #else
 	"libD2Glide.so",
 #endif
