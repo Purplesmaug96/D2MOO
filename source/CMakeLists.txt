@@ -1,5 +1,9 @@
 add_subdirectory(D2CommonDefinitions)
-# add_subdirectory(Storm)
+
+if(WIN32)
+add_subdirectory(Storm)
+endif()
+
 add_subdirectory(Fog)
 add_subdirectory(D2Hell)
 add_subdirectory(D2CMP)
