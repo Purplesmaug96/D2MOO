@@ -67,8 +67,10 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if (NOT WIN32)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-write-strings -fpermissive  -Wno-invalid-offsetof -Wno-multichar -Wno-old-style-definition")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fpermissive -Wno-invalid-offsetof -Wno-multichar")
+endif()
 
 if (NOT WIN32)
 add_compile_options(-include ${CMAKE_CURRENT_SOURCE_DIR}/source/include/win/__windows_shim_msvcrt.h)
