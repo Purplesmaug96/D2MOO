@@ -62,19 +62,19 @@ int32_t __fastcall AIUTIL_GetDistanceToCoordinatesWithSize(D2UnitStrc* pUnit, in
 	}
 }
 
-//D2Game.0x6FCF1210
+// D2Game.0x6FCF1210
 int32_t __fastcall AIUTIL_GetDistanceToCoordinates_FullUnitSize(D2UnitStrc* pTarget, D2UnitStrc* pSource)
 {
 	return AIUTIL_GetDistanceToCoordinatesWithSize(pTarget, CLIENTS_GetUnitX(pSource), CLIENTS_GetUnitY(pSource), UNITS_GetUnitSizeX(pTarget));
 }
 
-//D2Game.0x6FCF1310
+// D2Game.0x6FCF1310
 int32_t __fastcall AIUTIL_GetDistanceToCoordinates_HalfUnitSize(D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	return AIUTIL_GetDistanceToCoordinatesWithSize(pUnit, nX, nY, ((uint32_t)UNITS_GetUnitSizeX(pUnit) >> 1) + 1);
 }
 
-//D2Game.0x6FCF13B0
+// D2Game.0x6FCF13B0
 int32_t __fastcall AIUTIL_GetDistanceToCoordinates_NoUnitSize(D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	const int32_t nXDiff = std::abs(CLIENTS_GetUnitX(pUnit) - nX);
@@ -90,7 +90,7 @@ int32_t __fastcall AIUTIL_GetDistanceToCoordinates_NoUnitSize(D2UnitStrc* pUnit,
 	}
 }
 
-//D2Game.0x6FCF1440
+// D2Game.0x6FCF1440
 uint32_t __fastcall AIUTIL_GetDistanceToCoordinates(D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	D2_ASSERT(pUnit);
@@ -109,7 +109,7 @@ uint32_t __fastcall AIUTIL_GetDistanceToCoordinates(D2UnitStrc* pUnit, int32_t n
 	}
 }
 
-//D2Game.0x6FCF14D0
+// D2Game.0x6FCF14D0
 int32_t __fastcall sub_6FCF14D0(D2UnitStrc* pUnit1, D2UnitStrc* pUnit2)
 {
 	constexpr uint8_t nOffsets[25] = { 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 };
@@ -137,7 +137,7 @@ int32_t __fastcall sub_6FCF14D0(D2UnitStrc* pUnit1, D2UnitStrc* pUnit2)
 	return 1;
 }
 
-//D2Game.0x6FCF16D0
+// D2Game.0x6FCF16D0
 D2UnitStrc* __fastcall sub_6FCF16D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2BaalThroneAiCallbackArgStrc* pArg = (D2BaalThroneAiCallbackArgStrc*)pCallbackArg;
@@ -164,7 +164,7 @@ D2UnitStrc* __fastcall sub_6FCF16D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1740
+// D2Game.0x6FCF1740
 D2UnitStrc* __fastcall sub_6FCF1740(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	UnkAiStrc5* pArg = (UnkAiStrc5*)pCallbackArg;
@@ -176,7 +176,7 @@ D2UnitStrc* __fastcall sub_6FCF1740(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1780
+// D2Game.0x6FCF1780
 D2UnitStrc* __fastcall sub_6FCF1780(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2UnkAiCallbackArgStrc* pArg = (D2UnkAiCallbackArgStrc*)pCallbackArg;
@@ -267,7 +267,7 @@ D2UnitStrc* __fastcall sub_6FCF1780(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1980
+// D2Game.0x6FCF1980
 D2UnitStrc* __fastcall sub_6FCF1980(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2UnkAiCallbackArgStrc2* pArg = (D2UnkAiCallbackArgStrc2*)pCallbackArg;
@@ -359,7 +359,7 @@ D2UnitStrc* __fastcall sub_6FCF1980(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1A50
+// D2Game.0x6FCF1A50
 int32_t __fastcall sub_6FCF1A50(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget)
 {
 	if (!pUnit || (pUnit->dwUnitType != UNIT_PLAYER && pUnit->dwUnitType != UNIT_MONSTER) || !pTarget || (pTarget->dwUnitType != UNIT_PLAYER && pTarget->dwUnitType != UNIT_MONSTER) || SUNIT_IsDead(pTarget) || SUNIT_IsDead(pUnit))
@@ -393,7 +393,7 @@ int32_t __fastcall sub_6FCF1A50(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc
 	return sub_6FCBD900(pGame, pUnit, pTarget);
 }
 
-//D2Game.0x6FCF1B30
+// D2Game.0x6FCF1B30
 D2UnitStrc* __fastcall sub_6FCF1B30(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2AiCallback7ArgStrc* pArg = (D2AiCallback7ArgStrc*)pCallbackArg;
@@ -430,7 +430,7 @@ D2UnitStrc* __fastcall sub_6FCF1B30(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1BD0
+// D2Game.0x6FCF1BD0
 D2UnitStrc* __fastcall sub_6FCF1BD0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2AiCallback11ArgStrc* pArg = (D2AiCallback11ArgStrc*)pCallbackArg;
@@ -467,7 +467,7 @@ D2UnitStrc* __fastcall sub_6FCF1BD0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1CB0
+// D2Game.0x6FCF1CB0
 D2UnitStrc* __fastcall sub_6FCF1CB0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2DoorObjectAiCallbackArgStrc* pArg = (D2DoorObjectAiCallbackArgStrc*)pCallbackArg;
@@ -488,7 +488,7 @@ D2UnitStrc* __fastcall sub_6FCF1CB0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1DC0
+// D2Game.0x6FCF1DC0
 D2UnitStrc* __fastcall sub_6FCF1DC0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2FallenShamanAiCallbackArgStrc* pArg = (D2FallenShamanAiCallbackArgStrc*)pCallbackArg;
@@ -503,7 +503,7 @@ D2UnitStrc* __fastcall sub_6FCF1DC0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1E30
+// D2Game.0x6FCF1E30
 D2UnitStrc* __fastcall sub_6FCF1E30(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pCallbackArg)
 {
 	D2VileMotherAiCallbackArgStrc* pArg = (D2VileMotherAiCallbackArgStrc*)pCallbackArg;
@@ -515,7 +515,7 @@ D2UnitStrc* __fastcall sub_6FCF1E30(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Unit
 	return nullptr;
 }
 
-//D2Game.0x6FCF1E80
+// D2Game.0x6FCF1E80
 D2UnitStrc* __fastcall sub_6FCF1E80(D2GameStrc* pGame, D2UnitStrc* pUnit, void* a3, D2UnitStrc*(__fastcall* a4)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*), int32_t nCallbackId)
 {
 	D2UnkAiTableStrc stru_6FD29600[13] =
@@ -652,7 +652,7 @@ D2UnitStrc* __fastcall AIUTIL_TargetCallback_Ubers(D2GameStrc* pGame, D2UnitStrc
 }
 #endif
 
-//D2Game.0x6FCF20E0
+// D2Game.0x6FCF20E0
 void __fastcall sub_6FCF20E0(D2UnitStrc* pUnit, void* pArg, void* ppUnit)
 {
 	D2PartyCallbackArgStrc* pPartyCallbackArg = (D2PartyCallbackArgStrc*)pArg;
@@ -669,7 +669,7 @@ void __fastcall sub_6FCF20E0(D2UnitStrc* pUnit, void* pArg, void* ppUnit)
 	}
 }
 
-//D2Game.0x6FCF2110
+// D2Game.0x6FCF2110
 D2UnitStrc* __fastcall sub_6FCF2110(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiControlStrc* pAiControl, int32_t* pDistance, int32_t* pCombat)
 {
 	D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
@@ -866,7 +866,7 @@ D2UnitStrc* __fastcall sub_6FCF2110(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 	return pTargetUnit;
 }
 
-//D2Game.0x6FCF27B0
+// D2Game.0x6FCF27B0
 int32_t __fastcall sub_6FCF27B0(D2UnitStrc* pUnit, D2UnitStrc** ppTarget, int32_t* pTargetDistance, D2UnitStrc* a4, int32_t a5)
 {
 	if ((pUnit && pUnit->dwUnitType == UNIT_PLAYER) || !a4)
@@ -919,7 +919,7 @@ int32_t __fastcall sub_6FCF27B0(D2UnitStrc* pUnit, D2UnitStrc** ppTarget, int32_
 	return 0;
 }
 
-//D2Game.0x6FCF2920
+// D2Game.0x6FCF2920
 int32_t __fastcall sub_6FCF2920(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3, int32_t a4, D2UnitStrc** ppUnit, int32_t* pDistance)
 {
 	D2UnitStrc* pTarget = nullptr;
@@ -1093,7 +1093,7 @@ int32_t __fastcall sub_6FCF2920(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3
 	}
 }
 
-//D2Game.0x6FCF2B80
+// D2Game.0x6FCF2B80
 D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentRooms(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArg, D2UnitStrc* (__fastcall* pfCallback)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*))
 {
 	D2ActiveRoomStrc* pRoom = UNITS_GetRoom(pUnit);
@@ -1121,7 +1121,7 @@ D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentRooms(D2GameStrc* pGame, D2Uni
 	return nullptr;
 }
 
-//D2Game.0x6FCF2C00
+// D2Game.0x6FCF2C00
 D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentActiveRooms(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArg, D2UnitStrc*(__fastcall* pfCallback)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*, void*))
 {
 	if (!pUnit || (pUnit->dwUnitType != UNIT_PLAYER && pUnit->dwUnitType != UNIT_MONSTER) || SUNIT_IsDead(pUnit))
@@ -1157,7 +1157,7 @@ D2UnitStrc* __fastcall AIUTIL_FindTargetInAdjacentActiveRooms(D2GameStrc* pGame,
 	return nullptr;
 }
 
-//D2Game.0x6FCF2CC0
+// D2Game.0x6FCF2CC0
 D2UnitStrc* __fastcall sub_6FCF2CC0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t* pDistance, int32_t* pInMeleeRange)
 {
 	D2UnitStrc* pTarget = nullptr;
@@ -1213,13 +1213,13 @@ D2UnitStrc* __fastcall sub_6FCF2CC0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
 	return nullptr;
 }
 
-//D2Game.0x6FCF2DF0
+// D2Game.0x6FCF2DF0
 int32_t __fastcall AIUTIL_CheckAiControlFlag(D2AiControlStrc* pAiControl, uint16_t nFlag)
 {
 	return (pAiControl->nAiFlags & nFlag) != 0;
 }
 
-//D2Game.0x6FCF2E00
+// D2Game.0x6FCF2E00
 void __fastcall AIUTIL_ToggleAiControlFlag(D2AiControlStrc* pAiControl, uint16_t nFlag, int32_t bSet)
 {
 	if (bSet)
@@ -1232,7 +1232,7 @@ void __fastcall AIUTIL_ToggleAiControlFlag(D2AiControlStrc* pAiControl, uint16_t
 	}
 }
 
-//D2Game.0x6FCF2E20
+// D2Game.0x6FCF2E20
 void __fastcall AIUTIL_ToggleAiControlFlag0x20(D2UnitStrc* pUnit, int32_t bSet)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -1242,14 +1242,14 @@ void __fastcall AIUTIL_ToggleAiControlFlag0x20(D2UnitStrc* pUnit, int32_t bSet)
 	}
 }
 
-//D2Game.0x6FCF2E70
+// D2Game.0x6FCF2E70
 int32_t __fastcall sub_6FCF2E70(D2UnitStrc* pUnit)
 {
 	const uint32_t nAiState = MONSTER_GetAiState(pUnit);
 	return nAiState == 3 || nAiState == 19;
 }
 
-//D2Game.0x6FCF2E90
+// D2Game.0x6FCF2E90
 int32_t __fastcall AIUTIL_CheckIfMonsterUsesSkill(D2UnitStrc* pUnit, int32_t nSkillId)
 {
 	if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -1274,7 +1274,7 @@ int32_t __fastcall AIUTIL_CheckIfMonsterUsesSkill(D2UnitStrc* pUnit, int32_t nSk
 	return 0;
 }
 
-//D2Game.0x6FCF2EF0
+// D2Game.0x6FCF2EF0
 void __fastcall AIUTIL_SetOwnerGUIDAndType(D2UnitStrc* pUnit, D2UnitStrc* pOwner)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -1295,7 +1295,7 @@ void __fastcall AIUTIL_SetOwnerGUIDAndType(D2UnitStrc* pUnit, D2UnitStrc* pOwner
 	}
 }
 
-//D2Game.0x6FCF2F30
+// D2Game.0x6FCF2F30
 void __fastcall AIUTIL_ApplyTerrorCurseState(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nSkillId, int32_t nParam1, int32_t nDuration)
 {
 	if (SUNIT_IsDead(pTarget) || !AIUTIL_CanUnitSwitchAi(pTarget, AISPECIALSTATE_TERROR))
@@ -1322,7 +1322,7 @@ void __fastcall AIUTIL_ApplyTerrorCurseState(D2GameStrc* pGame, D2UnitStrc* pUni
 	}
 }
 
-//D2Game.0x6FCF3000
+// D2Game.0x6FCF3000
 BOOL __fastcall AIUTIL_CanUnitSwitchAi(D2UnitStrc* pUnit, D2C_AiSpecialState nAiSpecialState)
 {
 	if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER

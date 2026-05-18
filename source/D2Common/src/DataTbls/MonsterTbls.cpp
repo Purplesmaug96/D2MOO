@@ -59,7 +59,7 @@ uint32_t __fastcall DATATBLS_StringToCode(char* szText)
 }
 
 
-//D2Common.0x6FD64C40 (#10592)
+// D2Common.0x6FD64C40 (#10592)
 int __stdcall DATATBLS_GetMonsterChainInfo(int nMonsterId, int* pMaxChainId, int* pChainId)
 {
 	D2MonStatsTxt* pMonStatsTxtRecord = DATATBLS_GetMonStatsTxtRecord(nMonsterId);
@@ -94,7 +94,7 @@ int __stdcall DATATBLS_GetMonsterChainInfo(int nMonsterId, int* pMaxChainId, int
 	}
 }
 
-//D2Common.0x6FD64CD0
+// D2Common.0x6FD64CD0
 void __fastcall DATATBLS_MonStatsSkillModeLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
 {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
@@ -155,7 +155,7 @@ void __fastcall DATATBLS_MonStatsSkillModeLinker(char* pSrc, void* pRecord, int 
 	}
 }
 
-//D2Common.0x6FD64DF0
+// D2Common.0x6FD64DF0
 void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive)
 {
 	long long v21 = 0; //TODO: Check / Remove
@@ -562,7 +562,7 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD67BD0 (#11261)
+// D2Common.0x6FD67BD0 (#11261)
 BOOL __stdcall DATATBLS_CalculateMonsterStatsByLevel(int nMonsterId, int nGameType, int nDifficulty, int nLevel, short nFlags, D2MonStatsInitStrc* pMonStatsInit)
 {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
@@ -735,7 +735,7 @@ BOOL __stdcall DATATBLS_CalculateMonsterStatsByLevel(int nMonsterId, int nGameTy
 	return FALSE;
 }
 
-//D2Common.0x6FD689B0 (#10642)
+// D2Common.0x6FD689B0 (#10642)
 void __stdcall DATATBLS_SetVelocityInMonStatsTxtRecord(int nMonsterId, short nVelocity)
 {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
@@ -746,13 +746,13 @@ void __stdcall DATATBLS_SetVelocityInMonStatsTxtRecord(int nMonsterId, short nVe
 	pMonStatsTxtRecord->nVelocity = nVelocity;
 }
 
-//D2Common.0x6FD68A00
+// D2Common.0x6FD68A00
 void __stdcall DATATBLS_ResetGlobalDefaultUnicodeString()
 {
 	sgptDataTables->wszDefault = 0;
 }
 
-//D2Common.0x6FD68A10 (#10651)
+// D2Common.0x6FD68A10 (#10651)
 const Unicode* __fastcall DATATBLS_RollRandomUniqueTitleString(D2UnitStrc* pUnit)
 {
 	int nRand = 0;
@@ -781,7 +781,7 @@ const Unicode* __fastcall DATATBLS_RollRandomUniqueTitleString(D2UnitStrc* pUnit
 	return &sgptDataTables->wszDefault;
 }
 
-//D2Common.0x6FD68A80 (#10652)
+// D2Common.0x6FD68A80 (#10652)
 const Unicode* __fastcall DATATBLS_RollRandomUniquePrefixString(D2UnitStrc* pUnit)
 {
 	int nRand = 0;
@@ -810,7 +810,7 @@ const Unicode* __fastcall DATATBLS_RollRandomUniquePrefixString(D2UnitStrc* pUni
 	return &sgptDataTables->wszDefault;
 }
 
-//D2Common.0x6FD68AF0 (#10653)
+// D2Common.0x6FD68AF0 (#10653)
 const Unicode* __fastcall DATATBLS_RollRandomUniqueSuffixString(D2UnitStrc* pUnit)
 {
 	int nRand = 0;
@@ -839,7 +839,7 @@ const Unicode* __fastcall DATATBLS_RollRandomUniqueSuffixString(D2UnitStrc* pUni
 	return &sgptDataTables->wszDefault;
 }
 
-//D2Common.0x6FD68B60 (#10654)
+// D2Common.0x6FD68B60 (#10654)
 const Unicode* __fastcall DATATBLS_RollRandomUniqueAppellationString(D2UnitStrc* pUnit)
 {
 	int nRand = 0;
@@ -868,7 +868,7 @@ const Unicode* __fastcall DATATBLS_RollRandomUniqueAppellationString(D2UnitStrc*
 	return &sgptDataTables->wszDefault;
 }
 
-//D2Common.0x6FD68BD0
+// D2Common.0x6FD68BD0
 void __fastcall DATATBLS_ReallocTCExInfo(D2TCExShortStrc* pTCExShort, int nNewRecordCount)
 {
 	pTCExShort->pInfo = (D2TCExInfoStrc*)D2_REALLOC_POOL(nullptr, pTCExShort->pInfo, sizeof(D2TCExInfoStrc) * nNewRecordCount);
@@ -876,7 +876,7 @@ void __fastcall DATATBLS_ReallocTCExInfo(D2TCExShortStrc* pTCExShort, int nNewRe
 	pTCExShort->nTypes = nNewRecordCount;
 }
 
-//D2Common.0x6FD68C40
+// D2Common.0x6FD68C40
 void __fastcall DATATBLS_UpdateTreasureClassProbabilities(D2TCExShortStrc* pTCExShort, D2TCExInfoStrc* pTCExInfo, int nProbability, BOOL bExpansion)
 {
 	int nRecordId = 0;
@@ -931,7 +931,7 @@ void __fastcall DATATBLS_UpdateTreasureClassProbabilities(D2TCExShortStrc* pTCEx
 	}
 }
 
-//D2Common.0x6FD68D40
+// D2Common.0x6FD68D40
 int __fastcall DATATBLS_ApplyRatio(signed int nValue, signed int nMultiplier, signed int nDivisor)
 {
 	if (nDivisor)
@@ -962,7 +962,7 @@ int __fastcall DATATBLS_ApplyRatio(signed int nValue, signed int nMultiplier, si
 	return 0;
 }
 
-//D2Common.0x6FD68DC0 (#10658)
+// D2Common.0x6FD68DC0 (#10658)
 D2TCExShortStrc* __stdcall DATATBLS_GetTreasureClassExRecordFromName(char* szText)
 {
 	int nId = FOG_GetRowFromTxt(sgptDataTables->pTreasureClassExLinker, szText, 0);
@@ -974,7 +974,7 @@ D2TCExShortStrc* __stdcall DATATBLS_GetTreasureClassExRecordFromName(char* szTex
 	return NULL;
 }
 
-//D2Common.0x6FD68DF0 (#10659)
+// D2Common.0x6FD68DF0 (#10659)
 D2TCExShortStrc* __stdcall DATATBLS_GetTreasureClassExRecordFromIdAndLevel(uint16_t wTCId, int nLvl)
 {
 	D2TCExShortStrc* pTCExRecord = NULL;
@@ -1005,7 +1005,7 @@ D2TCExShortStrc* __stdcall DATATBLS_GetTreasureClassExRecordFromIdAndLevel(uint1
 	return NULL;
 }
 
-//D2Common.0x6FD68E50 (#10660)
+// D2Common.0x6FD68E50 (#10660)
 D2TCExShortStrc* __stdcall DATATBLS_GetTreasureClassExRecordFromActAndDifficulty(int nDifficulty, int nAct, int nIndex)
 {
 	if (nDifficulty > 0)
@@ -1324,7 +1324,7 @@ void DATATBLS_ParseTreasureClassItem(D2TCExShortStrc* pTCExTxtRecord, D2Treasure
 	}
 }
 
-//D2Common.0x6FD68EC0
+// D2Common.0x6FD68EC0
 void __fastcall DATATBLS_LoadTreasureClassExTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1414,14 +1414,14 @@ void __fastcall DATATBLS_LoadTreasureClassExTxt(HD2ARCHIVE hArchive)
 	DATATBLS_UnloadBin(pTreasureClassExTxt);
 }
 
-//D2Common.0x6FD69B70 (#10656)
+// D2Common.0x6FD69B70 (#10656)
 int __stdcall DATATBLS_ShouldNeverCallInExpansion()
 {
 	FOG_DisplayWarning("should never call this function in expansion", __FILE__, __LINE__);
 	return 0;
 }
 
-//D2Common.0x6FD69B90
+// D2Common.0x6FD69B90
 void __fastcall DATATBLS_LoadMonItemPercentTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1436,20 +1436,20 @@ void __fastcall DATATBLS_LoadMonItemPercentTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pMonItemPercentDataTables.pMonItemPercentTxt = (D2MonItemPercentTxt*)DATATBLS_CompileTxt(hArchive, "monitempercent", pTbl, &sgptDataTables->pMonItemPercentDataTables.nMonItemPercentTxtRecordCount, sizeof(D2MonItemPercentTxt));
 }
 
-//D2Common.0x6FD69C40
+// D2Common.0x6FD69C40
 void __fastcall DATATBLS_UnloadMonItemPercentTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pMonItemPercentDataTables.pMonItemPercentTxt);
 	sgptDataTables->pMonItemPercentDataTables.pMonItemPercentTxt = NULL;
 }
 
-//D2Common.0x6FD69C50 (#10662)
+// D2Common.0x6FD69C50 (#10662)
 D2MonItemPercentDataTbl* __fastcall DATATBLS_GetMonItemPercentDataTables()
 {
 	return &sgptDataTables->pMonItemPercentDataTables;
 }
 
-//D2Common.0x6FD69C60 (#10663)
+// D2Common.0x6FD69C60 (#10663)
 D2MonItemPercentTxt* __stdcall DATATBLS_GetMonItemPercentTxtRecord(int nId)
 {
 	if (nId >= 0 && nId < sgptDataTables->pMonItemPercentDataTables.nMonItemPercentTxtRecordCount)
@@ -1462,7 +1462,7 @@ D2MonItemPercentTxt* __stdcall DATATBLS_GetMonItemPercentTxtRecord(int nId)
 	return NULL;
 }
 
-//D2Common.0x6FD69CD0
+// D2Common.0x6FD69CD0
 void __fastcall DATATBLS_LoadMonUModTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1495,7 +1495,7 @@ void __fastcall DATATBLS_LoadMonUModTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD69FA0
+// D2Common.0x6FD69FA0
 void __fastcall DATATBLS_LoadSuperUniquesTxt(HD2ARCHIVE hArchive)
 {
 	int nId = 0;
@@ -1576,7 +1576,7 @@ void __fastcall DATATBLS_LoadSuperUniquesTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD6A440 (#10668)
+// D2Common.0x6FD6A440 (#10668)
 D2SuperUniquesTxt* __stdcall DATATBLS_GetSuperUniquesTxtRecord(int nSuperUniqueId)
 {
 	if (nSuperUniqueId >= 0 && nSuperUniqueId < sgptDataTables->nSuperUniquesTxtRecordCount)
@@ -1587,13 +1587,13 @@ D2SuperUniquesTxt* __stdcall DATATBLS_GetSuperUniquesTxtRecord(int nSuperUniqueI
 	return NULL;
 }
 
-//D2Common.0x6FD6A470 (#11257)
+// D2Common.0x6FD6A470 (#11257)
 int __fastcall DATATBLS_GetSuperUniquesTxtRecordCount()
 {
 	return sgptDataTables->nSuperUniquesTxtRecordCount;
 }
 
-//D2Common.0x6FD6A480
+// D2Common.0x6FD6A480
 void __fastcall DATATBLS_LoadHirelingTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -1706,7 +1706,7 @@ void __fastcall DATATBLS_LoadHirelingTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD6B1A0
+// D2Common.0x6FD6B1A0
 D2ItemTypesTxt* __fastcall DATATBLS_GetItemTypesTxtRecord(int nItemType)
 {
 	if (nItemType >= 0 && nItemType < sgptDataTables->nItemTypesTxtRecordCount)
@@ -1717,7 +1717,7 @@ D2ItemTypesTxt* __fastcall DATATBLS_GetItemTypesTxtRecord(int nItemType)
 	return NULL;
 }
 
-//D2Common.0x6FD6B1D0 (#10583)
+// D2Common.0x6FD6B1D0 (#10583)
 D2HirelingTxt* __stdcall DATATBLS_GetHirelingTxtRecordFromIdAndLevel(BOOL bExpansion, int nId, int nLevel)
 {
 	if (nId >= 256)
@@ -1756,7 +1756,7 @@ D2HirelingTxt* __stdcall DATATBLS_GetHirelingTxtRecordFromIdAndLevel(BOOL bExpan
 	return pBestLevelHireling;
 }
 
-//D2Common.0x6FD6B270 (#10585)
+// D2Common.0x6FD6B270 (#10585)
 D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromNameId(BOOL bExpansion, uint16_t nNameId, D2HirelingTxt* pOldRecord)
 {
 	D2HirelingTxt* pHirelingTxtRecord = NULL;
@@ -1785,7 +1785,7 @@ D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromNameId(BOOL bExpan
 	return NULL;
 }
 
-//D2Common.0x6FD6B310 (#10586)
+// D2Common.0x6FD6B310 (#10586)
 D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromClassId(BOOL bExpansion, int nClass, D2HirelingTxt* pOldRecord)
 {
 	D2HirelingTxt* pHirelingTxtRecord = NULL;
@@ -1814,7 +1814,7 @@ D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromClassId(BOOL bExpa
 	return NULL;
 }
 
-//D2Common.0x6FD6B3A0 (#10587)
+// D2Common.0x6FD6B3A0 (#10587)
 D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromVendorIdAndDifficulty(BOOL bExpansion, int nVendorId, int nDifficulty, D2HirelingTxt* pOldRecord)
 {
 	D2HirelingTxt* pHirelingTxtRecord = NULL;
@@ -1843,7 +1843,7 @@ D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromVendorIdAndDifficu
 	return NULL;
 }
 
-//D2Common.0x6FD6B440 (#10584)
+// D2Common.0x6FD6B440 (#10584)
 D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromActAndDifficulty(BOOL bExpansion, int nAct, int nDifficulty, D2HirelingTxt* pOldRecord)
 {
 	D2HirelingTxt* pHirelingTxtRecord = NULL;
@@ -1877,7 +1877,7 @@ D2HirelingTxt* __stdcall DATATBLS_GetNextHirelingTxtRecordFromActAndDifficulty(B
 	return NULL;
 }
 
-//D2Common.0x6FD6B4F0
+// D2Common.0x6FD6B4F0
 void __fastcall DATATBLS_LoadNpcTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1907,7 +1907,7 @@ void __fastcall DATATBLS_LoadNpcTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pNpcTxt = (D2NpcTxt*)DATATBLS_CompileTxt(hArchive, "npc", pTbl, &sgptDataTables->nNpcTxtRecordCount, sizeof(D2NpcTxt));
 }
 
-//D2Common.0x6FD6B820 (#10588)
+// D2Common.0x6FD6B820 (#10588)
 D2NpcTxt* __stdcall DATATBLS_GetNpcTxtRecord(uint32_t dwNpcId)
 {
 	for (int i = 0; i < sgptDataTables->nNpcTxtRecordCount; ++i)
@@ -1921,7 +1921,7 @@ D2NpcTxt* __stdcall DATATBLS_GetNpcTxtRecord(uint32_t dwNpcId)
 	return NULL;
 }
 
-//D2Common.0x6FD6B850
+// D2Common.0x6FD6B850
 void __fastcall DATATBLS_LoadMonSoundsTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1973,7 +1973,7 @@ void __fastcall DATATBLS_LoadMonSoundsTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pMonSoundsTxt = (D2MonSoundsTxt*)DATATBLS_CompileTxt(hArchive, "monsounds", pTbl, &sgptDataTables->nMonSoundsTxtRecordCount, sizeof(D2MonSoundsTxt));
 }
 
-//D2Common.0x6FD6BF50 (#11252)
+// D2Common.0x6FD6BF50 (#11252)
 D2MonSoundsTxt* __stdcall DATATBLS_GetMonSoundsTxtRecordFromSoundId(int nSoundId)
 {
 	if (sgptDataTables->pMonSoundsTxt && nSoundId >= 0 && nSoundId < sgptDataTables->nMonSoundsTxtRecordCount)
@@ -1984,7 +1984,7 @@ D2MonSoundsTxt* __stdcall DATATBLS_GetMonSoundsTxtRecordFromSoundId(int nSoundId
 	return NULL;
 }
 
-//D2Common.0x6FD6BF80 (#11250)
+// D2Common.0x6FD6BF80 (#11250)
 D2MonSoundsTxt* __stdcall DATATBLS_GetMonSoundsTxtRecordFromMonsterId(int nMonsterId)
 {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
@@ -2003,7 +2003,7 @@ D2MonSoundsTxt* __stdcall DATATBLS_GetMonSoundsTxtRecordFromMonsterId(int nMonst
 	return NULL;
 }
 
-//D2Common.0x6FD6BFE0
+// D2Common.0x6FD6BFE0
 void __fastcall DATATBLS_MonStats2CompositLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
 {
 	D2MonStats2Txt* pMonStats2TxtRecord = NULL;
@@ -2092,7 +2092,7 @@ void __fastcall DATATBLS_MonStats2CompositLinker(char* pSrc, void* pRecord, int 
 	}
 }
 
-//D2Common.0x6FD6C150
+// D2Common.0x6FD6C150
 void __fastcall DATATBLS_LoadMonStats2Txt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -2229,7 +2229,7 @@ void __fastcall DATATBLS_LoadMonStats2Txt(HD2ARCHIVE hArchive)
 	sgptDataTables->pMonStats2Txt = (D2MonStats2Txt*)DATATBLS_CompileTxt(hArchive, "monstats2", pTbl, &sgptDataTables->nMonStats2TxtRecordCount, sizeof(D2MonStats2Txt));
 }
 
-//D2Common.0x6FD6D660
+// D2Common.0x6FD6D660
 int __fastcall DATATBLS_CheckNestedMonsterTypes(int nMonType1, int nMonType2)
 {
 	D2MonTypeTxt* pMonTypeTxtRecord = NULL;
@@ -2291,7 +2291,7 @@ int __fastcall DATATBLS_CheckNestedMonsterTypes(int nMonType1, int nMonType2)
 	return 0;
 }
 
-//D2Common.0x6FD6D730
+// D2Common.0x6FD6D730
 void __fastcall DATATBLS_LoadMonTypeTxt(HD2ARCHIVE hArchive)
 {
 	uint32_t* pMonTypeNest = NULL;
@@ -2327,7 +2327,7 @@ void __fastcall DATATBLS_LoadMonTypeTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD6D910
+// D2Common.0x6FD6D910
 void __fastcall DATATBLS_UnloadMonTypeTxt()
 {
 	if (sgptDataTables->pMonTypeTxt)
@@ -2340,7 +2340,7 @@ void __fastcall DATATBLS_UnloadMonTypeTxt()
 	}
 }
 
-//D2Common.0x6FD6D960
+// D2Common.0x6FD6D960
 void __fastcall DATATBLS_LoadMonPropTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -2443,7 +2443,7 @@ void __fastcall DATATBLS_LoadMonPropTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pMonPropTxt = (D2MonPropTxt*)DATATBLS_CompileTxt(hArchive, "monprop", pTbl, &sgptDataTables->nMonPropTxtRecordCount, sizeof(D2MonPropTxt));
 }
 
-//D2Common.0x6FD6E8E0
+// D2Common.0x6FD6E8E0
 void __fastcall DATATBLS_LoadMonLvlTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -2484,7 +2484,7 @@ void __fastcall DATATBLS_LoadMonLvlTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pMonLvlTxt = (D2MonLvlTxt*)DATATBLS_CompileTxt(hArchive, "monlvl", pTbl, &sgptDataTables->nMonLvlTxtRecordCount, sizeof(D2MonLvlTxt));
 }
 
-//D2Common.0x6FD6EDE0
+// D2Common.0x6FD6EDE0
 void __fastcall DATATBLS_MonPresetPlaceLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
 {
 	int nRow = 0;
@@ -2524,7 +2524,7 @@ void __fastcall DATATBLS_MonPresetPlaceLinker(char* pSrc, void* pRecord, int nOf
 	}
 }
 
-//D2Common.0x6FD6EE60
+// D2Common.0x6FD6EE60
 void __fastcall DATATBLS_LoadMonPresetTxt(HD2ARCHIVE hArchive)
 {
 	D2MonPresetTxt* pMonPresetTxt = NULL;
@@ -2560,7 +2560,7 @@ void __fastcall DATATBLS_LoadMonPresetTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->nMonPresetTxtActRecordCounts[nAct] = nActRecords;
 }
 
-//D2Common.0x6FD6EF30 (#11256)
+// D2Common.0x6FD6EF30 (#11256)
 D2MonPresetTxt* __stdcall DATATBLS_GetMonPresetTxtActSection(int nAct, int* pRecordCount)
 {
 	if (pRecordCount)
@@ -2577,7 +2577,7 @@ D2MonPresetTxt* __stdcall DATATBLS_GetMonPresetTxtActSection(int nAct, int* pRec
 	return NULL;
 }
 
-//D2Common.0x6FD6EF70 (#11258)
+// D2Common.0x6FD6EF70 (#11258)
 int __stdcall DATATBLS_MapSuperUniqueId(int nType, int nSuperUnique)
 {
 	switch (nType)
@@ -2594,7 +2594,7 @@ int __stdcall DATATBLS_MapSuperUniqueId(int nType, int nSuperUnique)
 	}
 }
 
-//D2Common.0x6FD6EFA0
+// D2Common.0x6FD6EFA0
 void __fastcall DATATBLS_LoadSoundsTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -2610,7 +2610,7 @@ void __fastcall DATATBLS_LoadSoundsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD6F020
+// D2Common.0x6FD6F020
 void __fastcall DATATBLS_UnloadSoundsTxt()
 {
 	if (sgptDataTables->pSoundsTxtCodes)
@@ -2624,7 +2624,7 @@ void __fastcall DATATBLS_UnloadSoundsTxt()
 }
 
 
-//D2Common.0x6FD6F230
+// D2Common.0x6FD6F230
 void __fastcall DATATBLS_LoadMonEquipTxt(HD2ARCHIVE hArchive)
 {
 	D2MonStatsTxt* pMonStatsTxtRecord = NULL;
@@ -2682,7 +2682,7 @@ void __fastcall DATATBLS_LoadMonEquipTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD6F580
+// D2Common.0x6FD6F580
 void __fastcall DATATBLS_LoadSomeMonsterTxts(HD2ARCHIVE hArchive)
 {
 	static const char* szTreasureClassVariants[] = { "A", "B", "C" };
@@ -2751,7 +2751,7 @@ void __fastcall DATATBLS_LoadSomeMonsterTxts(HD2ARCHIVE hArchive)
 	DATATBLS_LoadMonEquipTxt(hArchive);
 }
 
-//D2Common.0x6FD6F810
+// D2Common.0x6FD6F810
 void __fastcall DATATBLS_CreateItemTypeTreasureClasses()
 {
 	D2ItemTypesTxt* pItemTypesTxtRecord = NULL;
@@ -2854,7 +2854,7 @@ void __fastcall DATATBLS_CreateItemTypeTreasureClasses()
 	}
 }
 
-//D2Common.0x6FD6FBB0
+// D2Common.0x6FD6FBB0
 void __fastcall DATATBLS_UnloadSomeMonsterTxts()
 {
 	if (sgptDataTables->pMonEquipTxt)

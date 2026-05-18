@@ -177,7 +177,7 @@ int __fastcall PATH_AStar_ComputePath(D2PathInfoStrc* pPathInfo)
 	return 0;
 }
 
-//D2Common.0x6FDA6D10
+// D2Common.0x6FDA6D10
 int __fastcall PATH_AStar_PushToVisitedCache(D2PathFoWallContextStrc* pContext, D2PathFoWallNodeStrc* pNode)
 {
 	const uint8_t nHash = (gaIdaStar_PointCacheHashMaskX[pNode->tPoint.X & 0x7F] + gaIdaStar_PointCacheHashMaskY[pNode->tPoint.Y & 0x7F]) & 0x7F;
@@ -221,7 +221,7 @@ BOOL __fastcall PATH_AStar_ExploreChildren(D2PathInfoStrc* pPathInfo, D2PathFoWa
 //1.10f: D2Common.0x6FDA7230
 //1.13c: D2Common.0x6FDCAF70
 // Diagonal distance with D=2 and D2=3 (2 to move to an adjacent pixel, 3 in diagonal)
-// http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#diagonal-distance 
+// http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#diagonal-distance
 // Note: This heuristic returns values in the same order as the Euclidian distance to pixel centers
 //       It is both "admissible" and "consistent".
 // Sample return values for the first quadrant:

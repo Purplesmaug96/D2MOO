@@ -2,7 +2,7 @@
 #include <D2Lang.h>
 
 
-//D2Common.0x6FD6FDF0
+// D2Common.0x6FD6FDF0
 void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -166,7 +166,7 @@ void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
 		{ "AutoMap", TXTFIELD_DWORD, 0, 444, NULL },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
-	
+
 	sgptDataTables->pObjectsTxt = (D2ObjectsTxt*)DATATBLS_CompileTxt(hArchive, "objects", pTbl, &sgptDataTables->nObjectsTxtRecordCount, sizeof(D2ObjectsTxt));
 
 	for (int i = 0; i < sgptDataTables->nObjectsTxtRecordCount; ++i)
@@ -181,7 +181,7 @@ void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD718F0 (#10626)
+// D2Common.0x6FD718F0 (#10626)
 D2ObjectsTxt* __stdcall DATATBLS_GetObjectsTxtRecord(int nObjectId)
 {
 	D2_ASSERT(nObjectId < sgptDataTables->nObjectsTxtRecordCount);
@@ -189,7 +189,7 @@ D2ObjectsTxt* __stdcall DATATBLS_GetObjectsTxtRecord(int nObjectId)
 	return &sgptDataTables->pObjectsTxt[nObjectId];
 }
 
-//D2Common.0x6FD71960
+// D2Common.0x6FD71960
 void __fastcall DATATBLS_UnloadObjectsTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pObjectsTxt);
@@ -197,7 +197,7 @@ void __fastcall DATATBLS_UnloadObjectsTxt()
 	sgptDataTables->nObjectsTxtRecordCount = 0;
 }
 
-//D2Common.0x6FD71980
+// D2Common.0x6FD71980
 void __fastcall DATATBLS_UnloadObjGroupTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pObjGroupTxt);
@@ -205,7 +205,7 @@ void __fastcall DATATBLS_UnloadObjGroupTxt()
 	sgptDataTables->nObjGroupTxtRecordCount = 0;
 }
 
-//D2Common.0x6FD719A0
+// D2Common.0x6FD719A0
 void __fastcall DATATBLS_LoadObjGroupTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -242,7 +242,7 @@ void __fastcall DATATBLS_LoadObjGroupTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pObjGroupTxt = (D2ObjGroupTxt*)DATATBLS_CompileTxt(hArchive, "objgroup", pTbl, &sgptDataTables->nObjGroupTxtRecordCount, sizeof(D2ObjGroupTxt));
 }
 
-//D2Common.0x6FD71E00 (#10627)
+// D2Common.0x6FD71E00 (#10627)
 D2ObjGroupTxt* __stdcall DATATBLS_GetObjGroupTxtRecord(int nId)
 {
 	if (nId < sgptDataTables->nObjGroupTxtRecordCount)
@@ -253,7 +253,7 @@ D2ObjGroupTxt* __stdcall DATATBLS_GetObjGroupTxtRecord(int nId)
 	return NULL;
 }
 
-//D2Common.0x6FD71E30
+// D2Common.0x6FD71E30
 void __fastcall DATATBLS_LoadShrinesTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -274,7 +274,7 @@ void __fastcall DATATBLS_LoadShrinesTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pShrinesTxt = (D2ShrinesTxt*)DATATBLS_CompileTxt(hArchive, "shrines", pTbl, &sgptDataTables->nShrinesTxtRecordCount, sizeof(D2ShrinesTxt));
 }
 
-//D2Common.0x6FD72000 (#10624)
+// D2Common.0x6FD72000 (#10624)
 D2ShrinesTxt* __stdcall DATATBLS_GetShrinesTxtRecord(int nShrineId)
 {
 	D2_ASSERT(nShrineId < sgptDataTables->nShrinesTxtRecordCount);
@@ -282,13 +282,13 @@ D2ShrinesTxt* __stdcall DATATBLS_GetShrinesTxtRecord(int nShrineId)
 	return &sgptDataTables->pShrinesTxt[nShrineId];
 }
 
-//D2Common.0x6FD72070 (#10625)
+// D2Common.0x6FD72070 (#10625)
 int __stdcall DATATBLS_GetShrinesTxtRecordCount()
 {
 	return sgptDataTables->nShrinesTxtRecordCount;
 }
 
-//D2Common.0x6FD72080
+// D2Common.0x6FD72080
 void __fastcall DATATBLS_UnloadShrinesTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pShrinesTxt);

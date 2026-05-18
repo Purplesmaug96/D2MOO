@@ -15,7 +15,7 @@
 D2WinPopUpStrc* gpPopUp;
 
 
-//D2Win.0x6F8AEAE0 (#10094)
+// D2Win.0x6F8AEAE0 (#10094)
 void __stdcall POPUP_Create()
 {
 	POPUP_Destroy();
@@ -35,7 +35,7 @@ void __stdcall POPUP_Create()
 	gpPopUp = pPopUp;
 }
 
-//D2Win.0x6F8AEBA0 (#10095)
+// D2Win.0x6F8AEBA0 (#10095)
 void __stdcall POPUP_Destroy()
 {
 	if (gpPopUp)
@@ -45,7 +45,7 @@ void __stdcall POPUP_Destroy()
 	}
 }
 
-//D2Win.0x6F8AEBC0
+// D2Win.0x6F8AEBC0
 int32_t __stdcall POPUP_IsActive()
 {
 	D2WinPopUpStrc* pPopUp = gpPopUp;
@@ -65,7 +65,7 @@ int32_t __stdcall POPUP_IsActive()
 	return 1;
 }
 
-//D2Win.0x6F8AEC10 (#10096)
+// D2Win.0x6F8AEC10 (#10096)
 int32_t __stdcall POPUP_AddLine(D2WinPopUpLineStrc* pPopUpLine)
 {
 	D2WinPopUpStrc* pPopUp = gpPopUp;
@@ -89,7 +89,7 @@ int32_t __stdcall POPUP_AddLine(D2WinPopUpLineStrc* pPopUpLine)
 	return 1;
 }
 
-//D2Win.0x6F8AECA0
+// D2Win.0x6F8AECA0
 int32_t __stdcall POPUP_HandleMouseButtonInput(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinPopUpStrc* pPopUp = gpPopUp;
@@ -117,7 +117,7 @@ int32_t __stdcall POPUP_HandleMouseButtonInput(SMSGHANDLER_PARAMS* pMsg)
 	return 1;
 }
 
-//D2Win.0x6F8AED10
+// D2Win.0x6F8AED10
 int32_t __fastcall POPUP_Initialize(D2WinControlStrc* pControl)
 {
 	D2WinPopUpStrc* pPopUp = (D2WinPopUpStrc*)pControl;
@@ -142,7 +142,7 @@ int32_t __fastcall POPUP_Initialize(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8AEDB0
+// D2Win.0x6F8AEDB0
 int32_t __fastcall POPUP_Draw(D2WinControlStrc* pControl)
 {
 	D2WinPopUpStrc* pPopUp = (D2WinPopUpStrc*)pControl;
@@ -159,7 +159,7 @@ int32_t __fastcall POPUP_Draw(D2WinControlStrc* pControl)
 	rect.bottom = pPopUp->controlHeader.nImageY + 5;
 	rect.top = pPopUp->controlHeader.nImageY - pPopUp->controlHeader.nHeight - 5;
 	rect.right = pPopUp->controlHeader.nImageX + pPopUp->controlHeader.nWidth + 5;
-	
+
 	D2GFX_UtilRect(&rect, 0xFFu);
 	D2GFX_DrawBox(rect.left, rect.bottom, rect.right, rect.top, D2Win_10034_MixRGB(0x3Fu, 0x3Fu, 0x3Fu), DRAWMODE_TRANS75);
 	D2Win_10127_SetFont(D2FONT_FONT16);

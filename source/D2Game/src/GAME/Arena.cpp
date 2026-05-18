@@ -14,13 +14,13 @@
 int32_t dword_6FD43FB0;
 
 
-//D2Game.0x6FC31010
+// D2Game.0x6FC31010
 int32_t __fastcall D2Game_10001_Return0()
 {
     return dword_6FD43FB0;
 }
 
-//D2Game.0x6FC31040
+// D2Game.0x6FC31040
 void __fastcall ARENA_AllocArena(D2GameStrc* pGame, int32_t nUnused, uint32_t nFlags, int32_t nTemplate)
 {
     D2ArenaStrc* pArena = D2_CALLOC_STRC_POOL(pGame->pMemoryPool, D2ArenaStrc);
@@ -30,7 +30,7 @@ void __fastcall ARENA_AllocArena(D2GameStrc* pGame, int32_t nUnused, uint32_t nF
     pArena->nTemplate = nTemplate;
 }
 
-//D2Game.0x6FC31090
+// D2Game.0x6FC31090
 void __fastcall ARENA_FreeArena(D2GameStrc* pGame)
 {
     if (!pGame->pArenaCtrl)
@@ -42,7 +42,7 @@ void __fastcall ARENA_FreeArena(D2GameStrc* pGame)
     pGame->pArenaCtrl = nullptr;
 }
 
-//D2Game.0x6FC310C0
+// D2Game.0x6FC310C0
 void __fastcall ARENA_AllocArenaUnit(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     D2ArenaUnitStrc* pArenaUnit = D2_CALLOC_STRC_POOL(pGame->pMemoryPool, D2ArenaUnitStrc);
@@ -53,7 +53,7 @@ void __fastcall ARENA_AllocArenaUnit(D2GameStrc* pGame, D2UnitStrc* pUnit)
     pPlayerData->pArenaUnit = pArenaUnit;
 }
 
-//D2Game.0x6FC31110
+// D2Game.0x6FC31110
 void __fastcall ARENA_FreeArenaUnit(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);
@@ -68,7 +68,7 @@ void __fastcall ARENA_FreeArenaUnit(D2GameStrc* pGame, D2UnitStrc* pPlayer)
     pPlayerData->pArenaUnit = nullptr;
 }
 
-//D2Game.0x6FC31160
+// D2Game.0x6FC31160
 int32_t __fastcall ARENA_GetAlternateStartTown(D2GameStrc* pGame)
 {
     D2ArenaStrc* pArena = pGame->pArenaCtrl;
@@ -77,7 +77,7 @@ int32_t __fastcall ARENA_GetAlternateStartTown(D2GameStrc* pGame)
     return pArena->nAlternateStartTown;
 }
 
-//D2Game.0x6FC31190
+// D2Game.0x6FC31190
 void __fastcall ARENA_ProcessKillEvent(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender)
 {
     if (!pGame->pArenaCtrl || !pAttacker)
@@ -118,7 +118,7 @@ void __fastcall ARENA_ProcessKillEvent(D2GameStrc* pGame, D2UnitStrc* pAttacker,
     }
 }
 
-//D2Game.0x6FC31280
+// D2Game.0x6FC31280
 void __fastcall ARENA_UpdateScore(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, D2ArenaScoreTypes eScore)
 {
     D2_ASSERT(pAttacker && pAttacker->dwUnitType == UNIT_PLAYER);
@@ -162,7 +162,7 @@ void __fastcall ARENA_UpdateScore(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2Un
     UNITROOM_RefreshUnit(pDefender);
 }
 
-//D2Game.0x6FC31470
+// D2Game.0x6FC31470
 void __fastcall ARENA_SynchronizeWithClients(D2GameStrc* pGame, D2ClientStrc* pClient)
 {
     D2ArenaStrc* pArena = pGame->pArenaCtrl;
@@ -205,7 +205,7 @@ void __fastcall ARENA_SynchronizeWithClients(D2GameStrc* pGame, D2ClientStrc* pC
     }
 }
 
-//D2Game.0x6FC315C0
+// D2Game.0x6FC315C0
 void __fastcall ARENA_SendScoresToClient(D2GameStrc* pGame, D2ClientStrc* pClient)
 {
     for (D2ClientStrc* i = pGame->pClientList; i; i = i->pNext)
@@ -218,7 +218,7 @@ void __fastcall ARENA_SendScoresToClient(D2GameStrc* pGame, D2ClientStrc* pClien
             D2GAME_PACKETS_SendPacket0x65_6FC3F5E0(pClient, pPlayer->dwUnitId, pArenaUnit->nScore);
         }
     }
-    
+
     D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(pClient, 1);
     if (pClient->dwClientState != CLIENTSTATE_INGAME && pPlayer)
     {
@@ -228,7 +228,7 @@ void __fastcall ARENA_SendScoresToClient(D2GameStrc* pGame, D2ClientStrc* pClien
     }
 }
 
-//D2Game.0x6FC31690
+// D2Game.0x6FC31690
 uint32_t __fastcall ARENA_NeedsClientUpdate(D2GameStrc* pGame)
 {
     D2ArenaStrc* pArena = pGame->pArenaCtrl;
@@ -237,7 +237,7 @@ uint32_t __fastcall ARENA_NeedsClientUpdate(D2GameStrc* pGame)
     return pArena->fFlags & GAMEFLAG_ARENA_UPDATECLIENTS;
 }
 
-//D2Game.0x6FC316D0
+// D2Game.0x6FC316D0
 uint32_t __fastcall ARENA_IsInArenaMode(D2GameStrc* pGame)
 {
     D2ArenaStrc* pArena = pGame->pArenaCtrl;
@@ -246,7 +246,7 @@ uint32_t __fastcall ARENA_IsInArenaMode(D2GameStrc* pGame)
     return pArena->fFlags & GAMEFLAG_ARENA_MODE;
 }
 
-//D2Game.0x6FC31710
+// D2Game.0x6FC31710
 uint32_t __fastcall ARENA_IsActive(D2GameStrc* pGame)
 {
     D2ArenaStrc* pArena = pGame->pArenaCtrl;
@@ -255,7 +255,7 @@ uint32_t __fastcall ARENA_IsActive(D2GameStrc* pGame)
     return pArena->fFlags & GAMEFLAG_ARENA_ACTIVE;
 }
 
-//D2Game.0x6FC31750
+// D2Game.0x6FC31750
 uint32_t __fastcall ARENA_GetFlags(D2GameStrc* pGame)
 {
     D2ArenaStrc* pArena = pGame->pArenaCtrl;
@@ -264,7 +264,7 @@ uint32_t __fastcall ARENA_GetFlags(D2GameStrc* pGame)
     return pArena->fFlags;
 }
 
-//D2Game.0x6FC31780
+// D2Game.0x6FC31780
 int32_t __fastcall ARENA_Return0()
 {
     return 0;
@@ -280,7 +280,7 @@ uint32_t __fastcall ARENA_ShouldTreatClassIdAsTemplateId(D2GameStrc* pGame)
     return pArena->fFlags & GAMEFLAG_ARENA_CLASS_OR_TEMPLATE_ID;
 }
 
-//D2Game.0x6FC317C0
+// D2Game.0x6FC317C0
 int32_t __fastcall ARENA_GetTemplateType(D2GameStrc* pGame)
 {
     D2ArenaStrc* pArena = pGame->pArenaCtrl;

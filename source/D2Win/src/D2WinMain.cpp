@@ -127,14 +127,14 @@ D2WinCommandRegisterStrc gpCommandRegister_6F8BDE28[28] =
 };
 
 
-//D2Win.0x6F8ACC60 (#10000)
+// D2Win.0x6F8ACC60 (#10000)
 BOOL __stdcall D2Win_CreateWindow(HINSTANCE hInstance, DisplayType nRenderMode, BOOL bWindowed, BOOL bCompress)
 {
 	D2CMP_SetCompressedDataMode(bCompress);
 	return D2GFX_Initialize(hInstance, D2Win_MAINWINDOW_WndProc_6F8AD9B0, nRenderMode, bWindowed);
 }
 
-//D2Win.0x6F8ACC90 (#10001)
+// D2Win.0x6F8ACC90 (#10001)
 BOOL __stdcall D2Win_InitializeSpriteCache(BOOL bWindowed, D2GameResolutionMode nResolution)
 {
 	dword_6F8FE26C = 1;
@@ -164,14 +164,14 @@ BOOL __stdcall D2Win_InitializeSpriteCache(BOOL bWindowed, D2GameResolutionMode 
 	return 1;
 }
 
-//D2Win.0x6F8ACD40 (#10014)
+// D2Win.0x6F8ACD40 (#10014)
 int __stdcall D2Win_10014_SetWndProc(WNDPROC wndProc)
 {
 	gpfWndProc_6F8FE268 = wndProc;
 	return 1;
 }
 
-//D2Win.0x6F8ACD60 (#10015)
+// D2Win.0x6F8ACD60 (#10015)
 int __fastcall D2Win_10015()
 {
 	D2Win_10115_FONT();
@@ -185,7 +185,7 @@ int __fastcall D2Win_10015()
 	return 1;
 }
 
-//D2Win.0x6F8ACDB0 (#10002)
+// D2Win.0x6F8ACDB0 (#10002)
 int __stdcall D2Win_CloseSpriteCache()
 {
 	dword_6F8FE26C = 0;
@@ -195,14 +195,14 @@ int __stdcall D2Win_CloseSpriteCache()
 	return 1;
 }
 
-//D2Win.0x6F8ACDD0 (#10003)
+// D2Win.0x6F8ACDD0 (#10003)
 void __stdcall D2Win_10003()
 {
 	gnResolution_6F8FE248 = 0;
 	WINDOW_PlayCutscene();
 }
 
-//D2Win.0x6F8ACDE0 (#10004)
+// D2Win.0x6F8ACDE0 (#10004)
 void __stdcall D2Win_10004(D2GameResolutionMode bForceResize)
 {
 	gnResolution_6F8FE248 = bForceResize;
@@ -254,7 +254,7 @@ void __stdcall D2Win_Helper()
 	}
 }
 
-//D2Win.0x6F8ACE20 (#10016)
+// D2Win.0x6F8ACE20 (#10016)
 int __stdcall D2Win_10016()
 {
 	dword_6F8FE254 = 0;
@@ -267,7 +267,7 @@ int __stdcall D2Win_10016()
 	return 1;
 }
 
-//D2Win.0x6F8ACEC0 (#10005)
+// D2Win.0x6F8ACEC0 (#10005)
 int __stdcall D2Win_10005(D2GameResolutionMode nResolution)
 {
 	gnResolution_6F8FE248 = nResolution;
@@ -285,40 +285,40 @@ int __stdcall D2Win_10005(D2GameResolutionMode nResolution)
 	return 1;
 }
 
-//D2Win.0x6F8ACF20 (#10006)
+// D2Win.0x6F8ACF20 (#10006)
 void __stdcall D2Win_10006_ClearDrawCaches()
 {
 	WINDOW_ClearCaches();
 }
 
-//D2Win.0x6F8ACF30 (#10007)
+// D2Win.0x6F8ACF30 (#10007)
 int __stdcall BACKGROUND_SetCellFile(D2CellFileStrc* pCellFile)
 {
 	gpBackgroundCellFile = pCellFile;
 	return 1;
 }
 
-//D2Win.0x6F8ACF50 (#10011)
+// D2Win.0x6F8ACF50 (#10011)
 int __stdcall CURSOR_SetCellFile(D2CellFileStrc* pCellFile)
 {
 	gpCursorCellFile = pCellFile;
 	return 1;
 }
 
-//D2Win.0x6F8ACF70 (#10010)
+// D2Win.0x6F8ACF70 (#10010)
 void __stdcall D2Win_10010(int(*a1)())
 {
 	dword_6F8FE27C = a1;
 }
 
-//D2Win.0x6F8ACF80 (#10009)
+// D2Win.0x6F8ACF80 (#10009)
 int __stdcall D2Win_10009()
 {
 	dword_6F8BDF78 = 0;
 	return 1;
 }
 
-//D2Win.0x6F8ACF90 (#10008)
+// D2Win.0x6F8ACF90 (#10008)
 int __stdcall D2Win_10008(void(__stdcall* pCallback)(DWORD))
 {
 	int nSleepMillis = 0;
@@ -396,14 +396,14 @@ int __stdcall D2Win_10008(void(__stdcall* pCallback)(DWORD))
 	return 0;
 }
 
-//D2Win.0x6F8AD0B0 (#10013)
+// D2Win.0x6F8AD0B0 (#10013)
 int __stdcall CONTROL_SetCellFile(D2WinControlStrc* pControl, D2CellFileStrc* pCellFile)
 {
 	pControl->pCellFile = pCellFile;
 	return 1;
 }
 
-//D2Win.0x6F8AD0D0 (#10012)
+// D2Win.0x6F8AD0D0 (#10012)
 int __stdcall D2Win_10012(D2WinEditBoxStrc* pEditBox)
 {
 	if (gpEditBox_6F8FE258)
@@ -420,13 +420,13 @@ int __stdcall D2Win_10012(D2WinEditBoxStrc* pEditBox)
 	return 1;
 }
 
-//D2Win.0x6F8AD110 (#10023)
+// D2Win.0x6F8AD110 (#10023)
 D2WinEditBoxStrc* __stdcall D2Win_10023()
 {
 	return dword_6F8FE25C;
 }
 
-//D2Win.0x6F8AD120
+// D2Win.0x6F8AD120
 int __stdcall CONTROL_AppendToList(D2WinControlStrc* pControl)
 {
 	if (gpControlList_6F8FE24C)
@@ -446,7 +446,7 @@ int __stdcall CONTROL_AppendToList(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8AD160
+// D2Win.0x6F8AD160
 int __stdcall CONTROL_RemoveFromList(D2WinControlStrc* pControl)
 {
 	if (dword_6F8FE25C == (D2WinEditBoxStrc*)pControl)
@@ -514,7 +514,7 @@ int __stdcall CONTROL_RemoveFromList(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8AD260 (#10017)
+// D2Win.0x6F8AD260 (#10017)
 D2WinControlStrc* __stdcall CONTROL_Create(D2WinControlInitStrc* pControlInit)
 {
 	D2CellFileStrc* pCellFile = nullptr;
@@ -619,7 +619,7 @@ D2WinControlStrc* __stdcall CONTROL_Create(D2WinControlInitStrc* pControlInit)
 	return nullptr;
 }
 
-//D2Win.0x6F8AD450 (#10018)
+// D2Win.0x6F8AD450 (#10018)
 int __stdcall CONTROL_Destroy(void* a1)
 {
 	//TODO: a1, result
@@ -699,7 +699,7 @@ int __stdcall CONTROL_Destroy(void* a1)
 	return 0;
 }
 
-//D2Win.0x6F8AD570 (#10025)
+// D2Win.0x6F8AD570 (#10025)
 void __fastcall D2Win_10025_CONTROL_ToggleFirstFlag(D2WinControlStrc* pControl, int bSet)
 {
 	if (!pControl)
@@ -717,7 +717,7 @@ void __fastcall D2Win_10025_CONTROL_ToggleFirstFlag(D2WinControlStrc* pControl, 
 	}
 }
 
-//D2Win.0x6F8AD5A0 (#10024)
+// D2Win.0x6F8AD5A0 (#10024)
 int __fastcall D2Win_10024_CONTROL_CheckFirstFlag(D2WinControlStrc* pControl)
 {
 	D2_ASSERT(pControl);
@@ -725,7 +725,7 @@ int __fastcall D2Win_10024_CONTROL_CheckFirstFlag(D2WinControlStrc* pControl)
 	return pControl->dwFlags & gdwBitMasks[0];
 }
 
-//D2Win.0x6F8AD5D0 (#10027)
+// D2Win.0x6F8AD5D0 (#10027)
 void __fastcall D2Win_10027_CONTROL_ToggleThirdFlag(D2WinControlStrc* pControl, int bSet)
 {
 	D2_ASSERT(pControl);
@@ -740,7 +740,7 @@ void __fastcall D2Win_10027_CONTROL_ToggleThirdFlag(D2WinControlStrc* pControl, 
 	}
 }
 
-//D2Win.0x6F8AD620 (#10026)
+// D2Win.0x6F8AD620 (#10026)
 int __fastcall D2Win_10026_CONTROL_CheckThirdFlag(D2WinControlStrc* pControl)
 {
 	D2_ASSERT(pControl);
@@ -748,13 +748,13 @@ int __fastcall D2Win_10026_CONTROL_CheckThirdFlag(D2WinControlStrc* pControl)
 	return pControl->dwFlags & gdwBitMasks[2];
 }
 
-//D2Win.0x6F8AD650 (#10170)
+// D2Win.0x6F8AD650 (#10170)
 BOOL __stdcall CONTROL_MouseInsideRect(const RECT* pRect)
 {
 	return PtInRect(pRect, gMousePosition_6F8FE234);
 }
 
-//D2Win.0x6F8AD670
+// D2Win.0x6F8AD670
 void __stdcall D2Win_COMMANDS_MouseMove_6F8AD670(SMSGHANDLER_PARAMS* pMsg)
 {
 	int nX = (int)(int16_t)LOWORD(pMsg->lParam); // GET_X_LPARAM
@@ -791,7 +791,7 @@ void __stdcall D2Win_COMMANDS_MouseMove_6F8AD670(SMSGHANDLER_PARAMS* pMsg)
 	gMousePosition_6F8FE234.y = nY;
 }
 
-//D2Win.0x6F8AD6F0 (#10019)
+// D2Win.0x6F8AD6F0 (#10019)
 void __stdcall D2Win_10019()
 {
 	if (WINDOW_GetState())
@@ -913,7 +913,7 @@ void __stdcall D2Win_10019()
 	}
 }
 
-//D2Win.0x6F8AD9B0
+// D2Win.0x6F8AD9B0
 LRESULT __stdcall D2Win_MAINWINDOW_WndProc_6F8AD9B0(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	if (!dword_6F8FE26C)
@@ -944,7 +944,7 @@ LRESULT __stdcall D2Win_MAINWINDOW_WndProc_6F8AD9B0(HWND hWnd, UINT Msg, WPARAM 
 	return DefWindowProcA(hWnd, Msg, wParam, lParam);
 }
 
-//D2Win.0x6F8ADA80
+// D2Win.0x6F8ADA80
 void __stdcall D2Win_COMMANDS_Char_6F8ADA80(SMSGHANDLER_PARAMS* pMsg)
 {
 	//TODO: v4
@@ -1007,7 +1007,7 @@ void __stdcall D2Win_COMMANDS_Char_6F8ADA80(SMSGHANDLER_PARAMS* pMsg)
 	SMsgBreakHandlerChain(pMsg);
 }
 
-//D2Win.0x6F8ADB10
+// D2Win.0x6F8ADB10
 void __stdcall D2Win_COMMANDS_Escape_6F8ADB10(SMSGHANDLER_PARAMS* pMsg)
 {
 	if (dword_6F8FE260)
@@ -1030,7 +1030,7 @@ void __stdcall D2Win_COMMANDS_Escape_6F8ADB10(SMSGHANDLER_PARAMS* pMsg)
 	return;
 }
 
-//D2Win.0x6F8ADB50
+// D2Win.0x6F8ADB50
 void __stdcall D2Win_COMMANDS_VirtualKey_6F8ADB50(SMSGHANDLER_PARAMS* pMsg)
 {
 	//TODO: v4
@@ -1094,7 +1094,7 @@ void __stdcall D2Win_COMMANDS_VirtualKey_6F8ADB50(SMSGHANDLER_PARAMS* pMsg)
 	return;
 }
 
-//D2Win.0x6F8ADBE0
+// D2Win.0x6F8ADBE0
 void __stdcall D2Win_COMMANDS_Control_6F8ADBE0(SMSGHANDLER_PARAMS* pMsg)
 {
 	dword_6F8FE274 = 1;
@@ -1102,7 +1102,7 @@ void __stdcall D2Win_COMMANDS_Control_6F8ADBE0(SMSGHANDLER_PARAMS* pMsg)
 	// Should we return SMsgBreakHandlerChain's result?
 }
 
-//D2Win.0x6F8ADBF0
+// D2Win.0x6F8ADBF0
 void __stdcall D2Win_COMMANDS_Control_6F8ADBF0(SMSGHANDLER_PARAMS* pMsg)
 {
 	dword_6F8FE274 = 0;
@@ -1110,7 +1110,7 @@ void __stdcall D2Win_COMMANDS_Control_6F8ADBF0(SMSGHANDLER_PARAMS* pMsg)
 	// Should we return SMsgBreakHandlerChain's result?
 }
 
-//D2Win.0x6F8ADC00
+// D2Win.0x6F8ADC00
 void __stdcall D2Win_COMMANDS_SysCommand_6F8ADC00(SMSGHANDLER_PARAMS* pMsg)
 {
 	uint16_t v1 = pMsg->wParam & 0xFFF0;
@@ -1121,7 +1121,7 @@ void __stdcall D2Win_COMMANDS_SysCommand_6F8ADC00(SMSGHANDLER_PARAMS* pMsg)
 	}
 }
 
-//D2Win.0x6F8ADC40
+// D2Win.0x6F8ADC40
 void __stdcall D2Win_COMMANDS_ActivateApp_6F8ADC40(SMSGHANDLER_PARAMS* pMsg)
 {
 	dword_6F8BDE20 = pMsg->wParam != 0;
@@ -1156,7 +1156,7 @@ void __stdcall D2Win_COMMANDS_ActivateApp_6F8ADC40(SMSGHANDLER_PARAMS* pMsg)
 	pMsg->bUseResult = 0;
 }
 
-//D2Win.0x6F8ADCD0 (#10168)
+// D2Win.0x6F8ADCD0 (#10168)
 void __stdcall D2Win_10168_WINMAIN_CreateScreenshot()
 {
 	const uint32_t dwTickCount = GetTickCount();
@@ -1201,7 +1201,7 @@ void __stdcall D2Win_10168_WINMAIN_CreateScreenshot()
 	D2_FREE(pBuffer);
 }
 
-//D2Win.0x6F8ADE70
+// D2Win.0x6F8ADE70
 void __stdcall D2Win_COMMANDS_Snapshot_6F8ADE70(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2Win_10168_WINMAIN_CreateScreenshot();
@@ -1210,7 +1210,7 @@ void __stdcall D2Win_COMMANDS_Snapshot_6F8ADE70(SMSGHANDLER_PARAMS* pMsg)
 	pMsg->lResult = 0;
 }
 
-//D2Win.0x6F8AE020
+// D2Win.0x6F8AE020
 void __stdcall D2Win_COMMANDS_KeyF1_6F8AE020(SMSGHANDLER_PARAMS* pMsg)
 {
 	if (!dword_6F8FE274 || !D2SOUND_10066())
@@ -1233,7 +1233,7 @@ void __stdcall D2Win_COMMANDS_KeyF1_6F8AE020(SMSGHANDLER_PARAMS* pMsg)
 	pMsg->lResult = 0;
 }
 
-//D2Win.0x6F8AE070
+// D2Win.0x6F8AE070
 void __stdcall D2Win_COMMANDS_MouseButton_6F8AE070(SMSGHANDLER_PARAMS* pMsg)
 {
 	//TODO: v10
@@ -1316,7 +1316,7 @@ void __stdcall D2Win_COMMANDS_MouseButton_6F8AE070(SMSGHANDLER_PARAMS* pMsg)
 	}
 }
 
-//D2Win.0x6F8AE220
+// D2Win.0x6F8AE220
 void __stdcall D2Win_COMMANDS_MouseWheel_6F8AE220(SMSGHANDLER_PARAMS* pMsg)
 {
 	//TODO: Names
@@ -1434,13 +1434,13 @@ void __stdcall D2Win_COMMANDS_MouseWheel_6F8AE220(SMSGHANDLER_PARAMS* pMsg)
 	return;
 }
 
-//D2Win.0x6F8AE4A0 (#10029)
+// D2Win.0x6F8AE4A0 (#10029)
 void __stdcall D2Win_10029(int a1)
 {
 	dword_6F8BDE18 = a1;
 }
 
-//D2Win.0x6F8AE4B0 (#10030)
+// D2Win.0x6F8AE4B0 (#10030)
 void __stdcall D2Win_10030_CONTROL_ToggleFourthFlag(D2WinControlStrc* pControl, int bSet)
 {
 	if (bSet)
@@ -1453,19 +1453,19 @@ void __stdcall D2Win_10030_CONTROL_ToggleFourthFlag(D2WinControlStrc* pControl, 
 	}
 }
 
-//D2Win.0x6F8AE4F0 (#10031)
+// D2Win.0x6F8AE4F0 (#10031)
 void __stdcall D2Win_10031(void* a1)
 {
 	dword_6F8FE260 = a1;
 }
 
-//D2Win.0x6F8AE500 (#10032)
+// D2Win.0x6F8AE500 (#10032)
 int __stdcall D2Win_IsMouseButtonPressed()
 {
 	return gbIsMouseButtonPressed;
 }
 
-//D2Win.0x6F8AE510 (#10033)
+// D2Win.0x6F8AE510 (#10033)
 int __stdcall D2Win_10033(D2WinControlStrc* a1, int a2)
 {
 	dword_6F8FE264 = a1;
@@ -1473,7 +1473,7 @@ int __stdcall D2Win_10033(D2WinControlStrc* a1, int a2)
 	return 1;
 }
 
-//D2Win.0x6F8AE530 (#10035)
+// D2Win.0x6F8AE530 (#10035)
 int __stdcall CONTROL_GetType(D2WinControlStrc* pControl)
 {
 	if (pControl)
@@ -1484,7 +1484,7 @@ int __stdcall CONTROL_GetType(D2WinControlStrc* pControl)
 	return 0;
 }
 
-//D2Win.0x6F8AE540
+// D2Win.0x6F8AE540
 D2WinControlStrc* __stdcall sub_6F8AE540()
 {
 	return dword_6F8FE264;

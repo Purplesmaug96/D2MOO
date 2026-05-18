@@ -25,7 +25,7 @@
 
 int dword_6FDEA6FC;
 
-//D2Common.0x6FDCFE40
+// D2Common.0x6FDCFE40
 static D2DrlgLinkStrc gAct1WildernessDrlgLink[15] =
 {
 	{ (void*)sub_6FD81330, LEVEL_STONYFIELD, -1, -1 },
@@ -36,7 +36,7 @@ static D2DrlgLinkStrc gAct1WildernessDrlgLink[15] =
 	{ NULL, 0, -1, -1 },
 };
 
-//D2Common.0x6FDCFF30
+// D2Common.0x6FDCFF30
 static D2DrlgLinkStrc gAct1MonasteryDrlgLink[15] =
 {
 	{ (void*)sub_6FD81330, LEVEL_MOOMOOFARM, -1, -1 },
@@ -47,7 +47,7 @@ static D2DrlgLinkStrc gAct1MonasteryDrlgLink[15] =
 	{ NULL, 0, -1, -1 },
 };
 
-//D2Common.0x6FDD0020
+// D2Common.0x6FDD0020
 static D2DrlgLinkStrc gAct2OutdoorDrlgLink[15] =
 {
 	{ (void*)sub_6FD81330, LEVEL_LUTGHOLEIN, -1, -1 },
@@ -59,7 +59,7 @@ static D2DrlgLinkStrc gAct2OutdoorDrlgLink[15] =
 	{ NULL, 0, -1, -1 },
 };
 
-//D2Common.0x6FDD0110
+// D2Common.0x6FDD0110
 static D2DrlgLinkStrc gAct2CanyonDrlgLink[15] =
 {
 	{ (void*)sub_6FD81330, LEVEL_CANYONOFTHEMAGI, -1, -1 },
@@ -77,7 +77,7 @@ static D2DrlgLinkStrc gAct5UbersDrlgLink[15] =
 };
 #endif
 
-//D2Common.0x6FDD0200
+// D2Common.0x6FDD0200
 static D2DrlgLinkStrc gAct4OutdoorDrlgLink[15] =
 {
 	{ (void*)sub_6FD81330, LEVEL_THEPANDEMONIUMFORTRESS, -1, -1 },
@@ -87,7 +87,7 @@ static D2DrlgLinkStrc gAct4OutdoorDrlgLink[15] =
 	{ NULL, 0, -1, -1 },
 };
 
-//D2Common.0x6FDD02F0
+// D2Common.0x6FDD02F0
 static D2DrlgLinkStrc gAct4ChaosSanctumDrlgLink[15] =
 {
 	{ (void*)sub_6FD81330, LEVEL_CHAOSSANCTUM, -1, -1 },
@@ -132,7 +132,7 @@ static const int gnBarricadeCliffBorderIds[14][2] =
 };
 
 
-//D2Common.0x6FD80480
+// D2Common.0x6FD80480
 void __fastcall DRLGOUTPLACE_BuildKurast(D2DrlgLevelStrc* pLevel)
 {
 	switch (pLevel->nLevelId)
@@ -192,7 +192,7 @@ void __fastcall DRLGOUTPLACE_BuildKurast(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD806A0
+// D2Common.0x6FD806A0
 void __fastcall DRLGOUTPLACE_InitAct3OutdoorLevel(D2DrlgLevelStrc* pLevel)
 {
 	DRLGOUTPLACE_SetOutGridLinkFlags(pLevel);
@@ -239,7 +239,7 @@ uint8_t byte_6FDCFB70[4*4] = {
 char byte_6FDCFB80[] = { (char)1, (char)0, (char)-1, (char)0 };
 char byte_6FDCFB84[] = { (char)0, (char)1, (char)0, (char)-1 };
 
-//D2Common.0x6FD80750
+// D2Common.0x6FD80750
 BOOL __fastcall sub_6FD80750(D2DrlgLevelStrc* pLevel, int nVertexId)
 {
 	int nX1 = (pLevel->pOutdoors->pVertices[6 + nVertexId].nPosX - pLevel->nPosX) / 8;
@@ -554,7 +554,7 @@ static const D2C_LvlPrestIds levelPrestBorder[13][4] = {
 	LVLPREST_NONE,						LVLPREST_ACT1_WILD_BORDER_12,	LVLPREST_ACT2_DESERT_BORDER_12, LVLPREST_ACT4_MESA_BORDER_12,
 };
 
-//D2Common.0x6FD80BE0
+// D2Common.0x6FD80BE0
 int __fastcall sub_6FD80BE0(int a1, int a2, int a3)
 {
 	const int lutIndex = a1 + 3 * a2 + 4;
@@ -572,7 +572,7 @@ int __fastcall sub_6FD80BE0(int a1, int a2, int a3)
 	}
 }
 
-//D2Common.0x6FD80C10
+// D2Common.0x6FD80C10
 int __fastcall sub_6FD80C10(int a1, int a2, int a3, int a4, int a5)
 {
 	int v6 = 0;
@@ -619,7 +619,7 @@ int __fastcall sub_6FD80C10(int a1, int a2, int a3, int a4, int a5)
 	}
 }
 
-//D2Common.0x6FD80C80
+// D2Common.0x6FD80C80
 void __fastcall DRLGOUTPLACE_SetBlankBorderGridCells(D2DrlgLevelStrc* pLevel)
 {	const D2CoordStrc aOffsets[4][2] = {
 		{{  0,  0 }, {  1,  1 }},
@@ -659,7 +659,7 @@ void __fastcall DRLGOUTPLACE_SetBlankBorderGridCells(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD80DA0
+// D2Common.0x6FD80DA0
 void __fastcall DRLGOUTPLACE_SetOutGridLinkFlags(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgVertexStrc* pVertex = pLevel->pOutdoors->pVertex;
@@ -682,7 +682,7 @@ void __fastcall DRLGOUTPLACE_SetOutGridLinkFlags(D2DrlgLevelStrc* pLevel)
 	while (pVertex != pLevel->pOutdoors->pVertex);
 }
 
-//D2Common.0x6FD80E10
+// D2Common.0x6FD80E10
 //TODO: v41, v61
 void __fastcall DRLGOUTPLACE_PlaceAct1245OutdoorBorders(D2DrlgLevelStrc* pLevel)
 {
@@ -980,7 +980,7 @@ void __fastcall DRLGOUTPLACE_PlaceAct1245OutdoorBorders(D2DrlgLevelStrc* pLevel)
 	DRLGOUTPLACE_SetBlankBorderGridCells(pLevel);
 }
 
-//D2Common.0x6FD81330
+// D2Common.0x6FD81330
 BOOL __fastcall sub_6FD81330(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	D2LevelDefBin* pLevelDefBinRecord = NULL;
@@ -997,7 +997,7 @@ BOOL __fastcall sub_6FD81330(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD81380
+// D2Common.0x6FD81380
 BOOL __fastcall sub_6FD81380(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	if (pLevelLinkData->nRand[1][pLevelLinkData->nIteration] == -1)
@@ -1020,7 +1020,7 @@ BOOL __fastcall sub_6FD81380(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD81430
+// D2Common.0x6FD81430
 void __fastcall sub_6FD81430(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrlgCoord2, int a3, int a4)
 {
 	switch (a3)
@@ -1086,7 +1086,7 @@ void __fastcall sub_6FD81430(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrl
 	}
 }
 
-//D2Common.0x6FD81530
+// D2Common.0x6FD81530
 BOOL __fastcall sub_6FD81530(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	if (pLevelLinkData->nRand[1][pLevelLinkData->nIteration] == -1)
@@ -1108,7 +1108,7 @@ BOOL __fastcall sub_6FD81530(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD815E0
+// D2Common.0x6FD815E0
 void __fastcall sub_6FD815E0(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrlgCoord2, int a3, int a4)
 {
 	switch (a3)
@@ -1198,7 +1198,7 @@ void __fastcall sub_6FD815E0(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrl
 	}
 }
 
-//D2Common.0x6FD81720
+// D2Common.0x6FD81720
 BOOL __fastcall sub_6FD81720(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	int nRand2 = 0;
@@ -1238,7 +1238,7 @@ BOOL __fastcall sub_6FD81720(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD81850
+// D2Common.0x6FD81850
 void __fastcall sub_6FD81850(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrlgCoord2, int a3, int a4)
 {
 	switch (a3)
@@ -1304,7 +1304,7 @@ void __fastcall sub_6FD81850(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrl
 	}
 }
 
-//D2Common.0x6FD81950
+// D2Common.0x6FD81950
 BOOL __fastcall sub_6FD81950(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	int nRand2 = 0;
@@ -1347,7 +1347,7 @@ BOOL __fastcall sub_6FD81950(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD81AD0
+// D2Common.0x6FD81AD0
 BOOL __fastcall sub_6FD81AD0(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	pLevelLinkData->nRand[1][pLevelLinkData->nIteration] = 0;
@@ -1358,7 +1358,7 @@ BOOL __fastcall sub_6FD81AD0(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD81B30
+// D2Common.0x6FD81B30
 BOOL __fastcall sub_6FD81B30(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	int nRand = 0;
@@ -1392,7 +1392,7 @@ BOOL __fastcall sub_6FD81B30(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD81BF0
+// D2Common.0x6FD81BF0
 BOOL __fastcall sub_6FD81BF0(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	int nRand = 0;
@@ -1419,7 +1419,7 @@ BOOL __fastcall sub_6FD81BF0(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 	return TRUE;
 }
 
-//D2Common.0x6FD81CA0
+// D2Common.0x6FD81CA0
 BOOL __fastcall sub_6FD81CA0(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	pLevelLinkData->nRand[1][pLevelLinkData->nIteration] = 3;
@@ -1529,7 +1529,7 @@ void __fastcall DRLGOUTPLACE_CreateLevelConnections(D2DrlgStrc* pDrlg, uint8_t n
 	}
 }
 
-//D2Common.0x6FD82050
+// D2Common.0x6FD82050
 //TODO: Rename variables
 BOOL __fastcall sub_6FD82050(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nIteration)
 {
@@ -1572,7 +1572,7 @@ BOOL __fastcall sub_6FD82050(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nItera
 	}
 }
 
-//D2Common.0x6FD82130
+// D2Common.0x6FD82130
 BOOL __fastcall sub_6FD82130(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nIteration)
 {
 	BOOL bResult = FALSE;
@@ -1605,7 +1605,7 @@ BOOL __fastcall sub_6FD82130(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nItera
 	return bResult;
 }
 
-//D2Common.0x6FD821E0
+// D2Common.0x6FD821E0
 BOOL __fastcall DRLGOUTPLACE_LinkAct2Outdoors(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nIteration)
 {
 	int nLevelLink = gAct2OutdoorDrlgLink[nIteration].nLevelLink;
@@ -1621,7 +1621,7 @@ BOOL __fastcall DRLGOUTPLACE_LinkAct2Outdoors(D2DrlgLevelLinkDataStrc* pLevelLin
 	return TRUE;
 }
 
-//D2Common.0x6FD82240
+// D2Common.0x6FD82240
 BOOL __fastcall DRLGOUTPLACE_LinkAct2Canyon(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nIteration)
 {
 	int nLevelLink = gAct2CanyonDrlgLink[nIteration].nLevelLink;
@@ -1672,7 +1672,7 @@ BOOL __fastcall DRLGOUTPLACE_LinkAct4Outdoors(D2DrlgLevelLinkDataStrc* pLevelLin
 	return TRUE;
 }
 
-//D2Common.0x6FD82300
+// D2Common.0x6FD82300
 BOOL __fastcall DRLGOUTPLACE_LinkAct4ChaosSanctum(D2DrlgLevelLinkDataStrc* pLevelLinkData, int nIteration)
 {
 	int nLevelLink = gAct4ChaosSanctumDrlgLink[nIteration].nLevelLink;
@@ -1688,7 +1688,7 @@ BOOL __fastcall DRLGOUTPLACE_LinkAct4ChaosSanctum(D2DrlgLevelLinkDataStrc* pLeve
 	return TRUE;
 }
 
-//D2Common.0x6FD82360
+// D2Common.0x6FD82360
 void __fastcall sub_6FD82360(D2DrlgLevelStrc* pLevel, int nIteration, int* pRand)
 {
 	static const D2UnkOutdoorStrc3 stru_6FDD06C0[15] =
@@ -1728,7 +1728,7 @@ void __fastcall sub_6FD82360(D2DrlgLevelStrc* pLevel, int nIteration, int* pRand
 	}
 }
 
-//D2Common.0x6FD823C0
+// D2Common.0x6FD823C0
 //TODO: v28 stuff
 void __fastcall sub_6FD823C0(D2DrlgStrc* pDrlg, D2DrlgLinkStrc* pDrlgLink, int(__fastcall* a3)(D2DrlgLevelLinkDataStrc*, int), void(__fastcall* a4)(D2DrlgLevelStrc*, int, int*))
 {
@@ -1869,7 +1869,7 @@ void __fastcall sub_6FD823C0(D2DrlgStrc* pDrlg, D2DrlgLinkStrc* pDrlgLink, int(_
 	}
 }
 
-//D2Common.0x6FD826D0
+// D2Common.0x6FD826D0
 void __fastcall sub_6FD826D0(D2DrlgStrc* pDrlg, int nStartId, int nEndId)
 {
 	D2DrlgWarpStrc* pDrlgWarp = NULL;
@@ -1890,7 +1890,7 @@ void __fastcall sub_6FD826D0(D2DrlgStrc* pDrlg, int nStartId, int nEndId)
 	}
 }
 
-//D2Common.0x6FD82750
+// D2Common.0x6FD82750
 void __fastcall sub_6FD82750(D2DrlgStrc* pDrlg, int nStartId, int nEndId)
 {
 	D2DrlgLevelStrc* pWarpLevel = NULL;
@@ -1921,7 +1921,7 @@ void __fastcall sub_6FD82750(D2DrlgStrc* pDrlg, int nStartId, int nEndId)
 
 
 
-//D2Common.0x6FDD0828
+// D2Common.0x6FDD0828
 static const D2C_LvlPrestIds gJunglePresets[] = {
 	LVLPREST_NONE, LVLPREST_ACT3_JUNGLE_W_E, LVLPREST_ACT3_JUNGLE_W_S, LVLPREST_ACT3_JUNGLE_W_N,
 	LVLPREST_ACT3_JUNGLE_E_W, LVLPREST_NONE, LVLPREST_ACT3_JUNGLE_E_S, LVLPREST_ACT3_JUNGLE_E_N,
@@ -1939,7 +1939,7 @@ static const D2C_LvlPrestIds gJunglePresets[] = {
 	LVLPREST_ACT3_JUNGLE_NSE_W, LVLPREST_NONE, LVLPREST_NONE, LVLPREST_NONE,
 	LVLPREST_NONE, LVLPREST_NONE, LVLPREST_NONE, LVLPREST_NONE,
 };
-//D2Common.0x6FDD0924
+// D2Common.0x6FDD0924
 static const D2C_LvlPrestIds gSpiderForestPresets[] = {
 	LVLPREST_NONE, LVLPREST_ACT3_CLEARING_WEBBY_W, LVLPREST_ACT3_CLEARING_WEBBY_E, LVLPREST_ACT3_CLEARING_WEBBY_EW,
 	LVLPREST_ACT3_CLEARING_WEBBY_S, LVLPREST_ACT3_CLEARING_WEBBY_SW, LVLPREST_ACT3_CLEARING_WEBBY_SE, LVLPREST_NONE,
@@ -2564,7 +2564,7 @@ D2DrlgLevelStrc* __fastcall DRLG_GenerateJungles(D2DrlgLevelStrc* pLevel)
 
 
 
-//D2Common.0x6FD83970
+// D2Common.0x6FD83970
 void __fastcall sub_6FD83970(D2DrlgCoordStrc* pDrlgCoord, D2JungleStrc* pJungle, int nRand, int nSizeX, int nSizeY)
 {
 	unsigned int nTemp = 0;
@@ -2613,7 +2613,7 @@ void __fastcall sub_6FD83970(D2DrlgCoordStrc* pDrlgCoord, D2JungleStrc* pJungle,
 	pJungle->field_10 = nRand;
 }
 
-//D2Common.0x6FD83A20
+// D2Common.0x6FD83A20
 void __fastcall DRLGOUTPLACE_InitOutdoorRoomGrids(D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2UnkOutdoorStrc2 a1 = {};
@@ -2720,7 +2720,7 @@ void __fastcall DRLGOUTPLACE_InitOutdoorRoomGrids(D2DrlgRoomStrc* pDrlgRoom)
 	DRLGGRID_AlterEdgeGridFlags(&pDrlgRoom->pOutdoor->pFloorGrid, 4, FLAG_OPERATION_OR);
 }
 
-//D2Common.0x6FD83C90
+// D2Common.0x6FD83C90
 void __fastcall DRLGOUTPLACE_CreateOutdoorRoomEx(D2DrlgLevelStrc* pLevel, int nX, int nY, int nWidth, int nHeight, int dwRoomFlags, int dwOutdoorFlags, int dwOutdoorFlagsEx, int dwDT1Mask)
 {
 	D2LevelDefBin* pLevelDefBinRecord = NULL;

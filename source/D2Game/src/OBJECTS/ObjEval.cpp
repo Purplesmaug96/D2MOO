@@ -12,7 +12,7 @@
 #include "UNIT/SUnitDmg.h"
 
 
-//D2Game.0x6FC745D0
+// D2Game.0x6FC745D0
 void __fastcall OBJEVAL_ApplyTrapObjectDamage(D2GameStrc* pGame, D2UnitStrc* pSrcUnit, D2UnitStrc* pTargetUnit, int32_t nDamageType)
 {
     D2ActiveRoomStrc* pTargetRoom = UNITS_GetRoom(pTargetUnit);

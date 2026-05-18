@@ -35,7 +35,7 @@ int32_t dword_6FC0B25C;
 int32_t dword_6FC0B260;
 
 
-//D2Net.0x6FC01000 (#10017)
+// D2Net.0x6FC01000 (#10017)
 int32_t __stdcall D2NET_10017()
 {
 	if (sub_6FC01A00())
@@ -55,7 +55,7 @@ int32_t __stdcall D2NET_10017()
 	return v1;
 }
 
-//D2Net.0x6FC01040
+// D2Net.0x6FC01040
 DWORD __stdcall CLIENT_ConnectToHost(void* szIpAddress)
 {
 	dword_6FC0B25C = 0;
@@ -88,7 +88,7 @@ DWORD __stdcall CLIENT_ConnectToHost(void* szIpAddress)
 	return 1;
 }
 
-//D2Net.0x6FC01120 (#10025)
+// D2Net.0x6FC01120 (#10025)
 int32_t __stdcall D2NET_10025()
 {
 	if (sub_6FC01A00())
@@ -120,7 +120,7 @@ int32_t __stdcall D2NET_10025()
 	return 2;
 }
 
-//D2Net.0x6FC011B0 (#10000)
+// D2Net.0x6FC011B0 (#10000)
 void __stdcall CLIENT_Initialize(int32_t a1, const char* szIpAddress)
 {
 	gpGamePacketList = nullptr;
@@ -142,7 +142,7 @@ void __stdcall CLIENT_Initialize(int32_t a1, const char* szIpAddress)
 	SetThreadDescription(ghClientThread, L"D2ClientConnectToHostThread"); // D2Moo only
 }
 
-//D2Net.0x6FC01240 (#10001)
+// D2Net.0x6FC01240 (#10001)
 void __stdcall CLIENT_Release()
 {
 	D2_LOCK(&gCriticalSection);
@@ -186,19 +186,19 @@ void __stdcall CLIENT_Release()
 	gClientSocket = 0;
 }
 
-//D2Net.0x6FC01300 (#10007)
+// D2Net.0x6FC01300 (#10007)
 int32_t __stdcall CLIENT_DequeueGamePacket(uint8_t* pBuffer, uint32_t nBufferSize)
 {
 	return NET_DequeueFirstPacketFromList(&gCriticalSection, &gpGamePacketList, pBuffer, nBufferSize);
 }
 
-//D2Net.0x6FC01310 (#10008)
+// D2Net.0x6FC01310 (#10008)
 int32_t __stdcall CLIENT_DequeueSystemPacket(uint8_t* pBuffer, uint32_t nBufferSize)
 {
 	return NET_DequeueFirstPacketFromList(&gCriticalSection, &gpSystemPacketList, pBuffer, nBufferSize);
 }
 
-//D2Net.0x6FC01320
+// D2Net.0x6FC01320
 DWORD __stdcall CLIENT_ThreadProc(void* a1)
 {
 	// TODO: Names
@@ -334,7 +334,7 @@ DWORD __stdcall CLIENT_ThreadProc(void* a1)
 	ExitThread(0);
 }
 
-//D2Net.0x6FC015C0
+// D2Net.0x6FC015C0
 int32_t __stdcall CLIENT_ReadPacketsFromStream()
 {
 	D2PacketBufferStrc* pPacketBuffer = gpPacketBuffer;
@@ -417,7 +417,7 @@ int32_t __stdcall CLIENT_ReadPacketsFromStream()
 	return bIsPacket0xAE;
 }
 
-//D2Net.0x6FC01760 (#10005)
+// D2Net.0x6FC01760 (#10005)
 int32_t __stdcall CLIENT_Send(int32_t nUnused, const uint8_t* pBuffer, int32_t nBufferSize)
 {
 	if (!gpPacketBuffer)
@@ -449,7 +449,7 @@ int32_t __stdcall CLIENT_Send(int32_t nUnused, const uint8_t* pBuffer, int32_t n
 	return 0;
 }
 
-//D2Net.0x6FC01810
+// D2Net.0x6FC01810
 void __fastcall CLIENT_ReadPacketFromBuffer(D2PacketBufferStrc* pBuffer, int32_t nBufferSize)
 {
 	D2PacketBufferStrc* pPacketBuffer = pBuffer;
@@ -522,7 +522,7 @@ void __fastcall CLIENT_ReadPacketFromBuffer(D2PacketBufferStrc* pBuffer, int32_t
 	}
 }
 
-//D2Net.0x6FC019A0 (#10013)
+// D2Net.0x6FC019A0 (#10013)
 void __stdcall CLIENT_GetLocalIpAddressString(char* szBuffer)
 {
 	sockaddr_in sa = {};

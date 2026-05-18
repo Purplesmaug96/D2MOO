@@ -27,7 +27,7 @@ D2CellFileStrc* ghPentagramCellFile;
 uint32_t dword_6F8FE220;
 
 
-//D2Win.0x6F8AC270 (#10135)
+// D2Win.0x6F8AC270 (#10135)
 D2WinListStrc* __fastcall LIST_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, void* a5, Font* pFont)
 {
 	// TODO: a5, pFont, nWidtha, v24
@@ -120,7 +120,7 @@ D2WinListStrc* __fastcall LIST_Create(int32_t nX, int32_t nY, int32_t nWidth, in
 	return pList;
 }
 
-//D2Win.0x6F8AC490 (#10136)
+// D2Win.0x6F8AC490 (#10136)
 int32_t __fastcall LIST_Destroy(D2WinListStrc* pList)
 {
 	D2_ASSERT(pList->controlHeader.nType == D2WIN_LIST);
@@ -135,7 +135,7 @@ int32_t __fastcall LIST_Destroy(D2WinListStrc* pList)
 	return CONTROL_RemoveFromList(&pList->controlHeader);
 }
 
-//D2Win.0x6F8AC4F0 (#10138)
+// D2Win.0x6F8AC4F0 (#10138)
 void __fastcall D2Win_10138(D2WinListStrc* pList, const char* szText, int32_t(__stdcall* a3)(SMSGHANDLER_PARAMS*), char a4, int32_t a5, int32_t a6, int32_t a7)
 {
 	Unicode wszText[256] = {};
@@ -144,7 +144,7 @@ void __fastcall D2Win_10138(D2WinListStrc* pList, const char* szText, int32_t(__
 	D2Win_10137(pList, wszText, a3, a4, a5, a6, a7);
 }
 
-//D2Win.0x6F8AC570 (#10137)
+// D2Win.0x6F8AC570 (#10137)
 void __fastcall D2Win_10137(D2WinListStrc* pList, Unicode* wszText, int32_t(__stdcall* a3)(SMSGHANDLER_PARAMS*), char a4, int32_t a5, int32_t a6, int32_t a7)
 {
 	D2_ASSERT(pList->controlHeader.nType == D2WIN_LIST);
@@ -209,7 +209,7 @@ void __fastcall D2Win_10137(D2WinListStrc* pList, Unicode* wszText, int32_t(__st
 	}
 }
 
-//D2Win.0x6F8AC6D0 (#10139)
+// D2Win.0x6F8AC6D0 (#10139)
 int32_t __fastcall LIST_GetSelectedDataIndex(D2WinListStrc* pList)
 {
 	D2_ASSERT(pList->controlHeader.nType == D2WIN_LIST);
@@ -228,7 +228,7 @@ int32_t __fastcall LIST_GetSelectedDataIndex(D2WinListStrc* pList)
 	return -1;
 }
 
-//D2Win.0x6F8AC720 (#10140)
+// D2Win.0x6F8AC720 (#10140)
 D2WinListDataStrc* __fastcall LIST_GetDataFromIndex(D2WinListStrc* pList, int32_t nIndex)
 {
 	D2_ASSERT(pList->controlHeader.nType == D2WIN_LIST);
@@ -247,7 +247,7 @@ D2WinListDataStrc* __fastcall LIST_GetDataFromIndex(D2WinListStrc* pList, int32_
 	return nullptr;
 }
 
-//D2Win.0x6F8AC770 (#10141)
+// D2Win.0x6F8AC770 (#10141)
 int32_t __fastcall D2Win_10141(D2WinListStrc* pList)
 {
 	D2_ASSERT(pList->controlHeader.nType == D2WIN_LIST);
@@ -255,7 +255,7 @@ int32_t __fastcall D2Win_10141(D2WinListStrc* pList)
 	return pList->field_50;
 }
 
-//D2Win.0x6F8AC7A0
+// D2Win.0x6F8AC7A0
 void __stdcall LIST_LoadPentspinCellfile()
 {
 	D2_ASSERT(ghPentagramCellFile == nullptr);
@@ -265,14 +265,14 @@ void __stdcall LIST_LoadPentspinCellfile()
 	ghPentagramCellFile = ARCHIVE_LoadCellFile(szFile, 0);
 }
 
-//D2Win.0x6F8AC800
+// D2Win.0x6F8AC800
 void __stdcall LIST_UnloadPentspinCellfile()
 {
 	ARCHIVE_FreeCellFile(ghPentagramCellFile);
 	ghPentagramCellFile = nullptr;
 }
 
-//D2Win.0x6F8AC820
+// D2Win.0x6F8AC820
 int32_t __fastcall LIST_Draw(D2WinControlStrc* pControl)
 {
 	D2WinListStrc* pList = (D2WinListStrc*)pControl;
@@ -344,7 +344,7 @@ int32_t __fastcall LIST_Draw(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8AC9B0
+// D2Win.0x6F8AC9B0
 int32_t __stdcall LIST_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinListStrc* pList = (D2WinListStrc*)pMsg->hWindow;
@@ -378,7 +378,7 @@ int32_t __stdcall LIST_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 	return 0;
 }
 
-//D2Win.0x6F8ACA70
+// D2Win.0x6F8ACA70
 int32_t __stdcall LIST_HandleCharInput(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinListStrc* pList = (D2WinListStrc*)pMsg->hWindow;
@@ -396,7 +396,7 @@ int32_t __stdcall LIST_HandleCharInput(SMSGHANDLER_PARAMS* pMsg)
 	return 0;
 }
 
-//D2Win.0x6F8ACAE0
+// D2Win.0x6F8ACAE0
 int32_t __stdcall LIST_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinListStrc* pList = (D2WinListStrc*)pMsg->hWindow;

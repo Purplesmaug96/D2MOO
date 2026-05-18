@@ -14,7 +14,7 @@
 //TODO: Find names
 
 
-//D2Common.0x6FDCE260
+// D2Common.0x6FDCE260
 static const D2CompositStrc stru_6FDCE260[] =
 {
 	{ ' sh1', WEAPONCLASS_1HS },
@@ -34,7 +34,7 @@ static const D2CompositStrc stru_6FDCE260[] =
 
 
 
-//D2Common.0x6FD466C0 (#10884)
+// D2Common.0x6FD466C0 (#10884)
 void __stdcall D2Common_10884_COMPOSIT_unk(D2UnitStrc* pUnit, int nClass, int nMode, int nUnitType, D2InventoryStrc* pInventory, char* szPath, int* pWeaponClassCode, BOOL bAddPathPrefix, int a9)
 {
 	static const D2CompositStrc stru_6FDD6088[] =
@@ -179,7 +179,7 @@ void __stdcall D2Common_10884_COMPOSIT_unk(D2UnitStrc* pUnit, int nClass, int nM
 	}
 }
 
-//D2Common.0x6FD46BC0 (#10885)
+// D2Common.0x6FD46BC0 (#10885)
 void __stdcall D2Common_10885_COMPOSIT_unk(D2UnitStrc* pUnit, char* szPath, int* pWeaponClassCode, BOOL bAddPathPrefix, int a5, D2InventoryStrc* pInventory, int nAnimMode)
 {
 	int nClass = 0;
@@ -202,7 +202,7 @@ void __stdcall D2Common_10885_COMPOSIT_unk(D2UnitStrc* pUnit, char* szPath, int*
 	D2Common_10884_COMPOSIT_unk(pUnit, nClass, nMode, nType, pInventory, szPath, pWeaponClassCode, bAddPathPrefix, a5);
 }
 
-//D2Common.0x6FD46C60 (#10886)
+// D2Common.0x6FD46C60 (#10886)
 int __stdcall COMPOSIT_GetWeaponClassIdFromCode(int nWeaponClassCode)
 {
 	for (int i = 0; i < ARRAY_SIZE(stru_6FDCE260); ++i)
@@ -216,7 +216,7 @@ int __stdcall COMPOSIT_GetWeaponClassIdFromCode(int nWeaponClassCode)
 	return 0;
 }
 
-//D2Common.0x6FD46C90 (#10887)
+// D2Common.0x6FD46C90 (#10887)
 int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int nClass, int nMode, D2InventoryStrc* pInventory, int* pWeaponClassId)
 {
 	D2MonStats2Txt* pMonStats2TxtRecord = NULL;
@@ -388,7 +388,7 @@ int __stdcall COMPOSIT_GetWeaponClassCode(D2UnitStrc* pUnit, int nUnitType, int 
 	return 0;
 }
 
-//D2Common.0x6FD47150 (#10888)
+// D2Common.0x6FD47150 (#10888)
 int __stdcall COMPOSIT_GetWeaponClassId(D2UnitStrc* pUnit, D2InventoryStrc* pInventory, int* pWeaponClassId, int nAnimMode, BOOL a5)
 {
 	int nClass = 0;
@@ -425,13 +425,13 @@ int __stdcall COMPOSIT_GetWeaponClassId(D2UnitStrc* pUnit, D2InventoryStrc* pInv
 	}
 }
 
-//D2Common.0x6FD47200 (#10889)
+// D2Common.0x6FD47200 (#10889)
 BOOL __stdcall COMPOSIT_IsArmorComponent(int nComponent)
 {
 	return nComponent == COMPOSIT_TORSO || nComponent == COMPOSIT_LEGS || nComponent == COMPOSIT_RIGHTARM || nComponent == COMPOSIT_LEFTARM || nComponent == COMPOSIT_SPECIAL1 || nComponent == COMPOSIT_SPECIAL2;
 }
 
-//D2Common.0x6FD47230 (#10890)
+// D2Common.0x6FD47230 (#10890)
 BOOL __stdcall COMPOSIT_IsWeaponBowOrXBow(D2UnitStrc* pUnit)
 {
 	int nWeaponClassId = 0;
@@ -453,7 +453,7 @@ BOOL __stdcall COMPOSIT_IsWeaponBowOrXBow(D2UnitStrc* pUnit)
 	return nWeaponClassId == WEAPONCLASS_BOW || nWeaponClassId == WEAPONCLASS_XBW;
 }
 
-//D2Common.0x6FD472E0 (#10891)
+// D2Common.0x6FD472E0 (#10891)
 //Note: value returned in eax register (32bits), can't change return type to uint8_t
 unsigned __stdcall COMPOSIT_GetArmorTypeFromComponent(int nComponent, uint8_t* pArmorComponents)
 {

@@ -15,7 +15,7 @@
 #include "UNIT/SUnitNpc.h"
 
 
-//D2Game.0x6FC40FB0
+// D2Game.0x6FC40FB0
 void __fastcall D2GAME_INVMODE_First_6FC40FB0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2ClientStrc* pClient, D2InventoryStrc* pInventoryArg)
 {
     D2InventoryStrc* pInventory = pUnit->pInventory;
@@ -64,7 +64,7 @@ void __fastcall D2GAME_INVMODE_First_6FC40FB0(D2GameStrc* pGame, D2UnitStrc* pUn
     }
 }
 
-//D2Game.0x6FC410E0
+// D2Game.0x6FC410E0
 int32_t __fastcall sub_6FC410E0(D2UnitStrc* pPlayer, D2UnitStrc* pItem, D2UnitStrc* pUnused, D2ClientStrc* pClient)
 {
     D2UnitStrc* pClientPlayer = CLIENTS_GetPlayerFromClient(pClient, 0);
@@ -238,7 +238,7 @@ int32_t __fastcall sub_6FC410E0(D2UnitStrc* pPlayer, D2UnitStrc* pItem, D2UnitSt
     return 0;
 }
 
-//D2Game.0x6FC415F0
+// D2Game.0x6FC415F0
 void __fastcall D2GAME_ResetSomeItemFlags_6FC415F0(D2GameStrc* pGame, D2UnitStrc* pItem)
 {
     constexpr uint32_t nItemCmdFlags[21] =
@@ -267,7 +267,7 @@ void __fastcall D2GAME_ResetSomeItemFlags_6FC415F0(D2GameStrc* pGame, D2UnitStrc
     }
 }
 
-//D2Game.0x6FC41660
+// D2Game.0x6FC41660
 int32_t __fastcall sub_6FC41660(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     if (pUnit && (pUnit->dwFlagEx & 0x400000 || pUnit->dwFlagEx & 0x800000))
@@ -286,7 +286,7 @@ int32_t __fastcall sub_6FC41660(D2GameStrc* pGame, D2UnitStrc* pUnit)
     return 0;
 }
 
-//D2Game.0x6FC416D0
+// D2Game.0x6FC416D0
 void __fastcall D2GAME_INVMODE_Last_6FC416D0(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     if (!pUnit->pInventory)

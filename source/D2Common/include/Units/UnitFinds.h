@@ -48,19 +48,19 @@ struct D2UnitFindDataStrc
 
 #pragma pack()
 
-//D2Common.0x6FDBC680 (#10408)
+// D2Common.0x6FDBC680 (#10408)
 D2COMMON_DLL_DECL BOOL __stdcall UNITFINDS_AreUnitsInNeighboredRooms(D2UnitStrc* pDestUnit, D2UnitStrc* pSrcUnit);
-//D2Common.0x6FDBC720 (#11087)
+// D2Common.0x6FDBC720 (#11087)
 D2COMMON_DLL_DECL D2UnitStrc* __stdcall UNITFINDS_FindUnitInNeighboredRooms(D2ActiveRoomStrc* pRoom, int nUnitType, int nClassId);
-//D2Common.0x6FDBC7B0 (#10405)
+// D2Common.0x6FDBC7B0 (#10405)
 D2COMMON_DLL_DECL int __stdcall UNITFINDS_GetTestedUnitsFromRoom(D2ActiveRoomStrc* pRoom, D2UnitStrc** ppUnits, UNITFINDTEST pfnUnitTest, D2UnitFindArgStrc* pUnitFindArg);
-//D2Common.0x6FDBC840 (#11088)
+// D2Common.0x6FDBC840 (#11088)
 D2COMMON_DLL_DECL D2UnitStrc* __stdcall UNITFINDS_GetNearestTestedUnit(D2UnitStrc* pUnit, int nX, int nY, int nSize, int(__fastcall* pfnUnitTest)(D2UnitStrc*, D2UnitStrc*));
-//D2Common.0x6FDBC990 (#10401)
+// D2Common.0x6FDBC990 (#10401)
 D2COMMON_DLL_DECL void __stdcall UNITFINDS_InitializeUnitFindData(void* pMemPool, D2UnitFindDataStrc* pUnitFindData, D2ActiveRoomStrc* pRoom, int nX, int nY, int nSize, UNITFINDTEST pfnUnitTest, D2UnitFindArgStrc* pUnitFindArg);
-//D2Common.0x6FDBCA50 (#10402)
+// D2Common.0x6FDBCA50 (#10402)
 D2COMMON_DLL_DECL void __stdcall UNITFINDS_FreeUnitFindData(D2UnitFindDataStrc* pUnitFindData);
-//D2Common.0x6FDBCA80 (#10403)
+// D2Common.0x6FDBCA80 (#10403)
 D2COMMON_DLL_DECL void __stdcall UNITFINDS_FindAllMatchingUnitsInNeighboredRooms(D2UnitFindDataStrc* pUnitFindData);
-//D2Common.0x6FDBCCA0 (#10404)
+// D2Common.0x6FDBCCA0 (#10404)
 D2COMMON_DLL_DECL int __stdcall UNITFINDS_TestUnit(D2UnitStrc* pUnit, D2UnitFindArgStrc* pUnitFindArg);

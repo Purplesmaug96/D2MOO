@@ -19,13 +19,13 @@ extern "C" const uint32_t gdwInvBitMasks[] =
 	0xFEFFFFFF, 0xFDFFFFFF, 0xFBFFFFFF, 0xF7FFFFFF, 0xEFFFFFFF, 0xDFFFFFFF, 0xBFFFFFFF, 0x7FFFFFFF,
 };
 
-//Fog.0x6FF71408
+// Fog.0x6FF71408
 uint32_t gdw_6FF71408[] =
 {
 	0x00000000, 0x00000001, 0x00000003, 0x00000007, 0x0000000F, 0x0000001F, 0x0000003F, 0x0000007F, 0x000000FF
 };
 
-//Fog.0x6FF7142C
+// Fog.0x6FF7142C
 uint8_t gn_6FF7142C[] =
 {
 	0xFF, 0xFE, 0xFC, 0xF8, 0xF0, 0xE0, 0xC0, 0x80, 0x00, 0x00, 0x00, 0x00
@@ -35,7 +35,7 @@ uint8_t gn_6FF7142C[] =
 /*
 Function:		BITMANIP_Initialize
 Address:		Fog.#10126
-Notes:			
+Notes:
 */
 void __stdcall BITMANIP_Initialize(D2BitBufferStrc* pBuffer, uint8_t* pBitStream, size_t nSize)
 {

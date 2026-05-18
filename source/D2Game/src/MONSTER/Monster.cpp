@@ -33,7 +33,7 @@
 #include "UNIT/SUnitProxy.h"
 
 
-//D2Game.0x6FC601C0
+// D2Game.0x6FC601C0
 void __fastcall MONSTER_SetAiState(D2UnitStrc* pMonster, int32_t nAiState)
 {
     if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData)
@@ -42,7 +42,7 @@ void __fastcall MONSTER_SetAiState(D2UnitStrc* pMonster, int32_t nAiState)
     }
 }
 
-//D2Game.0x6FC601E0
+// D2Game.0x6FC601E0
 int32_t __fastcall MONSTER_GetAiState(D2UnitStrc* pMonster)
 {
     if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData)
@@ -53,7 +53,7 @@ int32_t __fastcall MONSTER_GetAiState(D2UnitStrc* pMonster)
     return 1;
 }
 
-//D2Game.0x6FC60200
+// D2Game.0x6FC60200
 void __fastcall MONSTER_SetLevelId(D2UnitStrc* pMonster, int32_t nLevelId)
 {
     if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData)
@@ -62,7 +62,7 @@ void __fastcall MONSTER_SetLevelId(D2UnitStrc* pMonster, int32_t nLevelId)
     }
 }
 
-//D2Game.0x6FC60220
+// D2Game.0x6FC60220
 int32_t __fastcall MONSTER_GetLevelId(D2UnitStrc* pMonster)
 {
     if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData)
@@ -73,7 +73,7 @@ int32_t __fastcall MONSTER_GetLevelId(D2UnitStrc* pMonster)
     return 0;
 }
 
-//D2Game.0x6FC60240
+// D2Game.0x6FC60240
 int32_t __fastcall MONSTER_CheckSummonerFlag(D2UnitStrc* pMonster, uint16_t nFlag)
 {
     if (pMonster && pMonster->dwUnitType == UNIT_MONSTER && pMonster->pMonsterData)
@@ -84,7 +84,7 @@ int32_t __fastcall MONSTER_CheckSummonerFlag(D2UnitStrc* pMonster, uint16_t nFla
     return 0;
 }
 
-//D2Game.0x6FC60270
+// D2Game.0x6FC60270
 void __fastcall MONSTER_ToggleSummonerFlag(D2UnitStrc* pMonster, uint16_t nFlag, int32_t bSet)
 {
     if (!pMonster || pMonster->dwUnitType != UNIT_MONSTER || !pMonster->pMonsterData)
@@ -102,7 +102,7 @@ void __fastcall MONSTER_ToggleSummonerFlag(D2UnitStrc* pMonster, uint16_t nFlag,
     }
 }
 
-//D2Game.0x6FC602A0
+// D2Game.0x6FC602A0
 void __fastcall MONSTER_Initialize(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2UnitStrc* pMonster, int32_t nUnitGUID)
 {
     if (pMonster)
@@ -149,7 +149,7 @@ D2MonPropTxt* __fastcall MONSTER_GetMonPropTxtRecord(int32_t nId)
     return nullptr;
 }
 
-//D2Game.0x6FC603D0
+// D2Game.0x6FC603D0
 void __fastcall MONSTER_InitializeStatsAndSkills(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2UnitStrc* pUnit, D2MonRegDataStrc* pMonRegData)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER || !pUnit->pMonsterData || !pUnit->pMonsterData->pMonstatsTxt)
@@ -301,7 +301,7 @@ void __fastcall MONSTER_InitializeStatsAndSkills(D2GameStrc* pGame, D2ActiveRoom
     sub_6FCF9580(pGame, nullptr, pUnit, -1, nLevel, nLevel, 1);
 }
 
-//D2Game.0x6FC60B10
+// D2Game.0x6FC60B10
 int32_t __fastcall MONSTER_SetVelocityAndPosition(D2GameStrc* pGame, D2UnitStrc* pMonster, int32_t nX, int32_t nY, int32_t a5)
 {
     int32_t nAnimMode = 0;
@@ -321,7 +321,7 @@ int32_t __fastcall MONSTER_SetVelocityAndPosition(D2GameStrc* pGame, D2UnitStrc*
     return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FC60BC0
+// D2Game.0x6FC60BC0
 void __fastcall MONSTER_RemoveAll(D2GameStrc* pGame)
 {
     for (int32_t i = 0; i < 128; ++i)
@@ -337,7 +337,7 @@ void __fastcall MONSTER_RemoveAll(D2GameStrc* pGame)
     }
 }
 
-//D2Game.0x6FC60C10
+// D2Game.0x6FC60C10
 void __fastcall MONSTER_Free(D2GameStrc* pGame, D2UnitStrc* pMonster)
 {
     SUNITDMG_FreeAttackerCombatList(pGame, pMonster);
@@ -372,7 +372,7 @@ void __fastcall MONSTER_Free(D2GameStrc* pGame, D2UnitStrc* pMonster)
     sub_6FC349F0(pGame, pMonster);
 }
 
-//D2Game.0x6FC60CD0
+// D2Game.0x6FC60CD0
 void __fastcall MONSTER_UpdateAiCallbackEvent(D2GameStrc* pGame, D2UnitStrc* pMonster)
 {
     D2GAME_EVENTS_Delete_6FC34840(pGame, pMonster, EVENTTYPE_AITHINK, 0);
@@ -406,14 +406,14 @@ void __fastcall MONSTER_UpdateAiCallbackEvent(D2GameStrc* pGame, D2UnitStrc* pMo
     }
 }
 
-//D2Game.0x6FC60E50
+// D2Game.0x6FC60E50
 void __fastcall MONSTER_DeleteEvents(D2GameStrc* pGame, D2UnitStrc* pMonster)
 {
     D2GAME_EVENTS_Delete_6FC34840(pGame, pMonster, EVENTTYPE_AITHINK, 0);
     D2GAME_EVENTS_Delete_6FC34840(pGame, pMonster, EVENTTYPE_STATREGEN, 0);
 }
 
-//D2Game.0x6FC60E70
+// D2Game.0x6FC60E70
 int32_t __fastcall MONSTER_GetHpBonus(int32_t nPlayerCount)
 {
     static const int32_t gnHpBonusTable[] =
@@ -445,7 +445,7 @@ int32_t __fastcall MONSTER_GetExperienceBonus(int32_t nPlayerCount)
     return gnExperienceBonusTable[nPlayerCount];
 }
 
-//D2Game.0x6FC60E90
+// D2Game.0x6FC60E90
 void __fastcall MONSTER_GetPlayerCountBonus(D2GameStrc* pGame, D2PlayerCountBonusStrc* pPlayerCountBonus, D2ActiveRoomStrc* pRoom, D2UnitStrc* pMonster)
 {
     if (!pPlayerCountBonus)
@@ -482,7 +482,7 @@ void __fastcall MONSTER_GetPlayerCountBonus(D2GameStrc* pGame, D2PlayerCountBonu
     pPlayerCountBonus->nDifficulty = pGame->nDifficulty;
 }
 
-//D2Game.0x6FC60F70
+// D2Game.0x6FC60F70
 void __fastcall MONSTER_SetComponents(D2MonRegDataStrc* pMonRegData, D2UnitStrc* pUnit)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -510,7 +510,7 @@ void __fastcall MONSTER_SetComponents(D2MonRegDataStrc* pMonRegData, D2UnitStrc*
     }
 }
 
-//D2Game.0x6FC610C0
+// D2Game.0x6FC610C0
 int32_t __fastcall MONSTER_HasComponents(D2UnitStrc* pMonster)
 {
     if (!pMonster || pMonster->dwUnitType != UNIT_MONSTER || !pMonster->pMonsterData)
@@ -529,7 +529,7 @@ int32_t __fastcall MONSTER_HasComponents(D2UnitStrc* pMonster)
     return 0;
 }
 
-//D2Game.0x6FC610F0
+// D2Game.0x6FC610F0
 int32_t __fastcall MONSTER_Reinitialize(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nClassId, int32_t nMode)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)

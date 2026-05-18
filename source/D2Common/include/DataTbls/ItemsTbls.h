@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <Archive.h>
@@ -172,7 +172,7 @@ struct D2ItemRatioTxt
 	int32_t dwNormalDivisor;				//0x3C
 	uint16_t wVersion;						//0x40
 	uint8_t nUber;							//0x42
-	uint8_t nClassSpecific;					//0x43 
+	uint8_t nClassSpecific;					//0x43
 };
 
 enum D2C_StatOp {
@@ -593,53 +593,53 @@ struct D2QualityItemDataTbl							//sgptDataTable + 0xEE4
 
 #pragma pack()
 
-//D2Common.0x6FD550E0
+// D2Common.0x6FD550E0
 int __fastcall DATATBLS_MapItemsTxtKeywordToNumber(char* szKey);
-//D2Common.0x6FD55140
+// D2Common.0x6FD55140
 int __fastcall DATATBLS_Return2(int);
-//D2Common.0x6FD55150
+// D2Common.0x6FD55150
 int __fastcall sub_6FD55150(char* szText, int* a2, int a3, int nKeywordNumber);
-//D2Common.0x6FD551E0
+// D2Common.0x6FD551E0
 void __fastcall DATATBLS_ItemCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn);
-//D2Common.0x6FD55280
+// D2Common.0x6FD55280
 void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD575D0
+// D2Common.0x6FD575D0
 void __fastcall DATATBLS_UnloadItemsTxt();
-//D2Common.0x6FD57620 (#10599)
+// D2Common.0x6FD57620 (#10599)
 D2COMMON_DLL_DECL D2ItemDataTbl* __stdcall DATATBLS_GetItemDataTables();
-//D2Common.0x6FD57630 (#10597)
+// D2Common.0x6FD57630 (#10597)
 D2COMMON_DLL_DECL int __stdcall DATATBLS_MapOldItemIndexToCurrent(int nItemId);
-//D2Common.0x6FD57680 (#10600)
+// D2Common.0x6FD57680 (#10600)
 D2COMMON_DLL_DECL D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId);
-//D2Common.0x6FD576D0 (#10601)
+// D2Common.0x6FD576D0 (#10601)
 D2COMMON_DLL_DECL D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId);
-//D2Common.0x6FD57720 (#10602)
+// D2Common.0x6FD57720 (#10602)
 D2COMMON_DLL_DECL int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode);
-//D2Common.0x6FD57740
+// D2Common.0x6FD57740
 void __fastcall DATATBLS_ItemParamLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn);
-//D2Common.0x6FD57820
+// D2Common.0x6FD57820
 void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD58080
+// D2Common.0x6FD58080
 void __fastcall DATATBLS_UnloadMagicSuffix_Prefix_AutomagicTxt();
-//D2Common.0x6FD580B0 (#10603)
+// D2Common.0x6FD580B0 (#10603)
 D2COMMON_DLL_DECL D2MagicAffixDataTbl* __stdcall DATATBLS_GetMagicAffixDataTables();
-//D2Common.0x6FD580C0 (#10604)
+// D2Common.0x6FD580C0 (#10604)
 D2COMMON_DLL_DECL D2MagicAffixTxt* __stdcall DATATBLS_GetMagicAffixTxtRecord(int nIndex);
-//D2Common.0x6FD58110
+// D2Common.0x6FD58110
 void __fastcall DATATBLS_LoadRareSuffix_PrefixTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD58450
+// D2Common.0x6FD58450
 void __fastcall DATATBLS_UnloadRareSuffix_PrefixTxt();
-//D2Common.0x6FD58480 (#10605)
+// D2Common.0x6FD58480 (#10605)
 D2COMMON_DLL_DECL D2RareAffixDataTbl* __fastcall DATATBLS_GetRareAffixDataTables();
-//D2Common.0x6FD58490 (#10606)
+// D2Common.0x6FD58490 (#10606)
 D2COMMON_DLL_DECL D2RareAffixTxt* __stdcall DATATBLS_GetRareAffixTxtRecord(int nId);
-//D2Common.0x6FD584E0
+// D2Common.0x6FD584E0
 void __fastcall DATATBLS_LoadUniqueItemsTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD59110
+// D2Common.0x6FD59110
 void __fastcall DATATBLS_UnloadUniqueItemsTxt();
-//D2Common.0x6FD59140
+// D2Common.0x6FD59140
 void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5AE00
+// D2Common.0x6FD5AE00
 void __fastcall DATATBLS_UnloadSets_SetItemsTxt();
 // Inlined
 D2SetItemsTxt* __stdcall DATATBLS_GetSetItemsTxtRecord(int nSetItemId);
@@ -647,78 +647,78 @@ D2SetItemsTxt* __stdcall DATATBLS_GetSetItemsTxtRecord(int nSetItemId);
 D2SetsTxt* __stdcall DATATBLS_GetSetsTxtRecord(int nSetId);
 // Inlined
 D2SetsTxt* __stdcall DATATBLS_GetSetsTxtRecordFromSetItemId(int nSetItemId);
-//D2Common.0x6FD5AE40
+// D2Common.0x6FD5AE40
 void __fastcall DATATBLS_LoadQualityItemsTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5B250
+// D2Common.0x6FD5B250
 void __fastcall DATATBLS_UnloadQualityItemsTxt();
-//D2Common.0x6FD5B260 (#10611)
+// D2Common.0x6FD5B260 (#10611)
 D2COMMON_DLL_DECL D2QualityItemDataTbl* __fastcall DATATBLS_GetQualityItemDataTables();
-//D2Common.0x6FD5B270 (#10612)
+// D2Common.0x6FD5B270 (#10612)
 D2COMMON_DLL_DECL D2QualityItemsTxt* __stdcall DATATBLS_GetQualityItemsTxtRecord(int nIndex);
-//D2Common.0x6FD5B2F0
+// D2Common.0x6FD5B2F0
 void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5BAE0
+// D2Common.0x6FD5BAE0
 void __fastcall DATATBLS_UnloadGemsTxt();
-//D2Common.0x6FD5BAF0 (#10615)
+// D2Common.0x6FD5BAF0 (#10615)
 D2COMMON_DLL_DECL D2GemDataTbl* __fastcall DATATBLS_GetGemDataTables();
-//D2Common.0x6FD5BB00 (#10616)
+// D2Common.0x6FD5BB00 (#10616)
 D2COMMON_DLL_DECL D2GemsTxt* __stdcall DATATBLS_GetGemsTxtRecord(int nGemId);
-//D2Common.0x6FD5BB70
+// D2Common.0x6FD5BB70
 void __fastcall DATATBLS_LoadBooksTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5BD10
+// D2Common.0x6FD5BD10
 void __fastcall DATATBLS_UnloadBooksTxt();
-//D2Common.0x6FD5BD20 (#10617)
+// D2Common.0x6FD5BD20 (#10617)
 D2COMMON_DLL_DECL D2BookDataTbl* __fastcall DATATBLS_GetBookDataTables();
-//D2Common.0x6FD5BD30 (#10618)
+// D2Common.0x6FD5BD30 (#10618)
 D2COMMON_DLL_DECL D2BooksTxt* __stdcall DATATBLS_GetBooksTxtRecord(int nBookId);
-//D2Common.0x6FD5BDA0
+// D2Common.0x6FD5BDA0
 void __fastcall DATATBLS_LoadLowQualityItemsTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5BE40
+// D2Common.0x6FD5BE40
 void __fastcall DATATBLS_UnloadLowQualityItemsTxt();
-//D2Common.0x6FD5BE50 (#10613)
+// D2Common.0x6FD5BE50 (#10613)
 D2COMMON_DLL_DECL D2LowQualityItemDataTbl* __fastcall DATATBLS_GetLowQualityItemDataTables();
-//D2Common.0x6FD5BE60 (#10614)
+// D2Common.0x6FD5BE60 (#10614)
 D2COMMON_DLL_DECL D2LowQualityItemsTxt* __stdcall DATATBLS_GetLowQualityItemsTxtRecord(int nId);
-//D2Common.0x6FD5BED0
+// D2Common.0x6FD5BED0
 void __fastcall DATATBLS_LoadItemRatioTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5C200
+// D2Common.0x6FD5C200
 void __fastcall DATATBLS_UnloadItemRatioTxt();
-//D2Common.0x6FD5C210 (#10622)
+// D2Common.0x6FD5C210 (#10622)
 D2COMMON_DLL_DECL D2ItemRatioDataTbl* __fastcall DATATBLS_GetItemRatioDataTables();
-//D2Common.0x6FD5C220 (#10623)
+// D2Common.0x6FD5C220 (#10623)
 D2COMMON_DLL_DECL D2ItemRatioTxt* __stdcall DATATBLS_GetItemRatioTxtRecord(int nItemId, uint8_t nDifficulty, uint16_t wVersion);
-//D2Common.0x6FD5C2F0
+// D2Common.0x6FD5C2F0
 int __cdecl DATATBLS_CompareItemStatCostDescs(const void* pRecord1, const void* pRecord2);
-//D2Common.0x6FD5C320
+// D2Common.0x6FD5C320
 void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5D070
+// D2Common.0x6FD5D070
 void __fastcall DATATBLS_UnloadItemStatCostTxt();
-//D2Common.0x6FD5D0D0
+// D2Common.0x6FD5D0D0
 void __fastcall DATATBLS_LoadPropertiesTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5D5E0
+// D2Common.0x6FD5D5E0
 void __fastcall DATATBLS_UnloadPropertiesTxt();
-//D2Common.0x6FD5D600
+// D2Common.0x6FD5D600
 void __fastcall DATATBLS_LoadGambleTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5D790
+// D2Common.0x6FD5D790
 int __cdecl DATATBLS_CompareGambleTxtRecords(const void* pRecord1, const void* pRecord2);
-//D2Common.0x6FD5D7B0
+// D2Common.0x6FD5D7B0
 void __fastcall DATATBLS_UnloadGambleTxt();
-//D2Common.0x6FD5D7F0 (#10671)
+// D2Common.0x6FD5D7F0 (#10671)
 D2COMMON_DLL_DECL D2GambleDataTbl* __fastcall DATATBLS_GetGambleDataTables();
-//D2Common.0x6FD5D800
+// D2Common.0x6FD5D800
 BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nItemType2);
-//D2Common.0x6FD5D8C0
+// D2Common.0x6FD5D8C0
 void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5DFE0
+// D2Common.0x6FD5DFE0
 void __fastcall DATATBLS_UnloadItemTypesTxt();
-//D2Common.0x6FD5E020
+// D2Common.0x6FD5E020
 void __fastcall DATATBLS_LoadRunesTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD5E9C0
+// D2Common.0x6FD5E9C0
 void __fastcall DATATBLS_UnloadRunesTxt();
-//D2Common.0x6FD5E9E0 (#10619)
+// D2Common.0x6FD5E9E0 (#10619)
 D2COMMON_DLL_DECL D2RuneDataTbl* __fastcall DATATBLS_GetRuneDataTables();
-//D2Common.0x6FD5E9F0 (#10621)
+// D2Common.0x6FD5E9F0 (#10621)
 D2COMMON_DLL_DECL void __stdcall DATATBLS_AddOrChangeRunesTxtRecord(int nRecordId, D2RunesTxt* pRecord);
-//D2Common.0x6FD5EAA0 (#10620)
+// D2Common.0x6FD5EAA0 (#10620)
 D2COMMON_DLL_DECL D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId);
 

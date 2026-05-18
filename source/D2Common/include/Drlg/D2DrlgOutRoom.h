@@ -28,17 +28,17 @@ struct D2DrlgOutdoorRoomStrc
 #pragma pack()
 
 
-//D2Common.0x6FD83D20
+// D2Common.0x6FD83D20
 void __fastcall DRLGOUTROOM_FreeDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom);
-//D2Common.0x6FD83D90
+// D2Common.0x6FD83D90
 void __fastcall DRLGOUTROOM_FreeDrlgOutdoorRoomData(D2DrlgRoomStrc* pDrlgRoom);
-//D2Common.0x6FD83DE0
+// D2Common.0x6FD83DE0
 void __fastcall DRLGOUTROOM_AllocDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom);
-//D2Common.6FD83E20
+// D2Common.6FD83E20
 void __fastcall DRLGOUTROOM_InitializeDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom);
-//D2Common.0x6FD83EC0
+// D2Common.0x6FD83EC0
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelCoords(D2DrlgLevelLinkDataStrc* pLevelLinkData);
-//D2Common.0x6FD83F70
+// D2Common.0x6FD83F70
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelDef(D2DrlgLevelLinkDataStrc* pLevelLinkData);
-//D2Common.0x6FD84010
+// D2Common.0x6FD84010
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByOffsetCoords(D2DrlgLevelLinkDataStrc* pLevelLinkData);

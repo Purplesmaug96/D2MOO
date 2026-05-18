@@ -39,10 +39,10 @@ struct D2PathFoWallContextStrc						  //sizeof 0x32EC
 
 #pragma pack()
 
-//D2Common.0x6FDA69E0
+// D2Common.0x6FDA69E0
 int __fastcall PATH_AStar_ComputePath(D2PathInfoStrc* pPathInfo);
 
-//D2Common.0x6FDA6D10
+// D2Common.0x6FDA6D10
 int __fastcall PATH_AStar_PushToVisitedCache(D2PathFoWallContextStrc* pContext, D2PathFoWallNodeStrc* pNode);
 
 //1.10f: D2Common.0x6FDA6D50
@@ -80,6 +80,6 @@ D2PathFoWallNodeStrc* __fastcall PATH_AStar_GetNewNode(D2PathFoWallContextStrc* 
 //1.13c: D2Common.0x6FDCAFB0
 BOOL __fastcall PATH_AStar_EvaluateNeighbor(D2PathInfoStrc* pPathInfo, D2PathFoWallContextStrc* pContext, D2PathFoWallNodeStrc* pCurrentNode, D2PathPointStrc tNewPointCoord, D2PathPointStrc tTargetCoord);
 
-//D2Common.0x6FDA78A0
+// D2Common.0x6FDA78A0
 signed int __fastcall PATH_AStar_FlushNodeToDynamicPath(D2PathFoWallNodeStrc* pNode, D2PathInfoStrc* pPathInfo);
 

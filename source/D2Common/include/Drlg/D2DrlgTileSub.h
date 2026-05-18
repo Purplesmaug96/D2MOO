@@ -61,25 +61,25 @@ struct D2DrlgSubstGroupStrc
 #pragma pack()
 
 
-//D2Common.0x6FD8A460
+// D2Common.0x6FD8A460
 void __fastcall DRLGTILESUB_AddSecondaryBorder(D2UnkOutdoorStrc* a1);
-//D2Common.0x6FD8A750
+// D2Common.0x6FD8A750
 BOOL __fastcall DRLGTILESUB_TestReplaceSubPreset(int a1, int a2, D2UnkOutdoorStrc* a3, D2DrlgSubstGroupStrc* pSubstGroup, D2LvlSubTxt* pLvlSubTxtRecord);
-//D2Common.0x6FD8A8E0
+// D2Common.0x6FD8A8E0
 void __fastcall DRLGTILESUB_ReplaceSubPreset(int a1, int a2, D2UnkOutdoorStrc* a3, D2DrlgSubstGroupStrc* pSubstGroup, D2LvlSubTxt* pLvlSubTxtRecord, int a6);
-//D2Common.0x6FD8AA80
+// D2Common.0x6FD8AA80
 void __fastcall sub_6FD8AA80(D2UnkOutdoorStrc2* a1);
-//D2Common.0x6FD8ACE0
+// D2Common.0x6FD8ACE0
 void __fastcall sub_6FD8ACE0(void* pMemPool, int nX, int nY, D2UnkOutdoorStrc2* a4, D2DrlgSubstGroupStrc* pSubstGroup, D2LvlSubTxt* pLvlSubTxtRecord, int a7);
-//D2Common.0x6FD8B010
+// D2Common.0x6FD8B010
 BOOL __fastcall sub_6FD8B010(int a1, int a2, D2UnkOutdoorStrc2* a3, D2DrlgSubstGroupStrc* pSubstGroup, D2LvlSubTxt* pLvlSubTxtRecord);
-//D2Common.0x6FD8B130
+// D2Common.0x6FD8B130
 BOOL __fastcall sub_6FD8B130(int a1, int a2, D2UnkOutdoorStrc2* a3, D2DrlgSubstGroupStrc* pSubstGroup, D2LvlSubTxt* pLvlSubTxtRecord);
-//D2Common.0x6FD8B290
+// D2Common.0x6FD8B290
 void __fastcall DRLGTILESUB_DoSubstitutions(D2UnkOutdoorStrc2* pOutdoorLevel, D2LvlSubTxt* pLvlSubTxtRecord);
-//D2Common.0x6FD8B640
+// D2Common.0x6FD8B640
 void __fastcall DRLGTILESUB_InitializeDrlgFile(HD2ARCHIVE hArchive, D2LvlSubTxt* pLvlSubTxtRecord);
-//D2Common.0x6FD8B770
+// D2Common.0x6FD8B770
 void __fastcall DRLGTILESUB_FreeDrlgFile(D2LvlSubTxt* pLvlSubTxtRecord);
-//D2Common.0x6FD8B7E0
+// D2Common.0x6FD8B7E0
 int __fastcall DRLGTILESUB_PickSubThemes(D2DrlgRoomStrc* pDrlgRoom, int nSubType, int nSubTheme);

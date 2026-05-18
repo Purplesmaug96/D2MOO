@@ -8,7 +8,7 @@
 #include <Calc.h>
 #include <Storm.h>
 
-//D2Common.0x6FD550E0
+// D2Common.0x6FD550E0
 int __fastcall DATATBLS_MapItemsTxtKeywordToNumber(char* szKey)
 {
 	if (!SStrCmpI(szKey, "min", 32))
@@ -33,13 +33,13 @@ int __fastcall DATATBLS_MapItemsTxtKeywordToNumber(char* szKey)
 	}
 }
 
-//D2Common.0x6FD55140
+// D2Common.0x6FD55140
 int __fastcall DATATBLS_Return2(int)
 {
 	return 2;
 }
 
-//D2Common.0x6FD55150
+// D2Common.0x6FD55150
 //TODO: Find a name
 int __fastcall sub_6FD55150(char* szText, int* a2, int a3, int nKeywordNumber)
 {
@@ -77,7 +77,7 @@ int __fastcall sub_6FD55150(char* szText, int* a2, int a3, int nKeywordNumber)
 	return 0;
 }
 
-//D2Common.0x6FD551E0
+// D2Common.0x6FD551E0
 void __fastcall DATATBLS_ItemCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
 {
 	int nBufferSize = 0;
@@ -104,7 +104,7 @@ void __fastcall DATATBLS_ItemCalcLinker(char* pSrc, void* pRecord, int nOffset, 
 	}
 }
 
-//D2Common.0x6FD55280
+// D2Common.0x6FD55280
 void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive)
 {
 	D2ItemsTxt* pWeapons = NULL;
@@ -357,7 +357,7 @@ void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD575D0
+// D2Common.0x6FD575D0
 void __fastcall DATATBLS_UnloadItemsTxt()
 {
 	FOG_FreeLinker(sgptDataTables->pItemsLinker);
@@ -375,13 +375,13 @@ void __fastcall DATATBLS_UnloadItemsTxt()
 	sgptDataTables->pItemDataTables.pItemsTxt = NULL;
 }
 
-//D2Common.0x6FD57620 (#10599)
+// D2Common.0x6FD57620 (#10599)
 D2ItemDataTbl* __stdcall DATATBLS_GetItemDataTables()
 {
 	return &sgptDataTables->pItemDataTables;
 }
 
-//D2Common.0x6FD57630 (#10597)
+// D2Common.0x6FD57630 (#10597)
 int __stdcall DATATBLS_MapOldItemIndexToCurrent(int nItemId)
 {
 	if (nItemId < sgptDataTables->pItemDataTables.nItemsTxtRecordCount)
@@ -396,7 +396,7 @@ int __stdcall DATATBLS_MapOldItemIndexToCurrent(int nItemId)
 	return -1;
 }
 
-//D2Common.0x6FD57680 (#10600)
+// D2Common.0x6FD57680 (#10600)
 D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
 {
 	if (nItemId < sgptDataTables->pItemDataTables.nItemsTxtRecordCount)
@@ -408,7 +408,7 @@ D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId)
 	return NULL;
 }
 
-//D2Common.0x6FD576D0 (#10601)
+// D2Common.0x6FD576D0 (#10601)
 D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId)
 {
 	*pItemId = FOG_GetLinkIndex(sgptDataTables->pItemsLinker, dwCode, 0);
@@ -421,13 +421,13 @@ D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* p
 	return NULL;
 }
 
-//D2Common.0x6FD57720 (#10602)
+// D2Common.0x6FD57720 (#10602)
 int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode)
 {
 	return FOG_GetLinkIndex(sgptDataTables->pItemsLinker, dwCode, 0);
 }
 
-//D2Common.0x6FD57740
+// D2Common.0x6FD57740
 void __fastcall DATATBLS_ItemParamLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
 {
 	int nRow = 0;
@@ -483,7 +483,7 @@ void __fastcall DATATBLS_ItemParamLinker(char* pSrc, void* pRecord, int nOffset,
 	}
 }
 
-//D2Common.0x6FD57820
+// D2Common.0x6FD57820
 void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -567,7 +567,7 @@ void __fastcall DATATBLS_LoadMagicSuffix_Prefix_AutomagicTxt(HD2ARCHIVE hArchive
 	}
 }
 
-//D2Common.0x6FD58080
+// D2Common.0x6FD58080
 void __fastcall DATATBLS_UnloadMagicSuffix_Prefix_AutomagicTxt()
 {
 	if (sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt)
@@ -577,13 +577,13 @@ void __fastcall DATATBLS_UnloadMagicSuffix_Prefix_AutomagicTxt()
 	sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt = NULL;
 }
 
-//D2Common.0x6FD580B0 (#10603)
+// D2Common.0x6FD580B0 (#10603)
 D2MagicAffixDataTbl* __stdcall DATATBLS_GetMagicAffixDataTables()
 {
 	return &sgptDataTables->pMagicAffixDataTables;
 }
 
-//D2Common.0x6FD580C0 (#10604)
+// D2Common.0x6FD580C0 (#10604)
 D2MagicAffixTxt* __stdcall DATATBLS_GetMagicAffixTxtRecord(int nIndex)
 {
 	D2_ASSERT(sgptDataTables->pMagicAffixDataTables.pMagicAffixTxt);
@@ -597,7 +597,7 @@ D2MagicAffixTxt* __stdcall DATATBLS_GetMagicAffixTxtRecord(int nIndex)
 	}
 }
 
-//D2Common.0x6FD58110
+// D2Common.0x6FD58110
 void __fastcall DATATBLS_LoadRareSuffix_PrefixTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -647,7 +647,7 @@ void __fastcall DATATBLS_LoadRareSuffix_PrefixTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD58450
+// D2Common.0x6FD58450
 void __fastcall DATATBLS_UnloadRareSuffix_PrefixTxt()
 {
 	if (sgptDataTables->pRareAffixDataTables.pRareAffixTxt)
@@ -657,13 +657,13 @@ void __fastcall DATATBLS_UnloadRareSuffix_PrefixTxt()
 	sgptDataTables->pRareAffixDataTables.pRareAffixTxt = NULL;
 }
 
-//D2Common.0x6FD58480 (#10605)
+// D2Common.0x6FD58480 (#10605)
 D2RareAffixDataTbl* __fastcall DATATBLS_GetRareAffixDataTables()
 {
 	return &sgptDataTables->pRareAffixDataTables;
 }
 
-//D2Common.0x6FD58490 (#10606)
+// D2Common.0x6FD58490 (#10606)
 D2RareAffixTxt* __stdcall DATATBLS_GetRareAffixTxtRecord(int nId)
 {
 	if (nId > sgptDataTables->pRareAffixDataTables.nRareAffixTxtRecordCount || nId <= 0)
@@ -677,7 +677,7 @@ D2RareAffixTxt* __stdcall DATATBLS_GetRareAffixTxtRecord(int nId)
 	}
 }
 
-//D2Common.0x6FD584E0
+// D2Common.0x6FD584E0
 void __fastcall DATATBLS_LoadUniqueItemsTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -775,7 +775,7 @@ void __fastcall DATATBLS_LoadUniqueItemsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD59110
+// D2Common.0x6FD59110
 void __fastcall DATATBLS_UnloadUniqueItemsTxt()
 {
 	FOG_FreeLinker(sgptDataTables->pUniqueItemsLinker);
@@ -783,7 +783,7 @@ void __fastcall DATATBLS_UnloadUniqueItemsTxt()
 	sgptDataTables->nUniqueItemsTxtRecordCount = 0;
 }
 
-//D2Common.0x6FD59140
+// D2Common.0x6FD59140
 void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -1004,7 +1004,7 @@ void __fastcall DATATBLS_LoadSets_SetItemsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD5AE00
+// D2Common.0x6FD5AE00
 void __fastcall DATATBLS_UnloadSets_SetItemsTxt()
 {
 	FOG_FreeLinker(sgptDataTables->pSetsLinker);
@@ -1043,7 +1043,7 @@ D2SetsTxt* __stdcall DATATBLS_GetSetsTxtRecordFromSetItemId(int nSetItemId)
 	return nullptr;
 }
 
-//D2Common.0x6FD5AE40
+// D2Common.0x6FD5AE40
 void __fastcall DATATBLS_LoadQualityItemsTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -1090,19 +1090,19 @@ void __fastcall DATATBLS_LoadQualityItemsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD5B250
+// D2Common.0x6FD5B250
 void __fastcall DATATBLS_UnloadQualityItemsTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pQualityItemDataTables.pQualityItemsTxt);
 }
 
-//D2Common.0x6FD5B260 (#10611)
+// D2Common.0x6FD5B260 (#10611)
 D2QualityItemDataTbl* __fastcall DATATBLS_GetQualityItemDataTables()
 {
 	return &sgptDataTables->pQualityItemDataTables;
 }
 
-//D2Common.0x6FD5B270 (#10612)
+// D2Common.0x6FD5B270 (#10612)
 D2QualityItemsTxt* __stdcall DATATBLS_GetQualityItemsTxtRecord(int nIndex)
 {
 	if (nIndex >= sgptDataTables->pQualityItemDataTables.nQualityItemsTxtRecordCount || nIndex == -1)
@@ -1117,7 +1117,7 @@ D2QualityItemsTxt* __stdcall DATATBLS_GetQualityItemsTxtRecord(int nIndex)
 	}
 }
 
-//D2Common.0x6FD5B2F0
+// D2Common.0x6FD5B2F0
 void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -1194,19 +1194,19 @@ void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD5BAE0
+// D2Common.0x6FD5BAE0
 void __fastcall DATATBLS_UnloadGemsTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pGemDataTables.pGemsTxt);
 }
 
-//D2Common.0x6FD5BAF0 (#10615)
+// D2Common.0x6FD5BAF0 (#10615)
 D2GemDataTbl* __fastcall DATATBLS_GetGemDataTables()
 {
 	return &sgptDataTables->pGemDataTables;
 }
 
-//D2Common.0x6FD5BB00 (#10616)
+// D2Common.0x6FD5BB00 (#10616)
 D2GemsTxt* __stdcall DATATBLS_GetGemsTxtRecord(int nGemId)
 {
 	if (nGemId >= sgptDataTables->pGemDataTables.nGemsTxtRecordCount || nGemId == -1)
@@ -1221,7 +1221,7 @@ D2GemsTxt* __stdcall DATATBLS_GetGemsTxtRecord(int nGemId)
 	}
 }
 
-//D2Common.0x6FD5BB70
+// D2Common.0x6FD5BB70
 void __fastcall DATATBLS_LoadBooksTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1241,19 +1241,19 @@ void __fastcall DATATBLS_LoadBooksTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pBookDataTables.pBooksTxt = (D2BooksTxt*)DATATBLS_CompileTxt(hArchive, "books", pTbl, &sgptDataTables->pBookDataTables.nBooksTxtRecordCount, sizeof(D2BooksTxt));
 }
 
-//D2Common.0x6FD5BD10
+// D2Common.0x6FD5BD10
 void __fastcall DATATBLS_UnloadBooksTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pBookDataTables.pBooksTxt);
 }
 
-//D2Common.0x6FD5BD20 (#10617)
+// D2Common.0x6FD5BD20 (#10617)
 D2BookDataTbl* __fastcall DATATBLS_GetBookDataTables()
 {
 	return &sgptDataTables->pBookDataTables;
 }
 
-//D2Common.0x6FD5BD30 (#10618)
+// D2Common.0x6FD5BD30 (#10618)
 D2BooksTxt* __stdcall DATATBLS_GetBooksTxtRecord(int nBookId)
 {
 	if (nBookId >= sgptDataTables->pBookDataTables.nBooksTxtRecordCount || nBookId == -1)
@@ -1269,7 +1269,7 @@ D2BooksTxt* __stdcall DATATBLS_GetBooksTxtRecord(int nBookId)
 	}
 }
 
-//D2Common.0x6FD5BDA0
+// D2Common.0x6FD5BDA0
 void __fastcall DATATBLS_LoadLowQualityItemsTxt(HD2ARCHIVE hArchive)
 {
 	const Unicode* pUnicode = NULL;
@@ -1287,19 +1287,19 @@ void __fastcall DATATBLS_LoadLowQualityItemsTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD5BE40
+// D2Common.0x6FD5BE40
 void __fastcall DATATBLS_UnloadLowQualityItemsTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pLowQualityItemDataTables.pLowQualityItemsTxt);
 }
 
-//D2Common.0x6FD5BE50 (#10613)
+// D2Common.0x6FD5BE50 (#10613)
 D2LowQualityItemDataTbl* __fastcall DATATBLS_GetLowQualityItemDataTables()
 {
 	return &sgptDataTables->pLowQualityItemDataTables;
 }
 
-//D2Common.0x6FD5BE60 (#10614)
+// D2Common.0x6FD5BE60 (#10614)
 D2LowQualityItemsTxt* __stdcall DATATBLS_GetLowQualityItemsTxtRecord(int nId)
 {
 	if (nId >= sgptDataTables->pLowQualityItemDataTables.nLowQualityItemsTxtRecordCount || nId == -1)
@@ -1315,7 +1315,7 @@ D2LowQualityItemsTxt* __stdcall DATATBLS_GetLowQualityItemsTxtRecord(int nId)
 	}
 }
 
-//D2Common.0x6FD5BED0
+// D2Common.0x6FD5BED0
 void __fastcall DATATBLS_LoadItemRatioTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1345,19 +1345,19 @@ void __fastcall DATATBLS_LoadItemRatioTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pItemRatioDataTables.pItemRatioTxt = (D2ItemRatioTxt*)DATATBLS_CompileTxt(hArchive, "itemratio", pTbl, &sgptDataTables->pItemRatioDataTables.nItemRatioTxtRecordCount, sizeof(D2ItemRatioTxt));
 }
 
-//D2Common.0x6FD5C200
+// D2Common.0x6FD5C200
 void __fastcall DATATBLS_UnloadItemRatioTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pItemRatioDataTables.pItemRatioTxt);
 }
 
-//D2Common.0x6FD5C210 (#10622)
+// D2Common.0x6FD5C210 (#10622)
 D2ItemRatioDataTbl* __fastcall DATATBLS_GetItemRatioDataTables()
 {
 	return &sgptDataTables->pItemRatioDataTables;
 }
 
-//D2Common.0x6FD5C220 (#10623)
+// D2Common.0x6FD5C220 (#10623)
 D2ItemRatioTxt* __stdcall DATATBLS_GetItemRatioTxtRecord(int nItemId, uint8_t nDifficulty, uint16_t wVersion)
 {
 	int nClass = 0;
@@ -1392,7 +1392,7 @@ D2ItemRatioTxt* __stdcall DATATBLS_GetItemRatioTxtRecord(int nItemId, uint8_t nD
 	return NULL;
 }
 
-//D2Common.0x6FD5C2F0
+// D2Common.0x6FD5C2F0
 int __cdecl DATATBLS_CompareItemStatCostDescs(const void* pRecord1, const void* pRecord2)
 {
 	D2ItemStatCostDescStrc* pElem1 = (D2ItemStatCostDescStrc*)pRecord1;
@@ -1412,7 +1412,7 @@ int __cdecl DATATBLS_CompareItemStatCostDescs(const void* pRecord1, const void* 
 	}
 }
 
-//D2Common.0x6FD5C320
+// D2Common.0x6FD5C320
 void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
 {
 	uint16_t nOpBase = 0;
@@ -1600,7 +1600,7 @@ void __fastcall DATATBLS_LoadItemStatCostTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD5D070
+// D2Common.0x6FD5D070
 void __fastcall DATATBLS_UnloadItemStatCostTxt()
 {
 	if (sgptDataTables->pItemStatCostTxt)
@@ -1623,7 +1623,7 @@ void __fastcall DATATBLS_UnloadItemStatCostTxt()
 	sgptDataTables->nStatsWithDescFunc = 0;
 }
 
-//D2Common.0x6FD5D0D0
+// D2Common.0x6FD5D0D0
 void __fastcall DATATBLS_LoadPropertiesTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -1664,14 +1664,14 @@ void __fastcall DATATBLS_LoadPropertiesTxt(HD2ARCHIVE hArchive)
 	sgptDataTables->pPropertiesTxt = (D2PropertiesTxt*)DATATBLS_CompileTxt(hArchive, "properties", pTbl, &sgptDataTables->nPropertiesTxtRecordCount, sizeof(D2PropertiesTxt));
 }
 
-//D2Common.0x6FD5D5E0
+// D2Common.0x6FD5D5E0
 void __fastcall DATATBLS_UnloadPropertiesTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pPropertiesTxt);
 	FOG_FreeLinker(sgptDataTables->pPropertiesLinker);
 }
 
-//D2Common.0x6FD5D600
+// D2Common.0x6FD5D600
 void __fastcall DATATBLS_LoadGambleTxt(HD2ARCHIVE hArchive)
 {
 	int nCounter = 0;
@@ -1732,7 +1732,7 @@ void __fastcall DATATBLS_LoadGambleTxt(HD2ARCHIVE hArchive)
 	DATATBLS_UnloadBin(pGambleTxt);
 }
 
-//D2Common.0x6FD5D790
+// D2Common.0x6FD5D790
 int __cdecl DATATBLS_CompareGambleTxtRecords(const void* pRecord1, const void* pRecord2)
 {
 	D2GambleTxt* pElem1 = (D2GambleTxt*)pRecord1;
@@ -1752,7 +1752,7 @@ int __cdecl DATATBLS_CompareGambleTxtRecords(const void* pRecord1, const void* p
 	}
 }
 
-//D2Common.0x6FD5D7B0
+// D2Common.0x6FD5D7B0
 void __fastcall DATATBLS_UnloadGambleTxt()
 {
 	if (sgptDataTables->pGambleDataTables.pGambleSelection)
@@ -1763,13 +1763,13 @@ void __fastcall DATATBLS_UnloadGambleTxt()
 	}
 }
 
-//D2Common.0x6FD5D7F0 (#10671)
+// D2Common.0x6FD5D7F0 (#10671)
 D2GambleDataTbl* __fastcall DATATBLS_GetGambleDataTables()
 {
 	return &sgptDataTables->pGambleDataTables;
 }
 
-//D2Common.0x6FD5D800
+// D2Common.0x6FD5D800
 BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nItemType2)
 {
 	int nParentItemTypes[129] = {};
@@ -1830,7 +1830,7 @@ BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nIt
 	return FALSE;
 }
 
-//D2Common.0x6FD5D8C0
+// D2Common.0x6FD5D8C0
 void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive)
 {
 	uint32_t* pItemTypesNest = NULL;
@@ -1903,7 +1903,7 @@ void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD5DFE0
+// D2Common.0x6FD5DFE0
 void __fastcall DATATBLS_UnloadItemTypesTxt()
 {
 	D2_FREE_POOL(nullptr, sgptDataTables->pItemTypesEquivalenceLUTs);
@@ -1911,7 +1911,7 @@ void __fastcall DATATBLS_UnloadItemTypesTxt()
 	FOG_FreeLinker(sgptDataTables->pItemTypesLinker);
 }
 
-//D2Common.0x6FD5E020
+// D2Common.0x6FD5E020
 void __fastcall DATATBLS_LoadRunesTxt(HD2ARCHIVE hArchive)
 {
 	HSFILE pFileHandle = NULL;
@@ -2000,20 +2000,20 @@ void __fastcall DATATBLS_LoadRunesTxt(HD2ARCHIVE hArchive)
 	}
 }
 
-//D2Common.0x6FD5E9C0
+// D2Common.0x6FD5E9C0
 void __fastcall DATATBLS_UnloadRunesTxt()
 {
 	DATATBLS_UnloadBin(sgptDataTables->pRuneDataTables.pRunesTxt);
 	FOG_FreeLinker(sgptDataTables->pRunesLinker);
 }
 
-//D2Common.0x6FD5E9E0 (#10619)
+// D2Common.0x6FD5E9E0 (#10619)
 D2RuneDataTbl* __fastcall DATATBLS_GetRuneDataTables()
 {
 	return &sgptDataTables->pRuneDataTables;
 }
 
-//D2Common.0x6FD5E9F0 (#10621)
+// D2Common.0x6FD5E9F0 (#10621)
 void __stdcall DATATBLS_AddOrChangeRunesTxtRecord(int nRecordId, D2RunesTxt* pRecord)
 {
 	D2RunesTxt* pRunesTxt = NULL;
@@ -2048,7 +2048,7 @@ void __stdcall DATATBLS_AddOrChangeRunesTxtRecord(int nRecordId, D2RunesTxt* pRe
 	memcpy(&sgptDataTables->pRuneDataTables.pRunesTxt[nRecordId], pRecord, sizeof(sgptDataTables->pRuneDataTables.pRunesTxt[nRecordId]));
 }
 
-//D2Common.0x6FD5EAA0 (#10620)
+// D2Common.0x6FD5EAA0 (#10620)
 D2RunesTxt* __stdcall DATATBLS_GetRunesTxtRecord(int nRunewordId)
 {
 	D2_ASSERT(nRunewordId > 0 || nRunewordId < sgptDataTables->pRuneDataTables.nRunesTxtRecordCount);

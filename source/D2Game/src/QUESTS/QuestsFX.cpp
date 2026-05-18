@@ -23,13 +23,13 @@
 #include "SKILLS/Skills.h"
 
 
-//D2Game.0x6FCB95A0
+// D2Game.0x6FCB95A0
 void __fastcall QUESTSFX_Bloodraven(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     return QUESTSFX_MainHandler(pGame, pUnit, 35, 25, 125, 1);
 }
 
-//D2Game.0x6FCB95B0
+// D2Game.0x6FCB95B0
 void __fastcall QUESTSFX_MainHandler(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSize, int32_t nDelayMin, int32_t nDelayMax, int32_t bCheckIfUndead)
 {
     D2_ASSERT(nDelayMax);
@@ -64,11 +64,11 @@ void __fastcall QUESTSFX_MainHandler(D2GameStrc* pGame, D2UnitStrc* pUnit, int32
             }
         }
     }
-    
+
     UNITFINDS_FreeUnitFindData(&unitFindData);
 }
 
-//D2Game.0x6FCB97D0
+// D2Game.0x6FCB97D0
 void __fastcall QUESTSFX_SpawnMephistoDeathControlMissile(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     D2MissileStrc missileParams = {};
@@ -83,13 +83,13 @@ void __fastcall QUESTSFX_SpawnMephistoDeathControlMissile(D2GameStrc* pGame, D2U
     MISSILES_CreateMissileFromParams(pGame, &missileParams);
 }
 
-//D2Game.0x6FCB9820
+// D2Game.0x6FCB9820
 void __fastcall QUESTSFX_Andariel(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     return QUESTSFX_MainHandler(pGame, pUnit, 35, 1, 51, 0);
 }
 
-//D2Game.0x6FCB9830
+// D2Game.0x6FCB9830
 void __fastcall QUESTSFX_SpawnRadamentDeathMissile(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     D2MissilesTxt* pMissilesTxtRecord = SKILLS_GetMissilesTxtRecord(MISSILE_RADAMENTDEATH);
@@ -101,7 +101,7 @@ void __fastcall QUESTSFX_SpawnRadamentDeathMissile(D2GameStrc* pGame, D2UnitStrc
     D2GAME_CreateMissile_6FD115E0(pGame, pUnit, 0, 1, MISSILE_RADAMENTDEATH, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit));
 }
 
-//D2Game.0x6FCB98F0
+// D2Game.0x6FCB98F0
 void __fastcall QUESTSFX_SpawnCompellingOrbMissile(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     D2UnitStrc* pStairs = UNITFINDS_FindUnitInNeighboredRooms(UNITS_GetRoom(pUnit), UNIT_OBJECT, 386);
@@ -131,13 +131,13 @@ void __fastcall QUESTSFX_SpawnCompellingOrbMissile(D2GameStrc* pGame, D2UnitStrc
     }
 }
 
-//D2Game.0x6FCB9A30
+// D2Game.0x6FCB9A30
 void __fastcall QUESTSFX_Izual(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     return QUESTSFX_MainHandler(pGame, pUnit, 105, 1, 2, 0);
 }
 
-//D2Game.0x6FCB9A40
+// D2Game.0x6FCB9A40
 void __fastcall QUESTSFX_ShenkTheOverseer(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     return QUESTSFX_MainHandler(pGame, pUnit, 35, 25, 125, 0);

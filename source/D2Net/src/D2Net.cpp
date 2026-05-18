@@ -17,19 +17,19 @@
 int32_t dword_6FC0B264;
 
 
-//D2Net.0x6FC01A00
+// D2Net.0x6FC01A00
 int32_t __stdcall sub_6FC01A00()
 {
 	return dword_6FC0B264 == 1 || dword_6FC0B264 == 2;
 }
 
-//D2Net.0x6FC01A20
+// D2Net.0x6FC01A20
 void __fastcall sub_6FC01A20(int32_t a1)
 {
 	dword_6FC0B264 = a1;
 }
 
-//D2Net.0x6FC01A30
+// D2Net.0x6FC01A30
 int32_t __fastcall NET_DequeueFirstPacketFromList(CRITICAL_SECTION* pCriticalSection, D2PacketStrc** ppPacketList, uint8_t* pBuffer, uint32_t nBufferSize)
 {
 	D2_LOCK(pCriticalSection);
@@ -53,7 +53,7 @@ int32_t __fastcall NET_DequeueFirstPacketFromList(CRITICAL_SECTION* pCriticalSec
 	return nPacketSize;
 }
 
-//D2Net.0x6FC01AE0
+// D2Net.0x6FC01AE0
 int32_t __fastcall NET_FreePacketList(CRITICAL_SECTION* pCriticalSection, D2PacketStrc** ppPacketList)
 {
 	D2_LOCK(pCriticalSection);

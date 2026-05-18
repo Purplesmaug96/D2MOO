@@ -31,7 +31,7 @@
 #include "SKILLS/SkillAss.h"
 
 
-//D2Game.0x6FCCD450
+// D2Game.0x6FCCD450
 void __fastcall AIBAAL_CountLivingMinions(D2UnitStrc* pUnit, void* ppUnitArg, void* pCounterArg)
 {
 	D2UnitStrc** ppUnit = (D2UnitStrc**)ppUnitArg;
@@ -43,7 +43,7 @@ void __fastcall AIBAAL_CountLivingMinions(D2UnitStrc* pUnit, void* ppUnitArg, vo
 	}
 }
 
-//D2Game.0x6FCCD470
+// D2Game.0x6FCCD470
 void __fastcall D2GAME_AI_Unk135_140_6FCCD470(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiTickParamStrc* pAiTickParam)
 {
 	int32_t nParam1 = 0;
@@ -75,7 +75,7 @@ void __fastcall D2GAME_AI_Unk135_140_6FCCD470(D2GameStrc* pGame, D2UnitStrc* pUn
 	AITACTICS_IdleInNeutralMode(pGame, pUnit, 1);
 }
 
-//D2Game.0x6FCCD520
+// D2Game.0x6FCCD520
 void __fastcall AITHINK_Fn135_BaalCrab(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiTickParamStrc* pAiTickParam)
 {
 	int32_t nCount = 0;
@@ -414,7 +414,7 @@ void __fastcall AITHINK_Fn145_UberBaal(D2GameStrc* pGame, D2UnitStrc* pUnit, D2A
 }
 #endif
 
-//D2Game.0x6FCCD630
+// D2Game.0x6FCCD630
 D2UnitStrc* __fastcall AIBAAL_GetTarget(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t* pMax, int32_t* pCount, void* pArgs, int32_t(__fastcall* pfCull)(D2UnitStrc*, D2UnitStrc*))
 {
 	D2_ASSERT(pfCull);
@@ -525,7 +525,7 @@ D2UnitStrc* __fastcall AIBAAL_GetTarget(D2GameStrc* pGame, D2UnitStrc* pUnit, in
 	return pTarget;
 }
 
-//D2Game.0x6FCCD8A0
+// D2Game.0x6FCCD8A0
 int32_t __fastcall AIBAAL_GetTargetScore(D2UnitStrc* pUnit, D2UnitStrc* pTarget, void* pArgs)
 {
 	const int32_t bInMeleeRange = UNITS_IsInMeleeRange(pUnit, pTarget, 0);
@@ -621,7 +621,7 @@ int32_t __fastcall AIBAAL_CullPotentialTargets(D2UnitStrc* pBaal, D2UnitStrc* pT
 	return 0;
 }
 
-//D2Game.0x6FCCDC80
+// D2Game.0x6FCCDC80
 int32_t __fastcall AIBAAL_RollRandomAiParam(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiControlStrc* pAiControl, D2UnitStrc* pTarget, int32_t nMax, int32_t nCount, D2AiCmdStrc* pAiCmd)
 {
 	if (pAiControl->dwAiParam[0])
@@ -772,7 +772,7 @@ int32_t __fastcall AIBAAL_RollRandomAiParam(D2GameStrc* pGame, D2UnitStrc* pUnit
 	return AI_GetRandomArrayIndex(aiParams, std::size(aiParams), pUnit, 1);
 }
 
-//D2Game.0x6FCCE040
+// D2Game.0x6FCCE040
 int32_t __fastcall AI_CheckSpecialSkillsOnPrimeEvil(D2UnitStrc* pUnit)
 {
 	D2SkillStrc* pSkill = UNITS_GetRightSkill(pUnit);
@@ -828,7 +828,7 @@ int32_t __fastcall AI_CheckSpecialSkillsOnPrimeEvil(D2UnitStrc* pUnit)
 	return 0;
 }
 
-//D2Game.0x6FCCE100
+// D2Game.0x6FCCE100
 int32_t __fastcall AI_GetRandomArrayIndex(int32_t* pArray, int32_t nArraySize, D2UnitStrc* pUnit, int32_t nDefaultValue)
 {
 	int32_t nSum = 0;
@@ -852,7 +852,7 @@ int32_t __fastcall AI_GetRandomArrayIndex(int32_t* pArray, int32_t nArraySize, D
 	return nDefaultValue;
 }
 
-//D2Game.0x6FCCE1A0
+// D2Game.0x6FCCE1A0
 int32_t __fastcall AIBAAL_RollRandomAiParamForNonCollidingUnit(D2GameStrc* pGame, D2AiControlStrc* pAiControl, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nCount, int32_t bInMediumRange, int32_t bInFarRange, int32_t bInCloseRange, int32_t nMax)
 {
 	int32_t aiParams[16] = { 0, 0, 5, 5, 5, 0, 5, 0, 40, 40, 0, 70, 80, 60, 20, 0};
@@ -1156,7 +1156,7 @@ void __fastcall AIBAAL_MainSkillHandler(D2GameStrc* pGame, D2UnitStrc* pUnit, D2
 	}
 }
 
-//D2Game.0x6FCCEB70
+// D2Game.0x6FCCEB70
 void __fastcall AITHINK_Fn140_BaalCrabClone(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiTickParamStrc* pAiTickParam)
 {
 	D2UnitStrc* pOwner = AIGENERAL_GetMinionOwner(pUnit);

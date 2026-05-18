@@ -7,7 +7,7 @@
 #include "UNIT/SUnit.h"
 
 
-//D2Game.0x6FCCD2E0 (#10025)
+// D2Game.0x6FCCD2E0 (#10025)
 D2UnitStrc* __stdcall DEBUG_GetUnitFromTypeAndGUID(int32_t nUnitType, int32_t nUnitGUID)
 {
     D2GameStrc* pGame = sub_6FC3B160();
@@ -21,7 +21,7 @@ D2UnitStrc* __stdcall DEBUG_GetUnitFromTypeAndGUID(int32_t nUnitType, int32_t nU
     return pUnit;
 }
 
-//D2Game.0x6FCCD310 (#10026)
+// D2Game.0x6FCCD310 (#10026)
 D2DrlgActStrc* __stdcall DEBUG_GetAct(uint8_t nAct)
 {
     D2GameStrc* pGame = sub_6FC3B160();
@@ -33,7 +33,7 @@ D2DrlgActStrc* __stdcall DEBUG_GetAct(uint8_t nAct)
     return pAct;
 }
 
-//D2Game.0x6FCCD350 (#10027)
+// D2Game.0x6FCCD350 (#10027)
 int32_t __stdcall DEBUG_GetFreeMonsterIndex()
 {
     D2GameStrc* pGame = sub_6FC3B160();
@@ -53,7 +53,7 @@ int32_t __stdcall DEBUG_GetFreeMonsterIndex()
     return nIndex;
 }
 
-//D2Game.0x6FCCD3B0 (#10028)
+// D2Game.0x6FCCD3B0 (#10028)
 D2ActiveRoomStrc* __stdcall DEBUG_GetRoomBySubtileCoordinates(uint8_t nAct, int32_t nX, int32_t nY)
 {
     D2GameStrc* pGame = sub_6FC3B160();

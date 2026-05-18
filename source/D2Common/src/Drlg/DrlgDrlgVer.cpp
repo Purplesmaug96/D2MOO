@@ -2,7 +2,7 @@
 #include <Drlg/D2DrlgDrlg.h>
 
 
-//D2Common.0x6FD782A0
+// D2Common.0x6FD782A0
 D2DrlgVertexStrc* __fastcall DRLGVER_AllocVertex(void* pMemPool, uint8_t nDirection)
 {
 	D2DrlgVertexStrc* pDrlgVertex = D2_CALLOC_STRC_POOL(pMemPool, D2DrlgVertexStrc);
@@ -10,7 +10,7 @@ D2DrlgVertexStrc* __fastcall DRLGVER_AllocVertex(void* pMemPool, uint8_t nDirect
 	return pDrlgVertex;
 }
 
-//D2Common.0x6FD782D0
+// D2Common.0x6FD782D0
 //TODO: v15, v16, v21, v23
 void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVertices, D2DrlgCoordStrc* pDrlgCoord, uint8_t nDirection, D2DrlgOrthStrc* pDrlgRoomData)
 {
@@ -225,7 +225,7 @@ void __fastcall DRLGVER_CreateVertices(void* pMemPool, D2DrlgVertexStrc** ppVert
 	}
 }
 
-//D2Common.0x6FD786C0
+// D2Common.0x6FD786C0
 void __fastcall DRLGVER_FreeVertices(void* pMemPool, D2DrlgVertexStrc** ppVertices)
 {
 	D2DrlgVertexStrc* pVertex = NULL;
@@ -251,7 +251,7 @@ void __fastcall DRLGVER_FreeVertices(void* pMemPool, D2DrlgVertexStrc** ppVertic
 	}
 }
 
-//D2Common.0x6FD78730
+// D2Common.0x6FD78730
 void __fastcall DRLGVER_GetCoordDiff(D2DrlgVertexStrc* pDrlgVertex, int* pDiffX, int* pDiffY)
 {
 	*pDiffX = pDrlgVertex->pNext->nPosX - pDrlgVertex->nPosX;

@@ -221,197 +221,197 @@ inline uint32_t PATH_FP16FitToCenter(uint32_t value)
 inline uint8_t PATH_NormalizeDirection(uint8_t nDirection) { return nDirection % PATH_NB_DIRECTIONS; }
 void PATH_UpdateClientCoords(D2DynamicPathStrc* pDynamicPath);
 
-//D2Common.0x6FDA8220
+// D2Common.0x6FDA8220
 void __fastcall sub_6FDA8220(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA82A0 (#10141)
+// D2Common.0x6FDA82A0 (#10141)
 D2COMMON_DLL_DECL void __stdcall PATH_GetClientCoordsVelocity(D2UnitStrc* pUnit, int* pX, int* pY);
-//D2Common.0x6FDA8320 (#10222)
+// D2Common.0x6FDA8320 (#10222)
 D2COMMON_DLL_DECL void __stdcall PATH_AddCollisionFootprintForUnit(D2UnitStrc* pUnit);
-//D2Common.0x6FDA8450 (#10223)
+// D2Common.0x6FDA8450 (#10223)
 D2COMMON_DLL_DECL BOOL __stdcall PATH_RemoveCollisionFootprintForUnit(D2UnitStrc* pUnit, BOOL bForce);
 //1.00:  D2Common.0x10059110 (#10141)
 //1.10f: D2Common.0x6FDA8600 (#10142)
 //1.13c: D2Common.0x6FD86230 (#10334)
 D2COMMON_DLL_DECL int __stdcall D2Common_10142(D2DynamicPathStrc* pPath, D2UnitStrc* pUnit, int bAllowInTown);
-//D2Common.0x6FDA8E30
+// D2Common.0x6FDA8E30
 int __fastcall PATH_ComputePathClassicMissile(D2DynamicPathStrc* pDynamicPath, D2UnitStrc* pUnit);
-//D2Common.0x6FDA8FE0
+// D2Common.0x6FDA8FE0
 void __fastcall PATH_FindValidTargetCoordsByMovingOrthogonally(D2PathInfoStrc* pPathInfo);
-//D2Common.0x6FDA90C0
+// D2Common.0x6FDA90C0
 uint8_t __fastcall PATH_AdvanceToDoor(D2PathInfoStrc* pPathInfo);
-//D2Common.0x6FDA9190 (#10156)
+// D2Common.0x6FDA9190 (#10156)
 D2COMMON_DLL_DECL void __stdcall PATH_FreeDynamicPath(void* pMemPool, D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA91B0 (#11282)
+// D2Common.0x6FDA91B0 (#11282)
 D2COMMON_DLL_DECL int __stdcall PATH_GetCollisionPatternFromMonStats2Txt(int nMonsterId);
-//D2Common.0x6FDA9250 (#11281)
+// D2Common.0x6FDA9250 (#11281)
 D2COMMON_DLL_DECL int __stdcall D2Common_11281_CollisionPatternFromSize(D2UnitStrc* pUnit, int nSize);
-//D2Common.0x6FDA92F0 (#10214)
+// D2Common.0x6FDA92F0 (#10214)
 D2COMMON_DLL_DECL void __stdcall D2Common_10214(D2UnitStrc* pUnit);
-//D2Common.0x6FDA9480 (#10152)
+// D2Common.0x6FDA9480 (#10152)
 D2COMMON_DLL_DECL void __stdcall PATH_AllocDynamicPath(void* pMemPool, D2ActiveRoomStrc* pRoom, int nX, int nY, D2UnitStrc* pUnit, BOOL bSetFlag);
-//D2Common.0x6FDA9720
+// D2Common.0x6FDA9720
 void __fastcall sub_6FDA9720(D2DynamicPathStrc* pDynamicPath, uint8_t nDirection);
-//D2Common.0x6FDA9770 (#10193)
+// D2Common.0x6FDA9770 (#10193)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10193_PATH_AdjustDirection(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA97C0 (#10216)
+// D2Common.0x6FDA97C0 (#10216)
 D2COMMON_DLL_DECL void __stdcall D2Common_10216(D2DynamicPathStrc* pDynamicPath, int nX, int nY, int a4);
-//D2Common.0x6FDA9850 (#10228)
+// D2Common.0x6FDA9850 (#10228)
 D2COMMON_DLL_DECL void __stdcall D2Common_10228(D2UnitStrc* pUnit);
-//D2Common.0x6FDA9870 (#10143)
+// D2Common.0x6FDA9870 (#10143)
 D2COMMON_DLL_DECL void __stdcall PATH_SetUnitDeadCollision(D2UnitStrc* pUnit, BOOL bForGameLogic);
-//D2Common.0x6FDA98F0 (#10144)
+// D2Common.0x6FDA98F0 (#10144)
 D2COMMON_DLL_DECL void __stdcall PATH_SetUnitAliveCollision(D2UnitStrc* pUnit, BOOL bForGameLogic);
-//D2Common.0x6FDA9A70 (#10146)
+// D2Common.0x6FDA9A70 (#10146)
 D2COMMON_DLL_DECL void __stdcall PATH_SetVelocity(D2DynamicPathStrc* pDynamicPath, int nVelocity, const char* szFile, int nLine);
-//D2Common.0x6FDA9AB0 (#10147)
+// D2Common.0x6FDA9AB0 (#10147)
 D2COMMON_DLL_DECL int __stdcall PATH_GetVelocity(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9AC0 (#10148)
+// D2Common.0x6FDA9AC0 (#10148)
 D2COMMON_DLL_DECL void __stdcall PATH_SetMaxVelocity(D2DynamicPathStrc* pDynamicPath, int nMaxVelocity);
-//D2Common.0x6FDA9AE0 (#10149)
+// D2Common.0x6FDA9AE0 (#10149)
 D2COMMON_DLL_DECL int __stdcall PATH_GetMaxVelocity(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9AF0 (#10150)
+// D2Common.0x6FDA9AF0 (#10150)
 D2COMMON_DLL_DECL void __stdcall PATH_SetAcceleration(D2DynamicPathStrc* pDynamicPath, int nAcceleration);
-//D2Common.0x6FDA9B10 (#10151)
+// D2Common.0x6FDA9B10 (#10151)
 D2COMMON_DLL_DECL int __stdcall PATH_GetAcceleration(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9B20 (#10153)
+// D2Common.0x6FDA9B20 (#10153)
 D2COMMON_DLL_DECL void __stdcall D2Common_10153(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9B40 (#10208)
+// D2Common.0x6FDA9B40 (#10208)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10208_PathSetPathingFlag(D2DynamicPathStrc* pDynamicPath, BOOL bSet);
-//D2Common.0x6FDA9B70 (#10209)
+// D2Common.0x6FDA9B70 (#10209)
 D2COMMON_DLL_DECL BOOL __stdcall D2COMMON_10209_PathCheckPathingFlag(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9B80 (#10154)
+// D2Common.0x6FDA9B80 (#10154)
 D2COMMON_DLL_DECL int __stdcall PATH_GetNumberOfPathPoints(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9B90 (#11291)
+// D2Common.0x6FDA9B90 (#11291)
 D2COMMON_DLL_DECL void __stdcall PATH_SetNumberOfPathPoints(D2DynamicPathStrc* pDynamicPath, int a2);
-//D2Common.0x6FDA9BC0 (#10155)
+// D2Common.0x6FDA9BC0 (#10155)
 D2COMMON_DLL_DECL int __stdcall D2Common_10155(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9BD0 (#10157)
+// D2Common.0x6FDA9BD0 (#10157)
 D2COMMON_DLL_DECL int __stdcall PATH_GetPathPoints(D2DynamicPathStrc* pDynamicPath, D2PathPointStrc** ppPathPoints);
-//D2Common.0x6FDA9BF0 (#10158)
+// D2Common.0x6FDA9BF0 (#10158)
 D2COMMON_DLL_DECL uint8_t __stdcall PATH_GetDirection(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9C10 (#10159)
+// D2Common.0x6FDA9C10 (#10159)
 D2COMMON_DLL_DECL uint8_t __stdcall PATH_GetNewDirection(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9C20 (#10160)
+// D2Common.0x6FDA9C20 (#10160)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10160_PathUpdateDirection(D2DynamicPathStrc* pDynamicPath, uint8_t nDirection);
-//D2Common.0x6FDA9C90 (#10161)
+// D2Common.0x6FDA9C90 (#10161)
 D2COMMON_DLL_DECL void __stdcall PATH_SetDirection(D2DynamicPathStrc* pDynamicPath, uint8_t nDirection);
-//D2Common.0x6FDA9CB0 (#10162)
+// D2Common.0x6FDA9CB0 (#10162)
 D2COMMON_DLL_DECL int __stdcall PATH_GetXPosition(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9CF0 (#10163)
+// D2Common.0x6FDA9CF0 (#10163)
 D2COMMON_DLL_DECL int __stdcall PATH_GetYPosition(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9D30 (#10194)
+// D2Common.0x6FDA9D30 (#10194)
 D2COMMON_DLL_DECL int __stdcall PATH_GetPrecisionX(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9D60 (#10195)
+// D2Common.0x6FDA9D60 (#10195)
 D2COMMON_DLL_DECL int __stdcall PATH_GetPrecisionY(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9D90 (#10196)
+// D2Common.0x6FDA9D90 (#10196)
 D2COMMON_DLL_DECL void __stdcall PATH_SetPrecisionX(D2DynamicPathStrc* pDynamicPath, int nPrecisionX);
-//D2Common.0x6FDA9DA0 (#10197)
+// D2Common.0x6FDA9DA0 (#10197)
 D2COMMON_DLL_DECL void __stdcall PATH_SetPrecisionY(D2DynamicPathStrc* pDynamicPath, int nPrecisionY);
-//D2Common.0x6FDA9DB0 (#10164)
+// D2Common.0x6FDA9DB0 (#10164)
 D2COMMON_DLL_DECL int __stdcall PATH_GetClientCoordX(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDC3CE0 (#10165)
+// D2Common.0x6FDC3CE0 (#10165)
 D2COMMON_DLL_DECL int __stdcall PATH_GetClientCoordY(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9DC0
+// D2Common.0x6FDA9DC0
 void __fastcall PATH_SetClientCoordX(D2DynamicPathStrc* pDynamicPath, int nTargetX);
-//D2Common.0x6FDA9DD0
+// D2Common.0x6FDA9DD0
 void __fastcall PATH_SetClientCoordY(D2DynamicPathStrc* pDynamicPath, int nTargetY);
-//D2Common.0x6FDA9DE0 (#10175)
+// D2Common.0x6FDA9DE0 (#10175)
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10175_PathGetFirstPointX(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9DF0 (#10176)
+// D2Common.0x6FDA9DF0 (#10176)
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10176_PathGetFirstPointY(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9E00 (#10224)
+// D2Common.0x6FDA9E00 (#10224)
 D2COMMON_DLL_DECL int __stdcall D2Common_10224(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9E10 (#10225)
+// D2Common.0x6FDA9E10 (#10225)
 D2COMMON_DLL_DECL int __stdcall D2Common_10225(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9E20 (#10177)
+// D2Common.0x6FDA9E20 (#10177)
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10177_PATH_GetLastPointX(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9E40 (#10178)
+// D2Common.0x6FDA9E40 (#10178)
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10178_PATH_GetLastPointY(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDB9C10 (#10166)
+// D2Common.0x6FDB9C10 (#10166)
 D2COMMON_DLL_DECL D2ActiveRoomStrc* __stdcall PATH_GetRoom(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9E60 (#10167)
+// D2Common.0x6FDA9E60 (#10167)
 D2COMMON_DLL_DECL void __stdcall PATH_SetRoom(D2DynamicPathStrc* pDynamicPath, D2ActiveRoomStrc* pRoom);
-//D2Common.0x6FDA9E70 (#10168)
+// D2Common.0x6FDA9E70 (#10168)
 D2COMMON_DLL_DECL D2ActiveRoomStrc* __stdcall PATH_GetNextRoom(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9E80 (#10169)
+// D2Common.0x6FDA9E80 (#10169)
 D2COMMON_DLL_DECL void __stdcall PATH_ClearNextRoom(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9E90 (#10170)
+// D2Common.0x6FDA9E90 (#10170)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10170_PathSetTargetPos(D2DynamicPathStrc* pDynamicPath, int nX, int nY);
-//D2Common.0x6FDA9EC0 (#10172)
+// D2Common.0x6FDA9EC0 (#10172)
 D2COMMON_DLL_DECL BOOL __stdcall PATH_IsCurrentRoomInvalid(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9ED0 (#10173)
+// D2Common.0x6FDA9ED0 (#10173)
 D2COMMON_DLL_DECL void __stdcall PATH_SetCurrentRoomInvalid(D2DynamicPathStrc* pDynamicPath, BOOL bSet);
-//D2Common.0x6FDA9F00 (#10145)
+// D2Common.0x6FDA9F00 (#10145)
 D2COMMON_DLL_DECL void __stdcall PATH_SetUnusedFlag_0x00004(D2DynamicPathStrc* pDynamicPath, BOOL bSet);
-//D2Common.0x6FDA9F30 (#10174)
+// D2Common.0x6FDA9F30 (#10174)
 D2COMMON_DLL_DECL BOOL __stdcall PATH_GetUnusedFlag_0x00004(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9F40 (#10179)
+// D2Common.0x6FDA9F40 (#10179)
 D2COMMON_DLL_DECL void __stdcall PATH_SetTargetUnit(D2DynamicPathStrc* pDynamicPath, D2UnitStrc* pUnit);
-//D2Common.0x6FDA9F60 (#10171)
+// D2Common.0x6FDA9F60 (#10171)
 D2COMMON_DLL_DECL void __stdcall PATH_GetTargetTypeAndGUID(D2DynamicPathStrc* pDynamicPath, int* pTargetType, D2UnitGUID* pTargetGUID);
-//D2Common.0x6FDA9FA0 (#10180)
+// D2Common.0x6FDA9FA0 (#10180)
 D2COMMON_DLL_DECL D2UnitStrc* __stdcall PATH_GetTargetUnit(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9FC0 (#10181)
+// D2Common.0x6FDA9FC0 (#10181)
 D2COMMON_DLL_DECL int __stdcall PATH_GetFootprintCollisionMask(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDA9FE0 (#10182)
+// D2Common.0x6FDA9FE0 (#10182)
 D2COMMON_DLL_DECL void __stdcall PATH_SetFootprintCollisionMask(D2DynamicPathStrc* pDynamicPath, int nCollisionMask);
-//D2Common.0x6FDAA0C0 (#10183)
+// D2Common.0x6FDAA0C0 (#10183)
 D2COMMON_DLL_DECL int __stdcall PATH_GetMoveTestCollisionMask(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA0D0 (#10184)
+// D2Common.0x6FDAA0D0 (#10184)
 D2COMMON_DLL_DECL void __stdcall PATH_SetMoveTestCollisionMask(D2DynamicPathStrc* pDynamicPath, int nCollisionMask);
-//D2Common.0x6FDAA0E0 (#10185)
+// D2Common.0x6FDAA0E0 (#10185)
 D2COMMON_DLL_DECL void __stdcall PATH_SetType(D2DynamicPathStrc* pDynamicPath, int nPathType);
-//D2Common.0x6FDAA1E0 (#10186)
+// D2Common.0x6FDAA1E0 (#10186)
 D2COMMON_DLL_DECL void __stdcall PATH_ResetToPreviousType(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA240 (#10187)
+// D2Common.0x6FDAA240 (#10187)
 D2COMMON_DLL_DECL int __stdcall PATH_GetType(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA250 (#10190)
+// D2Common.0x6FDAA250 (#10190)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10190_PATH_SetDistance(D2DynamicPathStrc* pDynamicPath, uint8_t nDistance);
-//D2Common.0x6FDAA270 (#10191)
+// D2Common.0x6FDAA270 (#10191)
 D2COMMON_DLL_DECL uint8_t __stdcall D2COMMON_10191_PATH_GetDistance(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA280 (#10188)
+// D2Common.0x6FDAA280 (#10188)
 D2COMMON_DLL_DECL void __stdcall PATH_SetNewDistance(D2DynamicPathStrc* pDynamicPath, uint8_t nNewDistance);
-//D2Common.0x6FDAA2B0 (#10189)
+// D2Common.0x6FDAA2B0 (#10189)
 D2COMMON_DLL_DECL uint8_t __stdcall PATH_GetMaxDistance(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA2C0 (#10201)
+// D2Common.0x6FDAA2C0 (#10201)
 D2COMMON_DLL_DECL uint16_t __stdcall D2Common_10201(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA300 (#10202)
+// D2Common.0x6FDAA300 (#10202)
 D2COMMON_DLL_DECL uint16_t __stdcall D2Common_10202(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA310 (#10192)
+// D2Common.0x6FDAA310 (#10192)
 D2COMMON_DLL_DECL void __stdcall PATH_SetIDAStarInitFScore(D2DynamicPathStrc* pDynamicPath, int nIDAStarInitFScore);
-//D2Common.0x6FDAA350 (#10198)
+// D2Common.0x6FDAA350 (#10198)
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10198_PathGetSaveStep(D2DynamicPathStrc* pDynamicPath, D2PathPointStrc** ppPathPoints);
-//D2Common.0x6FDAA390 (#10199)
+// D2Common.0x6FDAA390 (#10199)
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10199_PathGetSaveX(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA3E0 (#10200)
+// D2Common.0x6FDAA3E0 (#10200)
 D2COMMON_DLL_DECL int __stdcall D2COMMON_10200_PathGetSaveY(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA430 (#10203)
+// D2Common.0x6FDAA430 (#10203)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10203_PATH_SetRotateFlag(D2DynamicPathStrc* pDynamicPath, BOOL bReset);
-//D2Common.0x6FDAA460 (#10204)
+// D2Common.0x6FDAA460 (#10204)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10204_PATH_ClearPoint2(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA480 (#10205)
+// D2Common.0x6FDAA480 (#10205)
 D2COMMON_DLL_DECL void __stdcall PATH_SetStepNum(D2DynamicPathStrc* pDynamicPath, uint8_t nSteps);
-//D2Common.0x6FDAA4B0 (#10206)
+// D2Common.0x6FDAA4B0 (#10206)
 D2COMMON_DLL_DECL int __stdcall PATH_GetStepNum(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA4C0 (#10207)
+// D2Common.0x6FDAA4C0 (#10207)
 D2COMMON_DLL_DECL void __stdcall D2Common_10207(D2DynamicPathStrc* pDynamicPath, char a2, char a3);
-//D2Common.0x6FDAA4E0 (#10217)
+// D2Common.0x6FDAA4E0 (#10217)
 D2COMMON_DLL_DECL void __stdcall PATH_SetDistance(D2DynamicPathStrc* pDynamicPath, int nDist);
-//D2Common.0x6FDAA520 (#10218)
+// D2Common.0x6FDAA520 (#10218)
 D2COMMON_DLL_DECL int __stdcall PATH_GetDistance(D2DynamicPathStrc* pDynamicPath);
-//D2Common.0x6FDAA530 (#10219)
+// D2Common.0x6FDAA530 (#10219)
 D2COMMON_DLL_DECL void __stdcall PATH_AddToDistance(D2DynamicPathStrc* pDynamicPath, int nAddition);
-//D2Common.0x6FDAA570 (#10210)
+// D2Common.0x6FDAA570 (#10210)
 D2COMMON_DLL_DECL int __stdcall PATH_GetUnitCollisionPattern(D2UnitStrc* pUnit);
-//D2Common.0x6FDAA580 (#10211)
+// D2Common.0x6FDAA580 (#10211)
 D2COMMON_DLL_DECL void __stdcall PATH_SetUnitCollisionPattern(D2UnitStrc* pUnit, int nCollisionPattern);
-//D2Common.0x6FDAA5A0 (#10212)
+// D2Common.0x6FDAA5A0 (#10212)
 D2COMMON_DLL_DECL void __stdcall D2COMMON_10212_PATH_SetMoveFlags(D2UnitStrc* pUnit, BOOL bSet);
-//D2Common.0x6FDAA600 (#10213)
+// D2Common.0x6FDAA600 (#10213)
 D2COMMON_DLL_DECL void __stdcall D2Common_10213(D2UnitStrc* pUnit);
-//D2Common.0x6FDAA6A0 (#10220)
+// D2Common.0x6FDAA6A0 (#10220)
 D2COMMON_DLL_DECL int __stdcall PATH_ComputeSquaredDistance(int nX1, int nY1, int nX2, int nY2);
-//D2Common.0x6FDAA6D0 (#10221)
+// D2Common.0x6FDAA6D0 (#10221)
 D2COMMON_DLL_DECL void __stdcall PATH_AddCollisionFootprintForOptionalUnit(D2UnitStrc* pUnit);
-//D2Common.0x6FDAA6F0 (#10237)
+// D2Common.0x6FDAA6F0 (#10237)
 D2COMMON_DLL_DECL BOOL __stdcall D2Common_10237(D2UnitStrc* pUnit);

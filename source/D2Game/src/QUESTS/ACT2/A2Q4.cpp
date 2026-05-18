@@ -25,7 +25,7 @@
 #include "SKILLS/Skills.h"
 
 
-//D2Game.0x6FD35F58
+// D2Game.0x6FD35F58
 D2NPCMessageTableStrc gpAct2Q4NpcMessages[] =
 {
 	{
@@ -143,7 +143,7 @@ D2NPCMessageTableStrc gpAct2Q4NpcMessages[] =
 };
 
 
-//D2Game.0x6FCA25C0
+// D2Game.0x6FCA25C0
 bool __fastcall ACT2Q4_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNpcId, D2UnitStrc* pPlayer, D2BitBufferStrc* pQuestFlags, D2UnitStrc* pNPC)
 {
 	if (QUESTRECORD_GetQuestState(pQuestFlags, QUESTSTATEFLAG_A2Q4, QFLAG_REWARDGRANTED) == 1)
@@ -207,7 +207,7 @@ bool __fastcall ACT2Q4_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNp
 	return false;
 }
 
-//D2Game.0x6FCA2660
+// D2Game.0x6FCA2660
 int32_t __fastcall ACT2Q4_UnitIterate_StatusCyclerEx(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty];
@@ -221,7 +221,7 @@ int32_t __fastcall ACT2Q4_UnitIterate_StatusCyclerEx(D2GameStrc* pGame, D2UnitSt
 	return 0;
 }
 
-//D2Game.0x6FCA26D0
+// D2Game.0x6FCA26D0
 int32_t __fastcall ACT2Q4_UnitIterate_UpdateQuestStateFlags(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty];
@@ -259,7 +259,7 @@ int32_t __fastcall ACT2Q4_UnitIterate_UpdateQuestStateFlags(D2GameStrc* pGame, D
 	return 0;
 }
 
-//D2Game.0x6FCA2780
+// D2Game.0x6FCA2780
 int32_t __fastcall ACT2Q4_IsHaremBlockerObjectOpened(D2GameStrc* pGame)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A2Q4_HORAZONTOME);
@@ -267,7 +267,7 @@ int32_t __fastcall ACT2Q4_IsHaremBlockerObjectOpened(D2GameStrc* pGame)
 	return pQuestData && ((D2Act2Quest4Strc*)pQuestData->pQuestDataEx)->nHaremBlockerObjectMode == OBJMODE_OPENED;
 }
 
-//D2Game.0x6FCA27B0
+// D2Game.0x6FCA27B0
 void __fastcall ACT2Q4_UnitIterate_SetPrimaryGoalDone(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty];
@@ -296,7 +296,7 @@ void __fastcall ACT2Q4_UnitIterate_SetPrimaryGoalDone(D2GameStrc* pGame, D2UnitS
 	QUESTRECORD_SetQuestState(pQuestFlags, QUESTSTATEFLAG_A2Q4, QFLAG_CUSTOM3);
 }
 
-//D2Game.0x6FCA2840
+// D2Game.0x6FCA2840
 void __fastcall ACT2Q4_InitQuestData(D2QuestDataStrc* pQuestData)
 {
 	memset(pQuestData->pfCallback, 0x00, sizeof(pQuestData->pfCallback));
@@ -323,7 +323,7 @@ void __fastcall ACT2Q4_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestDataEx->bDrognanActivated = 0;
 }
 
-//D2Game.0x6FCA2920
+// D2Game.0x6FCA2920
 void __fastcall ACT2Q4_Callback02_NpcDeactivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (!pQuestArg->pTarget || pQuestArg->pTarget->dwClassId != MONSTER_DROGNAN)
@@ -344,7 +344,7 @@ void __fastcall ACT2Q4_Callback02_NpcDeactivate(D2QuestDataStrc* pQuestData, D2Q
 	SUNIT_IterateUnitsOfType(pQuestData->pGame, 0, 0, ACT2Q4_UnitIterate_UpdateQuestStateFlags);
 }
 
-//D2Game.0x6FCA2980
+// D2Game.0x6FCA2980
 void __fastcall ACT2Q4_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	const int16_t nMessageIndex = pQuestArg->nMessageIndex;
@@ -447,7 +447,7 @@ void __fastcall ACT2Q4_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 	}
 }
 
-//D2Game.0x6FCA2C50
+// D2Game.0x6FCA2C50
 void __fastcall ACT2Q4_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	static const int32_t nIndices[] =
@@ -494,7 +494,7 @@ void __fastcall ACT2Q4_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2Que
 	}
 }
 
-//D2Game.0x6FCA2D90
+// D2Game.0x6FCA2D90
 void __fastcall ACT2Q4_Callback03_ChangedLevel(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (pQuestArg->nNewLevel == LEVEL_ARCANESANCTUARY)
@@ -581,7 +581,7 @@ void __fastcall ACT2Q4_Callback03_ChangedLevel(D2QuestDataStrc* pQuestData, D2Qu
 	}
 }
 
-//D2Game.0x6FCA2F60
+// D2Game.0x6FCA2F60
 void __fastcall ACT2Q4_InitializeJerhynMonster(D2QuestDataStrc* pQuestData, D2UnitStrc* pUnit, D2ActiveRoomStrc* pRoom, D2CoordStrc* pCoord)
 {
 	D2Act2Quest4Strc* pQuestDataEx = (D2Act2Quest4Strc*)pQuestData->pQuestDataEx;
@@ -650,7 +650,7 @@ void __fastcall ACT2Q4_InitializeJerhynMonster(D2QuestDataStrc* pQuestData, D2Un
 	}
 }
 
-//D2Game.0x6FCA3160
+// D2Game.0x6FCA3160
 bool __fastcall ACT2Q4_SeqCallback(D2QuestDataStrc* pQuestData)
 {
 	if (pQuestData->fState || pQuestData->bNotIntro != 1)
@@ -674,7 +674,7 @@ bool __fastcall ACT2Q4_SeqCallback(D2QuestDataStrc* pQuestData)
 	return true;
 }
 
-//D2Game.0x6FCA31E0
+// D2Game.0x6FCA31E0
 void __fastcall ACT2Q4_Callback13_PlayerStartedGame(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pQuestArg->pPlayer)->pQuestData[pQuestArg->pGame->nDifficulty];
@@ -729,7 +729,7 @@ void __fastcall ACT2Q4_Callback13_PlayerStartedGame(D2QuestDataStrc* pQuestData,
 	pQuestDataEx->nHaremBlockerObjectMode = OBJMODE_OPENED;
 }
 
-//D2Game.0x6FCA3320
+// D2Game.0x6FCA3320
 void __fastcall ACT2Q4_InitializeJerhynStartObject(D2QuestDataStrc* pQuestData, D2ObjInitFnStrc* pOp)
 {
 	D2Act2Quest4Strc* pQuestDataEx = (D2Act2Quest4Strc*)pQuestData->pQuestDataEx;
@@ -759,7 +759,7 @@ void __fastcall ACT2Q4_InitializeJerhynStartObject(D2QuestDataStrc* pQuestData, 
 	}
 }
 
-//D2Game.0x6FCA33F0
+// D2Game.0x6FCA33F0
 void __fastcall ACT2Q4_InitializeJerhynPalaceObject(D2QuestDataStrc* pQuestData, D2ObjInitFnStrc* pOp)
 {
 	D2Act2Quest4Strc* pQuestDataEx = (D2Act2Quest4Strc*)pQuestData->pQuestDataEx;
@@ -794,7 +794,7 @@ void __fastcall ACT2Q4_InitializeJerhynPalaceObject(D2QuestDataStrc* pQuestData,
 	ACT2Q4_InitializeJerhynMonster(pQuestData, pOp->pObject, pOp->pRoom, &pCoord);
 }
 
-//D2Game.0x6FCA34D0
+// D2Game.0x6FCA34D0
 int32_t __fastcall ACT2Q4_IsGuardMoving(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A2Q4_HORAZONTOME);
@@ -813,7 +813,7 @@ int32_t __fastcall ACT2Q4_IsGuardMoving(D2GameStrc* pGame, D2UnitStrc* pUnit)
 	return 1;
 }
 
-//D2Game.0x6FCA3500
+// D2Game.0x6FCA3500
 void __fastcall ACT2Q4_InitializeHaremBlockerObject(D2QuestDataStrc* pQuestData, D2UnitStrc* pUnit)
 {
 	D2Act2Quest4Strc* pQuestDataEx = (D2Act2Quest4Strc*)pQuestData->pQuestDataEx;
@@ -848,7 +848,7 @@ void __fastcall ACT2Q4_InitializeHaremBlockerObject(D2QuestDataStrc* pQuestData,
 	pQuestDataEx->nHaremBlockerGUID = pHaremBlocker->dwUnitId;
 }
 
-//D2Game.0x6FCA35D0
+// D2Game.0x6FCA35D0
 void __fastcall OBJECTS_InitFunction30_HaremBlocker(D2ObjInitFnStrc* pOp)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pOp->pGame, QUEST_A2Q4_HORAZONTOME);
@@ -873,7 +873,7 @@ void __fastcall OBJECTS_InitFunction30_HaremBlocker(D2ObjInitFnStrc* pOp)
 	}
 }
 
-//D2Game.0x6FCA3620
+// D2Game.0x6FCA3620
 int32_t __fastcall ACT2Q4_IsJerhynPalaceActivated(D2GameStrc* pGame)
 {
 	D2QuestDataStrc* pQuestData11 = QUESTS_GetQuestData(pGame, QUEST_A2Q4_HORAZONTOME);
@@ -884,7 +884,7 @@ int32_t __fastcall ACT2Q4_IsJerhynPalaceActivated(D2GameStrc* pGame)
 		|| !pQuestData13 || !pQuestData13->bNotIntro || pQuestData13->fState >= 4 || pQuestData11->bNotIntro != 1 || pQuestData11->fState >= 2;
 }
 
-//D2Game.0x6FCA36A0
+// D2Game.0x6FCA36A0
 int32_t __fastcall ACT2Q4_HasGuardMovedToEndPosition(D2GameStrc* pGame)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A2Q4_HORAZONTOME);
@@ -902,7 +902,7 @@ int32_t __fastcall ACT2Q4_HasGuardMovedToEndPosition(D2GameStrc* pGame)
 	return 0;
 }
 
-//D2Game.0x6FCA36E0
+// D2Game.0x6FCA36E0
 int32_t __fastcall ACT2Q4_GetGuardCoordinates(D2GameStrc* pGame, D2CoordStrc* pCoord)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A2Q4_HORAZONTOME);
@@ -929,7 +929,7 @@ int32_t __fastcall ACT2Q4_GetGuardCoordinates(D2GameStrc* pGame, D2CoordStrc* pC
 	return 0;
 }
 
-//D2Game.0x6FCA3740
+// D2Game.0x6FCA3740
 void __fastcall ACT2Q4_GetAndUpdatePalaceNpcState(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t* a3, int32_t* pIdle)
 {
 	D2QuestDataStrc* pQuestData11 = QUESTS_GetQuestData(pGame, QUEST_A2Q4_HORAZONTOME);
@@ -1028,7 +1028,7 @@ void __fastcall ACT2Q4_GetAndUpdatePalaceNpcState(D2GameStrc* pGame, D2UnitStrc*
 	}
 }
 
-//D2Game.0x6FCA3A10
+// D2Game.0x6FCA3A10
 int32_t __fastcall ACT2Q4_UnitIterate_CheckDistanceToHaremBlocker(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty];
@@ -1057,7 +1057,7 @@ int32_t __fastcall ACT2Q4_UnitIterate_CheckDistanceToHaremBlocker(D2GameStrc* pG
 	return 1;
 }
 
-//D2Game.0x6FCA3AA0
+// D2Game.0x6FCA3AA0
 int32_t __fastcall OBJECTS_OperateFunction42_SanctuaryTome(D2ObjOperateFnStrc* pOp, int32_t nOperate)
 {
 	if (!pOp || !pOp->pObject)
@@ -1098,7 +1098,7 @@ int32_t __fastcall OBJECTS_OperateFunction42_SanctuaryTome(D2ObjOperateFnStrc* p
 	return 1;
 }
 
-//D2Game.0x6FCA3B80
+// D2Game.0x6FCA3B80
 int32_t __fastcall ACT2Q4_UnitIterate_SetCompletionFlag(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty];
@@ -1111,7 +1111,7 @@ int32_t __fastcall ACT2Q4_UnitIterate_SetCompletionFlag(D2GameStrc* pGame, D2Uni
 	return 0;
 }
 
-//D2Game.0x6FCA3BC0
+// D2Game.0x6FCA3BC0
 int32_t __fastcall ACT2Q4_UnitIterate_SetPrimaryGoalDoneForPartyMembers(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty];
@@ -1142,7 +1142,7 @@ int32_t __fastcall ACT2Q4_UnitIterate_SetPrimaryGoalDoneForPartyMembers(D2GameSt
 	return 0;
 }
 
-//D2Game.0x6FCA3C70
+// D2Game.0x6FCA3C70
 int32_t __fastcall ACT2Q4_UnitIterate_UselessGoalCheck(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	QUESTRECORD_GetQuestState(UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty], QUESTSTATEFLAG_A2Q4, QFLAG_PRIMARYGOALDONE);//TODO: Meant to be set?
@@ -1150,7 +1150,7 @@ int32_t __fastcall ACT2Q4_UnitIterate_UselessGoalCheck(D2GameStrc* pGame, D2Unit
 	return 0;
 }
 
-//D2Game.0x6FCA3CA0
+// D2Game.0x6FCA3CA0
 void __fastcall OBJECTS_InitFunction29_ArcaneSanctuaryPortal(D2ObjInitFnStrc* pOp)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pOp->pGame, QUEST_A2Q4_HORAZONTOME);
@@ -1193,7 +1193,7 @@ void __fastcall OBJECTS_InitFunction29_ArcaneSanctuaryPortal(D2ObjInitFnStrc* pO
 	}
 }
 
-//D2Game.0x6FCA3D60
+// D2Game.0x6FCA3D60
 void __fastcall ACT2Q4_SetPortalMode(D2GameStrc* pGame, int32_t nLevelId)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A2Q4_HORAZONTOME);

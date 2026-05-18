@@ -25,7 +25,7 @@ D2TaskStrc* gtTaskSlots[TASKQSLOTS];
 D2LinkStrc gpTaskQueueLink;
 
 
-//D2Game.0x6FC404E0 (#10039)
+// D2Game.0x6FC404E0 (#10039)
 void __stdcall TASK_InitializeClock()
 {
     gbHasHighResolutionClock = QueryPerformanceFrequency(&gPerformanceFrequency);
@@ -46,7 +46,7 @@ static int32_t TASK_GetClockTime()
 }
 
 
-//D2Game.0x6FC40500 (#10040)
+// D2Game.0x6FC40500 (#10040)
 void __stdcall TASK_FreeAllQueueSlots()
 {
     EnterCriticalSection(&gTaskSlotsCriticalSection.cs);
@@ -70,7 +70,7 @@ void __stdcall TASK_FreeAllQueueSlots()
     LeaveCriticalSection(&gTaskSlotsCriticalSection.cs);
 }
 
-//D2Game.0x6FC405B0 (#10041)
+// D2Game.0x6FC405B0 (#10041)
 int __cdecl D2Game_10041_TASK_Create()
 {
     UNIMPLEMENTED();
@@ -180,7 +180,7 @@ int __cdecl D2Game_10041_TASK_Create()
     return nTaskSlotIndex;
 }
 
-//D2Game.0x6FC407A0 (#10042) --------------------------------------------------------
+// D2Game.0x6FC407A0 (#10042) --------------------------------------------------------
 BOOL __fastcall D2Game_10042(D2TaskStrc* pTask, int nTaskType, D2LinkStrc* pPrevTaskBalanceLink)
 {
     BOOL nResult = FALSE;
@@ -218,7 +218,7 @@ BOOL __fastcall D2Game_10042(D2TaskStrc* pTask, int nTaskType, D2LinkStrc* pPrev
     return nResult;
 }
 
-//D2Game.0x6FC40930 (#10043)
+// D2Game.0x6FC40930 (#10043)
 int32_t __fastcall D2Game_10043(int8_t a1, int32_t* pOutBalanceTaskType)
 {
     const int8_t nIndex = a1 & 31;
@@ -252,7 +252,7 @@ int32_t __fastcall D2Game_10043(int8_t a1, int32_t* pOutBalanceTaskType)
     return 100;
 }
 
-//D2Game.0x6FC40A40 (#10044)
+// D2Game.0x6FC40A40 (#10044)
 int32_t __fastcall D2Game_10044(int8_t nTaskNumber)
 {
     const int8_t nIndex = nTaskNumber & 31;
@@ -339,7 +339,7 @@ static void TASK_CloseGame(uint32_t nGameHashKey, char nTaskNumber)
     LeaveCriticalSection(&gTaskSlotsCriticalSection.cs);
 }
 
-//D2Game.0x6FC40B30 (#10045) --------------------------------------------------------
+// D2Game.0x6FC40B30 (#10045) --------------------------------------------------------
 void __fastcall TASK_ProcessGame(char nTaskNumber, D2TaskStrc* ptTask)
 {
     D2_ASSERT(ptTask->nType == TASK_PROCESSGAME);
@@ -409,7 +409,7 @@ void __fastcall TASK_ProcessGame(char nTaskNumber, D2TaskStrc* ptTask)
     }
 }
 
-//D2Game.0x6FC40E40
+// D2Game.0x6FC40E40
 void __fastcall TASK_QueueIncrement(D2TaskStrc* ptTaskQueue, int32_t* pTaskType, int nTaskTypeIncrement)
 {
     D2LinkStrc* ptTaskBalanceLink = &ptTaskQueue->pTaskBalanceLink;
@@ -426,7 +426,7 @@ void __fastcall TASK_QueueIncrement(D2TaskStrc* ptTaskQueue, int32_t* pTaskType,
 }
 
 
-//D2Game.0x6FC40ED0
+// D2Game.0x6FC40ED0
 void __fastcall TASK_LinkList_Insert(D2LinkStrc* pPrev, D2LinkStrc* pLink)
 {
     D2_ASSERT(pPrev);
@@ -439,7 +439,7 @@ void __fastcall TASK_LinkList_Insert(D2LinkStrc* pPrev, D2LinkStrc* pLink)
 }
 
 // Exactly the same code as TASK_LinkList_Insert, except one is supposed to provide the list head instead of the previous element.
-//D2Game.0x6FC40F20
+// D2Game.0x6FC40F20
 void __fastcall TASK_LinkList_PushFront(D2LinkStrc* pList, D2LinkStrc* pLink)
 {
     D2_ASSERT(pList);
@@ -451,7 +451,7 @@ void __fastcall TASK_LinkList_PushFront(D2LinkStrc* pList, D2LinkStrc* pLink)
     pList->pNext = pLink;
 }
 
-//D2Game.0x6FC40F70
+// D2Game.0x6FC40F70
 void __fastcall TASK_LinkList_Remove(D2LinkStrc* pLink)
 {
     D2_ASSERT(pLink);

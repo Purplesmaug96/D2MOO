@@ -40,13 +40,13 @@ int32_t gbWriteSaveFile_6FD30E08;
 int32_t dword_6FD4DC28;
 
 
-//D2Game.0x6FC895D0 (#10036)
+// D2Game.0x6FC895D0 (#10036)
 void __fastcall D2GAME_10036_PLRSAVE_EnableSaveFileWriting(int32_t bWriteSaveFile)
 {
     gbWriteSaveFile_6FD30E08 = bWriteSaveFile;
 }
 
-//D2Game.0x6FC895E0
+// D2Game.0x6FC895E0
 int32_t __fastcall sub_6FC895E0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2SavedItemStrc* pSavedItem, D2UnitStrc** ppItem, int32_t* a5)
 {
     if (a5)
@@ -137,7 +137,7 @@ int32_t __fastcall sub_6FC895E0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2SavedI
     return 0;
 }
 
-//D2Game.0x6FC897F0
+// D2Game.0x6FC897F0
 D2UnitStrc* __fastcall sub_6FC897F0(D2GameStrc* pGame, D2SavedItemStrc* pSavedItem)
 {
     D2ItemDropStrc itemDrop = {};
@@ -179,7 +179,7 @@ D2UnitStrc* __fastcall sub_6FC897F0(D2GameStrc* pGame, D2SavedItemStrc* pSavedIt
     return pItem;
 }
 
-//D2Game.0x6FC898F0
+// D2Game.0x6FC898F0
 int32_t __fastcall sub_6FC898F0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc* pItem, D2UnitStrc* a4)
 {
     if (!pItem)
@@ -251,13 +251,13 @@ int32_t __fastcall sub_6FC898F0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
     }
 }
 
-//D2Game.0x6FC89AB0 (#10029)
+// D2Game.0x6FC89AB0 (#10029)
 int32_t __stdcall D2GAME_10029_SAVE_WriteFileInterface(D2GameStrc* pGame, D2UnitStrc* pPlayer, const char* szName)
 {
     return D2GAME_SAVE_WriteFile_6FC8A500(pGame, pPlayer, szName, 0);
 }
 
-//D2Game.0x6FC89AD0
+// D2Game.0x6FC89AD0
 int32_t __stdcall D2GAME_SAVE_SerializeItem_6FC89AD0(D2UnitStrc* pItem, uint8_t* pBitstream, uint32_t nBitstreamSize, int32_t n0, int32_t a5)
 {
     int32_t nBitsLeft = 0;
@@ -276,7 +276,7 @@ int32_t __stdcall D2GAME_SAVE_SerializeItem_6FC89AD0(D2UnitStrc* pItem, uint8_t*
     return nBitsLeft;
 }
 
-//D2Game.0x6FC89B50
+// D2Game.0x6FC89B50
 int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8_t* pBitstream, uint32_t nBitstreamSize, int32_t a4, int32_t a5)
 {
     if (nBitstreamSize < 2)
@@ -465,7 +465,7 @@ int32_t __stdcall PLRSAVE_WriteItems_6FC89B50(D2InventoryStrc* pInventory, uint8
     return pData - pBitstream;
 }
 
-//D2Game.0x6FC8A0F0
+// D2Game.0x6FC8A0F0
 int32_t __fastcall sub_6FC8A0F0(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* pSection, int32_t nSize, int32_t a5, int32_t a6)
 {
     if (a5 && pUnit && pUnit->dwUnitType == UNIT_PLAYER)
@@ -480,7 +480,7 @@ int32_t __fastcall sub_6FC8A0F0(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* p
     return PLRSAVE_WriteItems_6FC89B50(pUnit->pInventory, pSection, nSize, a5, a6);
 }
 
-//D2Game.0x6FC8A140
+// D2Game.0x6FC8A140
 int32_t __fastcall D2GAME_SAVE_CalculateChecksum_6FC8A140(D2SaveHeaderStrc* pSaveHeader, int32_t nSize)
 {
     int32_t nCheckSum = 0;
@@ -513,7 +513,7 @@ int32_t __fastcall D2GAME_SAVE_CalculateChecksum_6FC8A140(D2SaveHeaderStrc* pSav
     return result;
 }
 
-//D2Game.0x6FC8A1B0
+// D2Game.0x6FC8A1B0
 int32_t __fastcall D2GAME_SAVE_WriteFileOnRealm_6FC8A1B0(D2GameStrc* pGame, D2UnitStrc* pPlayer, const char* szCharName, char* szAccountName, int32_t bInteractsWithPlayer, int32_t nCharSaveTransactionToken, int32_t a7, D2ClientInfoStrc* pClientInfo)
 {
     if (!gbWriteSaveFile_6FD30E08)
@@ -641,7 +641,7 @@ int32_t __fastcall D2GAME_SAVE_WriteFileOnRealm_6FC8A1B0(D2GameStrc* pGame, D2Un
     return TRUE;
 }
 
-//D2Game.0x6FC8A500
+// D2Game.0x6FC8A500
 int32_t __fastcall D2GAME_SAVE_WriteFile_6FC8A500(D2GameStrc* pGame, D2UnitStrc* pPlayer, const char* szName, DWORD dwArg)
 {
     if (!pPlayer)
@@ -727,7 +727,7 @@ int32_t __fastcall D2GAME_SAVE_WriteFile_6FC8A500(D2GameStrc* pGame, D2UnitStrc*
     return 1;
 }
 
-//D2Game.0x6FC8A780
+// D2Game.0x6FC8A780
 int32_t __fastcall sub_6FC8A780(D2GameStrc* pGame, D2ClientStrc* pClient, uint8_t* pSavefile, D2UnitStrc** ppPlayer, int32_t* pValid, int32_t* pVersion, int32_t* a7, int32_t* a8, int32_t* a9, int32_t* a10, int32_t* a11)
 {
     // TODO: Names
@@ -1009,7 +1009,7 @@ int32_t __fastcall sub_6FC8A780(D2GameStrc* pGame, D2ClientStrc* pClient, uint8_
     return 0;
 }
 
-//D2Game.0x6FC8AD50
+// D2Game.0x6FC8AD50
 int32_t __fastcall D2GAME_SAVE_ReadWaypointData_6FC8AD50(D2UnitStrc* pUnit, uint8_t* pSection, int32_t nUnused, int32_t* pSize)
 {
     constexpr uint32_t WAYPOINT_DATA_SIZE = 80;
@@ -1042,7 +1042,7 @@ int32_t __fastcall D2GAME_SAVE_ReadWaypointData_6FC8AD50(D2UnitStrc* pUnit, uint
     return 0;
 }
 
-//D2Game.0x6FC8ADE0
+// D2Game.0x6FC8ADE0
 int32_t __fastcall sub_6FC8ADE0(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* pSection, int32_t a4, int32_t nUnused, int32_t* pSize)
 {
     *pSize = 0;
@@ -1079,7 +1079,7 @@ int32_t __fastcall sub_6FC8ADE0(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* p
     return SYSERROR_BAD_STATS;
 }
 
-//D2Game.0x6FC8AEC0
+// D2Game.0x6FC8AEC0
 int32_t __fastcall sub_6FC8AEC0(D2GameStrc* pGame, D2ClientStrc* pClient, D2UnitStrc* pUnit, uint8_t* pSection, int32_t a5, int32_t a6, int32_t* pSkillCount)
 {
     *pSkillCount = 0;
@@ -1108,7 +1108,7 @@ int32_t __fastcall sub_6FC8AEC0(D2GameStrc* pGame, D2ClientStrc* pClient, D2Unit
     return SYSERROR_BAD_SKILLS;
 }
 
-//D2Game.0x6FC8AF70
+// D2Game.0x6FC8AF70
 int32_t __fastcall sub_6FC8AF70(D2SavedItemStrc* pSavedItem, uint8_t* pData)
 {
     memset(pSavedItem, 0, sizeof(D2SavedItemStrc));
@@ -1241,7 +1241,7 @@ int32_t __fastcall sub_6FC8AF70(D2SavedItemStrc* pSavedItem, uint8_t* pData)
     }
 }
 
-//D2Game.0x6FC8B3D0
+// D2Game.0x6FC8B3D0
 int32_t __fastcall sub_6FC8B3D0(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint8_t* pSection, uint32_t dwVersion, int32_t nSize, int32_t a6, int32_t* pSize)
 {
     // Original game computes the remaining size but does nothing with it.
@@ -1324,7 +1324,7 @@ int32_t __fastcall sub_6FC8B3D0(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint8_t*
     return 0;
 }
 
-//D2Game.0x6FC8B680
+// D2Game.0x6FC8B680
 int32_t __fastcall sub_6FC8B680(D2GameStrc* pGame, D2UnitStrc* pUnit, D2SavedItemStrc* pSavedItem, D2UnitStrc** ppItem, int32_t* a5)
 {
     D2UnitStrc* pItem = sub_6FC897F0(pGame, pSavedItem);
@@ -1407,7 +1407,7 @@ int32_t __fastcall sub_6FC8B680(D2GameStrc* pGame, D2UnitStrc* pUnit, D2SavedIte
     return 0;
 }
 
-//D2Game.0x6FC8B8A0
+// D2Game.0x6FC8B8A0
 int32_t __fastcall PLRSAVE_ReadItems_6FC8B8A0(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint8_t* pSection, uint32_t dwVersion, int32_t nSize, int32_t a6, int32_t* pSize)
 {
     if (*(uint16_t*)pSection != 'MJ')
@@ -1511,7 +1511,7 @@ int32_t __fastcall PLRSAVE_ReadItems_6FC8B8A0(D2GameStrc* pGame, D2UnitStrc* pPl
     return 0;
 }
 
-//D2Game.0x6FC8BAA0
+// D2Game.0x6FC8BAA0
 int32_t __fastcall sub_6FC8BAA0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc* pItem, D2UnitStrc* a4)
 {
     if (!pItem)
@@ -1594,7 +1594,7 @@ int32_t __fastcall sub_6FC8BAA0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
     }
 }
 
-//D2Game.0x6FC8BC70
+// D2Game.0x6FC8BC70
 int32_t __fastcall sub_6FC8BC70(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* pSection, uint32_t dwVersion, int32_t nSize, int32_t a6, int32_t* pSize)
 {
     if (dwVersion == 71)
@@ -1611,7 +1611,7 @@ int32_t __fastcall sub_6FC8BC70(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* p
     }
 }
 
-//D2Game.0x6FC8BCC0
+// D2Game.0x6FC8BCC0
 int32_t __fastcall sub_6FC8BCC0(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint8_t* pSection, uint32_t dwVersion, int32_t nRemainingSize, int32_t* pSize)
 {
     *pSize = 0;
@@ -1668,7 +1668,7 @@ int32_t __fastcall sub_6FC8BCC0(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint8_t*
     return 0;
 }
 
-//D2Game.0x6FC8BEE0
+// D2Game.0x6FC8BEE0
 int32_t __fastcall sub_6FC8BEE0(int16_t nHirelingId, int32_t nLevel)
 {
     switch (nHirelingId)
@@ -1743,7 +1743,7 @@ int32_t __fastcall sub_6FC8BEE0(int16_t nHirelingId, int32_t nLevel)
     }
 }
 
-//D2Game.0x6FC8C050
+// D2Game.0x6FC8C050
 uint32_t __fastcall sub_6FC8C050(D2GameStrc* pGame, int16_t nHirelingId, uint32_t a3)
 {
     int32_t nLevel = 1;
@@ -1771,7 +1771,7 @@ uint32_t __fastcall sub_6FC8C050(D2GameStrc* pGame, int16_t nHirelingId, uint32_
     return nExperience;
 }
 
-//D2Game.0x6FC8C0C0) --------------------------------------------------------
+// D2Game.0x6FC8C0C0) --------------------------------------------------------
 int32_t __fastcall D2GAME_SAVE_ProcessSaveFile_6FC8C0C0(D2GameStrc* pGame, D2ClientStrc* pClient, uint8_t* pSaveFile, int32_t nSize, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg)
 {
     return 0;
@@ -2190,7 +2190,7 @@ int32_t __fastcall D2GAME_SAVE_ProcessSaveFile_6FC8C0C0(D2GameStrc* pGame, D2Cli
 //    return 0;
 }
 
-//D2Game.0x6FC8C890
+// D2Game.0x6FC8C890
 int32_t __fastcall sub_6FC8C890(D2GameStrc* pGame, D2ClientStrc* pClient, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg)
 {
     sub_6FC32220(pClient);
@@ -2232,7 +2232,7 @@ int32_t __fastcall sub_6FC8C890(D2GameStrc* pGame, D2ClientStrc* pClient, D2Unit
     return 0;
 }
 
-//D2Game.0x6FC8C9D0
+// D2Game.0x6FC8C9D0
 int32_t __fastcall D2GAME_SAVE_ReadFile_6FC8C9D0(D2GameStrc* pGame, D2ClientStrc* pClient, const char* szName, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg)
 {
     *ppPlayer = nullptr;
@@ -2286,7 +2286,7 @@ int32_t __fastcall D2GAME_SAVE_ReadFile_6FC8C9D0(D2GameStrc* pGame, D2ClientStrc
     return nResult;
 }
 
-//D2Game.0x6FC8CB40
+// D2Game.0x6FC8CB40
 int32_t __fastcall D2GAME_SAVE_GetUnitDataFromFile_6FC8CB40(D2GameStrc* pGame, D2ClientStrc* pClient, const char* szName, int32_t a4, D2UnitStrc** ppPlayer, D2ActiveRoomStrc* pRoomArg, int32_t nXArg, int32_t nYArg)
 {
     if (pGame->nGameType != 1 && pGame->nGameType != 2 && !gpD2EventCallbackTable_6FD45830)

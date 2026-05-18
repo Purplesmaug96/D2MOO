@@ -15,7 +15,7 @@
 #include "UNIT/SUnit.h"
 
 
-//D2Game.0x6FCAD210
+// D2Game.0x6FCAD210
 int32_t __fastcall ACT3Q7_GetWandererCoordinates(D2GameStrc* pGame, D2UnitStrc* pUnit, D2CoordStrc* pCoord)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A3Q7_DARKWANDERER);
@@ -89,7 +89,7 @@ int32_t __fastcall ACT3Q7_GetWandererCoordinates(D2GameStrc* pGame, D2UnitStrc* 
 	return 1;
 }
 
-//D2Game.0x6FCAD360
+// D2Game.0x6FCAD360
 void __fastcall OBJECTS_InitFunction43_DarkWanderer(D2ObjInitFnStrc* pOp)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pOp->pGame, QUEST_A3Q7_DARKWANDERER);
@@ -116,7 +116,7 @@ void __fastcall OBJECTS_InitFunction43_DarkWanderer(D2ObjInitFnStrc* pOp)
 	pQuestDataEx->bDarkWandererInitialized = 1;
 }
 
-//D2Game.0x6FCAD460
+// D2Game.0x6FCAD460
 void __fastcall ACT3Q7_InitQuestData(D2QuestDataStrc* pQuestData)
 {
 	memset(pQuestData->pfCallback, 0x00, sizeof(pQuestData->pfCallback));
@@ -137,7 +137,7 @@ void __fastcall ACT3Q7_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestDataEx->bPrimaryGoalOpen = 1;
 }
 
-//D2Game.0x6FCAD4F0
+// D2Game.0x6FCAD4F0
 void __fastcall ACT3Q7_Callback13_PlayerStartedGame(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (QUESTRECORD_GetQuestState(UNITS_GetPlayerData(pQuestArg->pPlayer)->pQuestData[pQuestArg->pGame->nDifficulty], QUESTSTATEFLAG_A3Q7, QFLAG_REWARDGRANTED) == 1)
@@ -147,7 +147,7 @@ void __fastcall ACT3Q7_Callback13_PlayerStartedGame(D2QuestDataStrc* pQuestData,
 	}
 }
 
-//D2Game.0x6FCAD530
+// D2Game.0x6FCAD530
 void __fastcall ACT3Q7_CreateVileDogSpawnTimer(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pGame, QUEST_A3Q7_DARKWANDERER);
@@ -175,7 +175,7 @@ void __fastcall ACT3Q7_CreateVileDogSpawnTimer(D2GameStrc* pGame, D2UnitStrc* pU
 	QUESTS_CreateTimer(pQuestData, ACT3Q7_SpawnVileDogs, 2);
 }
 
-//D2Game.0x6FCAD590
+// D2Game.0x6FCAD590
 bool __fastcall ACT3Q7_SpawnVileDogs(D2GameStrc* pGame, D2QuestDataStrc* pQuestData)
 {
 	static const D2CoordStrc pAdjustCoords[] =
@@ -230,7 +230,7 @@ bool __fastcall ACT3Q7_SpawnVileDogs(D2GameStrc* pGame, D2QuestDataStrc* pQuestD
 	return 1;
 }
 
-//D2Game.0x6FCAD690
+// D2Game.0x6FCAD690
 int32_t __fastcall ACT3Q7_UnitIterate_SetRewardGranted(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pData)
 {
 	D2BitBufferStrc* pQuestFlags = UNITS_GetPlayerData(pUnit)->pQuestData[pGame->nDifficulty];

@@ -3,7 +3,7 @@
 #include <winnt.h>
 
 // NOLINTBEGIN(bugprone-branch-clone)
-//D2Win.0x6F8A6C70
+// D2Win.0x6F8A6C70
 BOOL __stdcall DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
 	switch (fdwReason)

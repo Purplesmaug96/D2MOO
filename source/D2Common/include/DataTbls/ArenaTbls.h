@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <D2Common.h>
 #include <D2BasicTypes.h>
@@ -56,21 +56,21 @@ struct D2CharTemplateTxt
 
 #pragma pack()
 
-//D2Common.0x6FD47840
+// D2Common.0x6FD47840
 void __fastcall DATATBLS_LoadArenaTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD47970 (#10596)
+// D2Common.0x6FD47970 (#10596)
 D2COMMON_DLL_DECL D2ArenaTxt* __fastcall DATATBLS_GetArenaTxtRecord(int nArenaType);
-//D2Common.0x6FD479B0
+// D2Common.0x6FD479B0
 void __fastcall DATATBLS_UnloadArenaTxt();
-//D2Common.0x6FD479D0
+// D2Common.0x6FD479D0
 void __fastcall DATATBLS_LoadCharTemplateTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD48770
+// D2Common.0x6FD48770
 void __fastcall DATATBLS_UnloadCharTemplateTxt();
-//D2Common.0x6FD48790 (#10664)
+// D2Common.0x6FD48790 (#10664)
 D2COMMON_DLL_DECL int __fastcall DATATBLS_GetCharTemplateTxtRecordCount();
-//D2Common.0x6FD487A0 (#10665)
+// D2Common.0x6FD487A0 (#10665)
 D2COMMON_DLL_DECL D2CharTemplateTxt* __fastcall DATATBLS_GetCharTemplateTxtRecord(int nTemplate, int nLevel);
-//D2Common.0x6FD48810 (#10666)
+// D2Common.0x6FD48810 (#10666)
 D2COMMON_DLL_DECL int __fastcall DATATBLS_GetClassFromCharTemplateTxtRecord(int nTemplate, int nLevel);
 
 

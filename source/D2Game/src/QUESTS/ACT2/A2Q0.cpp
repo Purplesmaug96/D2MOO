@@ -8,7 +8,7 @@
 #include "QUESTS/ACT1/A1Q4.h"
 
 
-//D2Game.0x6FD348E8
+// D2Game.0x6FD348E8
 D2NPCMessageTableStrc gpAct2Q0NpcMessages[] =
 {
 	{
@@ -32,7 +32,7 @@ D2NPCMessageTableStrc gpAct2Q0NpcMessages[] =
 };
 
 
-//D2Game.0x6FC9F350
+// D2Game.0x6FC9F350
 void __fastcall ACT2Q0_InitQuestData(D2QuestDataStrc* pQuestData)
 {
 	memset(pQuestData->pfCallback, 0x00, sizeof(pQuestData->pfCallback));
@@ -55,7 +55,7 @@ void __fastcall ACT2Q0_InitQuestData(D2QuestDataStrc* pQuestData)
 	QUESTS_ResetPlayerGUIDCount(&pQuestDataEx->tPlayerGUIDs);
 }
 
-//D2Game.0x6FC9F3F0
+// D2Game.0x6FC9F3F0
 void __fastcall ACT2Q0_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (pQuestArg->nNPCNo == MONSTER_JERHYN)
@@ -83,7 +83,7 @@ void __fastcall ACT2Q0_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 	}
 }
 
-//D2Game.0x6FC9F460
+// D2Game.0x6FC9F460
 void __fastcall ACT2Q0_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	int32_t nNpcId = -1;
@@ -126,13 +126,13 @@ void __fastcall ACT2Q0_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2Que
 	}
 }
 
-//D2Game.0x6FC9F510
+// D2Game.0x6FC9F510
 bool __fastcall ACT2Q0_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNpcId, D2UnitStrc* pPlayer, D2BitBufferStrc* pQuestFlags, D2UnitStrc* pNPC)
 {
 	return nNpcId == MONSTER_JERHYN && !QUESTRECORD_GetQuestState(pQuestFlags, QUESTSTATEFLAG_A2Q0, QFLAG_REWARDGRANTED);
 }
 
-//D2Game.0x6FC9F540
+// D2Game.0x6FC9F540
 void __fastcall ACT2Q0_Callback10_PlayerLeavesGame(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	D2Act2Quest0Strc* pQuestDataEx = (D2Act2Quest0Strc*)pQuestData->pQuestDataEx;
@@ -147,7 +147,7 @@ void __fastcall ACT2Q0_Callback10_PlayerLeavesGame(D2QuestDataStrc* pQuestData, 
 	}
 }
 
-//D2Game.0x6FC9F560
+// D2Game.0x6FC9F560
 void __fastcall ACT2Q0_Callback13_PlayerStartedGame(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (QUESTRECORD_GetQuestState(UNITS_GetPlayerData(pQuestArg->pPlayer)->pQuestData[pQuestArg->pGame->nDifficulty], QUESTSTATEFLAG_A2Q0, QFLAG_REWARDGRANTED) == 1)

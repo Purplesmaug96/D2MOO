@@ -22,7 +22,7 @@ __forceinline int32_t EVENT_MapUnitTypeToIndex(int32_t nUnitType)
 }
 
 
-//D2Game.0x6FC34840
+// D2Game.0x6FC34840
 void __fastcall D2GAME_EVENTS_Delete_6FC34840(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventTypes nEventType, int32_t nEventCustomId)
 {
     D2EventTimerStrc* pEventTimer = SUNIT_GetTimerFromUnit(pUnit);
@@ -38,7 +38,7 @@ void __fastcall D2GAME_EVENTS_Delete_6FC34840(D2GameStrc* pGame, D2UnitStrc* pUn
     }
 }
 
-//D2Game.0x6FC34890
+// D2Game.0x6FC34890
 void __fastcall sub_6FC34890(D2GameStrc* pGame, D2EventTimerStrc* pTimer)
 {
     if (pTimer->nFlags & EVENTFLAG_0x1)
@@ -99,7 +99,7 @@ void __fastcall sub_6FC34890(D2GameStrc* pGame, D2EventTimerStrc* pTimer)
     pTimer->nFlags = EVENTFLAG_0x2;
 }
 
-//D2Game.0x6FC349B0
+// D2Game.0x6FC349B0
 void __fastcall sub_6FC349B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nEvent, EventTimerCallback pCallback)
 {
     D2EventTimerStrc* pEventTimer = SUNIT_GetTimerFromUnit(pUnit);
@@ -117,7 +117,7 @@ void __fastcall sub_6FC349B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nEven
     }
 }
 
-//D2Game.0x6FC349F0
+// D2Game.0x6FC349F0
 void __fastcall sub_6FC349F0(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     D2EventTimerStrc* pEventTimer = SUNIT_GetTimerFromUnit(pUnit);
@@ -132,7 +132,7 @@ void __fastcall sub_6FC349F0(D2GameStrc* pGame, D2UnitStrc* pUnit)
     SUNIT_SetTimerOnUnit(pUnit, nullptr);
 }
 
-//D2Game.0x6FC34A30
+// D2Game.0x6FC34A30
 void __fastcall D2GAME_DeleteTimersOnUnit_6FC34A30(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     if (SUNIT_GetTimerFromUnit(pUnit))
@@ -164,7 +164,7 @@ void __fastcall EVENT_FreeEventQueue(D2GameStrc* pGame)
     pGame->pTimerQueue = nullptr;
 }
 
-//D2Game.0x6FC34AE0
+// D2Game.0x6FC34AE0
 void __fastcall EVENT_AllocEventQueue(D2GameStrc* pGame)
 {
     EVENT_FreeEventQueue(pGame);
@@ -175,7 +175,7 @@ void __fastcall EVENT_AllocEventQueue(D2GameStrc* pGame)
     pGame->pTimerQueue = pTimerQueue;
 }
 
-//D2Game.0x6FC34BD0
+// D2Game.0x6FC34BD0
 void __fastcall EVENT_IterateEvents(D2GameStrc* pGame)
 {
     D2EventTimerQueueStrc* pTimerQueue = pGame->pTimerQueue;
@@ -262,39 +262,39 @@ static void __fastcall EVENT_ExecuteEventsImpl(ExecuteEventCallback pDefaultCall
     }
 }
 
-//D2Game.0x6FC34CC0
+// D2Game.0x6FC34CC0
 void __fastcall EVENT_ExecutePlayerEvents(D2GameStrc* pGame, D2EventTimerQueueStrc* pTimerQueue, D2EventTimerStrc* pEventTimer, int32_t a4)
 {
     EVENT_ExecuteEventsImpl(D2GAME_EVENTS_Callback_6FC81BD0, pGame, pTimerQueue, pEventTimer, a4);
 }
 
-//D2Game.0x6FC34DB0
+// D2Game.0x6FC34DB0
 void __fastcall EVENT_ExecuteMonsterEvents(D2GameStrc* pGame, D2EventTimerQueueStrc* pTimerQueue, D2EventTimerStrc* pEventTimer, int32_t a4)
 {
     EVENT_ExecuteEventsImpl(MONSTERMODE_EventHandler, pGame, pTimerQueue, pEventTimer, a4);
 }
 
-//D2Game.0x6FC34EA0
+// D2Game.0x6FC34EA0
 void __fastcall EVENT_ExecuteObjectEvents(D2GameStrc* pGame, D2EventTimerQueueStrc* pTimerQueue, D2EventTimerStrc* pEventTimer, int32_t a4)
 {
     EVENT_ExecuteEventsImpl(
         [](D2GameStrc* pGame, D2UnitStrc* pObject, D2C_EventTypes nEventType, int32_t, int32_t) {
             D2GAME_OBJMODE_InvokeEventFunction_6FC75250(pGame, pObject, nEventType);
-        }, pGame, pTimerQueue, pEventTimer, a4 
+        }, pGame, pTimerQueue, pEventTimer, a4
     );
 }
 
-//D2Game.0x6FC34F90
+// D2Game.0x6FC34F90
 void __fastcall EVENT_ExecuteMissileEvents(D2GameStrc* pGame, D2EventTimerQueueStrc* pTimerQueue, D2EventTimerStrc* pEventTimer, int32_t a4)
 {
     EVENT_ExecuteEventsImpl(
         [](D2GameStrc* pGame, D2UnitStrc* pMissile, D2C_EventTypes nEventType, int32_t, int32_t) {
             MISSMODE_SrvDoHandler(pGame, pMissile, nEventType);
-        }, pGame, pTimerQueue, pEventTimer, a4 
+        }, pGame, pTimerQueue, pEventTimer, a4
     );
 }
 
-//D2Game.0x6FC35080
+// D2Game.0x6FC35080
 void __fastcall EVENT_ExecuteItemEvents(D2GameStrc* pGame, D2EventTimerQueueStrc* pTimerQueue, D2EventTimerStrc* pEventTimer, int32_t a4)
 {
     EVENT_ExecuteEventsImpl(
@@ -302,10 +302,10 @@ void __fastcall EVENT_ExecuteItemEvents(D2GameStrc* pGame, D2EventTimerQueueStrc
             D2GAME_Items_EventsHandler_6FC4A460(pGame, pUnit, nEventType);
         }, pGame, pTimerQueue, pEventTimer, a4
     );
-    
+
 }
 
-//D2Game.0x6FC35170
+// D2Game.0x6FC35170
 int32_t __fastcall EVENT_GetEventFrame(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nEvent)
 {
     int32_t nEventFrame = 0;
@@ -327,13 +327,13 @@ int32_t __fastcall EVENT_GetEventFrame(D2GameStrc* pGame, D2UnitStrc* pUnit, int
     return nEventFrame;
 }
 
-//D2Game.0x6FC351B0
+// D2Game.0x6FC351B0
 void __fastcall EVENT_SetEvent(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventTypes nEventType, int32_t nExpireFrame, int32_t dwEventCustomId, int32_t dwEventCustomParam)
 {
     D2GAME_InitTimer_6FC351D0(pGame, pUnit, nEventType, nExpireFrame, nullptr, dwEventCustomId, dwEventCustomParam);
 }
 
-//D2Game.0x6FC351D0
+// D2Game.0x6FC351D0
 void __fastcall D2GAME_InitTimer_6FC351D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventTypes nEventType, int32_t nExpireFrame, EventTimerCallback pfCallBack, int32_t dwEventCustomId, int32_t dwEventCustomParam)
 {
     // TODO: v19
@@ -400,7 +400,7 @@ void __fastcall D2GAME_InitTimer_6FC351D0(D2GameStrc* pGame, D2UnitStrc* pUnit, 
     }
 }
 
-//D2Game.0x6FC353D0
+// D2Game.0x6FC353D0
 D2EventTimerStrc** __fastcall sub_6FC353D0(D2GameStrc* pGame, int32_t nUnitType, int32_t nExpireFrame)
 {
     const int32_t nIndex = EVENT_MapUnitTypeToIndex(nUnitType);
@@ -502,7 +502,7 @@ D2EventTimerStrc* __fastcall EVENT_AllocateUnitTimer(D2GameStrc* pGame, D2UnitSt
     return pNewTimer;
 }
 
-//D2Game.0x6FC35570
+// D2Game.0x6FC35570
 void __fastcall sub_6FC35570(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventTypes nEventType, int32_t dwEventCustomId, int32_t dwEventCustomParam)
 {
     if (nEventType >= EVENTTYPE_COUNT)
@@ -528,7 +528,7 @@ void __fastcall sub_6FC35570(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventType
     *ppEventTimer = pNewTimer;
 }
 
-//D2Game.0x6FC351D0
+// D2Game.0x6FC351D0
 void __fastcall j_D2GAME_InitTimer_6FC351D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2C_EventTypes nEventType, int32_t nExpireFrame, EventTimerCallback pfCallBack, int32_t nSkillId, int32_t nSkillLevel)
 {
     D2GAME_InitTimer_6FC351D0(pGame, pUnit, nEventType, nExpireFrame, pfCallBack, nSkillId, nSkillLevel);

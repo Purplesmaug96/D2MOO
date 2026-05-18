@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 
@@ -216,7 +216,7 @@ struct D2SkillsTxt
 	uint16_t wCltDoFunc;					//0xF4
 	uint16_t wCltPrgFunc[3];				//0xF6
 	uint16_t wStSound;						//0xFC
-	uint16_t nStSoundClass;					//0x0FE	
+	uint16_t nStSoundClass;					//0x0FE
 	uint16_t wDoSound;						//0x100
 	uint16_t wDoSoundA;						//0x102
 	uint16_t wDoSoundB;						//0x104
@@ -296,19 +296,19 @@ struct D2SkillsTxt
 
 #pragma pack()
 
-//D2Common.0x6FD498D0
+// D2Common.0x6FD498D0
 int __fastcall DATATBLS_MapSkillsTxtKeywordToNumber(char* szKey);
-//D2Common.0x6FD49980
+// D2Common.0x6FD49980
 int __fastcall sub_6FD49980(int nValue);
-//D2Common.0x6FD49990
+// D2Common.0x6FD49990
 int __fastcall sub_6FD49990(char* szText, int* a2, int a3, int nKeywordNumber);
-//D2Common.0x6FD49D20
+// D2Common.0x6FD49D20
 void __fastcall DATATBLS_SkillCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn);
-//D2Common.0x6FD49E40
+// D2Common.0x6FD49E40
 void __fastcall DATATBLS_SkillDescCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn);
-//D2Common.0x6FD49F60
+// D2Common.0x6FD49F60
 void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD4E350
+// D2Common.0x6FD4E350
 void __fastcall DATATBLS_UnloadSkills_SkillDescTxt();
 //Inlined at various places
 D2SkillsTxt* __fastcall DATATBLS_GetSkillsTxtRecord(int nSkillId);

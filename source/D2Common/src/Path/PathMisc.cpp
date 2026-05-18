@@ -104,7 +104,7 @@ const D2CoordStrc gatDirectionToOffset[8] = {
 	{ 1, -1},
 };
 
-//D2Common.0x6FDAA720
+// D2Common.0x6FDAA720
 int __fastcall sub_6FDAA720(D2PathInfoStrc* pPathInfo)
 {
 	D2DynamicPathStrc* pDynamicPath = pPathInfo->pDynamicPath;
@@ -116,7 +116,7 @@ int __fastcall sub_6FDAA720(D2PathInfoStrc* pPathInfo)
 		int nPrevDirection = PATH_DIR_NULL;
 		D2PathPointStrc tLastSegmentEndCoord = pPathInfo->tStartCoord;
 		bool bSegmentEndAlreadyAdded = false;
-		
+
 		D2PathPointStrc tCurCoords = tLastSegmentEndCoord;
 		int nCurDistance;
 		for(nCurDistance = 0;nCurDistance < pPathInfo->nDistMax; nCurDistance++)
@@ -453,14 +453,14 @@ BOOL __fastcall PATH_RayTrace(D2DynamicPathStrc* pDynamicPath, D2PathPointStrc* 
 		}
 		return TRUE;
 	}
-	
+
 	if (nPointsX >= nPointsY)
 	{
 		const int nXIncrement = 2 * (nDeltaX >= 0) - 1;
 		const int nYIncrement = 2 * (nDeltaY >= 0) - 1;
 		if (tStartCoord.X == tTargetPoint.X)
 			return TRUE;
-		
+
 		tCurPoint.X = tStartCoord.X;
 		while (tCurPoint.X != tTargetPoint.X)
 		{
@@ -538,14 +538,14 @@ BOOL __fastcall PATH_RayTrace(D2DynamicPathStrc* pDynamicPath, D2PathPointStrc* 
 	}
 }
 
-//D2Common.0x6FDAB0B0
+// D2Common.0x6FDAB0B0
 int __fastcall sub_6FDAB0B0(D2PathInfoStrc* pPathInfo)
 {
 	pPathInfo->pDynamicPath->dwCurrentPointIdx = 0;
 	return PATH_Toward_6FDAA9F0(pPathInfo);
 }
 
-//D2Common.0x6FDAB0C0
+// D2Common.0x6FDAB0C0
 int __fastcall PATH_BackupTurn_Compute(D2PathInfoStrc* pPathInfo)
 {
 	int result = 0;
@@ -596,7 +596,7 @@ int __fastcall PATH_Straight_Compute(D2PathInfoStrc* pPathInfo)
 		}
 	}
 
-	
+
 	// If distance is short enough, try to go around obstacles.
 	const int nMaxDist = 18;
 	const int nMaxDistSquared = nMaxDist * nMaxDist;
@@ -636,7 +636,7 @@ int __fastcall PATH_Leap_6FDAB1E0(D2PathInfoStrc* pPathInfo)
 	return pDynamicPath->dwPathPoints;
 }
 
-//D2Common.0x6FDAB240
+// D2Common.0x6FDAB240
 int __fastcall PATH_Knockback_Client(D2PathInfoStrc* pPathInfo)
 {
 	pPathInfo->pDynamicPath->dwCurrentPointIdx = 0;
@@ -645,7 +645,7 @@ int __fastcall PATH_Knockback_Client(D2PathInfoStrc* pPathInfo)
 	return 1;
 }
 
-//D2Common.0x6FDAB270
+// D2Common.0x6FDAB270
 int __fastcall PATH_Knockback_Server(D2PathInfoStrc* pPathInfo)
 {
 	D2DynamicPathStrc* pDynamicPath = pPathInfo->pDynamicPath;
@@ -683,7 +683,7 @@ int __fastcall PATH_Knockback_Server(D2PathInfoStrc* pPathInfo)
 	return pDynamicPath->dwPathPoints;
 }
 
-//D2Common.0x6FDAB3C0
+// D2Common.0x6FDAB3C0
 signed int __fastcall PATH_ComputePathBlessedHammer_6FDAB3C0(D2DynamicPathStrc* pDynamicPath)
 {
 	const uint32_t dwOriginPrecisionX = pDynamicPath->tGameCoords.dwPrecisionX;
@@ -692,7 +692,7 @@ signed int __fastcall PATH_ComputePathBlessedHammer_6FDAB3C0(D2DynamicPathStrc* 
 
 	int nAngleRadians_512 = 0;
 	int nDistanceToOrigin = 0;
-	
+
 	// Looks like we keep one additional slot for the last point ?
 	// Could be an error in the original game
 	const int nbPointsToGenerate = D2DynamicPathStrc::MAXPATHLEN - 1;
@@ -738,7 +738,7 @@ static DWORD getChargedBoltDirOffset(uint64_t i)
 	return dirOffsetSequence[i & 31];
 }
 
-//D2Common.0x6FDAB4A0
+// D2Common.0x6FDAB4A0
 int __fastcall PATH_ComputePathChargedBolt_6FDAB4A0(D2DynamicPathStrc* pDynamicPath, D2SeedStrc* pSeed)
 {
 	D2PathPointStrc nPrevPoint;
@@ -764,7 +764,7 @@ int __fastcall PATH_ComputePathChargedBolt_6FDAB4A0(D2DynamicPathStrc* pDynamicP
 	return pDynamicPath->dwPathPoints;
 }
 
-//D2Common.0x6FDAB610
+// D2Common.0x6FDAB610
 int __fastcall sub_6FDAB610(int nX1, int nY1, int nX2, int nY2)
 {
 	int nAbsDiffX = 0;
@@ -849,7 +849,7 @@ int __stdcall sub_6FDAB6A0(D2PathPointStrc pPoint1, D2PathPointStrc pPoint2)
 	return sub_6FDAB610(pPoint1.X, pPoint1.Y, pPoint2.X, pPoint2.Y);
 }
 
-//D2Common.0x6FDAB750
+// D2Common.0x6FDAB750
 int __fastcall sub_6FDAB750(int nX1, int nY1, int nX2, int nY2)
 {
 	return stru_6FDD2158[sub_6FDAB610(nX1, nY1, nX2, nY2)].unk0x00;
@@ -862,7 +862,7 @@ int __stdcall sub_6FDAB770(D2PathPointStrc pPoint1, D2PathPointStrc pPoint2)
 	return stru_6FDD2158[sub_6FDAB6A0(pPoint1, pPoint2)].unk0x00;
 }
 
-//D2Common.0x6FDAB790
+// D2Common.0x6FDAB790
 void __fastcall PATH_GetDirections_6FDAB790(int* pTestDir, D2PathPointStrc pPoint1, D2PathPointStrc pPoint2)
 {
 	int nIndex = sub_6FDAB6A0(pPoint1, pPoint2);
@@ -886,7 +886,7 @@ void __fastcall sub_6FDAB7D0(int* pTestDir, int nUnused, D2PathPointStrc pPoint1
 	pTestDir[2] = byte_6FDD2288[nIndex].unk0x02;
 }
 
-//D2Common.0x6FDABA50
+// D2Common.0x6FDABA50
 int __stdcall sub_6FDABA50(D2PathPointStrc pPoint1, D2PathPointStrc pPoint2)
 {
 	static const int dword_6FDD22D8[] =
@@ -943,13 +943,13 @@ int __stdcall sub_6FDABA50(D2PathPointStrc pPoint1, D2PathPointStrc pPoint2)
 }
 
 
-//D2Common.0x6FDAC170
+// D2Common.0x6FDAC170
 int __fastcall PATH_SimplifyToLines_6FDAC170(D2PathPointStrc* pOutPathPoints, D2PathPointStrc* pInputPoints, D2PathPointStrc tStartCoord, signed int nbTempPoints)
 {
 	if (nbTempPoints >= 2)
 	{
 		int nbOutPoints = 0;
-		
+
 		int prevDeltaX = pInputPoints->X - tStartCoord.X;
 		int prevDeltaY = pInputPoints->Y - tStartCoord.Y;
 		int nbPointsInLine = 0;
@@ -986,7 +986,7 @@ int __fastcall PATH_SimplifyToLines_6FDAC170(D2PathPointStrc* pOutPathPoints, D2
 	return 0;
 }
 
-//D2Common.0x6FDAC700 (#10215)
+// D2Common.0x6FDAC700 (#10215)
 int __stdcall PATH_ComputeDirection(int nX1, int nY1, int nX2, int nY2)
 {
 	D2CoordStrc pCoords = {};
@@ -997,7 +997,7 @@ int __stdcall PATH_ComputeDirection(int nX1, int nY1, int nX2, int nY2)
 	return nDirection;
 }
 
-//D2Common.0x6FDAC760
+// D2Common.0x6FDAC760
 int __stdcall PATH_ComputeDirectionFromPreciseCoords_6FDAC760(DWORD dwStartPrecisionX, DWORD dwStartPrecisionY, DWORD dwTargetPrecisionX, DWORD dwTargetPrecisionY)
 {
 	D2CoordStrc pCoords = {};
@@ -1039,7 +1039,7 @@ void __fastcall PATH_ComputeVelocityAndDirectionVectorsToNextPoint(D2DynamicPath
 
 	D2CoordStrc tDirectionVector;
 	int nDirection;
-	PATH_GetDirectionVector( 
+	PATH_GetDirectionVector(
 		&tDirectionVector, &nDirection,
 		dwPrecisionX, dwPrecisionY,
 		nPointFP16X, nPointFP16Y
@@ -1053,10 +1053,10 @@ void __fastcall PATH_ComputeVelocityAndDirectionVectorsToNextPoint(D2DynamicPath
 	pPath->tVelocityVector.nX = (tDirectionVector.nX * pPath->dwVelocity) >> 8;
 	pPath->tVelocityVector.nY = (tDirectionVector.nY * pPath->dwVelocity) >> 8;
 
-	bool nextPosInSamePoint = 
+	bool nextPosInSamePoint =
 		PATH_FromFP16(nPointFP16X) == PATH_FromFP16(dwPrecisionX + pPath->tVelocityVector.nX)
 		&& PATH_FromFP16(nPointFP16Y) == PATH_FromFP16(dwPrecisionY + pPath->tVelocityVector.nY);
-	
+
 	if (bForceDirectionNormalization || nextPosInSamePoint && bNormalizeDirectionIfSamePos)
 	{
 		sub_6FDA9720(pPath, nDirection);
@@ -1264,7 +1264,7 @@ BOOL __stdcall D2Common_10226(D2UnitStrc* pUnit, signed int a2)
 	return FALSE;
 }
 
-//D2Common.0x6FDAD530 (#10227)
+// D2Common.0x6FDAD530 (#10227)
 //TODO: Find a name
 BOOL __stdcall D2Common_10227(D2UnitStrc* pUnit)
 {
@@ -1287,7 +1287,7 @@ BOOL __stdcall D2Common_10227(D2UnitStrc* pUnit)
 	}
 }
 
-//D2Common.0x6FDAD590 (#10229)
+// D2Common.0x6FDAD590 (#10229)
 BOOL __stdcall D2Common_10229(D2DynamicPathStrc *pDynamicPath, D2UnitStrc *pUnit, D2ActiveRoomStrc *pDestRoom, uint32_t nDestX, uint32_t nDestY)
 {
 	D2PathPointStrc tCoords = { uint16_t(nDestX), uint16_t(nDestY) };

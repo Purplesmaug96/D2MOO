@@ -135,16 +135,16 @@ enum D2MapTileFlags
 {
 	MAPTILE_FLAGS_NONE = 0,
 	MAPTILE_UNK_0x1 = 0x000001,
-	MAPTILE_WALL_EXIT = 0x000002, // warps, door exit, 
+	MAPTILE_WALL_EXIT = 0x000002, // warps, door exit,
 	MAPTILE_TREES = 0x000004, // Could also be delimiting an enclosure inside another area. Probably misnamed because not only trees ?
 	MAPTILE_HIDDEN = 0x000008, // used by warps & others // aka skip automap
 	MAPTILE_UNK_0x10 = 0x000010,
 	MAPTILE_HASPRESETUNITS = 0x000020, // used for orientations 8-9; spawn doors & towers etc
 	MAPTILE_UNWALKABLE = 0x000040,
-	MAPTILE_FILL_LOS = 0x000080, // all subtiles will get wall collision; 
+	MAPTILE_FILL_LOS = 0x000080, // all subtiles will get wall collision;
 	MAPTILE_FLOOR_LINKER_PATH = 0x000100, // the floor is near a wp or forms a path within level or to another level
 	MAPTILE_UNK_0x200 = 0x000200, // Reveal hidden ?
-	MAPTILE_PITCH_BLACK = 0x000400, // the lighting changed, R&B=0 
+	MAPTILE_PITCH_BLACK = 0x000400, // the lighting changed, R&B=0
 	MAPTILE_OBJECT_WALL = 0x000800, // wall tile made of crops: barrels / crates / benches / tables (material flag 0x04)
 	MAPTILE_UNK_0x001000 = 0x001000,
 	MAPTILE_LOS = 0x002000,
@@ -565,57 +565,57 @@ struct D2DrlgWarpStrc
 
 #pragma pack()
 
-//D2Common.0x6FD74120 (#10014)
+// D2Common.0x6FD74120 (#10014)
 D2COMMON_DLL_DECL D2DrlgStrc* __fastcall DRLG_AllocDrlg(D2DrlgActStrc* pAct, uint8_t nActNo, HD2ARCHIVE hArchive, uint32_t nInitSeed, int nLevelId, uint32_t nFlags, D2GameStrc* pGame, uint8_t nDifficulty, AUTOMAPFN pfAutoMap, TOWNAUTOMAPFN pfTownAutoMap);
-//D2Common.0x6FD743B0 (#10012)
+// D2Common.0x6FD743B0 (#10012)
 D2COMMON_DLL_DECL void __fastcall DRLG_FreeDrlg(D2DrlgStrc* pDrlg);
-//D2Common.0x6FD74440
+// D2Common.0x6FD74440
 void __fastcall DRLG_FreeLevel(void* pMemPool, D2DrlgLevelStrc* pLevel, BOOL bAlloc);
-//D2Common.0x6FD745C0
+// D2Common.0x6FD745C0
 void __fastcall sub_6FD745C0(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStrc* pDrlgRoom2);
-//D2Common.0x6FD74700
+// D2Common.0x6FD74700
 void __fastcall DRLG_UpdateAndFreeInactiveRooms(D2DrlgStrc* pDrlg);
-//D2Common.0x6FD748D0 (#10013)
+// D2Common.0x6FD748D0 (#10013)
 D2COMMON_DLL_DECL D2DrlgLevelStrc* __fastcall DRLG_AllocLevel(D2DrlgStrc* pDrlg, int nLevelId);
-//D2Common.0x6FD749A0 (#10005)
+// D2Common.0x6FD749A0 (#10005)
 D2COMMON_DLL_DECL D2DrlgLevelStrc* __stdcall DRLG_GetLevel(D2DrlgStrc* pDrlg, int nLevelId);
-//D2Common.0x6FD749D0
+// D2Common.0x6FD749D0
 int __fastcall DRLG_GetHoradricStaffTombLevelId(D2DrlgStrc* pDrlg);
-//D2Common.0x6FD749E0
+// D2Common.0x6FD749E0
 int __fastcall DRLG_GetDirectionFromCoordinates(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrlgCoord2);
-//D2Common.0x6FD74A40
+// D2Common.0x6FD74A40
 void __fastcall DRLG_CreateRoomForRoomEx(D2DrlgStrc* pDrlg, D2DrlgRoomStrc* pDrlgRoom);
-//D2Common.0x6FD74B30
+// D2Common.0x6FD74B30
 int* __fastcall DRLG_GetRoomCenterX_RoomWarpXFromRoom(D2DrlgRoomStrc* pDrlgRoom);
-//D2Common.0x6FD74B40
+// D2Common.0x6FD74B40
 void __fastcall DRLG_ComputeLevelWarpInfo(D2DrlgLevelStrc* pLevel);
-//D2Common.0x6FD74C10 (#10006)
+// D2Common.0x6FD74C10 (#10006)
 D2COMMON_DLL_DECL void __stdcall DRLG_InitLevel(D2DrlgLevelStrc* pLevel);
-//D2Common.0x6FD74D50
+// D2Common.0x6FD74D50
 int __fastcall DRLG_GetNumberOfPopulatedRoomsInLevel(D2DrlgStrc* pDrlg, int nLevelId);
-//D2Common.0x6FD74D90
+// D2Common.0x6FD74D90
 void __fastcall DRLG_GetMinAndMaxCoordinatesFromLevel(D2DrlgLevelStrc* pLevel, int* pTileMinX, int* pTileMinY, int* pTileMaxX, int* pTileMaxY);
-//D2Common.0x6FD74E10
+// D2Common.0x6FD74E10
 void __fastcall DRLG_UpdateRoomExCoordinates(D2DrlgLevelStrc* pLevel);
-//D2Common.0x6FD74EF0
+// D2Common.0x6FD74EF0
 D2DrlgRoomStrc* __fastcall DRLG_GetRoomExFromLevelAndCoordinates(D2DrlgLevelStrc* pLevel, int nX, int nY);
-//D2Common.0x6FD74F70
+// D2Common.0x6FD74F70
 D2DrlgRoomStrc* __fastcall DRLG_GetRoomExFromCoordinates(int nX, int nY, D2DrlgStrc* pDrlg, D2DrlgRoomStrc* pDrlgRoom, D2DrlgLevelStrc* pLevel);
-//D2Common.0x6FD751C0
+// D2Common.0x6FD751C0
 BOOL __fastcall DRLG_IsTownLevel(int nLevelId);
-//D2Common.0x6FD75260 (#10000)
+// D2Common.0x6FD75260 (#10000)
 D2COMMON_DLL_DECL int __stdcall DRLG_GetLevelTypeFromLevelId(int nLevelId);
-//D2Common.0x6FD75270
+// D2Common.0x6FD75270
 void __fastcall DRLG_SetLevelPositionAndSize(D2DrlgStrc* pDrlg, D2DrlgLevelStrc* pLevel);
-//D2Common.0x6FD75300 (#10001)
+// D2Common.0x6FD75300 (#10001)
 D2COMMON_DLL_DECL uint8_t __stdcall DRLG_GetActNoFromLevelId(int nLevelId);
-//D2Common.0x6FD75330 (#10004)
+// D2Common.0x6FD75330 (#10004)
 D2COMMON_DLL_DECL int __stdcall DRLG_GetSaveMonstersFromLevelId(int nLevelId);
-//D2Common.0x6FD75350 (#10002)
+// D2Common.0x6FD75350 (#10002)
 D2COMMON_DLL_DECL int __stdcall DRLG_GetLOSDrawFromLevelId(int nLevelId);
-//D2Common.0x6FD75370
+// D2Common.0x6FD75370
 D2DrlgWarpStrc* __fastcall DRLG_GetDrlgWarpFromLevelId(D2DrlgStrc* pDrlg, int nLevelId);
-//D2Common.0x6FD753F0
+// D2Common.0x6FD753F0
 void __fastcall DRLG_SetWarpId(D2DrlgWarpStrc* pDrlgWarp, int nVis, int nWarp, int nId);
-//D2Common.0x6FD75450
+// D2Common.0x6FD75450
 int __fastcall DRLG_IsOnClient(D2DrlgStrc* pDrlg);

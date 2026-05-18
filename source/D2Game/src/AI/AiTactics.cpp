@@ -28,7 +28,7 @@
 #include "UNIT/SUnit.h"
 #include "UNIT/SUnitInactive.h"
 
-//D2Game.0x6FCCF9D0
+// D2Game.0x6FCCF9D0
 D2UnitStrc* __fastcall sub_6FCCF9D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiControlStrc* pAiControl, int32_t* pDistance, int32_t* pCombat)
 {
 	D2UnitStrc* pResult = sub_6FCF2110(pGame, pUnit, pAiControl, pDistance, pCombat);
@@ -66,7 +66,7 @@ D2UnitStrc* __fastcall sub_6FCCF9D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 	return nullptr;
 }
 
-//D2Game.0x6FCCFC00
+// D2Game.0x6FCCFC00
 D2UnitStrc* __fastcall sub_6FCCFC00(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiControlStrc* pAiControl, int32_t* pDistance, int32_t* pCombat)
 {
 	D2UnitStrc* pResult = sub_6FCF2110(pGame, pUnit, pAiControl, pDistance, pCombat);
@@ -89,7 +89,7 @@ D2UnitStrc* __fastcall sub_6FCCFC00(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 	return nullptr;
 }
 
-//D2Game.0x6FCCFD40
+// D2Game.0x6FCCFD40
 D2UnitStrc* __fastcall sub_6FCCFD40(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiControlStrc* pAiControl, int32_t* pDistance, int32_t* pCombat, int32_t nMaxDistance)
 {
 	D2UnitStrc* pResult = sub_6FCF2110(pGame, pUnit, pAiControl, pDistance, pCombat);
@@ -102,7 +102,7 @@ D2UnitStrc* __fastcall sub_6FCCFD40(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCo
 	return nullptr;
 }
 
-//D2Game.0x6FCCFD70
+// D2Game.0x6FCCFD70
 D2UnitStrc* __fastcall sub_6FCCFD70(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t* bCloseToTarget)
 {
 	if (!UNITS_GetRoom(pUnit))
@@ -128,7 +128,7 @@ D2UnitStrc* __fastcall sub_6FCCFD70(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
 	return pCallbackArg.pTarget;
 }
 
-//D2Game.0x6FCCFDE0
+// D2Game.0x6FCCFDE0
 D2UnitStrc* __fastcall sub_6FCCFDE0(D2GameStrc* pGame, D2UnitStrc* pNPC, D2UnitStrc* pPlayer, void* pCallbackArg)
 {
 	UnkAiStrc1* pArg = (UnkAiStrc1*)pCallbackArg;
@@ -169,7 +169,7 @@ D2UnitStrc* __fastcall sub_6FCCFDE0(D2GameStrc* pGame, D2UnitStrc* pNPC, D2UnitS
 	return nullptr;
 }
 
-//D2Game.0x6FCCFEA0
+// D2Game.0x6FCCFEA0
 int32_t __fastcall AITACTICS_ChangeModeAndTargetUnit(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nMode, D2UnitStrc* pTargetUnit)
 {
 	D2ModeChangeStrc modeChange = {};
@@ -179,7 +179,7 @@ int32_t __fastcall AITACTICS_ChangeModeAndTargetUnit(D2GameStrc* pGame, D2UnitSt
 	return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FCCFEE0
+// D2Game.0x6FCCFEE0
 int32_t __fastcall AITACTICS_ChangeModeAndTargetCoordinates(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nMode, int32_t nX, int32_t nY)
 {
 	D2ModeChangeStrc modeChange = {};
@@ -190,7 +190,7 @@ int32_t __fastcall AITACTICS_ChangeModeAndTargetCoordinates(D2GameStrc* pGame, D
 	return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FCCFF20
+// D2Game.0x6FCCFF20
 int32_t __fastcall AITACTICS_UseSequenceSkill(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nSkillId, D2UnitStrc* pTargetUnit, int32_t nX, int32_t nY)
 {
 	if (nSkillId < 0 || nSkillId >= sgptDataTables->nSkillsTxtRecordCount)
@@ -211,7 +211,7 @@ int32_t __fastcall AITACTICS_UseSequenceSkill(D2GameStrc* pGame, D2UnitStrc* pUn
 	return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 0);
 }
 
-//D2Game.0x6FCCFFB0
+// D2Game.0x6FCCFFB0
 int32_t __fastcall AITACTICS_UseSkill(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t nMode, int32_t nSkillId, D2UnitStrc* pTarget, int32_t nX, int32_t nY)
 {
 	if (!pUnit || nMode >= 16u)
@@ -240,7 +240,7 @@ int32_t __fastcall AITACTICS_UseSkill(D2GameStrc* pGame, D2UnitStrc* pUnit, uint
 	return 0;
 }
 
-//D2Game.0x6FCD00A0
+// D2Game.0x6FCD00A0
 void __fastcall AITACTICS_IdleInNeutralMode(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nFrames)
 {
 	if (!pUnit || pUnit->dwAnimMode != MONMODE_NEUTRAL)
@@ -254,7 +254,7 @@ void __fastcall AITACTICS_IdleInNeutralMode(D2GameStrc* pGame, D2UnitStrc* pUnit
 	AITACTICS_Idle(pGame, pUnit, nFrames);
 }
 
-//D2Game.0x6FCD0110
+// D2Game.0x6FCD0110
 void __fastcall AITACTICS_Idle(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nFrames)
 {
 	if (!nFrames)
@@ -266,7 +266,7 @@ void __fastcall AITACTICS_Idle(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nFr
 	EVENT_SetEvent(pGame, pUnit, EVENTTYPE_AITHINK, nFrames + pGame->dwGameFrame, 0, 0);
 }
 
-//D2Game.0x6FCD0150
+// D2Game.0x6FCD0150
 void __fastcall sub_6FCD0150(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nFrames)
 {
 	if (!nFrames)
@@ -282,7 +282,7 @@ void __fastcall sub_6FCD0150(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nFram
 	}
 }
 
-//D2Game.0x6FCD01B0
+// D2Game.0x6FCD01B0
 void __fastcall AITACTICS_SetVelocity(D2UnitStrc* pUnit, int32_t a2, int32_t nVel, uint8_t a4)
 {
 	D2_ASSERT((nVel >= -126) && (nVel <= 126));
@@ -302,13 +302,13 @@ void __fastcall AITACTICS_SetVelocity(D2UnitStrc* pUnit, int32_t a2, int32_t nVe
 	}
 }
 
-//D2Game.0x6FCD0220
+// D2Game.0x6FCD0220
 int32_t __fastcall AITACTICS_WalkToTargetUnitWithFlags(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTargetUnit, uint8_t nFlag)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, pTargetUnit, MONMODE_WALK, 0, 0, 1u, nFlag);
 }
 
-//D2Game.0x6FCD0240
+// D2Game.0x6FCD0240
 int32_t __fastcall AITACTICS_MoveToTarget(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nMode, int32_t nX, int32_t nY, uint8_t bStep, uint8_t nFlags)
 {
 	int32_t nNewMode = nMode;
@@ -370,25 +370,25 @@ int32_t __fastcall AITACTICS_MoveToTarget(D2GameStrc* pGame, D2UnitStrc* pUnit, 
 	return 0;
 }
 
-//D2Game.0x6FCD03B0
+// D2Game.0x6FCD03B0
 int32_t __fastcall AITACTICS_WalkToTargetUnit(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, pTarget, MONMODE_WALK, 0, 0, 1u, 0);
 }
 
-//D2Game.0x6FCD03D0
+// D2Game.0x6FCD03D0
 int32_t __fastcall AITACTICS_RunToTargetUnitWithFlags(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, uint8_t nFlags)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, pTarget, MONMODE_RUN, 0, 0, 1u, nFlags);
 }
 
-//D2Game.0x6FCD03F0
+// D2Game.0x6FCD03F0
 int32_t __fastcall AITACTICS_RunToTargetUnit(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, pTarget, MONMODE_RUN, 0, 0, 1u, 0);
 }
 
-//D2Game.0x6FCD0410
+// D2Game.0x6FCD0410
 int32_t __fastcall sub_6FCD0410(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, uint8_t nFlags)
 {
 	if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -399,37 +399,37 @@ int32_t __fastcall sub_6FCD0410(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc
 	return AITACTICS_WalkToTargetUnitWithFlags(pGame, pUnit, pTarget, nFlags);
 }
 
-//D2Game.0x6FCD0460
+// D2Game.0x6FCD0460
 int32_t __fastcall AITACTICS_WalkToTargetCoordinates(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_WALK, nX, nY, 1u, 0);
 }
 
-//D2Game.0x6FCD0480
+// D2Game.0x6FCD0480
 int32_t __fastcall AITACTICS_RunToTargetCoordinates(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_RUN, nX, nY, 1u, 0);
 }
 
-//D2Game.0x6FCD04A0
+// D2Game.0x6FCD04A0
 int32_t __fastcall AITACTICS_WalkToTargetCoordinatesDeleteAiEvent(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_WALK, nX, nY, 1u, 4);
 }
 
-//D2Game.0x6FCD04C0
+// D2Game.0x6FCD04C0
 int32_t __fastcall AITACTICS_RunToTargetCoordinatesDeleteAiEvent(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_RUN, nX, nY, 1u, 4);
 }
 
-//D2Game.0x6FCD04E0
+// D2Game.0x6FCD04E0
 int32_t __fastcall AITACTICS_WalkToTargetCoordinatesNoSteps(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY)
 {
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_WALK, nX, nY, 0, 0);
 }
 
-//D2Game.0x6FCD0500
+// D2Game.0x6FCD0500
 int32_t __fastcall AITACTICS_WalkToTargetUnitWithSteps(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, uint8_t bStep)
 {
 	if (!bStep)
@@ -440,7 +440,7 @@ int32_t __fastcall AITACTICS_WalkToTargetUnitWithSteps(D2GameStrc* pGame, D2Unit
 	return AITACTICS_MoveToTarget(pGame, pUnit, pTarget, MONMODE_WALK, 0, 0, bStep, 0);
 }
 
-//D2Game.0x6FCD0530
+// D2Game.0x6FCD0530
 int32_t __fastcall AITACTICS_RunToTargetUnitWithSteps(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, uint8_t bStep)
 {
 	if (!bStep)
@@ -451,7 +451,7 @@ int32_t __fastcall AITACTICS_RunToTargetUnitWithSteps(D2GameStrc* pGame, D2UnitS
 	return AITACTICS_MoveToTarget(pGame, pUnit, pTarget, MONMODE_RUN, 0, 0, bStep, 0);
 }
 
-//D2Game.0x6FCD0560
+// D2Game.0x6FCD0560
 int32_t __fastcall D2GAME_AICORE_Escape_6FCD0560(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nMaxDistance, int32_t bDeleteAiEventCallback)
 {
 	if (!pUnit || !pTarget)
@@ -478,7 +478,7 @@ int32_t __fastcall D2GAME_AICORE_Escape_6FCD0560(D2GameStrc* pGame, D2UnitStrc* 
 	return AITACTICS_MoveToTarget(pGame, pUnit, 0, MONMODE_WALK, nX + nXSign * nMaxDistance, nY + nYSign * nMaxDistance, 1u, bDeleteAiEventCallback != 0 ? 4 : 0);
 }
 
-//D2Game.0x6FCD06D0
+// D2Game.0x6FCD06D0
 int32_t __fastcall sub_6FCD06D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nMaxDistance, int32_t bDeleteAiEventCallback)
 {
 	const int32_t nX = CLIENTS_GetUnitX(pUnit);
@@ -500,7 +500,7 @@ int32_t __fastcall sub_6FCD06D0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc
 	return AITACTICS_MoveToTarget(pGame, pUnit, 0, MONMODE_RUN, nX + nXSign * nMaxDistance, nY + nYSign * nMaxDistance, 1u, bDeleteAiEventCallback != 0 ? 4 : 0);
 }
 
-//D2Game.0x6FCD0840
+// D2Game.0x6FCD0840
 int32_t __fastcall AITACTICS_WalkCloseToUnit(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nMaxDistance)
 {
 	int32_t nOffsetX = 0;
@@ -533,7 +533,7 @@ int32_t __fastcall AITACTICS_WalkCloseToUnit(D2GameStrc* pGame, D2UnitStrc* pUni
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_WALK, nTargetX + nOffsetX, nTargetY + nOffsetY, 1u, 0);
 }
 
-//D2Game.0x6FCD09D0
+// D2Game.0x6FCD09D0
 int32_t __fastcall AITACTICS_WanderToTarget(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nMaxDistance)
 {
 	int32_t nOffsetX = 0;
@@ -566,7 +566,7 @@ int32_t __fastcall AITACTICS_WanderToTarget(D2GameStrc* pGame, D2UnitStrc* pUnit
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_WALK, nTargetX + nOffsetX, nTargetY + nOffsetY, 1u, 0);
 }
 
-//D2Game.0x6FCD0B60
+// D2Game.0x6FCD0B60
 int32_t __fastcall D2GAME_AICORE_WalkToOwner_6FCD0B60(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pOwner, int32_t nMaxDistance)
 {
 	if (!pOwner)
@@ -577,7 +577,7 @@ int32_t __fastcall D2GAME_AICORE_WalkToOwner_6FCD0B60(D2GameStrc* pGame, D2UnitS
 	return AITACTICS_WanderToTarget(pGame, pUnit, pOwner, nMaxDistance);
 }
 
-//D2Game.0x6FCD0D00
+// D2Game.0x6FCD0D00
 int32_t __fastcall AITACTICS_RunCloseToTargetUnit(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nMaxDistance)
 {
 	int32_t nOffsetX = 0;
@@ -610,7 +610,7 @@ int32_t __fastcall AITACTICS_RunCloseToTargetUnit(D2GameStrc* pGame, D2UnitStrc*
 	return AITACTICS_MoveToTarget(pGame, pUnit, nullptr, MONMODE_RUN, nTargetX + nOffsetX, nTargetY + nOffsetY, 1u, 0);
 }
 
-//D2Game.0x6FCD0E80
+// D2Game.0x6FCD0E80
 int32_t __fastcall sub_6FCD0E80(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t a4, int32_t bDeleteAiEventCallback)
 {
 	//TODO: v8
@@ -635,7 +635,7 @@ int32_t __fastcall sub_6FCD0E80(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc
 	return AITACTICS_MoveToTarget(pGame, pUnit, pTarget, MONMODE_WALK, 0, 0, 1u, bDeleteAiEventCallback != 0 ? 4 : 0);
 }
 
-//D2Game.0x6FCD0F10
+// D2Game.0x6FCD0F10
 void __fastcall AITACTICS_AddMessage(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pScrollTarget, uint16_t wMessage, int32_t bScrollMessage)
 {
 	if (!wMessage || wMessage > USHRT_MAX)
@@ -694,7 +694,7 @@ void __fastcall AITACTICS_AddMessage(D2GameStrc* pGame, D2UnitStrc* pUnit, D2Uni
 	}
 }
 
-//D2Game.0x6FCD1020
+// D2Game.0x6FCD1020
 int32_t __fastcall AITACTICS_ChangeModeAndTargetCoordinatesOneStep(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nMode)
 {
 	D2ModeChangeStrc modeChange = {};
@@ -706,7 +706,7 @@ int32_t __fastcall AITACTICS_ChangeModeAndTargetCoordinatesOneStep(D2GameStrc* p
 	return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FCD1070
+// D2Game.0x6FCD1070
 int32_t __fastcall AITACTICS_ChangeModeAndTargetCoordinatesNoStep(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nMode)
 {
 	D2ModeChangeStrc modeChange = {};
@@ -718,7 +718,7 @@ int32_t __fastcall AITACTICS_ChangeModeAndTargetCoordinatesNoStep(D2GameStrc* pG
 	return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FCD10C0
+// D2Game.0x6FCD10C0
 // TODO: Check name
 int32_t __fastcall AITACTICS_MoveInRadiusToTarget(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nMode, int32_t a5, int32_t a6)
 {
@@ -762,14 +762,14 @@ int32_t __fastcall AITACTICS_MoveInRadiusToTarget(D2GameStrc* pGame, D2UnitStrc*
 	return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FCD12C0
+// D2Game.0x6FCD12C0
 // TODO: Check name
 int32_t __fastcall AITACTICS_WalkInRadiusToTarget(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t a4, int32_t a5)
 {
 	return AITACTICS_MoveInRadiusToTarget(pGame, pUnit, pTarget, MONMODE_WALK, a4, a5);
 }
 
-//D2Game.0x6FCD12E0
+// D2Game.0x6FCD12E0
 int32_t __fastcall AITACTICS_WalkAroundTargetWithScaledDistance(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiControlStrc* pAiControl, D2UnitStrc* pTarget, int32_t nScale)
 {
 	const int32_t nDistance = UNITS_GetDistanceToOtherUnit(pUnit, pTarget);
@@ -788,7 +788,7 @@ int32_t __fastcall AITACTICS_WalkAroundTargetWithScaledDistance(D2GameStrc* pGam
 	return D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FCD1430
+// D2Game.0x6FCD1430
 D2UnitStrc* __fastcall AITACTICS_GetTargetMinion(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
 	D2UnitStrc* pTarget = SUNIT_GetLastAttacker(pGame, pUnit);
@@ -819,7 +819,7 @@ D2UnitStrc* __fastcall AITACTICS_GetTargetMinion(D2GameStrc* pGame, D2UnitStrc* 
 	}
 }
 
-//D2Game.0x6FCD1490
+// D2Game.0x6FCD1490
 void __fastcall AITACTICS_UseSkillInRange(D2UnitStrc* pUnit, int32_t nRange, uint16_t wSkillId, uint8_t nMode)
 {
 	const int32_t nX = CLIENTS_GetUnitX(pUnit) + ITEMS_RollLimitedRandomNumber(&pUnit->pSeed, 2 * nRange) - nRange;

@@ -17,7 +17,7 @@
 constexpr int32_t CHARACTER_SAVE_SIZE = 0x2000;
 
 
-//D2Game.0x6FC317F0
+// D2Game.0x6FC317F0
 int32_t __fastcall CCMD_IsStringZeroTerminated(const char* pData, int32_t nDataSize)
 {
     for (int32_t i = 0; i < nDataSize; ++i)
@@ -31,7 +31,7 @@ int32_t __fastcall CCMD_IsStringZeroTerminated(const char* pData, int32_t nDataS
     return 0;
 }
 
-//D2Game.0x6FC31810
+// D2Game.0x6FC31810
 uint32_t __fastcall CCMD_CanClientJoinGame(int32_t a1, int32_t a2, char* szClientName)
 {
     // TODO: Names
@@ -84,7 +84,7 @@ uint32_t __fastcall CCMD_CanClientJoinGame(int32_t a1, int32_t a2, char* szClien
     return 0;
 }
 
-//D2Game.0x6FC31910
+// D2Game.0x6FC31910
 void __fastcall CCMD_ProcessClientSystemMessage(void* pData, int32_t nSize)
 {
     // TODO: Names
@@ -214,7 +214,7 @@ void __fastcall CCMD_ProcessClientSystemMessage(void* pData, int32_t nSize)
     }
 }
 
-//D2Game.0x6FC31C00
+// D2Game.0x6FC31C00
 void __fastcall CCMD_ProcessClientMessage(void* pData, int32_t nPacketSize)
 {
     const int32_t nClientId = *(int32_t*)pData;

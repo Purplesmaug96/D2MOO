@@ -8,7 +8,7 @@
 #include "Drlg/D2DrlgRoomTile.h"
 #include "D2CMP.h"
 
-//D2Common.0x6FD76420
+// D2Common.0x6FD76420
 void __fastcall DRLGLOGIC_FreeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom)
 {
 
@@ -33,7 +33,7 @@ void __fastcall DRLGLOGIC_FreeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD764A0
+// D2Common.0x6FD764A0
 void __fastcall DRLGLOGIC_InitializeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom, D2DrlgGridStrc* pTileTypeGrid, D2DrlgGridStrc* pFloorGrid, D2DrlgGridStrc* pWallGrid)
 {
 	int nCellPositions[1024] = {};
@@ -146,7 +146,7 @@ void __fastcall DRLGLOGIC_InitializeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom, D2D
 	sub_6FD769B0(pDrlgRoom);
 }
 
-//D2Common.0x6FD76830
+// D2Common.0x6FD76830
 void __fastcall DRLGLOGIC_SetTileGridFlags(D2UnkDrlgLogicStrc* a1, int nX, int nY, int a4)
 {
 	static const D2CoordStrc stru_6FDCE5C8[] =
@@ -232,7 +232,7 @@ void __fastcall DRLGLOGIC_SetTileGridFlags(D2UnkDrlgLogicStrc* a1, int nX, int n
 	}
 }
 
-//D2Common.0x6FD769B0
+// D2Common.0x6FD769B0
 void __fastcall sub_6FD769B0(D2DrlgRoomStrc* pDrlgRoom)
 {
 	for (int i = 0; i < pDrlgRoom->nRoomsNear; ++i)
@@ -261,7 +261,7 @@ void __fastcall sub_6FD769B0(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD76A90
+// D2Common.0x6FD76A90
 void __fastcall sub_6FD76A90(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStrc* pDrlgRoom2, int nX, int nY)
 {
 	if (DRLGROOM_AreXYInsideCoordinatesOrOnBorder(&pDrlgRoom2->pDrlgCoord, nX, nY))
@@ -282,7 +282,7 @@ void __fastcall sub_6FD76A90(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStrc* pDrlgRo
 	}
 }
 
-//D2Common.0x6FD76B90
+// D2Common.0x6FD76B90
 void __fastcall sub_6FD76B90(D2DrlgRoomStrc* pDrlgRoom, int nIndex1, int nIndex2, BOOL bNode)
 {
 	if (pDrlgRoom->pLogicalRoomInfo ==nullptr || (pDrlgRoom->pLogicalRoomInfo->dwFlags & DRLGLOGIC_ROOMINFO_HAS_COORD_LIST))
@@ -317,7 +317,7 @@ void __fastcall sub_6FD76B90(D2DrlgRoomStrc* pDrlgRoom, int nIndex1, int nIndex2
 	}
 }
 
-//D2Common.0x6FD76C20
+// D2Common.0x6FD76C20
 BOOL __fastcall DRLG_CheckLayer1ButNotWallObject(D2DrlgTileDataStrc* pTileData)
 {
 	if (GetMapTileLayer(pTileData->dwFlags) == 1)
@@ -331,7 +331,7 @@ BOOL __fastcall DRLG_CheckLayer1ButNotWallObject(D2DrlgTileDataStrc* pTileData)
 	return FALSE;
 }
 
-//D2Common.0x6FD76C50
+// D2Common.0x6FD76C50
 void __fastcall DRLGLOGIC_SetCoordListForTiles(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->pTileGrid->pTiles.nWalls)
@@ -350,7 +350,7 @@ void __fastcall DRLGLOGIC_SetCoordListForTiles(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD76CF0
+// D2Common.0x6FD76CF0
 void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2DrlgLogicalRoomInfoStrc* pDrlgCoordList, int nLists)
 {
 	DRLGGRID_InitializeGridCells(pDrlgRoom->pLevel->pDrlg->pMempool, &pDrlgCoordList->pIndexY, pDrlgRoom->nTileWidth + 1, pDrlgRoom->nTileHeight + 1);
@@ -453,7 +453,7 @@ void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2
 	}
 }
 
-//D2Common.0x6FD76F90
+// D2Common.0x6FD76F90
 void __fastcall DRLGLOGIC_AllocCoordLists(D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2DrlgLogicalRoomInfoStrc* pLogicalRoomInfo = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2DrlgLogicalRoomInfoStrc);
@@ -476,7 +476,7 @@ void __fastcall DRLGLOGIC_AllocCoordLists(D2DrlgRoomStrc* pDrlgRoom)
 	pLogicalRoomInfo->pCoordList->pBox[1].nWidth = pDrlgRoom->nTileXPos + pDrlgRoom->nTileWidth;
 }
 
-//D2Common.0x6FD77080
+// D2Common.0x6FD77080
 int __fastcall DRLGLOGIC_GetRoomCoordListIndex(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY)
 {
 	D2RoomCoordListStrc* pRoomCoordList = sub_6FD77110(pDrlgRoom, nX, nY);
@@ -489,7 +489,7 @@ int __fastcall DRLGLOGIC_GetRoomCoordListIndex(D2DrlgRoomStrc* pDrlgRoom, int nX
 	return -1;
 }
 
-//D2Common.0x6FD77110
+// D2Common.0x6FD77110
 D2RoomCoordListStrc* __fastcall sub_6FD77110(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY)
 {
 	D2_ASSERT(pDrlgRoom->pLogicalRoomInfo);
@@ -504,7 +504,7 @@ D2RoomCoordListStrc* __fastcall sub_6FD77110(D2DrlgRoomStrc* pDrlgRoom, int nX, 
 	}
 }
 
-//D2Common.0x6FD77190
+// D2Common.0x6FD77190
 D2RoomCoordListStrc* __fastcall DRLGLOGIC_GetRoomCoordList(D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2_ASSERT(pDrlgRoom->pLogicalRoomInfo);

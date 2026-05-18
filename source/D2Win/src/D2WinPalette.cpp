@@ -57,7 +57,7 @@ uint32_t dword_6F96A7C0;
 uint32_t dword_6F96A7C4;
 
 
-//D2Win.0x6F8AE550 (#10177)
+// D2Win.0x6F8AE550 (#10177)
 int32_t __fastcall D2Win_10177(uint8_t nAct)
 {
 	int32_t nActNo = nAct + 1;
@@ -79,7 +79,7 @@ int32_t __fastcall D2Win_10177(uint8_t nAct)
 	return nResult;
 }
 
-//D2Win.0x6F8AE5E0
+// D2Win.0x6F8AE5E0
 int32_t __fastcall sub_6F8AE5E0(const char* szDatFileName, const char* szPL2FileName)
 {
 	D2PaletteTableStrc paletteTable = {};
@@ -153,13 +153,13 @@ int32_t __fastcall sub_6F8AE5E0(const char* szDatFileName, const char* szPL2File
 	return 1;
 }
 
-//D2Win.0x6F8AE930 (#10175)
+// D2Win.0x6F8AE930 (#10175)
 uint8_t* __fastcall D2Win_10175_GetPL2Shift(int32_t nIndex)
 {
 	return gStatesPalette_6F9626C0[nIndex];
 }
 
-//D2Win.0x6F8AE940 (#10179)
+// D2Win.0x6F8AE940 (#10179)
 void __stdcall D2Win_10179()
 {
 	if (!dword_6F8BE008)
@@ -190,7 +190,7 @@ void __stdcall D2Win_10179()
 	D2GFX_SetPalette(gRGBAPalette_6F9622C0);
 }
 
-//D2Win.0x6F8AE9A0 (#10176)
+// D2Win.0x6F8AE9A0 (#10176)
 void __fastcall D2Win_10176(int32_t a1)
 {
 	if (a1)
@@ -209,7 +209,7 @@ void __fastcall D2Win_10176(int32_t a1)
 	}
 }
 
-//D2Win.0x6F8AE9F0 (#10028)
+// D2Win.0x6F8AE9F0 (#10028)
 int32_t __stdcall D2Win_10028(const char* pszPalDatFilename, const char* pszPalPL2Filename)
 {
 	if (pszPalDatFilename)
@@ -231,13 +231,13 @@ int32_t __stdcall D2Win_10028(const char* pszPalDatFilename, const char* pszPalP
 	return 1;
 }
 
-//D2Win.0x6F8AEA80 (#10034)
+// D2Win.0x6F8AEA80 (#10034)
 uint8_t __stdcall D2Win_10034_MixRGB(uint8_t nRed, uint8_t nGreen, uint8_t nBlue)
 {
 	return D2CMP_GetNearestPaletteIndex(gRGBAPalette_6F9622C0, 0x100u, nRed, nGreen, nBlue);
 }
 
-//D2Win.0x6F8AEAC0 (#10178)
+// D2Win.0x6F8AEAC0 (#10178)
 void __fastcall D2Win_10178(D2ShadowLightGammaPaletteStrc* pBuffer)
 {
 	memcpy(pBuffer, &gShadowsLightGammaPalette_6F91E298, sizeof(gShadowsLightGammaPalette_6F91E298));

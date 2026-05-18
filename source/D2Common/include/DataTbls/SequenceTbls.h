@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 #include <D2Composit.h>
@@ -39,19 +39,19 @@ struct D2PlayerWeaponSequencesStrc
 
 #pragma pack()
 
-//D2Common.0x6FD727A0 (#10682)
+// D2Common.0x6FD727A0 (#10682)
 D2COMMON_DLL_DECL D2AnimSeqTxt* __stdcall DATATBLS_GetMonSeqTxtRecordFromUnit(D2UnitStrc* pUnit);
-//D2Common.0x6FD727C0
+// D2Common.0x6FD727C0
 D2AnimSeqRecordStrc* __fastcall DATATBLS_GetSeqRecordFromUnit(D2UnitStrc* pUnit);
-//D2Common.0x6FD728A0 (#10683)
+// D2Common.0x6FD728A0 (#10683)
 D2COMMON_DLL_DECL int __stdcall DATATBLS_GetSeqFramePointsCount(D2UnitStrc* pUnit);
-//D2Common.0x6FD728C0 (#10684)
+// D2Common.0x6FD728C0 (#10684)
 D2COMMON_DLL_DECL int __stdcall DATATBLS_GetSeqFrameCount(D2UnitStrc* pUnit);
-//D2Common.0x6FD728E0 (#10685)
+// D2Common.0x6FD728E0 (#10685)
 D2COMMON_DLL_DECL void __stdcall DATATBLS_ComputeSequenceAnimation(D2AnimSeqTxt* pMonSeqTxt, int nTargetFramePoint, int nCurrentFramePoint, unsigned int* pMode, unsigned int* pFrame, int* pDirection, int* pEvent);
-//D2Common.0x6FD72990 (#10686)
+// D2Common.0x6FD72990 (#10686)
 D2COMMON_DLL_DECL void __stdcall DATATBLS_GetSequenceEvent(D2AnimSeqTxt* pMonSeqTxt, int nSeqFramePoint, int* pEvent);
-//D2Common.0x6FD6F050
+// D2Common.0x6FD6F050
 void __fastcall DATATBLS_LoadMonSeqTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD6F200 (#11262)
+// D2Common.0x6FD6F200 (#11262)
 D2COMMON_DLL_DECL D2AnimSeqRecordStrc* __stdcall DATATBLS_GetMonSeqTableRecord(int nSequence);

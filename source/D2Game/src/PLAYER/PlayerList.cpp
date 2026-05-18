@@ -15,7 +15,7 @@
 uint32_t dword_6FD4DC40;
 
 
-//D2Game.0x6FCBA690
+// D2Game.0x6FCBA690
 void __fastcall PLAYERLIST_FreePlayerLists(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);
@@ -32,7 +32,7 @@ void __fastcall PLAYERLIST_FreePlayerLists(D2GameStrc* pGame, D2UnitStrc* pPlaye
     pPlayerData->pPlayerList = nullptr;
 }
 
-//D2Game.0x6FCBA6E0
+// D2Game.0x6FCBA6E0
 void __fastcall PLAYERLIST_IterateCallback_FreePlayerList(D2GameStrc* pGame, D2UnitStrc* pPlayer, void* pArg)
 {
     D2UnitStrc* pPlayerArg = (D2UnitStrc*)pArg;
@@ -88,7 +88,7 @@ D2PlayerListStrc* __fastcall PLAYERLIST_GetPlayerListRecordFromUnitGUID(D2UnitSt
     return nullptr;
 }
 
-//D2Game.0x6FCBA750
+// D2Game.0x6FCBA750
 void __fastcall PLAYERLIST_AllocPlayerList(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer1);
@@ -122,7 +122,7 @@ void __fastcall PLAYERLIST_AllocPlayerList(D2GameStrc* pGame, D2UnitStrc* pPlaye
     }
 }
 
-//D2Game.0x6FCBA840
+// D2Game.0x6FCBA840
 void __fastcall PLAYERLIST_ToggleFlag(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, uint32_t nFlags, int32_t bSet)
 {
     if (pPlayer1 == pPlayer2)
@@ -148,7 +148,7 @@ void __fastcall PLAYERLIST_ToggleFlag(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D
     sub_6FC3F840(pGame, pPlayer1 ? pPlayer1->dwUnitId : -1, pPlayer2 ? pPlayer2->dwUnitId : -1, pPlayerList->dwFlags);
 }
 
-//D2Game.0x6FCBA8E0
+// D2Game.0x6FCBA8E0
 int32_t __fastcall PLAYERLIST_CheckFlag(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, uint32_t nFlags)
 {
     if (pPlayer1 == pPlayer2)
@@ -165,7 +165,7 @@ int32_t __fastcall PLAYERLIST_CheckFlag(D2UnitStrc* pPlayer1, D2UnitStrc* pPlaye
     return pPlayerList->dwFlags & nFlags;
 }
 
-//D2Game.0x6FCBA930
+// D2Game.0x6FCBA930
 uint16_t __fastcall PLAYERLIST_GetFlags(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     if (pPlayer1 == pPlayer2)
@@ -182,7 +182,7 @@ uint16_t __fastcall PLAYERLIST_GetFlags(D2UnitStrc* pPlayer1, D2UnitStrc* pPlaye
     return pPlayerList->dwFlags;
 }
 
-//D2Game.0x6FCBA980
+// D2Game.0x6FCBA980
 void __fastcall sub_6FCBA980(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, int32_t a3)
 {
     if (pPlayer1 == pPlayer2)
@@ -199,7 +199,7 @@ void __fastcall sub_6FCBA980(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, int32_t
     pPlayerList->field_C = a3;
 }
 
-//D2Game.0x6FCBA9D0
+// D2Game.0x6FCBA9D0
 int16_t __fastcall sub_6FCBA9D0(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     if (pPlayer1 == pPlayer2)
@@ -216,7 +216,7 @@ int16_t __fastcall sub_6FCBA9D0(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
     return pPlayerList->field_C;
 }
 
-//D2Game.0x6FCBAA20
+// D2Game.0x6FCBAA20
 void __fastcall sub_6FCBAA20(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     if (pPlayer1 == pPlayer2)
@@ -233,7 +233,7 @@ void __fastcall sub_6FCBAA20(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
     }
 }
 
-//D2Game.0x6FCBAAA0
+// D2Game.0x6FCBAAA0
 void __fastcall sub_6FCBAAA0(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     if (pPlayer1 == pPlayer2)
@@ -250,7 +250,7 @@ void __fastcall sub_6FCBAAA0(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc
     sub_6FC3F840(pGame, pPlayer1 ? pPlayer1->dwUnitId : -1, pPlayer2 ? pPlayer2->dwUnitId : -1, pPlayerList->dwFlags);
 }
 
-//D2Game.0x6FCBAB20
+// D2Game.0x6FCBAB20
 void __fastcall sub_6FCBAB20(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 {
     D2_ASSERT(pPlayer);
@@ -258,7 +258,7 @@ void __fastcall sub_6FCBAB20(D2GameStrc* pGame, D2UnitStrc* pPlayer)
     SUNIT_IterateLivingPlayers(pGame, sub_6FCBAB50, pPlayer);
 }
 
-//D2Game.0x6FCBAB50
+// D2Game.0x6FCBAB50
 void __fastcall sub_6FCBAB50(D2GameStrc* pGame, D2UnitStrc* pPlayer, void* pArg)
 {
     D2UnitStrc* pUnit = (D2UnitStrc*)pArg;
@@ -287,7 +287,7 @@ void __fastcall sub_6FCBAB50(D2GameStrc* pGame, D2UnitStrc* pPlayer, void* pArg)
     }
 }
 
-//D2Game.0x6FCBAD60
+// D2Game.0x6FCBAD60
 void __fastcall PLAYERLIST_sub_6FCBAD60(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);
@@ -305,7 +305,7 @@ void __fastcall PLAYERLIST_sub_6FCBAD60(D2GameStrc* pGame, D2UnitStrc* pPlayer)
     }
 }
 
-//D2Game.0x6FCBAE20
+// D2Game.0x6FCBAE20
 int32_t __fastcall PLAYERLIST_GetHostileDelay(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     if (!pPlayer2)
@@ -331,7 +331,7 @@ int32_t __fastcall PLAYERLIST_GetHostileDelay(D2UnitStrc* pPlayer1, D2UnitStrc* 
     return pPlayerList->field_8;
 }
 
-//D2Game.0x6FCBAE70
+// D2Game.0x6FCBAE70
 void __fastcall PLAYERLIST_SetHostileDelay(D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, int32_t a3)
 {
     if (pPlayer1 != pPlayer2)
@@ -350,7 +350,7 @@ void __fastcall PLAYERLIST_SetHostileDelay(D2UnitStrc* pPlayer1, D2UnitStrc* pPl
     }
 }
 
-//D2Game.0x6FCBAED0
+// D2Game.0x6FCBAED0
 void __fastcall sub_6FCBAED0()
 {
     dword_6FD4DC40 = GetTickCount();

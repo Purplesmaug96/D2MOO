@@ -44,7 +44,7 @@
 int32_t dword_6FD4DC30;
 
 
-//D2Game.0x6FC8F3D0
+// D2Game.0x6FC8F3D0
 int32_t __fastcall OBJECTS_OperateFunction32_Bank(D2ObjOperateFnStrc* pOp, int32_t nOperate)
 {
     if (!pOp || !pOp->pObject)
@@ -74,7 +74,7 @@ int32_t __fastcall OBJECTS_OperateFunction32_Bank(D2ObjOperateFnStrc* pOp, int32
     return 1;
 }
 
-//D2Game.0x6FC8F450
+// D2Game.0x6FC8F450
 int32_t __fastcall PLRTRADE_CheckCubeInput(D2GameStrc* pGame, D2InventoryStrc* pInventory, D2CubeMainTxt* pCubeMainTxt, int32_t nInputIndex, D2CubeItemStrc* pCubeItem, int32_t* a6)
 {
     if (!pInventory)
@@ -465,7 +465,7 @@ int32_t __fastcall PLRTRADE_CheckCubeInput(D2GameStrc* pGame, D2InventoryStrc* p
     return nItemCountWithStacks == nQuantity;
 }
 
-//D2Game.0x6FC8FE40
+// D2Game.0x6FC8FE40
 int16_t __fastcall PLRTRADE_RollRandomItemClassOfSameType(D2GameStrc* pGame, int32_t nItemLevel, int32_t nItemId)
 {
     D2ItemDataTbl* pItemDataTbl = DATATBLS_GetItemDataTables();
@@ -519,7 +519,7 @@ int16_t __fastcall PLRTRADE_RollRandomItemClassOfSameType(D2GameStrc* pGame, int
     return 0;
 }
 
-//D2Game.0x6FC90000
+// D2Game.0x6FC90000
 int32_t __fastcall PLRTRADE_CreateCowPortal(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     return ACT1Q4_CreateCowPortal(pGame, pUnit);
@@ -1028,7 +1028,7 @@ void __fastcall PLRTRADE_CreateCubeOutputs(D2GameStrc* pGame, D2UnitStrc* pUnit,
     }
 }
 
-//D2Game.0x6FC90A60
+// D2Game.0x6FC90A60
 void __fastcall PLRTRADE_Free(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pUnit);
@@ -1050,7 +1050,7 @@ void __fastcall PLRTRADE_Free(D2GameStrc* pGame, D2UnitStrc* pUnit)
     }
 }
 
-//D2Game.0x6FC90AE0
+// D2Game.0x6FC90AE0
 void __fastcall sub_6FC90AE0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3)
 {
     if (!pUnit || !UNITS_GetPlayerData(pUnit)->pTrade)
@@ -1094,7 +1094,7 @@ void __fastcall sub_6FC90AE0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3)
     sub_6FC90C20(pGame, pUnit);
 }
 
-//D2Game.0x6FC90BE0
+// D2Game.0x6FC90BE0
 void __fastcall sub_6FC90BE0(D2GameStrc* pGame, D2UnitStrc* pPlayer, void* pArg)
 {
     D2UnitStrc* pOtherPlayer = (D2UnitStrc*)pArg;
@@ -1105,7 +1105,7 @@ void __fastcall sub_6FC90BE0(D2GameStrc* pGame, D2UnitStrc* pPlayer, void* pArg)
     }
 }
 
-//D2Game.0x6FC90C20
+// D2Game.0x6FC90C20
 void __fastcall sub_6FC90C20(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);
@@ -1128,7 +1128,7 @@ void __fastcall sub_6FC90C20(D2GameStrc* pGame, D2UnitStrc* pPlayer)
     }
 }
 
-//D2Game.0x6FC90D70
+// D2Game.0x6FC90D70
 void __fastcall PLRTRADE_SendEventPacketToPlayer(D2UnitStrc* pPlayer, D2C_SRV2CLT5A_TYPES nType, char* szSource)
 {
     D2GSPacketSrv5A packet5A = {};
@@ -1150,7 +1150,7 @@ void __fastcall PLRTRADE_SendEventPacketToPlayer(D2UnitStrc* pPlayer, D2C_SRV2CL
     D2GAME_PACKETS_SendPacket0x5A_6FC3DEC0(SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__), &packet5A);
 }
 
-//D2Game.0x6FC90DE0
+// D2Game.0x6FC90DE0
 void __fastcall PLRTRADE_TryToTrade(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     if (PLAYER_IsBusy(pPlayer1) || ACT4Q2_HasDiabloBeenKilled(pGame))
@@ -1216,7 +1216,7 @@ void __fastcall PLRTRADE_TryToTrade(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2U
     }
 }
 
-//D2Game.0x6FC91050
+// D2Game.0x6FC91050
 void __fastcall sub_6FC91050(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, D2PlayerDataStrc* pPlayerData1, D2PlayerDataStrc* pPlayerData2, int32_t nTradeState)
 {
     UNITS_RefreshInventory(pPlayer1, 1);
@@ -1257,7 +1257,7 @@ void __fastcall sub_6FC91050(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc
     EVENT_SetEvent(pGame, pPlayer2, EVENTTYPE_UPDATETRADE, pGame->dwGameFrame + 1, 0, 0);
 }
 
-//D2Game.0x6FC91250
+// D2Game.0x6FC91250
 int32_t __fastcall sub_6FC91250(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint16_t nButton, int32_t nGoldAmount)
 {
     if (!pPlayer)
@@ -1741,7 +1741,7 @@ int32_t __fastcall sub_6FC91250(D2GameStrc* pGame, D2UnitStrc* pPlayer, uint16_t
     return 0;
 }
 
-//D2Game.0x6FC92130
+// D2Game.0x6FC92130
 void __fastcall PLRTRADE_HandleCubeInteraction(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     if (!pUnit)
@@ -2034,7 +2034,7 @@ void __fastcall PLRTRADE_HandleCubeInteraction(D2GameStrc* pGame, D2UnitStrc* pU
     }
 }
 
-//D2Game.0x6FC927D0
+// D2Game.0x6FC927D0
 int32_t __fastcall PLRTRADE_AllocPlayerTrade(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);
@@ -2058,7 +2058,7 @@ int32_t __fastcall PLRTRADE_AllocPlayerTrade(D2GameStrc* pGame, D2UnitStrc* pPla
     return 1;
 }
 
-//D2Game.0x6FC92890
+// D2Game.0x6FC92890
 void __fastcall PLRTRADE_AddGold(D2UnitStrc* pUnit, int32_t nStat, int32_t nValue)
 {
     if (!pUnit)
@@ -2096,7 +2096,7 @@ void __fastcall PLRTRADE_AddGold(D2UnitStrc* pUnit, int32_t nStat, int32_t nValu
     STATLIST_AddUnitStat(pUnit, nStat, nValue, 0);
 }
 
-//D2Game.0x6FC92920
+// D2Game.0x6FC92920
 void __fastcall sub_6FC92920(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2, D2PlayerDataStrc* pPlayerData1, D2PlayerDataStrc* pPlayerData2)
 {
     sub_6FC4B830(pGame, pPlayer1);
@@ -2142,7 +2142,7 @@ void __fastcall sub_6FC92920(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc
     EVENT_SetEvent(pGame, pPlayer2, EVENTTYPE_UPDATETRADE, pGame->dwGameFrame + 1, 0, 0);
 }
 
-//D2Game.0x6FC92A90
+// D2Game.0x6FC92A90
 int32_t __fastcall sub_6FC92A90(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitStrc* pPlayer2)
 {
     D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pPlayer1, __FILE__, __LINE__);
@@ -2222,7 +2222,7 @@ int32_t __fastcall sub_6FC92A90(D2GameStrc* pGame, D2UnitStrc* pPlayer1, D2UnitS
     return 1;
 }
 
-//D2Game.0x6FC92CF0
+// D2Game.0x6FC92CF0
 void __fastcall PLRTRADE_StopAllPlayerInteractions(D2GameStrc* pGame, D2UnitStrc* pPlayer)
 {
     int32_t nUnitType = 0;
@@ -2267,20 +2267,20 @@ void __fastcall PLRTRADE_StopAllPlayerInteractions(D2GameStrc* pGame, D2UnitStrc
     EVENT_SetEvent(pGame, pOtherPlayer, EVENTTYPE_UPDATETRADE, pGame->dwGameFrame + 1, 0, 0);
 }
 
-//D2Game.0x6FC92EE0
+// D2Game.0x6FC92EE0
 void __fastcall sub_6FC92EE0(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     PLRTRADE_StopAllPlayerInteractions(pGame, pUnit);
 }
 
-//D2Game.0x6FC92EF0
+// D2Game.0x6FC92EF0
 void __fastcall sub_6FC92EF0(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     SUNIT_ResetInteractInfo(pUnit);
     sub_6FC4B830(pGame, pUnit);
 }
 
-//D2Game.0x6FC92F10
+// D2Game.0x6FC92F10
 void __fastcall sub_6FC92F10(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc* pItem)
 {
     int32_t nUnitType = 0;
@@ -2346,7 +2346,7 @@ void __fastcall sub_6FC92F10(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc*
     }
 }
 
-//D2Game.0x6FC931D0
+// D2Game.0x6FC931D0
 void __fastcall sub_6FC931D0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc* pItem)
 {
     int32_t nUnitType = 0;
@@ -2410,7 +2410,7 @@ void __fastcall sub_6FC931D0(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc*
     }
 }
 
-//D2Game.0x6FC933F0
+// D2Game.0x6FC933F0
 int32_t __fastcall PLRTRADE_CopyTradeSaveDataToBuffer(D2UnitStrc* pUnit, uint8_t* pBuffer, int32_t nBufferSize)
 {
     D2PlayerTradeStrc* pTrade = UNITS_GetPlayerData(pUnit)->pTrade;
@@ -2423,7 +2423,7 @@ int32_t __fastcall PLRTRADE_CopyTradeSaveDataToBuffer(D2UnitStrc* pUnit, uint8_t
     return 0;
 }
 
-//D2Game.0x6FC93430
+// D2Game.0x6FC93430
 int32_t __fastcall sub_6FC93430(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc* pItem)
 {
     D2PlayerDataStrc* pPlayerData1 = UNITS_GetPlayerData(pPlayer);
@@ -2529,7 +2529,7 @@ int32_t __fastcall sub_6FC93430(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitSt
     return nResult;
 }
 
-//D2Game.0x6FC93740
+// D2Game.0x6FC93740
 int32_t __fastcall sub_6FC93740(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     int32_t nUnitType = 0;
@@ -2551,7 +2551,7 @@ int32_t __fastcall sub_6FC93740(D2GameStrc* pGame, D2UnitStrc* pUnit)
     return 1;
 }
 
-//D2Game.0x6FC937A0
+// D2Game.0x6FC937A0
 int32_t __fastcall D2GAME_PLRTRADE_IsInteractingWithPlayer(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     int32_t nUnitType = 0;
@@ -2560,7 +2560,7 @@ int32_t __fastcall D2GAME_PLRTRADE_IsInteractingWithPlayer(D2GameStrc* pGame, D2
     return SUNIT_GetInteractInfo(pUnit, &nUnitType, &nUnitGUID) && nUnitType == UNIT_PLAYER && SUNIT_GetServerUnit(pGame, UNIT_PLAYER, nUnitGUID);
 }
 
-//D2Game.0x6FC937F0
+// D2Game.0x6FC937F0
 void __fastcall D2GAME_PLRTRADE_Last_6FC937F0(D2GameStrc* pGame, D2UnitStrc* pPlayer, int32_t a3, int32_t a4)
 {
     D2PlayerDataStrc* pPlayerData = UNITS_GetPlayerData(pPlayer);

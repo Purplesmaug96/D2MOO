@@ -7,7 +7,7 @@
 #include "QUESTS/Quests.h"
 
 
-//D2Game.0x6FD376B8
+// D2Game.0x6FD376B8
 D2NPCMessageTableStrc gpAct2Q8NpcMessages[] =
 {
 	{
@@ -25,7 +25,7 @@ D2NPCMessageTableStrc gpAct2Q8NpcMessages[] =
 };
 
 
-//D2Game.0x6FCA66F0
+// D2Game.0x6FCA66F0
 void __fastcall ACT2Q8_InitQuestData(D2QuestDataStrc* pQuestData)
 {
 	memset(pQuestData->pfCallback, 0x00, sizeof(pQuestData->pfCallback));
@@ -46,7 +46,7 @@ void __fastcall ACT2Q8_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestData->pfActiveFilter = ACT2Q8_ActiveFilterCallback;
 }
 
-//D2Game.0x6FCA6770
+// D2Game.0x6FCA6770
 void __fastcall ACT2Q8_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (pQuestArg->nNPCNo == MONSTER_ACT2GUARD5 && pQuestArg->nMessageIndex == 303)
@@ -55,7 +55,7 @@ void __fastcall ACT2Q8_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 	}
 }
 
-//D2Game.0x6FCA67B0
+// D2Game.0x6FCA67B0
 void __fastcall ACT2Q8_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (!pQuestArg->pTarget || pQuestArg->pTarget->dwClassId != MONSTER_ACT2GUARD5)
@@ -82,7 +82,7 @@ void __fastcall ACT2Q8_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2Que
 	}
 }
 
-//D2Game.0x6FCA6850
+// D2Game.0x6FCA6850
 bool __fastcall ACT2Q8_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNpcId, D2UnitStrc* pPlayer, D2BitBufferStrc* pQuestFlags, D2UnitStrc* pNPC)
 {
 	if (nNpcId != MONSTER_ACT2GUARD5)

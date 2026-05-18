@@ -29,19 +29,19 @@ struct D2WinAnimImageStrc
 #pragma pack(pop)
 
 
-//D2Win.0x6F8A53B0
+// D2Win.0x6F8A53B0
 D2WinAnimImageStrc* __fastcall ANIMIMAGE_Create(int nX, int nY, int nWidth, int nHeight, D2CellFileStrc* pCellFile, uint32_t nAnimSpeed, int(__stdcall* a7)(SMSGHANDLER_PARAMS*), D2AnimatedImageDescriptor* pDescriptor, DrawMode eDrawMode, void(__stdcall* a10)(SMSGHANDLER_PARAMS*));
-//D2Win.0x6F8B1BF0
+// D2Win.0x6F8B1BF0
 int __fastcall ANIMIMAGE_Destroy(D2WinControlStrc* pControl);
-//D2Win.0x6F8A54A0
+// D2Win.0x6F8A54A0
 int __fastcall D2Win_10106(D2WinAnimImageStrc* pAnimImage);
-//D2Win.0x6F8A54D0
+// D2Win.0x6F8A54D0
 int __fastcall D2Win_10104(D2WinAnimImageStrc* pAnimImage);
-//D2Win.0x6F8A5530
+// D2Win.0x6F8A5530
 int32_t __fastcall ANIMIMAGE_ShouldMouseInputBeHandled(D2WinControlStrc* pControl);
-//D2Win.0x6F8A5610
+// D2Win.0x6F8A5610
 int32_t __fastcall ANIMIMAGE_Draw(D2WinControlStrc* pControl);
-//D2Win.0x6F8A5900
+// D2Win.0x6F8A5900
 int __stdcall ANIMIMAGE_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg);
-//D2Win.0x6F8A5980
+// D2Win.0x6F8A5980
 int32_t __stdcall ANIMIMAGE_SetIsRunning(D2WinAnimImageStrc* pAnimImage, int32_t bIsRunning);

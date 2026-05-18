@@ -7,7 +7,7 @@
 
 #include <Archive.h>
 
-//D2Common.0x6FD473C0
+// D2Common.0x6FD473C0
 D2AnimDataTableStrc* __fastcall DATATBLS_LoadAnimDataD2(HD2ARCHIVE hArchive)
 {
 	D2AnimDataTableStrc* pAnimDataTable = D2_CALLOC_STRC_POOL(nullptr, D2AnimDataTableStrc);
@@ -30,7 +30,7 @@ D2AnimDataTableStrc* __fastcall DATATBLS_LoadAnimDataD2(HD2ARCHIVE hArchive)
 	return pAnimDataTable;
 }
 
-//D2Common.0x6FD47460
+// D2Common.0x6FD47460
 void __fastcall DATATBLS_UnloadAnimDataD2(D2AnimDataTableStrc* pAnimData)
 {
 	if (pAnimData)
@@ -85,7 +85,7 @@ static D2AnimDataRecordStrc* DATATBLS_GetAnimDataRecordFromPath(char* szPath)
 	return nullptr;
 }
 
-//D2Common.0x6FD474A0
+// D2Common.0x6FD474A0
 const D2AnimDataRecordStrc* __fastcall DATATBLS_GetAnimDataRecord(D2UnitStrc* pUnit, int nClassId, int nMode, int nUnitType, D2InventoryStrc* pInventory)
 {
 	int nWeaponClassCode = 0;
@@ -101,7 +101,7 @@ const D2AnimDataRecordStrc* __fastcall DATATBLS_GetAnimDataRecord(D2UnitStrc* pU
 	}
 }
 
-//D2Common.0x6FD475D0 (#10640)
+// D2Common.0x6FD475D0 (#10640)
 void __stdcall DATATBLS_UnitAnimInfoDebugSet(D2UnitStrc* pUnit, int nAnimSpeed)
 {
 	int nWeaponClassCode = 0;
@@ -115,7 +115,7 @@ void __stdcall DATATBLS_UnitAnimInfoDebugSet(D2UnitStrc* pUnit, int nAnimSpeed)
 	exit(-1);
 }
 
-//D2Common.0x6FD47700 (#10641)
+// D2Common.0x6FD47700 (#10641)
 BOOL __stdcall DATATBLS_GetAnimDataInfo(char* szPath, int* pOutLength, int* pOutAnimSpeed, int* pOutFirstFrameTagged)
 {
 	if (D2AnimDataRecordStrc* pRecord = DATATBLS_GetAnimDataRecordFromPath(szPath))

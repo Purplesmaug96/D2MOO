@@ -1,18 +1,18 @@
 #include "D2Text.h"
 #include <Fog.h>
 
-//D2Common.0x6FDC36E0 (#10901)
+// D2Common.0x6FDC36E0 (#10901)
 D2TextHeaderStrc* __stdcall TEXT_AllocTextHeader(void* pMemPool)
 {
 	D2TextHeaderStrc* pTextHeader = D2_ALLOC_STRC_POOL(pMemPool, D2TextHeaderStrc);
 	pTextHeader->pMemPool = pMemPool;
 	pTextHeader->nCount = 0;
 	pTextHeader->pNode = NULL;
-	
+
 	return pTextHeader;
 }
 
-//D2Common.0x6FDC3710 (#10902)
+// D2Common.0x6FDC3710 (#10902)
 void __stdcall TEXT_FreeTextHeader(D2TextHeaderStrc* pTextHeader)
 {
 	D2TextNodeStrc* pNode = NULL;
@@ -29,7 +29,7 @@ void __stdcall TEXT_FreeTextHeader(D2TextHeaderStrc* pTextHeader)
 	D2_FREE_POOL(pTextHeader->pMemPool, pTextHeader);
 }
 
-//D2Common.0x6FDC3760 (#10903)
+// D2Common.0x6FDC3760 (#10903)
 void __stdcall TEXT_AddNodeToTextList(D2TextHeaderStrc* pTextHeader, short nStringId, int nMenu)
 {
 	D2TextNodeStrc* pNode = NULL;
@@ -43,7 +43,7 @@ void __stdcall TEXT_AddNodeToTextList(D2TextHeaderStrc* pTextHeader, short nStri
 	pTextHeader->pNode = pNode;
 }
 
-//D2Common.0x6FDC37A0 (#10904)
+// D2Common.0x6FDC37A0 (#10904)
 void __stdcall TEXT_RemoveNodeFromTextList(D2TextHeaderStrc* pTextHeader, short nStringId)
 {
 	D2TextNodeStrc* pPrevious = NULL;
@@ -78,7 +78,7 @@ void __stdcall TEXT_RemoveNodeFromTextList(D2TextHeaderStrc* pTextHeader, short 
 	}
 }
 
-//D2Common.0x6FDC37F0 (#10905)
+// D2Common.0x6FDC37F0 (#10905)
 int __stdcall TEXT_GetMenuType2NodeCount(D2TextHeaderStrc* pTextHeader)
 {
 	int nNodes = 0;
@@ -94,7 +94,7 @@ int __stdcall TEXT_GetMenuType2NodeCount(D2TextHeaderStrc* pTextHeader)
 	return nNodes;
 }
 
-//D2Common.0x6FDC33820 (#10906)
+// D2Common.0x6FDC33820 (#10906)
 short __stdcall TEXT_GetStringIdOfMenuType2Node(D2TextHeaderStrc* pTextHeader, int nNodeId)
 {
 	D2TextNodeStrc* pNode = NULL;
@@ -120,7 +120,7 @@ short __stdcall TEXT_GetStringIdOfMenuType2Node(D2TextHeaderStrc* pTextHeader, i
 	return 3724;
 }
 
-//D2Common.0x6FDC3850 (#10907)
+// D2Common.0x6FDC3850 (#10907)
 short __stdcall TEXT_GetStringIdOfMenuType1Or2Node(D2TextHeaderStrc* pTextHeader, int nNodeId)
 {
 	D2TextNodeStrc* pNode = NULL;
@@ -146,7 +146,7 @@ short __stdcall TEXT_GetStringIdOfMenuType1Or2Node(D2TextHeaderStrc* pTextHeader
 	return -1;
 }
 
-//D2Common.0x6FDC3890 (#10908)
+// D2Common.0x6FDC3890 (#10908)
 short __stdcall TEXT_GetStringIdOfMenuType0Or2Node(D2TextHeaderStrc* pTextHeader, int nNodeId)
 {
 	D2TextNodeStrc* pNode = NULL;
@@ -172,7 +172,7 @@ short __stdcall TEXT_GetStringIdOfMenuType0Or2Node(D2TextHeaderStrc* pTextHeader
 	return -1;
 }
 
-//D2Common.0x6FDC38C0 (#10909)
+// D2Common.0x6FDC38C0 (#10909)
 void __stdcall TEXT_CreateMessageListFromTextHeader(D2TextHeaderStrc* pTextHeader, D2MessageListStrc* pMsgList)
 {
 	D2_ASSERT(pTextHeader != nullptr);
@@ -181,7 +181,7 @@ void __stdcall TEXT_CreateMessageListFromTextHeader(D2TextHeaderStrc* pTextHeade
 	memset(pMsgList, 0x00, sizeof(D2MessageListStrc));
 
 	pMsgList->nCount = LOBYTE(pTextHeader->nCount);
-	
+
 	int i = 0;
 	for (D2TextNodeStrc* pNode = pTextHeader->pNode; pNode != nullptr; pNode = pNode->pNext)
 	{
@@ -193,7 +193,7 @@ void __stdcall TEXT_CreateMessageListFromTextHeader(D2TextHeaderStrc* pTextHeade
 	}
 }
 
-//D2Common.0x6FDC3970 (#10910)
+// D2Common.0x6FDC3970 (#10910)
 void __stdcall TEXT_CreateTextHeaderFromMessageList(D2TextHeaderStrc* pTextHeader, D2MessageListStrc* pMsgList)
 {
 	D2_ASSERT(pTextHeader != nullptr);
@@ -218,7 +218,7 @@ void __stdcall TEXT_CreateTextHeaderFromMessageList(D2TextHeaderStrc* pTextHeade
 	}
 }
 
-//D2Common.0x6FDC3A70 (#10911)
+// D2Common.0x6FDC3A70 (#10911)
 void __stdcall TEXT_SortTextNodeListByStringId(D2TextHeaderStrc* pTextHeader)
 {
 	D2_ASSERT(pTextHeader != nullptr);

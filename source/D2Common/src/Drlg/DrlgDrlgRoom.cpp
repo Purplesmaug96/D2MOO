@@ -11,7 +11,7 @@
 #include "D2Seed.h"
 
 
-//D2Common.0x6FD771C0
+// D2Common.0x6FD771C0
 D2DrlgRoomStrc* __fastcall DRLGROOM_AllocRoomEx(D2DrlgLevelStrc* pLevel, int nType)
 {
 	D2DrlgRoomStrc* pDrlgRoom = D2_CALLOC_STRC_POOL(pLevel->pDrlg->pMempool, D2DrlgRoomStrc);
@@ -39,7 +39,7 @@ D2DrlgRoomStrc* __fastcall DRLGROOM_AllocRoomEx(D2DrlgLevelStrc* pLevel, int nTy
 	return pDrlgRoom;
 }
 
-//D2Common.0x6FD77280
+// D2Common.0x6FD77280
 void __fastcall sub_6FD77280(D2DrlgRoomStrc* pDrlgRoom, BOOL bClient, uint32_t nFlags)
 {
 	pDrlgRoom->pRoom = NULL;
@@ -52,7 +52,7 @@ void __fastcall sub_6FD77280(D2DrlgRoomStrc* pDrlgRoom, BOOL bClient, uint32_t n
 	}
 }
 
-//D2Common.0x6FD772B0
+// D2Common.0x6FD772B0
 void __fastcall DRLGROOM_FreeRoomTiles(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2RoomTileStrc* pRoomTile = NULL;
@@ -68,7 +68,7 @@ void __fastcall DRLGROOM_FreeRoomTiles(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom
 	pDrlgRoom->pRoomTiles = NULL;
 }
 
-//D2Common.0x6FD772F0
+// D2Common.0x6FD772F0
 void __fastcall DRLGROOM_FreeRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2PresetUnitStrc* pNextPresetUnit = NULL;
@@ -99,7 +99,7 @@ void __fastcall DRLGROOM_FreeRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 		DRLGPRESET_FreePresetRoomData(pDrlgRoom);
 	}
 
-	
+
 	for (D2PresetUnitStrc* pPresetUnit = pDrlgRoom->pPresetUnits; pPresetUnit; pPresetUnit = pNextPresetUnit)
 	{
 		pNextPresetUnit = pPresetUnit->pNext;
@@ -198,11 +198,11 @@ void __fastcall DRLGROOM_FreeRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 	D2_FREE_POOL(pMemPool, pDrlgRoom);
 }
 
-//D2Common.0x6FD774F0
+// D2Common.0x6FD774F0
 void __fastcall DRLGROOM_FreeRoomData(void* pMemPool, D2DrlgOrthStrc* pDrlgRoomData)
 {
 	D2DrlgOrthStrc* pNext = NULL;
-	
+
 	for (D2DrlgOrthStrc* pRoomData = pDrlgRoomData; pRoomData; pRoomData = pNext)
 	{
 		pNext = pRoomData->pNext;
@@ -210,7 +210,7 @@ void __fastcall DRLGROOM_FreeRoomData(void* pMemPool, D2DrlgOrthStrc* pDrlgRoomD
 	}
 }
 
-//D2Common.0x6FD77520
+// D2Common.0x6FD77520
 void __fastcall DRLGROOM_AllocDrlgOrthsForRooms(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStrc* pDrlgRoom2, int nDirection)
 {
 	D2DrlgOrthStrc* pDrlgOrth = NULL;
@@ -259,7 +259,7 @@ void __fastcall DRLGROOM_AllocDrlgOrthsForRooms(D2DrlgRoomStrc* pDrlgRoom1, D2Dr
 	}
 }
 
-//D2Common.0x6FD77600
+// D2Common.0x6FD77600
 void __fastcall DRLGROOM_AddOrth(D2DrlgOrthStrc** ppDrlgOrth, D2DrlgLevelStrc* pLevel, int nDirection, BOOL bIsPreset)
 {
 	D2DrlgOrthStrc* pPrevious = NULL;
@@ -311,7 +311,7 @@ void __fastcall DRLGROOM_AddOrth(D2DrlgOrthStrc** ppDrlgOrth, D2DrlgLevelStrc* p
 	}
 }
 
-//D2Common.0x6FD776B0
+// D2Common.0x6FD776B0
 BOOL __fastcall sub_6FD776B0(D2DrlgOrthStrc* pDrlgOrth1, D2DrlgOrthStrc* pDrlgOrth2)
 {
 	if (pDrlgOrth1->nDirection <= pDrlgOrth2->nDirection)
@@ -385,7 +385,7 @@ void DRLG_ComputeManhattanDistance(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc
 }
 
 
-//D2Common.0x6FD77740
+// D2Common.0x6FD77740
 // Compute manhattan distance between rectangles and returns true if distance is greater or equal than nMargin
 BOOL __fastcall DRLG_GetRectanglesManhattanDistanceAndCheckNotOverlapping(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrlgCoord2, int nMaxDistance, int* pDistanceX, int* pDistanceY)
 {
@@ -393,7 +393,7 @@ BOOL __fastcall DRLG_GetRectanglesManhattanDistanceAndCheckNotOverlapping(D2Drlg
 	return *pDistanceX >= nMaxDistance || *pDistanceY >= nMaxDistance;
 }
 
-//D2Common.0x6FD777B0
+// D2Common.0x6FD777B0
 // Compute manhattan distance between rectangles and returns true if distance is greater or equal than nMargin
 BOOL __fastcall DRLG_CheckNotOverlappingUsingManhattanDistance(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrlgCoord2, int nMaxDistanceToAssumeCollision)
 {
@@ -402,7 +402,7 @@ BOOL __fastcall DRLG_CheckNotOverlappingUsingManhattanDistance(D2DrlgCoordStrc* 
 	return DRLG_GetRectanglesManhattanDistanceAndCheckNotOverlapping(pDrlgCoord1, pDrlgCoord2, nMaxDistanceToAssumeCollision, &nSignedDistanceX, &nSignedDistanceY);
 }
 
-//D2Common.0x6FD77800
+// D2Common.0x6FD77800
 BOOL __fastcall DRLG_CheckOverlappingWithOrthogonalMargin(D2DrlgCoordStrc* pDrlgCoord1, D2DrlgCoordStrc* pDrlgCoord2, int nOrthogonalDistanceMax)
 {
 	int nSignedDistanceX = 0;
@@ -432,7 +432,7 @@ BOOL __fastcall DRLG_CheckOverlappingWithOrthogonalMargin(D2DrlgCoordStrc* pDrlg
 	return FALSE;
 }
 
-//D2Common.0x6FD77890
+// D2Common.0x6FD77890
 BOOL __fastcall DRLGMAZE_CheckRoomNotOverlaping(D2DrlgLevelStrc* pLevel, D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStrc* pIgnoredRoom, int nMargin)
 {
 	for (D2DrlgRoomStrc* pCurrentRoomEx = pLevel->pFirstRoomEx; pCurrentRoomEx; pCurrentRoomEx = pCurrentRoomEx->pDrlgRoomNext)
@@ -449,7 +449,7 @@ BOOL __fastcall DRLGMAZE_CheckRoomNotOverlaping(D2DrlgLevelStrc* pLevel, D2DrlgR
 	return TRUE;
 }
 
-//D2Common.0x6FD77910
+// D2Common.0x6FD77910
 void __fastcall DRLGROOM_AddRoomExToLevel(D2DrlgLevelStrc* pLevel, D2DrlgRoomStrc* pDrlgRoom)
 {
 	pDrlgRoom->pDrlgRoomNext = pLevel->pFirstRoomEx;
@@ -457,7 +457,7 @@ void __fastcall DRLGROOM_AddRoomExToLevel(D2DrlgLevelStrc* pLevel, D2DrlgRoomStr
 	++pLevel->nRooms;
 }
 
-//D2Common.0x6FD77930
+// D2Common.0x6FD77930
 BOOL __fastcall DRLGROOM_AreXYInsideCoordinates(D2DrlgCoordStrc* pDrlgCoord, int nX, int nY)
 {
 	if (nX >= pDrlgCoord->nPosX && nY >= pDrlgCoord->nPosY && nX < pDrlgCoord->nPosX + pDrlgCoord->nWidth && nY < pDrlgCoord->nPosY + pDrlgCoord->nHeight)
@@ -468,7 +468,7 @@ BOOL __fastcall DRLGROOM_AreXYInsideCoordinates(D2DrlgCoordStrc* pDrlgCoord, int
 	return FALSE;
 }
 
-//D2Common.0x6FD77980
+// D2Common.0x6FD77980
 BOOL __fastcall DRLGROOM_AreXYInsideCoordinatesOrOnBorder(D2DrlgCoordStrc* pDrlgCoord, int nX, int nY)
 {
 	if (nX >= pDrlgCoord->nPosX && nY >= pDrlgCoord->nPosY && nX <= pDrlgCoord->nPosX + pDrlgCoord->nWidth && nY <= pDrlgCoord->nPosY + pDrlgCoord->nHeight)
@@ -479,7 +479,7 @@ BOOL __fastcall DRLGROOM_AreXYInsideCoordinatesOrOnBorder(D2DrlgCoordStrc* pDrlg
 	return FALSE;
 }
 
-//D2Common.0x6FD779D0
+// D2Common.0x6FD779D0
 BOOL __fastcall DRLGROOM_CheckLOSDraw(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->nType == DRLGTYPE_MAZE)
@@ -490,11 +490,11 @@ BOOL __fastcall DRLGROOM_CheckLOSDraw(D2DrlgRoomStrc* pDrlgRoom)
 	{
 		return pDrlgRoom->dwFlags & DRLGROOMFLAG_NO_LOS_DRAW;
 	}
-		
+
 	return FALSE;
 }
 
-//D2Common.0x6FD779F0
+// D2Common.0x6FD779F0
 int __fastcall sub_6FD779F0(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->nType == DRLGTYPE_MAZE)
@@ -505,34 +505,34 @@ int __fastcall sub_6FD779F0(D2DrlgRoomStrc* pDrlgRoom)
 	return 0;
 }
 
-//D2Common.0x6FD77A00
+// D2Common.0x6FD77A00
 int __fastcall DRLGROOM_CheckWaypointFlags(D2DrlgRoomStrc* pDrlgRoom)
 {
 	return pDrlgRoom->dwFlags & (DRLGROOMFLAG_HAS_WAYPOINT | DRLGROOMFLAG_HAS_WAYPOINT_SMALL);
 }
 
-//D2Common.0x6FD77A10
+// D2Common.0x6FD77A10
 int __fastcall DRLGROOM_GetLevelId(D2DrlgRoomStrc* pDrlgRoom)
 {
 	return pDrlgRoom->pLevel->nLevelId;
 }
 
-//D2Common.0x6FD77A20
+// D2Common.0x6FD77A20
 int __fastcall DRLGROOM_GetWarpDestinationLevel(D2DrlgRoomStrc* pDrlgRoom, int nSourceLevel)
 {
 	int nDestinationLevel = 0;
 	D2LvlWarpTxt* pLvlWarpTxtRecord = nullptr;
 	D2ActiveRoomStrc* pRoom = DRLGWARP_GetDestinationRoom(pDrlgRoom, nSourceLevel, &nDestinationLevel, &pLvlWarpTxtRecord);
 	D2_ASSERT(pRoom);
-	
+
 	pDrlgRoom = DUNGEON_GetRoomExFromRoom(pRoom);
 	D2_ASSERT(pDrlgRoom);
-	
+
 	D2_ASSERT(pDrlgRoom->pLevel);
 	return pDrlgRoom->pLevel->nLevelId;
 }
 
-//D2Common.0x6FD77AB0
+// D2Common.0x6FD77AB0
 int __fastcall DRLGROOM_GetLevelIdFromPopulatedRoom(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (!pDrlgRoom)
@@ -550,7 +550,7 @@ int __fastcall DRLGROOM_GetLevelIdFromPopulatedRoom(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD77AF0
+// D2Common.0x6FD77AF0
 BOOL __fastcall DRLGROOM_HasWaypoint(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (!pDrlgRoom)
@@ -561,7 +561,7 @@ BOOL __fastcall DRLGROOM_HasWaypoint(D2DrlgRoomStrc* pDrlgRoom)
 	return DRLGROOM_CheckWaypointFlags(pDrlgRoom) != 0;
 }
 
-//D2Common.0x6FD77B20
+// D2Common.0x6FD77B20
 const char* __fastcall DRLGROOM_GetPickedLevelPrestFilePathFromRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->nType == DRLGTYPE_PRESET)
@@ -574,7 +574,7 @@ const char* __fastcall DRLGROOM_GetPickedLevelPrestFilePathFromRoomEx(D2DrlgRoom
 	}
 }
 
-//D2Common.0x6FD77B50
+// D2Common.0x6FD77B50
 int __fastcall DRLGROOM_ReorderNearRoomList(D2DrlgRoomStrc* pDrlgRoom, D2ActiveRoomStrc** ppRoomList)
 {
 	int nRooms = 0;
@@ -743,7 +743,7 @@ void __fastcall sub_6FD77BB0(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD77EB0
+// D2Common.0x6FD77EB0
 void __fastcall DRLGROOM_SortRoomListByPosition(D2DrlgRoomStrc** ppRoomList, int nListSize)
 {
 	D2DrlgRoomStrc* pDrlgRoom1 = NULL;
@@ -765,7 +765,7 @@ void __fastcall DRLGROOM_SortRoomListByPosition(D2DrlgRoomStrc** ppRoomList, int
 	}
 }
 
-//D2Common.0x6FD77F00
+// D2Common.0x6FD77F00
 BOOL __fastcall sub_6FD77F00(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom1, uint8_t nWarpId, D2DrlgRoomStrc* pDrlgRoom2, char nWarpFlag, int nDirection)
 {
 	D2RoomTileStrc* pRoomTile = NULL;
@@ -836,7 +836,7 @@ BOOL __fastcall sub_6FD77F00(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom1, uint8_t
 	return bResult;
 }
 
-//D2Common.0x6FD780E0
+// D2Common.0x6FD780E0
 D2PresetUnitStrc* __fastcall DRLGROOM_AllocPresetUnit(D2DrlgRoomStrc* pDrlgRoom, void* pMemPool, int nUnitType, int nIndex, int nMode, int nX, int nY)
 {
 	D2PresetUnitStrc* pPresetUnit = D2_CALLOC_STRC_POOL(pMemPool, D2PresetUnitStrc);
@@ -860,7 +860,7 @@ D2PresetUnitStrc* __fastcall DRLGROOM_AllocPresetUnit(D2DrlgRoomStrc* pDrlgRoom,
 	return pPresetUnit;
 }
 
-//D2Common.0x6FD78160
+// D2Common.0x6FD78160
 D2PresetUnitStrc* __fastcall DRLGROOM_GetPresetUnits(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (!(pDrlgRoom->dwFlags & DRLGROOMFLAG_AUTOMAP_REVEAL))
@@ -876,13 +876,13 @@ D2PresetUnitStrc* __fastcall DRLGROOM_GetPresetUnits(D2DrlgRoomStrc* pDrlgRoom)
 	return pDrlgRoom->pPresetUnits;
 }
 
-//D2Common.0x6FD78190
+// D2Common.0x6FD78190
 void __fastcall DRLGROOM_SetRoom(D2DrlgRoomStrc* pDrlgRoom, D2ActiveRoomStrc* pRoom)
 {
 	pDrlgRoom->pRoom = pRoom;
 }
 
-//D2Common.0x6FD781A0
+// D2Common.0x6FD781A0
 void __fastcall DRLGROOM_GetRGB_IntensityFromRoomEx(D2DrlgRoomStrc* pDrlgRoom, uint8_t* pIntensity, uint8_t* pRed, uint8_t* pGreen, uint8_t* pBlue)
 {
 	D2LevelDefBin* pLevelDefRecord = DATATBLS_GetLevelDefRecord(pDrlgRoom->pLevel->nLevelId);
@@ -893,7 +893,7 @@ void __fastcall DRLGROOM_GetRGB_IntensityFromRoomEx(D2DrlgRoomStrc* pDrlgRoom, u
 	*pBlue = pLevelDefRecord->nBlue;
 }
 
-//D2Common.0x6FD781E0
+// D2Common.0x6FD781E0
 int* __fastcall DRLGROOM_GetVisArrayFromLevelId(D2DrlgStrc* pDrlg, int nLevelId)
 {
 	D2DrlgWarpStrc* pDrlgWarp = pDrlg->pWarp;
@@ -916,7 +916,7 @@ int* __fastcall DRLGROOM_GetVisArrayFromLevelId(D2DrlgStrc* pDrlg, int nLevelId)
 	return DATATBLS_GetLevelDefRecord(nLevelId)->dwVis;
 }
 
-//D2Common.0x6FD78230
+// D2Common.0x6FD78230
 D2DrlgStrc* __fastcall DRLGROOM_GetDrlgFromRoomEx(D2DrlgRoomStrc* pRoom)
 {
 	D2_ASSERT(pRoom);

@@ -7,7 +7,7 @@
 #include "QUESTS/Quests.h"
 
 
-//D2Game.0x6FD37220
+// D2Game.0x6FD37220
 D2NPCMessageTableStrc gpAct2Q7NpcMessages[] =
 {
 	{
@@ -49,7 +49,7 @@ D2NPCMessageTableStrc gpAct2Q7NpcMessages[] =
 };
 
 
-//D2Game.0x6FCA6420
+// D2Game.0x6FCA6420
 void __fastcall ACT2Q7_InitQuestData(D2QuestDataStrc* pQuestData)
 {
 	memset(pQuestData->pfCallback, 0x00, sizeof(pQuestData->pfCallback));
@@ -70,7 +70,7 @@ void __fastcall ACT2Q7_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestData->pfActiveFilter = ACT2Q7_ActiveFilterCallback;
 }
 
-//D2Game.0x6FCA64B0
+// D2Game.0x6FCA64B0
 void __fastcall ACT2Q7_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (pQuestArg->nNPCNo != MONSTER_ACT2GUARD4)
@@ -90,7 +90,7 @@ void __fastcall ACT2Q7_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 	}
 }
 
-//D2Game.0x6FCA6510
+// D2Game.0x6FCA6510
 void __fastcall ACT2Q7_Callback02_NpcDeactivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (!pQuestArg->pTarget || pQuestArg->pTarget->dwClassId != MONSTER_ACT2GUARD4)
@@ -106,7 +106,7 @@ void __fastcall ACT2Q7_Callback02_NpcDeactivate(D2QuestDataStrc* pQuestData, D2Q
 	}
 }
 
-//D2Game.0x6FCA6540
+// D2Game.0x6FCA6540
 void __fastcall ACT2Q7_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (!pQuestArg->pTarget || pQuestArg->pTarget->dwClassId != MONSTER_ACT2GUARD4)
@@ -126,7 +126,7 @@ void __fastcall ACT2Q7_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2Que
 	}
 
 	D2QuestDataStrc* pQuestData8 = QUESTS_GetQuestData(pQuestData->pGame, 8);
-	
+
 	if (pQuestData8 && !pQuestData8->bNotIntro || QUESTRECORD_GetQuestState(pQuestFlags, QUESTSTATEFLAG_A2Q7, QFLAG_PRIMARYGOALDONE))
 	{
 		QUESTS_InitScrollTextChain(pQuestData, pQuestArg->pTextControl, MONSTER_ACT2GUARD4, (uint32_t)SEED_RollRandomNumber(&pQuestArg->pPlayer->pSeed) % 3 + 2);
@@ -137,12 +137,12 @@ void __fastcall ACT2Q7_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2Que
 	}
 }
 
-//D2Game.0x6FCA6660
+// D2Game.0x6FCA6660
 void __fastcall OBJECTS_InitFunction05_Door(D2ObjInitFnStrc* pOp)
 {
 }
 
-//D2Game.0x6FCA6680
+// D2Game.0x6FCA6680
 bool __fastcall ACT2Q7_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNpcId, D2UnitStrc* pPlayer, D2BitBufferStrc* pQuestFlags, D2UnitStrc* pNPC)
 {
 	if (nNpcId != MONSTER_ACT2GUARD4)

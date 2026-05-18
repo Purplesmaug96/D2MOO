@@ -13,11 +13,11 @@ struct D2WinCommandRegisterStrc
 #pragma pack(pop)
 
 
-//D2Win.0x6F8B1DC0
+// D2Win.0x6F8B1DC0
 void __fastcall WREGISTER_RegisterCommand(HWND hWnd, int32_t nType, int32_t nId, void(__stdcall* pCallback)(SMSGHANDLER_PARAMS*));
-//D2Win.0x6F8B1EC0
+// D2Win.0x6F8B1EC0
 void __fastcall WREGISTER_UnregisterCommand(HWND hWnd, int32_t nType, int32_t nId, void(__stdcall* pCallback)(SMSGHANDLER_PARAMS*));
-//D2Win.0x6F8B1FC0
+// D2Win.0x6F8B1FC0
 void __fastcall WREGISTER_RegisterCommands(HWND hWnd, D2WinCommandRegisterStrc* pCommandRegister, int32_t nCommands);
-//D2Win.0x6F8B2010
+// D2Win.0x6F8B2010
 void __fastcall WREGISTER_UnregisterCommands(HWND hWnd, D2WinCommandRegisterStrc* pCommandRegister, int32_t nCommands);

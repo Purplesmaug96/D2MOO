@@ -9,7 +9,7 @@
 #include "UNIT/SUnitInactive.h"
 
 
-//D2Game.0x6FCCED00
+// D2Game.0x6FCCED00
 D2AiControlStrc* __fastcall AIGENERAL_AllocAiControl(D2GameStrc* pGame)
 {
 	D2AiControlStrc* pAiControl = D2_CALLOC_STRC_POOL(pGame->pMemoryPool, D2AiControlStrc);
@@ -21,7 +21,7 @@ D2AiControlStrc* __fastcall AIGENERAL_AllocAiControl(D2GameStrc* pGame)
 	return pAiControl;
 }
 
-//D2Game.0x6FCCED40
+// D2Game.0x6FCCED40
 void __fastcall AIGENERAL_SetAiControlParam(D2UnitStrc* pMonster, int32_t nIndex, int32_t nParamValue)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pMonster);
@@ -48,7 +48,7 @@ void __fastcall AIGENERAL_SetAiControlParam(D2UnitStrc* pMonster, int32_t nIndex
 	}
 }
 
-//D2Game.0x6FCCED80
+// D2Game.0x6FCCED80
 int32_t __fastcall AIGENERAL_GetAiControlParam(D2UnitStrc* pUnit, int32_t nIndex)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -74,7 +74,7 @@ int32_t __fastcall AIGENERAL_GetAiControlParam(D2UnitStrc* pUnit, int32_t nIndex
 	return 0;
 }
 
-//D2Game.0x6FCCEDC0
+// D2Game.0x6FCCEDC0
 D2AiCmdStrc* __fastcall AIGENERAL_AllocAiCommand(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -109,7 +109,7 @@ D2AiCmdStrc* __fastcall AIGENERAL_AllocAiCommand(D2GameStrc* pGame, D2UnitStrc* 
 	return pAiCmd;
 }
 
-//D2Game.0x6FCCEE40
+// D2Game.0x6FCCEE40
 void __fastcall AIGENERAL_FreeCurrentAiCommand(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -144,7 +144,7 @@ void __fastcall AIGENERAL_FreeCurrentAiCommand(D2GameStrc* pGame, D2UnitStrc* pU
 	D2_FREE_POOL(pGame->pMemoryPool, pCurrentCmd);
 }
 
-//D2Game.0x6FCCEEB0
+// D2Game.0x6FCCEEB0
 void __fastcall AIGENERAL_FreeAllAiCommands(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -159,7 +159,7 @@ void __fastcall AIGENERAL_FreeAllAiCommands(D2GameStrc* pGame, D2UnitStrc* pUnit
 	}
 }
 
-//D2Game.0x6FCCEEF0
+// D2Game.0x6FCCEEF0
 D2AiCmdStrc* __fastcall AIGENERAL_GetCurrentAiCommandFromUnit(D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -171,7 +171,7 @@ D2AiCmdStrc* __fastcall AIGENERAL_GetCurrentAiCommandFromUnit(D2UnitStrc* pUnit)
 	return pAiControl->pCurrentCmd;
 }
 
-//D2Game.0x6FCCEF10
+// D2Game.0x6FCCEF10
 D2AiCmdStrc* __fastcall AIGENERAL_GetAiCommandFromParam(D2UnitStrc* pUnit, int32_t nCmdParam, int32_t bSet)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -210,7 +210,7 @@ D2AiCmdStrc* __fastcall AIGENERAL_GetAiCommandFromParam(D2UnitStrc* pUnit, int32
 	return pAiCmd;
 }
 
-//D2Game.0x6FCCEF70
+// D2Game.0x6FCCEF70
 void __fastcall AIGENERAL_AllocCommandsForMinions(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCmdStrc* pAiCmd)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -235,7 +235,7 @@ void __fastcall AIGENERAL_AllocCommandsForMinions(D2GameStrc* pGame, D2UnitStrc*
 	}
 }
 
-//D2Game.0x6FCCF050
+// D2Game.0x6FCCF050
 D2AiCmdStrc* __fastcall AIGENERAL_CopyAiCommand(D2GameStrc* pGame, D2UnitStrc* pUnit, D2AiCmdStrc* pAiCmd)
 {
 	D2AiCmdStrc* pCopy = AIGENERAL_AllocAiCommand(pGame, pUnit);
@@ -250,7 +250,7 @@ D2AiCmdStrc* __fastcall AIGENERAL_CopyAiCommand(D2GameStrc* pGame, D2UnitStrc* p
 	return pCopy;
 }
 
-//D2Game.0x6FCCF090
+// D2Game.0x6FCCF090
 D2AiCmdStrc* __fastcall AIGENERAL_SetCurrentAiCommand(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nCmdParam, int32_t bSet)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -270,7 +270,7 @@ D2AiCmdStrc* __fastcall AIGENERAL_SetCurrentAiCommand(D2GameStrc* pGame, D2UnitS
 	return AIGENERAL_GetAiCommandFromParam(pUnit, nCmdParam, bSet);
 }
 
-//D2Game.0x6FCCF190
+// D2Game.0x6FCCF190
 void __fastcall AIGENERAL_FreeAiControl(D2GameStrc* pGame, D2AiControlStrc* pAiControl)
 {
 	if (!pAiControl)
@@ -322,7 +322,7 @@ void __fastcall AIGENERAL_FreeAiControl(D2GameStrc* pGame, D2AiControlStrc* pAiC
 	D2_FREE_POOL(pGame->pMemoryPool, pAiControl);
 }
 
-//D2Game.0x6FCCF240
+// D2Game.0x6FCCF240
 D2MapAIStrc** __stdcall AIGENERAL_GetMapAiFromUnit(D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -334,7 +334,7 @@ D2MapAIStrc** __stdcall AIGENERAL_GetMapAiFromUnit(D2UnitStrc* pUnit)
 	return &pAiControl->pMapAi;
 }
 
-//D2Game.0x6FCCF270
+// D2Game.0x6FCCF270
 void __fastcall AIGENERAL_SetOwnerData(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nOwnerGUID, int32_t nOwnerType, int32_t bSetFlag1, int32_t bSetFlag2)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -354,7 +354,7 @@ void __fastcall AIGENERAL_SetOwnerData(D2GameStrc* pGame, D2UnitStrc* pUnit, int
 	pAiControl->pGame = pGame;
 }
 
-//D2Game.0x6FCCF2D0
+// D2Game.0x6FCCF2D0
 void __fastcall AIGENERAL_GetOwnerData(D2UnitStrc* pUnit, int32_t* pUnitGUID, int32_t* pUnitType)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -369,7 +369,7 @@ void __fastcall AIGENERAL_GetOwnerData(D2UnitStrc* pUnit, int32_t* pUnitGUID, in
 	}
 }
 
-//D2Game.0x6FCCF320
+// D2Game.0x6FCCF320
 D2UnitStrc* __fastcall AIGENERAL_GetMinionOwner(D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -381,7 +381,7 @@ D2UnitStrc* __fastcall AIGENERAL_GetMinionOwner(D2UnitStrc* pUnit)
 	return nullptr;
 }
 
-//D2Game.0x6FCCF360
+// D2Game.0x6FCCF360
 void __fastcall AIGENERAL_AllocMinionList(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pMinion)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -400,7 +400,7 @@ void __fastcall AIGENERAL_AllocMinionList(D2GameStrc* pGame, D2UnitStrc* pUnit, 
 	pAiControl->pMinionList = pMinionList;
 }
 
-//D2Game.0x6FCCF3C0
+// D2Game.0x6FCCF3C0
 void __fastcall AIGENERAL_FreeMinionList(D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -441,7 +441,7 @@ void __fastcall AIGENERAL_FreeMinionList(D2UnitStrc* pUnit)
 	}
 }
 
-//D2Game.0x6FCCF4B0
+// D2Game.0x6FCCF4B0
 void __fastcall sub_6FCCF4B0(D2UnitStrc* pUnit)
 {
 	if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER || !pUnit->pMonsterData)
@@ -480,7 +480,7 @@ void __fastcall sub_6FCCF4B0(D2UnitStrc* pUnit)
 	pAiControl->pMinionList = nullptr;
 }
 
-//D2Game.0x6FCCF590
+// D2Game.0x6FCCF590
 void __fastcall AIGENERAL_FreeAllMinionLists(D2GameStrc* pGame, D2MinionListStrc* pMinionList)
 {
 	while (pMinionList)
@@ -491,7 +491,7 @@ void __fastcall AIGENERAL_FreeAllMinionLists(D2GameStrc* pGame, D2MinionListStrc
 	}
 }
 
-//D2Game.0x6FCCF5C0
+// D2Game.0x6FCCF5C0
 void __fastcall AIGENERAL_ExecuteCallbackOnMinions(D2UnitStrc* pUnit, void* a2, void* a3, void(__fastcall* pfnParty)(D2UnitStrc*, void*, void*))
 {
 	D2_ASSERT(pfnParty);
@@ -513,7 +513,7 @@ void __fastcall AIGENERAL_ExecuteCallbackOnMinions(D2UnitStrc* pUnit, void* a2, 
 	}
 }
 
-//D2Game.0x6FCCF680
+// D2Game.0x6FCCF680
 void __fastcall AIGENERAL_GetAiControlInfo(D2UnitStrc* pUnit, int32_t* pOwnerGUID, int32_t* pOwnerType, int32_t* pAiControlFlag1, int32_t* pAiControlFlag2, D2MinionListStrc** ppMinionList)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -533,7 +533,7 @@ void __fastcall AIGENERAL_GetAiControlInfo(D2UnitStrc* pUnit, int32_t* pOwnerGUI
 	}
 }
 
-//D2Game.0x6FCCF710
+// D2Game.0x6FCCF710
 void __fastcall AIGENERAL_SetAiControlInfo(D2GameStrc* pGame, D2UnitStrc* pUnit, DWORD nOwnerGUID, DWORD nOwnerType, int32_t bSetFlag1, int32_t bSetFlag2, D2MinionListStrc* pMinionList)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -560,7 +560,7 @@ void __fastcall AIGENERAL_SetAiControlInfo(D2GameStrc* pGame, D2UnitStrc* pUnit,
 	pAiControl->pMinionList = pMinionList;
 }
 
-//D2Game.0x6FCCF7C0
+// D2Game.0x6FCCF7C0
 void __fastcall AIGENERAL_UpdateMinionList(D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);
@@ -628,7 +628,7 @@ void __fastcall AIGENERAL_UpdateMinionList(D2UnitStrc* pUnit)
 	}
 }
 
-//D2Game.0x6FCCF9B0
+// D2Game.0x6FCCF9B0
 int32_t __fastcall AIGENERAL_GetMinionSpawnClassId(D2UnitStrc* pUnit)
 {
 	D2AiControlStrc* pAiControl = AIGENERAL_GetAiControlFromUnit(pUnit);

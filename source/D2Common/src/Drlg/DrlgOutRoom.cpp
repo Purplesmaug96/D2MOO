@@ -10,7 +10,7 @@
 
 //TODO: Check calls with DrlgGridStrc args
 
-//D2Common.0x6FD83D20
+// D2Common.0x6FD83D20
 void __fastcall DRLGOUTROOM_FreeDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->pOutdoor)
@@ -22,7 +22,7 @@ void __fastcall DRLGOUTROOM_FreeDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD83D90
+// D2Common.0x6FD83D90
 void __fastcall DRLGOUTROOM_FreeDrlgOutdoorRoomData(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->pOutdoor)
@@ -35,13 +35,13 @@ void __fastcall DRLGOUTROOM_FreeDrlgOutdoorRoomData(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD83DE0
+// D2Common.0x6FD83DE0
 void __fastcall DRLGOUTROOM_AllocDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom)
 {
 	pDrlgRoom->pOutdoor = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2DrlgOutdoorRoomStrc);
 }
 
-//D2Common.6FD83E20
+// D2Common.6FD83E20
 void __fastcall DRLGOUTROOM_InitializeDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom)
 {
 	DRLGROOMTILE_AllocTileGrid(pDrlgRoom);
@@ -59,7 +59,7 @@ void __fastcall DRLGOUTROOM_InitializeDrlgOutdoorRoom(D2DrlgRoomStrc* pDrlgRoom)
 	DRLGLOGIC_AllocCoordLists(pDrlgRoom);
 }
 
-//D2Common.0x6FD83EC0
+// D2Common.0x6FD83EC0
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelCoords(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	int nRand = SEED_RollRandomNumber(&pLevelLinkData->pSeed) & 1;
@@ -80,11 +80,11 @@ BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelCoords(D2DrlgLevelLinkDataStrc* pLe
 
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosX = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosX - pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nWidth;
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosY = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nHeight - pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nHeight + pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosY - 16;
-	
+
 	return TRUE;
 }
 
-//D2Common.0x6FD83F70
+// D2Common.0x6FD83F70
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelDef(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	D2LevelDefBin* pLevelDefBin = NULL;
@@ -112,7 +112,7 @@ BOOL __fastcall DRLGOUTROOM_LinkLevelsByLevelDef(D2DrlgLevelLinkDataStrc* pLevel
 	return TRUE;
 }
 
-//D2Common.0x6FD84010
+// D2Common.0x6FD84010
 BOOL __fastcall DRLGOUTROOM_LinkLevelsByOffsetCoords(D2DrlgLevelLinkDataStrc* pLevelLinkData)
 {
 	static const D2CoordStrc pOffsetCoords[4] =
@@ -156,6 +156,6 @@ BOOL __fastcall DRLGOUTROOM_LinkLevelsByOffsetCoords(D2DrlgLevelLinkDataStrc* pL
 
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosX = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosX + pOffsetCoords[nIndex].nX;
 	pLevelLinkData->pLevelCoord[pLevelLinkData->nIteration].nPosY = pLevelLinkData->pLevelCoord[pLevelLinkData->pLink[pLevelLinkData->nIteration].nLevelLink].nPosY + pOffsetCoords[nIndex].nY;
-	
+
 	return TRUE;
 }

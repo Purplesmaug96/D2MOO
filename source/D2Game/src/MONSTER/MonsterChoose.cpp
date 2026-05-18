@@ -24,7 +24,7 @@ D2UnkMonCreateStrc2 dword_6FD2E9A0 = {
 D2UnkMonCreateStrc2* off_6FD2E9DC = &dword_6FD2E9A0;
 
 
-//D2Game.0x6FC62020
+// D2Game.0x6FC62020
 void __stdcall sub_6FC62020(D2SeedStrc* pSeed, D2MonRegDataStrc* pMonRegData, int32_t nCount)
 {
     D2_ASSERT(pSeed);
@@ -37,7 +37,7 @@ void __stdcall sub_6FC62020(D2SeedStrc* pSeed, D2MonRegDataStrc* pMonRegData, in
     }
 
     int32_t nMax = (1 << pMonStats2TxtRecord->unk0x25) - pMonRegData->nComponentVariantsMax;
-    
+
     if (nCount > nMax)
     {
         nCount = nMax;
@@ -116,7 +116,7 @@ void __stdcall sub_6FC62020(D2SeedStrc* pSeed, D2MonRegDataStrc* pMonRegData, in
         {
             pData[j] = pMonRegData->nComponentVariants[0][j];
         }
-        
+
         int32_t bContinue = 0;
         do
         {
@@ -144,7 +144,7 @@ void __stdcall sub_6FC62020(D2SeedStrc* pSeed, D2MonRegDataStrc* pMonRegData, in
     }
 }
 
-//D2Game.0x6FC62420
+// D2Game.0x6FC62420
 int32_t __fastcall MONSTERCHOOSE_GetPresetMonsterId(D2GameStrc* pGame, D2MonsterRegionStrc* pMonsterRegion, D2ActiveRoomStrc* pRoom, D2MonStatsTxt** ppMonStatsTxtRecord, uint8_t nChance, int32_t bSpawnUMon)
 {
     D2SeedStrc* pSeed = nullptr;
@@ -197,7 +197,7 @@ int32_t __fastcall MONSTERCHOOSE_GetPresetMonsterId(D2GameStrc* pGame, D2Monster
     return nMonsterId;
 }
 
-//D2Game.0x6FC62640
+// D2Game.0x6FC62640
 D2UnkMonCreateStrc2* __fastcall sub_6FC62640(D2ActiveRoomStrc* pRoom)
 {
     if (pRoom)
@@ -208,7 +208,7 @@ D2UnkMonCreateStrc2* __fastcall sub_6FC62640(D2ActiveRoomStrc* pRoom)
     return off_6FD2E9DC;
 }
 
-//D2Game.0x6FC62670
+// D2Game.0x6FC62670
 int32_t __fastcall MONSTERCHOOSE_GetBossSpawnType(D2MonsterRegionStrc* pMonsterRegion, D2ActiveRoomStrc* pRoom)
 {
     if (pMonsterRegion->dwUniqueCount < pMonsterRegion->nBossMin && pMonsterRegion->unk0x0C && (ITEMS_RollRandomNumber(&pRoom->pSeed) % 100) < 100 * pMonsterRegion->unk0x04 / pMonsterRegion->unk0x0C)

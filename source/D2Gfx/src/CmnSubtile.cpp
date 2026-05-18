@@ -74,14 +74,14 @@ constexpr int32_t dword_6FA7E0DC[] =
 
 
 
-//D2Gfx.0x6FA71000
+// D2Gfx.0x6FA71000
 void __fastcall D2GFX_InitGouraudCache_6FA71000()
 {
     DGFX_InitGouraudCache_6FA72570();
     gCmnInfo_pBuffer_6FA8144C = nullptr;
 }
 
-//D2Gfx.0x6FA71010
+// D2Gfx.0x6FA71010
 void __fastcall D2GFX_FillYBufferTable_6FA71010(uint8_t* a1, int32_t a2, int32_t a3, int32_t a4)
 {
     gCmnInfo_pBuffer_6FA8144C = a1;
@@ -102,7 +102,7 @@ void __fastcall D2GFX_FillYBufferTable_6FA71010(uint8_t* a1, int32_t a2, int32_t
     }
 }
 
-//D2Gfx.0x6FA71070
+// D2Gfx.0x6FA71070
 void __fastcall sub_6FA71070(D2PaletteTableStrc* pPaletteTable)
 {
     memcpy(gpPaletteTable_6FA81460, pPaletteTable, sizeof(gpPaletteTable_6FA81460));
@@ -113,7 +113,7 @@ void __fastcall sub_6FA71070(D2PaletteTableStrc* pPaletteTable)
     }
 }
 
-//D2Gfx.0x6FA710C0
+// D2Gfx.0x6FA710C0
 int32_t __fastcall D2GFX_SetContrastAndGamma_6FA710C0()
 {
     DWORD nContrast = gnDisplayType != DISPLAYTYPE_GLIDE ? 100 : 0;
@@ -126,7 +126,7 @@ int32_t __fastcall D2GFX_SetContrastAndGamma_6FA710C0()
     return D2GFX_SetGamma(nGamma);
 }
 
-//D2Gfx.0x6FA71130
+// D2Gfx.0x6FA71130
 void __fastcall sub_6FA71130(uint8_t* a1, uint8_t* a2, uint8_t* a3)
 {
     // Unrolled in original dll
@@ -142,7 +142,7 @@ void __fastcall sub_6FA71130(uint8_t* a1, uint8_t* a2, uint8_t* a3)
     }
 }
 
-//D2Gfx.0x6FA71340
+// D2Gfx.0x6FA71340
 void __fastcall sub_6FA71340(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6)
 {
     uint8_t* v6 = a2;
@@ -166,7 +166,7 @@ void __fastcall sub_6FA71340(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, i
     }
 }
 
-//D2Gfx.0x6FA71720
+// D2Gfx.0x6FA71720
 void __fastcall sub_6FA71720(uint8_t* a1, uint8_t* a2, uint8_t* a3, int32_t a4)
 {
     // TODO: Names
@@ -199,20 +199,20 @@ void __fastcall sub_6FA71720(uint8_t* a1, uint8_t* a2, uint8_t* a3, int32_t a4)
     }
 }
 
-//D2Gfx.0x6FA71970
+// D2Gfx.0x6FA71970
 void __fastcall sub_6FA71970(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, int32_t a5, int32_t a6, int32_t a7, uint8_t a8)
 {
     // TODO: Names
     uint8_t* v8 = a1;
     uint8_t* v9 = a2;
     uint8_t* v10 = (uint8_t*)((char*)byte_6FA85220 + 32 * ((a5 >> a8) + 32 * (a3 >> a8)));
-    
+
     while (a7)
     {
         const uint8_t v11 = v8[0];
         const uint8_t v12 = v8[1];
         v8 += 2;
-        
+
         if (v11 || v12)
         {
             uint8_t* v13 = &v9[v11];
@@ -239,7 +239,7 @@ void __fastcall sub_6FA71970(uint8_t* a1, uint8_t* a2, int32_t a3, int32_t a4, i
     }
 }
 
-//D2Gfx.0x6FA71D90) --------------------------------------------------------
+// D2Gfx.0x6FA71D90) --------------------------------------------------------
 void __fastcall sub_6FA71D90(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, uint8_t* a5, int32_t a6)
 {
     BYTE* v6; // ebp@1
@@ -336,7 +336,7 @@ void __fastcall sub_6FA71D90(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, u
     }
 }
 
-//D2Gfx.0x6FA72090) --------------------------------------------------------
+// D2Gfx.0x6FA72090) --------------------------------------------------------
 void __fastcall sub_6FA72090(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, int32_t a5, int32_t a6, int32_t a7, int32_t a8, int32_t a9, uint8_t a10)
 {
     char v10; // cl@1
@@ -432,7 +432,7 @@ void __fastcall sub_6FA72090(int32_t a1, int32_t a2, uint8_t* a3, uint8_t* a4, i
     }
 }
 
-//D2Gfx.0x6FA72570
+// D2Gfx.0x6FA72570
 void __fastcall DGFX_InitGouraudCache_6FA72570()
 {
     // TODO: Check, Names
@@ -462,7 +462,7 @@ void __fastcall DGFX_InitGouraudCache_6FA72570()
     }
 }
 
-//D2Gfx.0x6FA72630
+// D2Gfx.0x6FA72630
 void __fastcall sub_6FA72630(int32_t a1, int32_t a2)
 {
     //TODO: Names
@@ -498,7 +498,7 @@ void __fastcall sub_6FA72630(int32_t a1, int32_t a2)
     dword_6FA8469C = a1;
 }
 
-//D2Gfx.0x6FA72700
+// D2Gfx.0x6FA72700
 void __fastcall sub_6FA72700()
 {
     int32_t v2 = -32 * dword_6FA81450;
@@ -509,7 +509,7 @@ void __fastcall sub_6FA72700()
     }
 }
 
-//D2Gfx.0x6FA72730) --------------------------------------------------------
+// D2Gfx.0x6FA72730) --------------------------------------------------------
 void __fastcall D2GFX_DrawVisTile_6FA72730(uint8_t* a1, int32_t nX, int32_t nY)
 {
 //    int32_t v3; // eax@1
@@ -647,7 +647,7 @@ void __fastcall D2GFX_DrawVisTile_6FA72730(uint8_t* a1, int32_t nX, int32_t nY)
 //    }
 }
 
-//D2Gfx.0x6FA72900
+// D2Gfx.0x6FA72900
 void __fastcall sub_6FA72900(uint8_t* a1, int32_t nX, int32_t nY, uint8_t a4)
 {
     if (nY < dword_6FA8D230 || nY >= dword_6FA8D24C || nX < dword_6FA84688 || nX >= dword_6FA85218)
@@ -669,7 +669,7 @@ void __fastcall sub_6FA72900(uint8_t* a1, int32_t nX, int32_t nY, uint8_t a4)
     }
 }
 
-//D2Gfx.0x6FA729D0
+// D2Gfx.0x6FA729D0
 void __fastcall TILE_TileDrawLit_6FA729D0(uint8_t* a1, int32_t nX, int32_t nY, int32_t* pIntensities)
 {
     if (dword_6FA8D250)
@@ -722,7 +722,7 @@ void __fastcall TILE_TileDrawLit_6FA729D0(uint8_t* a1, int32_t nX, int32_t nY, i
     }
 }
 
-//D2Gfx.0x6FA72B80) --------------------------------------------------------
+// D2Gfx.0x6FA72B80) --------------------------------------------------------
 void __fastcall D2GFX_DrawBlendedVisTile_6FA72B80(int32_t a1, int32_t nX, int32_t nY, uint8_t nAlpha)
 {
 //    LPPALETTEENTRY v4; // eax@2
@@ -903,7 +903,7 @@ void __fastcall D2GFX_DrawBlendedVisTile_6FA72B80(int32_t a1, int32_t nX, int32_
 //    }
 }
 
-//D2Gfx.0x6FA72DC0) --------------------------------------------------------
+// D2Gfx.0x6FA72DC0) --------------------------------------------------------
 void __fastcall D2GFX_DrawRoofTile_6FA72DC0(int32_t a1, int32_t nX, int32_t nY, int32_t* pIntensities, uint8_t nAlpha)
 {
 //    LPPALETTEENTRY v5; // eax@2
@@ -1127,7 +1127,7 @@ void __fastcall D2GFX_DrawRoofTile_6FA72DC0(int32_t a1, int32_t nX, int32_t nY, 
 //    }
 }
 
-//D2Gfx.0x6FA73130
+// D2Gfx.0x6FA73130
 void __fastcall sub_6FA73130(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3, uint8_t* a4, uint8_t a5)
 {
     D2PaletteStrc* pPalette = &stru_6FA81580[(uint32_t)a5 >> 3];
@@ -1160,7 +1160,7 @@ void __fastcall sub_6FA73130(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3,
     }
 }
 
-//D2Gfx.0x6FA73270
+// D2Gfx.0x6FA73270
 void __fastcall sub_6FA73270(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3, uint8_t* a4, int32_t* a5)
 {
     // TODO: Names
@@ -1202,7 +1202,7 @@ void __fastcall sub_6FA73270(D2TileLibraryBlockStrc* a1, int32_t a2, int32_t a3,
     }
 }
 
-//D2Gfx.0x6FA73410) --------------------------------------------------------
+// D2Gfx.0x6FA73410) --------------------------------------------------------
 void __fastcall D2GFX_FloorTileDraw_6FA73410(D2TileLibraryEntryStrc* pTileLibraryEntry, int32_t nX, int32_t nY, D2GfxLightExStrc* pLightEx)
 {
 //    int32_t v4; // ebx@1

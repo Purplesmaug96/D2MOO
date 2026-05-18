@@ -7,7 +7,7 @@
 #include "QUESTS/Quests.h"
 
 
-//D2Game.0x6FD3A7D8
+// D2Game.0x6FD3A7D8
 D2NPCMessageTableStrc gpAct4Q0NpcMessages[] =
 {
 	{
@@ -25,7 +25,7 @@ D2NPCMessageTableStrc gpAct4Q0NpcMessages[] =
 };
 
 
-//D2Game.0x6FCAD6F0
+// D2Game.0x6FCAD6F0
 void __fastcall ACT4Q0_InitQuestData(D2QuestDataStrc* pQuestData)
 {
 	memset(pQuestData->pfCallback, 0x00, sizeof(pQuestData->pfCallback));
@@ -41,7 +41,7 @@ void __fastcall ACT4Q0_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestData->pfActiveFilter = ACT4Q0_ActiveFilterCallback;
 }
 
-//D2Game.0x6FCAD750
+// D2Game.0x6FCAD750
 void __fastcall ACT4Q0_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (pQuestArg->nNPCNo == MONSTER_TYRAEL2 && pQuestArg->nMessageIndex == 664)
@@ -50,7 +50,7 @@ void __fastcall ACT4Q0_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 	}
 }
 
-//D2Game.0x6FCAD790
+// D2Game.0x6FCAD790
 void __fastcall ACT4Q0_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	D2UnitStrc* pTarget = pQuestArg->pTarget;
@@ -66,7 +66,7 @@ void __fastcall ACT4Q0_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2Que
 	}
 }
 
-//D2Game.0x6FCAD800
+// D2Game.0x6FCAD800
 bool __fastcall ACT4Q0_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNpcId, D2UnitStrc* pPlayer, D2BitBufferStrc* pQuestFlags, D2UnitStrc* pNPC)
 {
 	return nNpcId == MONSTER_TYRAEL2 && !QUESTRECORD_GetQuestState(pQuestFlags, QUESTSTATEFLAG_A4Q0, QFLAG_REWARDGRANTED);

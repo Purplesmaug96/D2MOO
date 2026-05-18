@@ -11,7 +11,7 @@
 #define M_PI 3.14159265358979323846
 #define NUM_TIME_RATES 3
 
-//D2Common.0x6FDE21B8
+// D2Common.0x6FDE21B8
 const D2EnvironmentCycleStrc gNormalEnvironmentCycle[NUM_ENVIRONMENT_CYCLES] =
 {
 	{ 320, ENVPERIOD_DAWN,  125, 144, 243, 0 }, // ENVCYCLE_SUNRISE
@@ -22,7 +22,7 @@ const D2EnvironmentCycleStrc gNormalEnvironmentCycle[NUM_ENVIRONMENT_CYCLES] =
 	{ 200, ENVPERIOD_NIGHT, 125, 144, 243, 0 }  // ENVCYCLE_NIGHT
 };
 
-//D2Common.0x6FDE2200
+// D2Common.0x6FDE2200
 const D2EnvironmentCycleStrc gAct4EnvironmentCycle[NUM_ENVIRONMENT_CYCLES] =
 {
 	{ 340, ENVPERIOD_DAWN,  243,  70, 243, 0 }, // ENVCYCLE_SUNRISE
@@ -33,7 +33,7 @@ const D2EnvironmentCycleStrc gAct4EnvironmentCycle[NUM_ENVIRONMENT_CYCLES] =
 	{ 200, ENVPERIOD_NIGHT, 125, 144, 243, 0 }  // ENVCYCLE_NIGHT
 };
 
-//D2Common.0x6FDE2248
+// D2Common.0x6FDE2248
 //The tainted sun quest eclipse
 const D2EnvironmentCycleStrc gEclipseEnvironmentCycle[NUM_ENVIRONMENT_CYCLES] =
 {
@@ -45,7 +45,7 @@ const D2EnvironmentCycleStrc gEclipseEnvironmentCycle[NUM_ENVIRONMENT_CYCLES] =
 	{ 240, ENVPERIOD_NIGHT, 0, 30, 243, 0 }	 // ENVCYCLE_NIGHT
 };
 
-//D2Common.0x6FDE2290
+// D2Common.0x6FDE2290
 const int gnTimeRates[4] =
 {
 	128, 4, 8, 0
@@ -72,7 +72,7 @@ static const D2EnvironmentCycleStrc* ENVIRONMENT_GetCycle(int nCycle, int nAct, 
 }
 
 
-//D2Common.0x6FD8D8E0
+// D2Common.0x6FD8D8E0
 D2DrlgEnvironmentStrc* __fastcall ENVIRONMENT_AllocDrlgEnvironment(void* pMemPool)
 {
 	D2DrlgEnvironmentStrc* pEnvironment = D2_CALLOC_STRC_POOL(pMemPool, D2DrlgEnvironmentStrc);
@@ -95,7 +95,7 @@ D2DrlgEnvironmentStrc* __fastcall ENVIRONMENT_AllocDrlgEnvironment(void* pMemPoo
 	return pEnvironment;
 }
 
-//D2Common.0x6FD8D970
+// D2Common.0x6FD8D970
 void __fastcall ENVIRONMENT_UpdateLightIntensity(D2DrlgEnvironmentStrc* pEnvironment, int nLevelId, int nAct)
 {
 	int nTargetIntensity = 0;
@@ -193,7 +193,7 @@ static uint8_t LerpLightColor(uint8_t nThis, uint8_t nNext, double lerpRatio)
 	return uint8_t(D2Lerp<double>(nThis,nNext,lerpRatio) + 0.5); // Round half up // NOLINT(bugprone-incorrect-roundings)
 }
 
-//D2Common.0x6FD8DAC0
+// D2Common.0x6FD8DAC0
 void __fastcall ENVIRONMENT_UpdateLightColor(D2DrlgEnvironmentStrc* pEnvironment, int nAct)
 {
 	const int nCycleIndex = pEnvironment->nCycleIndex;
@@ -208,13 +208,13 @@ void __fastcall ENVIRONMENT_UpdateLightColor(D2DrlgEnvironmentStrc* pEnvironment
 	pEnvironment->nBlue  = LerpLightColor(pCurrEnvironmentCycle->nBlue,  pNextEnvironmentCycle->nBlue,  dLerpRatio);
 }
 
-//D2Common.6FD8DBE0
+// D2Common.6FD8DBE0
 void __fastcall ENVIRONMENT_FreeDrlgEnvironment(void* pMemPool, D2DrlgEnvironmentStrc* pEnvironment)
 {
 	D2_FREE_POOL(pMemPool, pEnvironment);
 }
 
-//D2Common.0x6FD8DC00 (#10923)
+// D2Common.0x6FD8DC00 (#10923)
 BOOL __stdcall ENVIRONMENT_UpdatePeriodOfDay(D2DrlgActStrc* pAct, D2ActiveRoomStrc* pRoom)
 {
 	D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct);
@@ -238,7 +238,7 @@ BOOL __stdcall ENVIRONMENT_UpdatePeriodOfDay(D2DrlgActStrc* pAct, D2ActiveRoomSt
 	return nPreviousPeriodOfDay != pEnvironment->nPeriodOfDay;
 }
 
-//D2Common.0x6FD8DC70
+// D2Common.0x6FD8DC70
 void __fastcall ENVIRONMENT_UpdateTicks(D2DrlgEnvironmentStrc* pEnvironment, int nActNo)
 {
 
@@ -289,7 +289,7 @@ void __fastcall ENVIRONMENT_UpdateTicks(D2DrlgEnvironmentStrc* pEnvironment, int
 	}
 }
 
-//D2Common.0x6FD8DD60 (#10924)
+// D2Common.0x6FD8DD60 (#10924)
 BOOL __stdcall ENVIRONMENT_UpdateCycleIndex(D2DrlgActStrc* pAct, int nActNo)
 {
 	if (D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct))
@@ -321,7 +321,7 @@ BOOL __stdcall ENVIRONMENT_UpdateCycleIndex(D2DrlgActStrc* pAct, int nActNo)
 	return FALSE;
 }
 
-//D2Common.0x6FD8DDD0 (#10927)
+// D2Common.0x6FD8DDD0 (#10927)
 void __stdcall ENVIRONMENT_GetLightColorFromAct(D2DrlgActStrc* pAct, uint8_t* pRed, uint8_t* pGreen, uint8_t* pBlue)
 {
 	if (D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct))
@@ -332,7 +332,7 @@ void __stdcall ENVIRONMENT_GetLightColorFromAct(D2DrlgActStrc* pAct, uint8_t* pR
 	}
 }
 
-//D2Common.0x6FD8DE00 (#10926)
+// D2Common.0x6FD8DE00 (#10926)
 int __stdcall ENVIRONMENT_GetIntensityFromAct(D2DrlgActStrc* pAct)
 {
 	if (D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct))
@@ -342,7 +342,7 @@ int __stdcall ENVIRONMENT_GetIntensityFromAct(D2DrlgActStrc* pAct)
 	return 0;
 }
 
-//D2Common.0x6FD8DE20 (#10933)
+// D2Common.0x6FD8DE20 (#10933)
 int __stdcall ENVIRONMENT_GetPeriodOfDayFromAct(D2DrlgActStrc* pAct, int* pBaseTime)
 {
 	if (D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct))
@@ -372,7 +372,7 @@ int __stdcall ENVIRONMENT_GetPeriodOfDayFromAct(D2DrlgActStrc* pAct, int* pBaseT
 	}
 }
 
-//D2Common.0x6FD8DE70 (#10928) - UNUSED
+// D2Common.0x6FD8DE70 (#10928) - UNUSED
 int __stdcall ENVIRONMENT_GetUnusedMember(D2DrlgActStrc* pAct)
 {
 	if (D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct))
@@ -384,7 +384,7 @@ int __stdcall ENVIRONMENT_GetUnusedMember(D2DrlgActStrc* pAct)
 	return 0;
 }
 
-//D2Common.0x6FD8DE90 (#10929) - UNUSED
+// D2Common.0x6FD8DE90 (#10929) - UNUSED
 void __stdcall ENVIRONMENT_NextEnvCycle(D2DrlgActStrc* pAct, D2ActiveRoomStrc* pRoom)
 {
 	D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct);
@@ -419,13 +419,13 @@ void __stdcall ENVIRONMENT_NextEnvCycle(D2DrlgActStrc* pAct, D2ActiveRoomStrc* p
 	}
 }
 
-//D2Common.0x6FD8DF30 (#10930)
+// D2Common.0x6FD8DF30 (#10930)
 int __stdcall ENVIRONMENT_GetCycleIndexFromAct(D2DrlgActStrc* pAct)
 {
 	return DUNGEON_GetEnvironmentFromAct(pAct)->nCycleIndex;
 }
 
-//D2Common.0x6FD8DF40 (#10932)
+// D2Common.0x6FD8DF40 (#10932)
 void __stdcall ENVIRONMENT_InitializeEnvironment(D2DrlgActStrc* pAct, D2ActiveRoomStrc* pRoom, int nIndex, int nTicks, BOOL bEclipse)
 {
 	D2_ASSERT(nIndex >= 0);
@@ -480,7 +480,7 @@ void __stdcall ENVIRONMENT_InitializeEnvironment(D2DrlgActStrc* pAct, D2ActiveRo
 	}
 }
 
-//D2Common.0x6FD8E080 (#10931)
+// D2Common.0x6FD8E080 (#10931)
 void __stdcall ENVIRONMENT_GetCycleIndex_Ticks_EclipseFromAct(D2DrlgActStrc* pAct, int* pCycleIndex, int* pTicks, BOOL* pEclipse)
 {
 	D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct);
@@ -490,7 +490,7 @@ void __stdcall ENVIRONMENT_GetCycleIndex_Ticks_EclipseFromAct(D2DrlgActStrc* pAc
 	*pEclipse = pEnvironment->bEclipse;
 }
 
-//D2Common.0x6FD8E0B0 (#10925) - UNUSED
+// D2Common.0x6FD8E0B0 (#10925) - UNUSED
 void __stdcall ENVIRONMENT_GetStatistics(D2DrlgActStrc* pAct, float* pCos, float* pLast, float* pSin, int* a5)
 {
 	D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct);
@@ -502,13 +502,13 @@ void __stdcall ENVIRONMENT_GetStatistics(D2DrlgActStrc* pAct, float* pCos, float
 	*a5 = 0;
 }
 
-//D2Common.0x6FD8E0F0 (#10934) - UNUSED
+// D2Common.0x6FD8E0F0 (#10934) - UNUSED
 int __stdcall ENVIRONMENT_GetTimeRateFromAct(D2DrlgActStrc* pAct)
 {
 	return DUNGEON_GetEnvironmentFromAct(pAct)->nTimeRate;
 }
 
-//D2Common.0x6FD8E100 (#10935) - UNUSED
+// D2Common.0x6FD8E100 (#10935) - UNUSED
 void __stdcall ENVIRONMENT_SetNextTimeRate(D2DrlgActStrc* pAct, D2ActiveRoomStrc* pRoom)
 {
 
@@ -546,7 +546,7 @@ void __stdcall ENVIRONMENT_SetNextTimeRate(D2DrlgActStrc* pAct, D2ActiveRoomStrc
 	}
 }
 
-//D2Common.0x6FD8E1B0 (#10936)
+// D2Common.0x6FD8E1B0 (#10936)
 void __stdcall ENVIRONMENT_TaintedSunBegin(D2DrlgActStrc* pAct)
 {
 	D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct);
@@ -557,7 +557,7 @@ void __stdcall ENVIRONMENT_TaintedSunBegin(D2DrlgActStrc* pAct)
 	ENVIRONMENT_InitializeEnvironment(pAct, NULL, ENVCYCLE_SUNRISE, 0, TRUE);
 }
 
-//D2Common.0x6FD8E1E0 (#10937)
+// D2Common.0x6FD8E1E0 (#10937)
 void __stdcall ENVIRONMENT_TaintedSunEnd(D2DrlgActStrc* pAct)
 {
 	D2DrlgEnvironmentStrc* pEnvironment = DUNGEON_GetEnvironmentFromAct(pAct);

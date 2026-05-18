@@ -4,7 +4,7 @@
 
 static const int gnNumberOfWaypoints = 7 * 8 * sizeof(short);
 
-//D2Common.0x6FDC3D20 (#11153)
+// D2Common.0x6FDC3D20 (#11153)
 BOOL __stdcall WAYPOINTS_GetLevelIdFromWaypointNo(short nWaypointNo, int* pLevelId)
 {
 	*pLevelId = 0;
@@ -24,7 +24,7 @@ BOOL __stdcall WAYPOINTS_GetLevelIdFromWaypointNo(short nWaypointNo, int* pLevel
 	return FALSE;
 }
 
-//D2Common.0x6FDC3D90 (#11152)
+// D2Common.0x6FDC3D90 (#11152)
 BOOL __stdcall WAYPOINTS_GetWaypointNoFromLevelId(int nLevelId, short* pWaypointNo)
 {
 	D2LevelsTxt* pLevelsTxtRecord = NULL;
@@ -40,7 +40,7 @@ BOOL __stdcall WAYPOINTS_GetWaypointNoFromLevelId(int nLevelId, short* pWaypoint
 	return *pWaypointNo != 255;
 }
 
-//D2Common.0x6FDC3DE0 (#11146)
+// D2Common.0x6FDC3DE0 (#11146)
 int __stdcall WAYPOINTS_IsActivated(D2WaypointDataStrc* pData, uint16_t wField)
 {
 	D2_ASSERT(pData);
@@ -49,7 +49,7 @@ int __stdcall WAYPOINTS_IsActivated(D2WaypointDataStrc* pData, uint16_t wField)
 	return (pData->nFlags[wField / 16 + 1] & (1 << (wField & 15))) != 0;
 }
 
-//D2Common.0x6FDC3E80 (#11147)
+// D2Common.0x6FDC3E80 (#11147)
 void __stdcall WAYPOINTS_ActivateWaypoint(D2WaypointDataStrc* pData, uint16_t wField)
 {
 	D2_ASSERT(pData);
@@ -58,7 +58,7 @@ void __stdcall WAYPOINTS_ActivateWaypoint(D2WaypointDataStrc* pData, uint16_t wF
 	pData->nFlags[wField / 16 + 1] |= (1 << (wField & 15));
 }
 
-//D2Common.0x6FDC3F20 (#11148)
+// D2Common.0x6FDC3F20 (#11148)
 D2WaypointDataStrc* __stdcall WAYPOINTS_AllocWaypointData(void* pMemPool)
 {
 	D2WaypointDataStrc* pData = D2_CALLOC_STRC_POOL(pMemPool, D2WaypointDataStrc);
@@ -69,7 +69,7 @@ D2WaypointDataStrc* __stdcall WAYPOINTS_AllocWaypointData(void* pMemPool)
 	return pData;
 }
 
-//D2Common.0x6FDC3F70 (#11149)
+// D2Common.0x6FDC3F70 (#11149)
 void __stdcall WAYPOINTS_FreeWaypointData(void* pMemPool, D2WaypointDataStrc* pData)
 {
 	if (pData->nFlags[0] != 0x102)
@@ -81,7 +81,7 @@ void __stdcall WAYPOINTS_FreeWaypointData(void* pMemPool, D2WaypointDataStrc* pD
 	D2_FREE_POOL(pMemPool, pData);
 }
 
-//D2Common.0x6FDC3FD0 (#11150)
+// D2Common.0x6FDC3FD0 (#11150)
 void __stdcall WAYPOINTS_CopyAndValidateWaypointData(D2WaypointDataStrc* pDestination, D2WaypointDataStrc* pSource)
 {
 	pDestination->nFlags[0] = pSource->nFlags[0];
@@ -103,7 +103,7 @@ void __stdcall WAYPOINTS_CopyAndValidateWaypointData(D2WaypointDataStrc* pDestin
 	pDestination->nFlags[1] |= 1;
 }
 
-//D2Common.0x6FDC4060 (#11151)
+// D2Common.0x6FDC4060 (#11151)
 void __stdcall WAYPOINTS_ValidateAndCopyWaypointData(D2WaypointDataStrc* pSource, D2WaypointDataStrc* pDestination)
 {
 	if (pSource->nFlags[0] != 0x102)

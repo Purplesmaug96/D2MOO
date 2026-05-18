@@ -18,7 +18,7 @@
 #include "D2WinMain.h"
 
 
-//D2Win.0x6F8A61A0 (#10107)
+// D2Win.0x6F8A61A0 (#10107)
 D2WinButtonStrc* __fastcall BUTTON_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, D2CellFileStrc* pCellFile, int32_t(__stdcall* pCallback)(SMSGHANDLER_PARAMS*), int32_t nActivationVirtualKey, int32_t nBaseFrame, uint32_t nFlags, uint16_t nStringId, int32_t(__stdcall* pfUpdateHoverState)(SMSGHANDLER_PARAMS*))
 {
 	D2WinButtonStrc* pButton = D2_CALLOC_STRC(D2WinButtonStrc);
@@ -63,7 +63,7 @@ D2WinButtonStrc* __fastcall BUTTON_Create(int32_t nX, int32_t nY, int32_t nWidth
 	return pButton;
 }
 
-//D2Win.0x6F8A62C0 (#10108)
+// D2Win.0x6F8A62C0 (#10108)
 int32_t __fastcall BUTTON_Destroy(D2WinButtonStrc* pButton)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -71,7 +71,7 @@ int32_t __fastcall BUTTON_Destroy(D2WinButtonStrc* pButton)
 	return CONTROL_RemoveFromList(&pButton->controlHeader);
 }
 
-//D2Win.0x6F8A62F0 (#10109)
+// D2Win.0x6F8A62F0 (#10109)
 int32_t __fastcall BUTTON_IsPressed(D2WinButtonStrc* pButton)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -79,7 +79,7 @@ int32_t __fastcall BUTTON_IsPressed(D2WinButtonStrc* pButton)
 	return pButton->bIsPressed && pButton->bIsCallbackPending ? 1 : 0;
 }
 
-//D2Win.0x6F8A6330 (#10110)
+// D2Win.0x6F8A6330 (#10110)
 void __fastcall BUTTON_SetIsPressed(D2WinButtonStrc* pButton, int32_t bIsPressed)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -88,7 +88,7 @@ void __fastcall BUTTON_SetIsPressed(D2WinButtonStrc* pButton, int32_t bIsPressed
 	pButton->bIsCallbackPending = bIsPressed;
 }
 
-//D2Win.0x6F8A6360 (#10186)
+// D2Win.0x6F8A6360 (#10186)
 void __fastcall BUTTON_SetText(D2WinButtonStrc* pButton, Font eFont, const Unicode* wszText, int32_t nTextColor)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -99,7 +99,7 @@ void __fastcall BUTTON_SetText(D2WinButtonStrc* pButton, Font eFont, const Unico
 	Unicode::strcpy(pButton->wszText, wszText);
 }
 
-//D2Win.0x6F8A63A0 (#10111)
+// D2Win.0x6F8A63A0 (#10111)
 void __fastcall BUTTON_SetTextWithStringId(D2WinButtonStrc* pButton, Font eFont, uint16_t nStringId, int32_t nTextColor)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -110,7 +110,7 @@ void __fastcall BUTTON_SetTextWithStringId(D2WinButtonStrc* pButton, Font eFont,
 	Unicode::strcpy(pButton->wszText, D2LANG_GetStringFromTblIndex(nStringId));
 }
 
-//D2Win.0x6F8A63F0 (#10112)
+// D2Win.0x6F8A63F0 (#10112)
 void __fastcall BUTTON_SetCoordinates(D2WinButtonStrc* pButton, int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -121,7 +121,7 @@ void __fastcall BUTTON_SetCoordinates(D2WinButtonStrc* pButton, int32_t nX, int3
 	pButton->controlHeader.nHeight = nHeight;
 }
 
-//D2Win.0x6F8A6430 (#10113)
+// D2Win.0x6F8A6430 (#10113)
 void __fastcall BUTTON_SimulateClick(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinButtonStrc* pButton = (D2WinButtonStrc*)pMsg->hWindow;
@@ -149,7 +149,7 @@ void __fastcall BUTTON_SimulateClick(SMSGHANDLER_PARAMS* pMsg)
 	--dword_6F8FE254;
 }
 
-//D2Win.0x6F8A64A0 (#10114)
+// D2Win.0x6F8A64A0 (#10114)
 void __fastcall BUTTON_SetBaseFrame(D2WinButtonStrc* pButton, int32_t nBaseFrame)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -157,7 +157,7 @@ void __fastcall BUTTON_SetBaseFrame(D2WinButtonStrc* pButton, int32_t nBaseFrame
 	pButton->nBaseFrame = nBaseFrame;
 }
 
-//D2Win.0x6F8A64D0
+// D2Win.0x6F8A64D0
 int32_t __fastcall BUTTON_OnMouseWheelScrolled(D2WinButtonStrc* pButton, int32_t nMouseWheelIncrement)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -185,7 +185,7 @@ int32_t __fastcall BUTTON_OnMouseWheelScrolled(D2WinButtonStrc* pButton, int32_t
 	return 0;
 }
 
-//D2Win.0x6F8A6570 (#10189)
+// D2Win.0x6F8A6570 (#10189)
 void __fastcall BUTTON_SetStringId(D2WinButtonStrc* pButton, uint16_t nStringId)
 {
 	D2_ASSERT(pButton->controlHeader.nType == D2WIN_BUTTON);
@@ -193,7 +193,7 @@ void __fastcall BUTTON_SetStringId(D2WinButtonStrc* pButton, uint16_t nStringId)
 	pButton->nStringId = nStringId;
 }
 
-//D2Win.0x6F8A65A0
+// D2Win.0x6F8A65A0
 int32_t __fastcall BUTTON_Draw(D2WinControlStrc* pControl)
 {
 	D2WinButtonStrc* pButton = (D2WinButtonStrc*)pControl;
@@ -348,7 +348,7 @@ int32_t __fastcall BUTTON_Draw(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8A6A10
+// D2Win.0x6F8A6A10
 int32_t __stdcall BUTTON_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinButtonStrc* pButton = (D2WinButtonStrc*)pMsg->hWindow;
@@ -391,7 +391,7 @@ int32_t __stdcall BUTTON_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 	return 1;
 }
 
-//D2Win.0x6F8A6AF0
+// D2Win.0x6F8A6AF0
 int32_t __stdcall BUTTON_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinButtonStrc* pButton = (D2WinButtonStrc*)pMsg->hWindow;
@@ -427,7 +427,7 @@ int32_t __stdcall BUTTON_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg)
 	return nResult;
 }
 
-//D2Win.0x6F8A6BB0
+// D2Win.0x6F8A6BB0
 int32_t __stdcall BUTTON_HandleVirtualKeyInput(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinButtonStrc* pButton = (D2WinButtonStrc*)pMsg->hWindow;

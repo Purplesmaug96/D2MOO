@@ -16,7 +16,7 @@
 #include "D2WinTextBox.h"
 
 
-//D2Win.0x6F8AF040 (#10063)
+// D2Win.0x6F8AF040 (#10063)
 D2WinScrollBarStrc* __fastcall SCROLLBAR_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, D2CellFileStrc* pCellFile, int32_t(__stdcall* a6)(SMSGHANDLER_PARAMS*))
 {
 	D2WinScrollBarStrc* pScrollBar = D2_CALLOC_STRC(D2WinScrollBarStrc);
@@ -38,13 +38,13 @@ D2WinScrollBarStrc* __fastcall SCROLLBAR_Create(int32_t nX, int32_t nY, int32_t 
 	return pScrollBar;
 }
 
-//D2Win.0x6F8B1BF0 (#10064)
+// D2Win.0x6F8B1BF0 (#10064)
 int32_t __fastcall SCROLLBAR_Destroy(D2WinControlStrc* pControl)
 {
 	return CONTROL_RemoveFromList(pControl);
 }
 
-//D2Win.0x6F8AF100 (#10065)
+// D2Win.0x6F8AF100 (#10065)
 int32_t __fastcall SCROLLBAR_GetMaxSteps(D2WinScrollBarStrc* pScrollBar)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -52,7 +52,7 @@ int32_t __fastcall SCROLLBAR_GetMaxSteps(D2WinScrollBarStrc* pScrollBar)
 	return pScrollBar->nMaxSteps;
 }
 
-//D2Win.0x6F8AF130 (#10066)
+// D2Win.0x6F8AF130 (#10066)
 int32_t __fastcall SCROLLBAR_SetMaxSteps(D2WinScrollBarStrc* pScrollBar, int32_t nMaxSteps)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -62,7 +62,7 @@ int32_t __fastcall SCROLLBAR_SetMaxSteps(D2WinScrollBarStrc* pScrollBar, int32_t
 	return 1;
 }
 
-//D2Win.0x6F8AF170 (#10068)
+// D2Win.0x6F8AF170 (#10068)
 int32_t __fastcall SCROLLBAR_SetCurrentStep(D2WinScrollBarStrc* pScrollBar, int32_t nCurrentStep)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -72,7 +72,7 @@ int32_t __fastcall SCROLLBAR_SetCurrentStep(D2WinScrollBarStrc* pScrollBar, int3
 	return 1;
 }
 
-//D2Win.0x6F8AF1B0 (#10067)
+// D2Win.0x6F8AF1B0 (#10067)
 int32_t __fastcall SCROLLBAR_GetCurrentStep(D2WinScrollBarStrc* pScrollBar)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -80,7 +80,7 @@ int32_t __fastcall SCROLLBAR_GetCurrentStep(D2WinScrollBarStrc* pScrollBar)
 	return pScrollBar->nCurrentStep;
 }
 
-//D2Win.0x6F8AF1E0 (#10069)
+// D2Win.0x6F8AF1E0 (#10069)
 int32_t __fastcall SCROLLBAR_SetTextBox(D2WinScrollBarStrc* pScrollBar, D2WinTextBoxStrc* pTextBox)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -89,7 +89,7 @@ int32_t __fastcall SCROLLBAR_SetTextBox(D2WinScrollBarStrc* pScrollBar, D2WinTex
 	return 1;
 }
 
-//D2Win.0x6F8AF240
+// D2Win.0x6F8AF240
 int32_t __fastcall sub_6F8AF240(SMSGHANDLER_PARAMS* pMsg, D2WinScrollBarStrc* pScrollBar, int32_t a3)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -125,7 +125,7 @@ int32_t __fastcall sub_6F8AF240(SMSGHANDLER_PARAMS* pMsg, D2WinScrollBarStrc* pS
 	return 0;
 }
 
-//D2Win.0x6F8AF2D0 (#10202)
+// D2Win.0x6F8AF2D0 (#10202)
 void __fastcall D2Win_10202(D2WinScrollBarStrc* pScrollBar, int32_t nPosition)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -133,7 +133,7 @@ void __fastcall D2Win_10202(D2WinScrollBarStrc* pScrollBar, int32_t nPosition)
 	pScrollBar->field_50 = nPosition;
 }
 
-//D2Win.0x6F8AF300 (#10201)
+// D2Win.0x6F8AF300 (#10201)
 int32_t __fastcall D2Win_10201(D2WinScrollBarStrc* pScrollBar)
 {
 	D2_ASSERT(pScrollBar->controlHeader.nType == D2WIN_SCROLLBAR);
@@ -141,7 +141,7 @@ int32_t __fastcall D2Win_10201(D2WinScrollBarStrc* pScrollBar)
 	return pScrollBar->field_50;
 }
 
-//D2Win.0x6F8AF330
+// D2Win.0x6F8AF330
 int32_t __fastcall SCROLLBAR_Draw(D2WinControlStrc* pControl)
 {
 	D2WinScrollBarStrc* pScrollBar = (D2WinScrollBarStrc*)pControl;
@@ -205,7 +205,7 @@ int32_t __fastcall SCROLLBAR_Draw(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8AF4D0
+// D2Win.0x6F8AF4D0
 int32_t __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinScrollBarStrc* pScrollBar = (D2WinScrollBarStrc*)pMsg->hWindow;
@@ -303,7 +303,7 @@ int32_t __stdcall SCROLLBAR_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 	return 0;
 }
 
-//D2Win.0x6F8AF6B0
+// D2Win.0x6F8AF6B0
 int32_t __stdcall SCROLLBAR_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinScrollBarStrc* pScrollBar = (D2WinScrollBarStrc*)pMsg->hWindow;
@@ -315,7 +315,7 @@ int32_t __stdcall SCROLLBAR_HandleMouseUp(SMSGHANDLER_PARAMS* pMsg)
 		pScrollBar->bIsUpperArrowPressed = 0;
 		pScrollBar->bIsLowerArrowPressed = 0;
 		pScrollBar->bIsStepIndicatorDragged = 0;
-		
+
 		return 1;
 	}
 

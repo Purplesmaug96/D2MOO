@@ -318,8 +318,8 @@ int __fastcall PATH_FindSubpathWithoutObstacles(D2PathInfoStrc* pInfo, D2PathPoi
 	return pCurPath->nPoints;
 }
 
-//D2Common.0x6FDAC170 (1.10f)
-//D2Common.0x6FD68310 (1.13c)
+// D2Common.0x6FDAC170 (1.10f)
+// D2Common.0x6FD68310 (1.13c)
 int __fastcall PATH_SimplifyToLines(D2PathPointStrc* pOutPathPoints, D2PathPointStrc* pInputPoints, D2PathPointStrc tStartCoord, signed int nbTempPoints)
 {
 	if (nbTempPoints >= 2)

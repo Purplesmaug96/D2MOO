@@ -24,7 +24,7 @@
 #include "UNIT/SUnit.h"
 
 
-//D2Game.0x6FC552A0
+// D2Game.0x6FC552A0
 void __fastcall MISSILES_RemoveAll(D2GameStrc* pGame)
 {
     for (int32_t i = 0; i < 128; ++i)
@@ -39,7 +39,7 @@ void __fastcall MISSILES_RemoveAll(D2GameStrc* pGame)
     }
 }
 
-//D2Game.0x6FC552F0
+// D2Game.0x6FC552F0
 void __fastcall MISSILES_Initialize(D2GameStrc* pGame, D2UnitStrc* pMissile, int32_t nUnitGUID)
 {
     if (!pMissile)
@@ -54,7 +54,7 @@ void __fastcall MISSILES_Initialize(D2GameStrc* pGame, D2UnitStrc* pMissile, int
     sub_6FC35570(pGame, pMissile, EVENTTYPE_MODECHANGE, 0, 0);
 }
 
-//D2Game.0x6FC55340
+// D2Game.0x6FC55340
 void __fastcall MISSILES_Free(D2GameStrc* pGame, D2UnitStrc* pMissile)
 {
     if (!pMissile)
@@ -66,7 +66,7 @@ void __fastcall MISSILES_Free(D2GameStrc* pGame, D2UnitStrc* pMissile)
     sub_6FC349F0(pGame, pMissile);
 }
 
-//D2Game.0x6FC55360
+// D2Game.0x6FC55360
 D2UnitStrc* __fastcall MISSILES_CreateMissileFromParams(D2GameStrc* pGame, D2MissileStrc* missileParams)
 {
     if (!missileParams->pOwner || (missileParams->pOwner->dwUnitType != UNIT_PLAYER && missileParams->pOwner->dwUnitType != UNIT_MONSTER))
@@ -166,7 +166,7 @@ D2UnitStrc* __fastcall MISSILES_CreateMissileFromParams(D2GameStrc* pGame, D2Mis
             ++nTargetY;
         }
 
-        
+
         int32_t nXDiff = 0;
         int32_t nYDiff = 0;
         if (pTarget)
@@ -323,7 +323,7 @@ D2UnitStrc* __fastcall MISSILES_CreateMissileFromParams(D2GameStrc* pGame, D2Mis
             {
                 D2SeedStrc seed = {};
                 SEED_InitLowSeed(&seed, STATLIST_GetUnitBaseStat(missileParams->pOwner, STAT_PIERCE_IDX, 0));
-                
+
                 int32_t nPierceIndex = 0;
                 do
                 {
@@ -355,7 +355,7 @@ D2UnitStrc* __fastcall MISSILES_CreateMissileFromParams(D2GameStrc* pGame, D2Mis
     return pMissile;
 }
 
-//D2Game.0x6FC55B70
+// D2Game.0x6FC55B70
 void __fastcall MISSILES_SyncToClient(D2ClientStrc* pClient, D2GameStrc* pGame, D2UnitStrc* pMissile, int32_t nVelocity)
 {
     if (!pMissile || pMissile->dwUnitType != UNIT_MISSILE)

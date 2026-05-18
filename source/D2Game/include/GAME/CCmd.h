@@ -15,11 +15,11 @@ enum D2C_ClientSystemMessage {
 	D2CLTSYS_REMOVEFROMGAME = 0x6F,
 };
 
-//D2Game.0x6FC317F0
+// D2Game.0x6FC317F0
 int32_t __fastcall CCMD_IsStringZeroTerminated(const char* pData, int32_t nDataSize);
-//D2Game.0x6FC31810
+// D2Game.0x6FC31810
 uint32_t __fastcall CCMD_CanClientJoinGame(int32_t a1, int32_t a2, char* szClientName);
-//D2Game.0x6FC31910
+// D2Game.0x6FC31910
 void __fastcall CCMD_ProcessClientSystemMessage(void* pData, int32_t nSize);
-//D2Game.0x6FC31C00
+// D2Game.0x6FC31C00
 void __fastcall CCMD_ProcessClientMessage(void* pData, int32_t nPacketSize);

@@ -39,7 +39,7 @@ static bool DRLGMAZE_OrthWithDirectionExists(D2DrlgRoomStrc* pDrlgRoom, int nDir
 }
 
 
-//D2Common.0x6FD78E50
+// D2Common.0x6FD78E50
 D2DrlgRoomStrc* __fastcall DRLGMAZE_GetFreeLocationForRoomEast(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgRoomStrc* pResult = nullptr;
@@ -58,7 +58,7 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_GetFreeLocationForRoomEast(D2DrlgLevelStrc* 
 	return pResult;
 }
 
-//D2Common.0x6FD79240
+// D2Common.0x6FD79240
 D2DrlgRoomStrc* __fastcall DRLGMAZE_GetFreeLocationForRoomWest(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgRoomStrc* pResult = nullptr;
@@ -76,7 +76,7 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_GetFreeLocationForRoomWest(D2DrlgLevelStrc* 
 	return pResult;
 }
 
-//D2Common.0x6FD79360
+// D2Common.0x6FD79360
 D2DrlgRoomStrc* __fastcall DRLGMAZE_GetFreeLocationForRoomNorth(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgRoomStrc* pResult = nullptr;
@@ -108,11 +108,11 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_GetFreeLocationForRoomSouth(D2DrlgLevelStrc*
 	return pResult;
 }
 
-//D2Common.0x6FD78F70
+// D2Common.0x6FD78F70
 //Named sSetChamberPreset in the original code ?
 void __fastcall DRLGMAZE_PickRoomPreset(D2DrlgRoomStrc* pDrlgRoom, BOOL bResetFlag)
 {
-	//D2Common.0x6FDCE710
+	// D2Common.0x6FDCE710
 	//Remapping of presets for harem, basement and spider cave. Effictively preventing any non diagonal presets since not every direction exists.
 	static const int nHardcodedPresetsRemapping[][3] =
 	{
@@ -133,7 +133,7 @@ void __fastcall DRLGMAZE_PickRoomPreset(D2DrlgRoomStrc* pDrlgRoom, BOOL bResetFl
 		{ LVLPREST_NONE,					LVLPREST_NONE,				LVLPREST_NONE },
 		{ LVLPREST_NONE,					LVLPREST_NONE,				LVLPREST_NONE },
 	};
-	//D2Common.0x6FDCE7D0
+	// D2Common.0x6FDCE7D0
 	//Remapping of presets for Nilhatak's temple and the lava maps (infernal pit) since not every direction exists.
 	static const int nExpansionHardcodedPresetsRemapping[][2] =
 	{
@@ -302,7 +302,7 @@ void __fastcall DRLGMAZE_PickRoomPreset(D2DrlgRoomStrc* pDrlgRoom, BOOL bResetFl
 }
 
 
-//D2Common.0x6FD79480
+// D2Common.0x6FD79480
 void __fastcall DRLGMAZE_InitLevelData(D2DrlgLevelStrc* pLevel)
 {
 	pLevel->pMaze = DATATBLS_GetLvlMazeTxtRecordFromLevelId(pLevel->nLevelId);
@@ -870,7 +870,7 @@ void __fastcall DRLGMAZE_GenerateLevel(D2DrlgLevelStrc* pLevel)
 	DRLGMAZE_RollBasicPresets(pLevel);
 }
 
-//D2Common.0x6FD79E10
+// D2Common.0x6FD79E10
 void __fastcall DRLGMAZE_SetPickedFileAndPresetId(D2DrlgRoomStrc* pDrlgRoom, int nLevelPrest, int nPickedFile, BOOL bResetFlag)
 {
 	pDrlgRoom->pMaze->nPickedFile = nPickedFile;
@@ -886,7 +886,7 @@ void __fastcall DRLGMAZE_SetPickedFileAndPresetId(D2DrlgRoomStrc* pDrlgRoom, int
 	}
 }
 
-//D2Common.0x6FD79E40
+// D2Common.0x6FD79E40
 D2DrlgRoomStrc* __fastcall DRLGMAZE_ReplaceRoomPreset(D2DrlgLevelStrc* pLevel, int nLevelPrestId1, int nLevelPrestId2, int nPickedFile, BOOL bResetFlag)
 {
 	for (D2DrlgRoomStrc* pDrlgRoom = pLevel->pFirstRoomEx; pDrlgRoom; pDrlgRoom = pDrlgRoom->pDrlgRoomNext)
@@ -901,7 +901,7 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_ReplaceRoomPreset(D2DrlgLevelStrc* pLevel, i
 	return NULL;
 }
 
-//D2Common.0x6FD79EA0
+// D2Common.0x6FD79EA0
 D2DrlgRoomStrc* __fastcall DRLGMAZE_AddAdjacentMazeRoom(D2DrlgRoomStrc* pDrlgRoom, int nDirection, BOOL bMergeRooms)
 {
 	D2DrlgOrthStrc* pDrlgOrth = NULL;
@@ -1024,7 +1024,7 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_AddAdjacentMazeRoom(D2DrlgRoomStrc* pDrlgRoo
 	return pNewRoomEx;
 }
 
-//D2Common.0x6FD7A110
+// D2Common.0x6FD7A110
 void __fastcall DRLGMAZE_InitBasicMazeLayout(D2DrlgLevelStrc* pLevel, int nRoomsPerDirection)
 {
 	D2DrlgRoomStrc* pFirstRoomEx = NULL;
@@ -1129,7 +1129,7 @@ void __fastcall DRLGMAZE_InitBasicMazeLayout(D2DrlgLevelStrc* pLevel, int nRooms
 	DRLGMAZE_PickRoomPreset(pFirstRoomEx, 1);
 }
 
-//D2Common.0x6FD7A340
+// D2Common.0x6FD7A340
 BOOL __fastcall DRLGMAZE_LinkMazeRooms(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStrc* pDrlgRoom2, int nDirection)
 {
 	switch (nDirection)
@@ -1189,7 +1189,7 @@ BOOL __fastcall DRLGMAZE_LinkMazeRooms(D2DrlgRoomStrc* pDrlgRoom1, D2DrlgRoomStr
 	return DRLGMAZE_CheckRoomNotOverlaping(pDrlgRoom1->pLevel, pDrlgRoom1, pDrlgRoom2, 0);
 }
 
-//D2Common.0x6FD7A450
+// D2Common.0x6FD7A450
 void __fastcall DRLGMAZE_MergeMazeRooms(D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2DrlgOrthStrc* pDrlgOrth = NULL;
@@ -1237,7 +1237,7 @@ void __fastcall DRLGMAZE_MergeMazeRooms(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD7A570
+// D2Common.0x6FD7A570
 D2DrlgRoomStrc* __fastcall DRLGMAZE_GetRandomRoomExFromLevel(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgRoomStrc* pDrlgRoom = pLevel->pFirstRoomEx;
@@ -1250,7 +1250,7 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_GetRandomRoomExFromLevel(D2DrlgLevelStrc* pL
 	return pDrlgRoom;
 }
 
-//D2Common.0x6FD7A5D0
+// D2Common.0x6FD7A5D0
 void __fastcall DRLGMAZE_BuildBasicMaze(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgRoomStrc* pRandomRoomEx = NULL;
@@ -1395,7 +1395,7 @@ static void PlaceLavaPreset(D2DrlgRoomStrc* pFirstRoomEx, int nSet)
 	}
 }
 
-//D2Common.0x6FD7A830
+// D2Common.0x6FD7A830
 void __fastcall DRLGMAZE_PlaceAct5LavaPresets(D2DrlgLevelStrc* pLevel)
 {
 	const int nSet = 2 * (SEED_RollRandomNumber(&pLevel->pFirstRoomEx->pSeed) & 3);
@@ -1411,7 +1411,7 @@ void __fastcall DRLGMAZE_PlaceAct5LavaPresets(D2DrlgLevelStrc* pLevel)
 	DRLGMAZE_FillBlankMazeSpaces(pLevel, LVLPREST_ACT4_LAVA_X, nullptr);
 }
 
-//D2Common.0x6FD7A9B0
+// D2Common.0x6FD7A9B0
 void __fastcall DRLGMAZE_FillBlankMazeSpaces(D2DrlgLevelStrc* pLevel, int nLevelPrest, D2DrlgRoomStrc* pIgnoreRoomEx)
 {
 	const int nRooms = pLevel->nRooms;
@@ -1458,7 +1458,7 @@ void __fastcall DRLGMAZE_FillBlankMazeSpaces(D2DrlgLevelStrc* pLevel, int nLevel
 	}
 }
 
-//D2Common.0x6FD7AAC0
+// D2Common.0x6FD7AAC0
 void __fastcall DRLGMAZE_PlaceAct2TombPrev_Act5BaalPrev(D2DrlgLevelStrc* pLevel)
 {
 	static const int dword_6FDCE8B4[][2] =
@@ -1551,7 +1551,7 @@ static int DRLGMAZE_ArcaneSanctuaryDirectionFromRoomIdx(int nBranchDirection, in
 	}
 }
 
-//D2Common.0x6FD7ABC0
+// D2Common.0x6FD7ABC0
 // This function has been rewritten using a loop to avoid having macros / 15 calls to the same functions.
 void __fastcall DRLGMAZE_PlaceArcaneSanctuary(D2DrlgLevelStrc* pLevel)
 {
@@ -1592,7 +1592,7 @@ void __fastcall DRLGMAZE_PlaceArcaneSanctuary(D2DrlgLevelStrc* pLevel)
 	pLevelFirstRoomEx->pMaze->nPickedFile = 4;
 }
 
-//D2Common.0x6FD7AFD0
+// D2Common.0x6FD7AFD0
 D2DrlgRoomStrc* __fastcall DRLGMAZE_PlaceAdjacentPresetRoom(D2DrlgRoomStrc* pParentRoomEx, int nDirection, BOOL bMergeRooms)
 {
 	D2DrlgRoomStrc* pNewRoomEx = DRLGROOM_AllocRoomEx(pParentRoomEx->pLevel, DRLGTYPE_PRESET);
@@ -1662,7 +1662,7 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_PlaceAdjacentPresetRoom(D2DrlgRoomStrc* pPar
 	return pNewRoomEx;
 }
 
-//D2Common.0x6FD7B230
+// D2Common.0x6FD7B230
 void __fastcall DRLGMAZE_ScanReplaceSpecialPreset(D2DrlgLevelStrc* pLevel, const D2MazeLevelIdStrc* pMazeInit, int* pRand)
 {
 	D2DrlgRoomStrc* pNewRoomEx = NULL;
@@ -1716,7 +1716,7 @@ void __fastcall DRLGMAZE_ScanReplaceSpecialPreset(D2DrlgLevelStrc* pLevel, const
 	}
 }
 
-//D2Common.0x6FD7B330
+// D2Common.0x6FD7B330
 void __fastcall DRLGMAZE_ScanReplaceSpecialAct2SewersPresets(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct2SewerPrevIds[] =
@@ -1874,7 +1874,7 @@ void __fastcall DRLGMAZE_ScanReplaceSpecialAct2SewersPresets(D2DrlgLevelStrc* pL
 	}
 }
 
-//D2Common.0x6FD7B660
+// D2Common.0x6FD7B660
 void __fastcall DRLGMAZE_AddSpecialPreset(D2DrlgLevelStrc* pLevel, int nDirection, int nLvlPrestId, int nFile)
 {
 	for (D2DrlgRoomStrc* pDrlgRoom = pLevel->pFirstRoomEx; pDrlgRoom; pDrlgRoom = pDrlgRoom->pDrlgRoomNext)
@@ -1889,7 +1889,7 @@ void __fastcall DRLGMAZE_AddSpecialPreset(D2DrlgLevelStrc* pLevel, int nDirectio
 	}
 }
 
-//D2Common.0x6FD7B710
+// D2Common.0x6FD7B710
 BOOL __fastcall DRLGMAZE_CheckIfMayPlaceAdjacentPresetRoom(D2DrlgRoomStrc* pDrlgRoom, int nDirection)
 {
 	if (DRLGMAZE_HasMapDS1(pDrlgRoom))
@@ -1914,7 +1914,7 @@ BOOL __fastcall DRLGMAZE_CheckIfMayPlaceAdjacentPresetRoom(D2DrlgRoomStrc* pDrlg
 	return pNewRoomEx != 0;
 }
 
-//D2Common.0x6FD7B8B0
+// D2Common.0x6FD7B8B0
 void __fastcall DRLGMAZE_PlaceAct2TombStuff(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct2TombNextIds[] =
@@ -2118,7 +2118,7 @@ void __fastcall DRLGMAZE_PlaceAct2TombStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7BC40
+// D2Common.0x6FD7BC40
 D2DrlgRoomStrc* __fastcall DRLGMAZE_InitRoomFixedPreset(D2DrlgRoomStrc* pDrlgRoom, int nDirection, int nLvlPrestId, int nFile, BOOL bUseInitPreset)
 {
 	D2DrlgRoomStrc* pNewRoomEx = DRLGROOM_AllocRoomEx(pDrlgRoom->pLevel, DRLGTYPE_PRESET);
@@ -2147,7 +2147,7 @@ D2DrlgRoomStrc* __fastcall DRLGMAZE_InitRoomFixedPreset(D2DrlgRoomStrc* pDrlgRoo
 	}
 }
 
-//D2Common.0x6FD7BCD0
+// D2Common.0x6FD7BCD0
 void __fastcall DRLGMAZE_PlaceAct2LairStuff(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct2LairPrevIds[] =
@@ -2255,7 +2255,7 @@ void __fastcall DRLGMAZE_PlaceAct2LairStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7BE60
+// D2Common.0x6FD7BE60
 void __fastcall DRLGMAZE_PlaceAct3DungeonStuff(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct3DungeonPrevIds[] =
@@ -2347,7 +2347,7 @@ void __fastcall DRLGMAZE_PlaceAct3DungeonStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7C000
+// D2Common.0x6FD7C000
 void __fastcall DRLGMAZE_PlaceAct3SewerStuff(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct3SewerDrainIds[] =
@@ -2438,7 +2438,7 @@ void __fastcall DRLGMAZE_PlaceAct3SewerStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7C1A0
+// D2Common.0x6FD7C1A0
 //TODO: v9, v14
 void __fastcall DRLGMAZE_PlaceAct3MephistoStuff(D2DrlgLevelStrc* pLevel)
 {
@@ -2551,7 +2551,7 @@ void __fastcall DRLGMAZE_PlaceAct3MephistoStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7C380
+// D2Common.0x6FD7C380
 void __fastcall DRLGMAZE_PlaceAct5TempleStuff(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct5TempleSpecialIds[] =
@@ -2636,7 +2636,7 @@ void __fastcall DRLGMAZE_PlaceAct5TempleStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7C500
+// D2Common.0x6FD7C500
 void __fastcall DRLGMAZE_PlaceAct5BaalStuff(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct5BaalNextIds[] =
@@ -2716,7 +2716,7 @@ void __fastcall DRLGMAZE_PlaceAct5BaalStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7C660
+// D2Common.0x6FD7C660
 void __fastcall DRLGMAZE_PlaceAct1Barracks(D2DrlgLevelStrc* pLevel)
 {
 	static D2DrlgRoomStrc* (__fastcall* pfGetBarracksEntryRoom[])(D2DrlgLevelStrc*) =
@@ -2877,14 +2877,14 @@ void __fastcall DRLGMAZE_PlaceAct1Barracks(D2DrlgLevelStrc* pLevel)
 	pLevel->nHeight = nTileMaxY - nTileMinY;
 }
 
-//D2Common.0x6FD7CA20
+// D2Common.0x6FD7CA20
 void __fastcall DRLGMAZE_SetRoomSize(D2DrlgRoomStrc* pDrlgRoom)
 {
 	pDrlgRoom->nTileWidth = pDrlgRoom->pLevel->pMaze->dwSizeX;
 	pDrlgRoom->nTileHeight = pDrlgRoom->pLevel->pMaze->dwSizeY;
 }
 
-//D2Common.0x6FD7CA40
+// D2Common.0x6FD7CA40
 void __fastcall DRLGMAZE_PlaceAct4Lava(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct4LavaForgeIds[] =
@@ -2964,7 +2964,7 @@ void __fastcall DRLGMAZE_PlaceAct4Lava(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7CCB0
+// D2Common.0x6FD7CCB0
 void __fastcall DRLGMAZE_PlaceAct5IceStuff(D2DrlgLevelStrc* pLevel)
 {
 	static const D2MazeLevelIdStrc nAct5IcePrevIds[] =
@@ -3095,7 +3095,7 @@ void __fastcall DRLGMAZE_PlaceAct5IceStuff(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7CEA0
+// D2Common.0x6FD7CEA0
 void __fastcall DRLGMAZE_RollAct_1_2_3_BasicPresets(D2DrlgLevelStrc* pLevel)
 {
 	int pOffsets[15] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
@@ -3204,7 +3204,7 @@ void __fastcall DRLGMAZE_RollAct_1_2_3_BasicPresets(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7D130
+// D2Common.0x6FD7D130
 void __fastcall DRLGMAZE_RollBasicPresets(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgBuildStrc* pDrlgBuild = NULL;
@@ -3350,7 +3350,7 @@ void __fastcall DRLGMAZE_RollBasicPresets(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7D3D0
+// D2Common.0x6FD7D3D0
 void __fastcall DRLGMAZE_ResetMazeRecord(D2DrlgLevelStrc* pLevel, BOOL bKeepMazeRecord)
 {
 	if (!bKeepMazeRecord)

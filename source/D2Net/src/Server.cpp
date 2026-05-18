@@ -19,13 +19,13 @@ int32_t gnLocalClientGameGuid_6FC0B26C;
 constexpr int32_t VARIABLE_PACKET_SIZE = -1;
 
 
-//D2Net.0x6FC01B30 (#10024)
+// D2Net.0x6FC01B30 (#10024)
 int32_t __stdcall SERVER_WSAGetLastError()
 {
 	return WSAGetLastError();
 }
 
-//D2Net.0x6FC01B60 (#10030)
+// D2Net.0x6FC01B60 (#10030)
 int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint32_t nBufferSize, int32_t* pSize)
 {
 	constexpr int32_t gServerPacketSizeTable[] =
@@ -397,7 +397,7 @@ int32_t __fastcall SERVER_GetServerPacketSize(D2PacketBufferStrc* pBuffer, uint3
 	}
 }
 
-//D2Net.0x6FC01E60 (#10031)
+// D2Net.0x6FC01E60 (#10031)
 int32_t __fastcall SERVER_GetClientPacketSize(D2PacketBufferStrc* pBuffer, uint32_t nBufferSize, int32_t* pSize)
 {
 	constexpr int32_t gClientPacketSizeTable[] =
@@ -632,19 +632,19 @@ int32_t __fastcall SERVER_GetClientPacketSize(D2PacketBufferStrc* pBuffer, uint3
 	}
 }
 
-//D2Net.0x6FC01FA0 (#10039)
+// D2Net.0x6FC01FA0 (#10039)
 D2NET_CLIENT_SendFunctionType __stdcall D2NET_10039()
 {
 	return CLIENT_Send;
 }
 
-//D2Net.0x6FC01FB0 (#10040)
+// D2Net.0x6FC01FB0 (#10040)
 D2NET_SERVER_GetClientGameGUIDFunctionType __stdcall D2NET_10040()
 {
 	return SERVER_GetClientGameGUID;
 }
 
-//D2Net.0x6FC01FC0
+// D2Net.0x6FC01FC0
 int32_t __fastcall SERVER_ReadPacketFromBufferCallback(QServer* nUnused, D2PacketBufferStrc* pPacketBuffer, int32_t nBufferSize)
 {
 	D2_MAYBE_UNUSED(nUnused);
@@ -652,7 +652,7 @@ int32_t __fastcall SERVER_ReadPacketFromBufferCallback(QServer* nUnused, D2Packe
 	return 1;
 }
 
-//D2Net.0x6FC01FE0
+// D2Net.0x6FC01FE0
 int32_t __fastcall SERVER_ValidateClientPacket(D2PacketBufferStrc* pPacketBuffer, uint32_t nBufferSize, int32_t* a3, int32_t* a4, int32_t* a5, int32_t* a6, int32_t nUnused1, int32_t nUnused2)
 {
 	int32_t nSize = 0;
@@ -698,7 +698,7 @@ int32_t __fastcall SERVER_ValidateClientPacket(D2PacketBufferStrc* pPacketBuffer
 	return 2;
 }
 
-//D2Net.0x6FC020B0
+// D2Net.0x6FC020B0
 int32_t __fastcall sub_6FC020B0(int32_t a1, int32_t nClientId, int32_t a3, int32_t a4)
 {
 	uint8_t data[2] = { 0xAE, 1 };
@@ -707,7 +707,7 @@ int32_t __fastcall sub_6FC020B0(int32_t a1, int32_t nClientId, int32_t a3, int32
 	return 1;
 }
 
-//D2Net.0x6FC020E0
+// D2Net.0x6FC020E0
 int32_t __fastcall sub_6FC020E0(int32_t a1, int32_t a2, int32_t a3, int32_t a4)
 {
 	const uint8_t data[1] = { 0x6F };
@@ -716,7 +716,7 @@ int32_t __fastcall sub_6FC020E0(int32_t a1, int32_t a2, int32_t a3, int32_t a4)
 	return 1;
 }
 
-//D2Net.0x6FC02110
+// D2Net.0x6FC02110
 int32_t __fastcall sub_6FC02110()
 {
 	uint8_t data[2] = { 0xAE, 0 };
@@ -724,49 +724,49 @@ int32_t __fastcall sub_6FC02110()
 	return D2NET_10006(0, 0, data, sizeof(data));
 }
 
-//D2Net.0x6FC02130 (#10002)
+// D2Net.0x6FC02130 (#10002)
 int32_t __stdcall SERVER_WaitForSingleObject(uint32_t dwMilliseconds)
 {
 	return FOG_WaitForSingleObject(gpServer, dwMilliseconds);
 }
 
-//D2Net.0x6FC02150 (#10003)
+// D2Net.0x6FC02150 (#10003)
 void __stdcall SERVER_Initialize(int32_t a1, int32_t a2)
 {
 	gpServer = FOG_InitializeServer(a1, 3, GAME_PORT, a2, (void*)SERVER_ValidateClientPacket, (void*)sub_6FC020B0, (void*)sub_6FC020E0, (void*)SERVER_ReadPacketFromBufferCallback);
 }
 
-//D2Net.0x6FC02190 (#10035)
+// D2Net.0x6FC02190 (#10035)
 int32_t __stdcall D2NET_10035(int32_t nIndex, int32_t nValue)
 {
 	return FOG_10186(gpServer, nIndex, nValue);
 }
 
-//D2Net.0x6FC021B0 (#10036)
+// D2Net.0x6FC021B0 (#10036)
 void __stdcall D2NET_10036(int32_t a1, int32_t a2)
 {
 	FOG_10187(gpServer, a2, a1);
 }
 
-//D2Net.0x6FC021D0 (#10026)
+// D2Net.0x6FC021D0 (#10026)
 void __stdcall SERVER_SetMaxClientsPerGame(int32_t nMaxClients)
 {
 	FOG_SetMaxClientsPerGame(gpServer, nMaxClients);
 }
 
-//D2Net.0x6FC021F0 (#10027)
+// D2Net.0x6FC021F0 (#10027)
 int32_t __stdcall D2NET_10027()
 {
 	return FOG_10180(gpServer);
 }
 
-//D2Net.0x6FC02200 (#10023)
+// D2Net.0x6FC02200 (#10023)
 void __stdcall SERVER_SetHackListEnabled(BOOL bEnabled)
 {
 	FOG_SetHackListEnabled(gpServer, bEnabled);
 }
 
-//D2Net.0x6FC02220 (#10004)
+// D2Net.0x6FC02220 (#10004)
 void __stdcall SERVER_Release()
 {
 	const uint8_t data[1] = { 0xAF };
@@ -776,27 +776,27 @@ void __stdcall SERVER_Release()
 }
 
 // TODO: Better name
-//D2Net.0x6FC02250 (#10010)
+// D2Net.0x6FC02250 (#10010)
 int32_t __stdcall SERVER_ReadFromMessageList1(uint8_t* pBuffer, int32_t nBufferSize)
 {
 	return FOG_10156(gpServer, 1, pBuffer, nBufferSize);
 }
 
 // TODO: Better name
-//D2Net.0x6FC02270 (#10011)
+// D2Net.0x6FC02270 (#10011)
 int32_t __stdcall SERVER_ReadFromMessageList0(uint8_t* pBuffer, int32_t nBufferSize)
 {
 	return FOG_10156(gpServer, 0, pBuffer, nBufferSize);
 }
 
 // TODO: Better name
-//D2Net.0x6FC02290 (#10012)
+// D2Net.0x6FC02290 (#10012)
 int32_t __stdcall SERVER_ReadFromMessageList2(uint8_t* pBuffer, int32_t nBufferSize)
 {
 	return FOG_10156(gpServer, 2, pBuffer, nBufferSize);
 }
 
-//D2Net.0x6FC022B0 (#10006)
+// D2Net.0x6FC022B0 (#10006)
 uint32_t __stdcall D2NET_10006(int8_t a1, int32_t nClientId, void* pBufferArg, uint32_t nBufferSize)
 {
 	const uint8_t* pBuffer = (const uint8_t*)pBufferArg;
@@ -836,55 +836,55 @@ uint32_t __stdcall D2NET_10006(int8_t a1, int32_t nClientId, void* pBufferArg, u
 	return FOG_10157(gpServer, nClientId, data, v6) != 0 ? v6 : 0;
 }
 
-//D2Net.0x6FC02410 (#10014)
+// D2Net.0x6FC02410 (#10014)
 void __stdcall SERVER_GetIpAddressStringFromClientId(int32_t nClientId, char* szBuffer, int32_t nBufferSize)
 {
 	FOG_10159(gpServer, nClientId, szBuffer, nBufferSize);
 }
 
-//D2Net.0x6FC02430 (#10038)
+// D2Net.0x6FC02430 (#10038)
 int32_t __stdcall SERVER_GetIpAddressFromClientId(int32_t nClientId)
 {
 	return FOG_10158(gpServer, nClientId);
 }
 
-//D2Net.0x6FC02450 (#10037)
+// D2Net.0x6FC02450 (#10037)
 SOCKET __stdcall SERVER_GetSocketFromClientId(int32_t nClientId)
 {
 	return FOG_10161(gpServer, nClientId);
 }
 
-//D2Net.0x6FC02470 (#10015)
+// D2Net.0x6FC02470 (#10015)
 void __stdcall D2NET_10015(int32_t nClientId, const char* szFile, int32_t nLine)
 {
 	FOG_10162(gpServer, nClientId, szFile, nLine);
 }
 
-//D2Net.0x6FC02490 (#10032)
+// D2Net.0x6FC02490 (#10032)
 void __stdcall D2NET_10032(int32_t nClientId, const char* szFile, int32_t nLine)
 {
 	FOG_10163(gpServer, nClientId, szFile, nLine);
 }
 
-//D2Net.0x6FC024B0 (#10033)
+// D2Net.0x6FC024B0 (#10033)
 int32_t __stdcall D2NET_10033(int32_t a1, int32_t a2, int32_t a3)
 {
 	return FOG_10164(gpServer, a1, a2, a3);
 }
 
-//D2Net.0x6FC024D0 (#10034)
+// D2Net.0x6FC024D0 (#10034)
 int32_t __stdcall D2NET_10034(int32_t nClientId, int32_t a2, int32_t a3)
 {
 	return FOG_10166(gpServer, nClientId, a2, a3);
 }
 
-//D2Net.0x6FC024F0 (#10016)
+// D2Net.0x6FC024F0 (#10016)
 void __stdcall D2NET_10016(int32_t nClientId)
 {
 	FOG_10165(gpServer, nClientId, __FILE__, __LINE__);
 }
 
-//D2Net.0x6FC02510 (#10018)
+// D2Net.0x6FC02510 (#10018)
 void __stdcall D2NET_10018(int32_t a1)
 {
 	if (!gpServer)
@@ -895,13 +895,13 @@ void __stdcall D2NET_10018(int32_t a1)
 	FOG_10170(gpServer, a1);
 }
 
-//D2Net.0x6FC02530 (#10019)
+// D2Net.0x6FC02530 (#10019)
 int32_t __stdcall D2NET_10019(D2NET_Unk_Callback pfCallback)
 {
 	return FOG_10171(gpServer, (void*)pfCallback);
 }
 
-//D2Net.0x6FC02550 (#10020)
+// D2Net.0x6FC02550 (#10020)
 int32_t __stdcall SERVER_SetClientGameGUID(int32_t nClientId, int32_t dwGameGuid)
 {
 	if (nClientId)
@@ -914,7 +914,7 @@ int32_t __stdcall SERVER_SetClientGameGUID(int32_t nClientId, int32_t dwGameGuid
 	return dwGameGuid;
 }
 
-//D2Net.0x6FC02580 (#10021)
+// D2Net.0x6FC02580 (#10021)
 int32_t __stdcall SERVER_GetClientGameGUID(int32_t nClientId)
 {
 	if (nClientId)
@@ -925,7 +925,7 @@ int32_t __stdcall SERVER_GetClientGameGUID(int32_t nClientId)
 	return gnLocalClientGameGuid_6FC0B26C;
 }
 
-//D2Net.0x6FC025A0
+// D2Net.0x6FC025A0
 int32_t __fastcall SERVER_EnqueuePacketToMessageList(const uint8_t* pBuffer, int32_t nBufferSize)
 {
 	D2_ASSERT(nBufferSize <= MAX_MSG_SIZE);
@@ -933,19 +933,19 @@ int32_t __fastcall SERVER_EnqueuePacketToMessageList(const uint8_t* pBuffer, int
 	return FOG_10175(gpServer, pBuffer, nBufferSize, 0) != 0;
 }
 
-//D2Net.0x6FC025F0 (#10022)
+// D2Net.0x6FC025F0 (#10022)
 int32_t __stdcall D2NET_10022(uint32_t dwMilliseconds)
 {
 	return FOG_10177(gpServer, dwMilliseconds);
 }
 
-//D2Net.0x6FC02610 (#10028)
+// D2Net.0x6FC02610 (#10028)
 int32_t __stdcall D2NET_10028_Return()
 {
 	return FOG_10182_Return(gpServer);
 }
 
-//D2Net.0x6FC02620 (#10029)
+// D2Net.0x6FC02620 (#10029)
 int32_t __stdcall D2NET_10029_Return(int32_t nUnused)
 {
 	return FOG_10183_Return(gpServer, nUnused);

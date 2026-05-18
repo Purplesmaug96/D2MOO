@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <D2BasicTypes.h>
 
@@ -109,22 +109,22 @@ struct D2CubeMainTxt
 
 #pragma pack()
 
-//D2Common.0x6FD523E0
+// D2Common.0x6FD523E0
 void __fastcall DATATBLS_CubeMainInputLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn);
-//D2Common.0x6FD52410
+// D2Common.0x6FD52410
 BOOL __fastcall DATATBLS_CubeMainInputParser(D2CubeInputItem* pCubeInput, char* szInput, int nTxtRow, int nItemId);
-//D2Common.0x6FD528D0
+// D2Common.0x6FD528D0
 void __fastcall DATATBLS_CubeMainOutputLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn);
-//D2Common.0x6FD52910
+// D2Common.0x6FD52910
 BOOL __fastcall DATATBLS_CubeMainOutputParser(D2CubeOutputItem* pCubeOutputParam, char* szOutput, int nTxtRow, int nItemId);
-//D2Common.0x6FD52FC0
+// D2Common.0x6FD52FC0
 void __fastcall DATATBLS_CubeMainParamLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn);
-//D2Common.0x6FD53030
+// D2Common.0x6FD53030
 void __fastcall DATATBLS_LoadCubeMainTxt(HD2ARCHIVE hArchive);
-//D2Common.0x6FD54250
+// D2Common.0x6FD54250
 void __fastcall DATATBLS_UnloadCubeMainTxt();
-//D2Common.0x6FD54260 (#11232)
+// D2Common.0x6FD54260 (#11232)
 D2COMMON_DLL_DECL D2CubeMainTxt* __stdcall DATATBLS_GetCubemainTxtRecord(int nIndex);
-//D2Common.0x6FD542C0 (#11233)
+// D2Common.0x6FD542C0 (#11233)
 D2COMMON_DLL_DECL int __fastcall DATATBLS_GetCubemainTxtRecordCount();
 

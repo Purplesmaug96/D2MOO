@@ -48,7 +48,7 @@ D2PresetUnitStrc* DRLGPRESET_AllocateAndAddPresetUnitToMap(D2DrlgRoomStrc* pDrlg
 }
 
 
-//D2Common.0x6FD859A0 (#11222)
+// D2Common.0x6FD859A0 (#11222)
 int __stdcall DRLGPRESET_CountPresetObjectsByAct(uint8_t nAct)
 {
 	for (int i = 0; i < 150; ++i)
@@ -62,7 +62,7 @@ int __stdcall DRLGPRESET_CountPresetObjectsByAct(uint8_t nAct)
 	return 0;
 }
 
-//D2Common.0x6FD859E0 (#11223)
+// D2Common.0x6FD859E0 (#11223)
 int __stdcall DRLGPRESET_GetObjectIndexFromObjPreset(uint8_t nAct, int nUnitId)
 {
 	static const int dword_6FDE1180[5][150] =
@@ -131,7 +131,7 @@ static void SkipInt32s(int32_t*& pData, uint32_t nbToSkip)
 	pData += nbToSkip;
 }
 
-//D2Common.0x6FD85A10
+// D2Common.0x6FD85A10
 void __fastcall DRLGPRESET_ParseDS1File(D2DrlgFileStrc* pDrlgFile, HD2ARCHIVE hArchive, const char* szFileName)
 {
 	D2DS1FileStrc* pDS1File = (D2DS1FileStrc*)ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT(hArchive, szFileName, NULL);
@@ -488,7 +488,7 @@ void __fastcall DRLGPRESET_ParseDS1File(D2DrlgFileStrc* pDrlgFile, HD2ARCHIVE hA
 	}
 }
 
-//D2Common.0x6FD86050
+// D2Common.0x6FD86050
 void __fastcall DRLGPRESET_LoadDrlgFile(D2DrlgFileStrc** ppDrlgFile, HD2ARCHIVE hArchive, const char* szFile)
 {
 	if (gpLvlSubTypeFilesCriticalSection)
@@ -533,7 +533,7 @@ void __fastcall DRLGPRESET_LoadDrlgFile(D2DrlgFileStrc** ppDrlgFile, HD2ARCHIVE 
 	}
 }
 
-//D2Common.0x6FD86190
+// D2Common.0x6FD86190
 void __fastcall DRLGPRESET_FreeDrlgFile(D2DrlgFileStrc** ppDrlgFile)
 {
 	if (*ppDrlgFile)
@@ -610,7 +610,7 @@ void __fastcall DRLGPRESET_FreeDrlgFile(D2DrlgFileStrc** ppDrlgFile)
 	}
 }
 
-//D2Common.0x6FD86310
+// D2Common.0x6FD86310
 D2PresetUnitStrc* __fastcall DRLGPRESET_CopyPresetUnit(void* pMemPool, D2PresetUnitStrc* pPresetUnit, int nX, int nY)
 {
 	D2PresetUnitStrc* pNewPresetUnit = D2_CALLOC_STRC_POOL(pMemPool, D2PresetUnitStrc);
@@ -636,7 +636,7 @@ D2PresetUnitStrc* __fastcall DRLGPRESET_CopyPresetUnit(void* pMemPool, D2PresetU
 	return pNewPresetUnit;
 }
 
-//D2Common.0x6FD86430
+// D2Common.0x6FD86430
 void __fastcall DRLGPRESET_FreePresetUnit(void* pMemPool, D2PresetUnitStrc* pPresetUnit)
 {
 	if (pPresetUnit->pMapAI)
@@ -647,7 +647,7 @@ void __fastcall DRLGPRESET_FreePresetUnit(void* pMemPool, D2PresetUnitStrc* pPre
 	D2_FREE_POOL(pMemPool, pPresetUnit);
 }
 
-//D2Common.0x6FD86480 (#10020)
+// D2Common.0x6FD86480 (#10020)
 D2MapAIStrc* __fastcall DRLGPRESET_CreateCopyOfMapAI(void* pMemPool, D2MapAIStrc* pMapAI)
 {
 	D2MapAIStrc* pNewMapAI = D2_ALLOC_STRC_POOL(pMemPool, D2MapAIStrc);
@@ -658,7 +658,7 @@ D2MapAIStrc* __fastcall DRLGPRESET_CreateCopyOfMapAI(void* pMemPool, D2MapAIStrc
 	return pNewMapAI;
 }
 
-//D2Common.0x6FD864F0 (#10021)
+// D2Common.0x6FD864F0 (#10021)
 D2MapAIStrc* __fastcall DRLGPRESET_ChangeMapAI(D2MapAIStrc** ppMapAI1, D2MapAIStrc** ppMapAI2)
 {
 	*ppMapAI2 = *ppMapAI1;
@@ -667,14 +667,14 @@ D2MapAIStrc* __fastcall DRLGPRESET_ChangeMapAI(D2MapAIStrc** ppMapAI1, D2MapAISt
 	return *ppMapAI2;
 }
 
-//D2Common.0x6FD86500 (#10022)
+// D2Common.0x6FD86500 (#10022)
 void __fastcall DRLGPRESET_FreeMapAI(void* pMemPool, D2MapAIStrc* pMapAI)
 {
 	D2_FREE_POOL(pMemPool, pMapAI->pPosition);
 	D2_FREE_POOL(pMemPool, pMapAI);
 }
 
-//D2Common.0x6FD86540
+// D2Common.0x6FD86540
 void __fastcall DRLGPRESET_AddPresetUnitToDrlgMap(void* pMemPool, D2DrlgMapStrc* pDrlgMap, D2SeedStrc* pSeed)
 {
 	D2PresetUnitStrc* pNewPresetUnit = NULL;
@@ -791,7 +791,7 @@ void DRLGPRESET_SpawnRiver(D2DrlgMapStrc* pMazeMap, const D2DrlgCoordStrc& tDrlg
 	DRLGPRESET_AddPresetRiverObjects(pMazeMap, pDrlgMemPool, nOffsetX, pDrlgGrid);
 }
 
-//D2Common.0x6FD867A0
+// D2Common.0x6FD867A0
 void __fastcall DRLGPRESET_SpawnHardcodedPresetUnits(D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2DrlgMapStrc* pMazeMap = pDrlgRoom->pMaze->pMap;
@@ -863,7 +863,7 @@ void __fastcall DRLGPRESET_SpawnHardcodedPresetUnits(D2DrlgRoomStrc* pDrlgRoom)
 	pDrlgRoom->dwFlags |= DRLGROOMFLAG_PRESET_UNITS_ADDED;
 }
 
-//D2Common.0x6FD86AC0
+// D2Common.0x6FD86AC0
 void __fastcall DRLGPRESET_AddPresetRiverObjects(D2DrlgMapStrc* pDrlgMap, void* pMemPool, int nOffsetX, D2DrlgGridStrc* pDrlgGrid)
 {
 	int nX = nOffsetX < 0 ? 0 : nOffsetX;
@@ -902,7 +902,7 @@ void __fastcall DRLGPRESET_AddPresetRiverObjects(D2DrlgMapStrc* pDrlgMap, void* 
 	}
 }
 
-//D2Common.0x6FD86C80
+// D2Common.0x6FD86C80
 void __fastcall DRLGPRESET_FreePresetRoomData(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->pMaze)
@@ -919,7 +919,7 @@ void __fastcall DRLGPRESET_FreePresetRoomData(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD86CE0
+// D2Common.0x6FD86CE0
 void __fastcall DRLGPRESET_FreeDrlgGrids(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2DrlgFileStrc* pDrlgFile = NULL;
@@ -945,7 +945,7 @@ void __fastcall DRLGPRESET_FreeDrlgGrids(void* pMemPool, D2DrlgRoomStrc* pDrlgRo
 	}
 }
 
-//D2Common.0x6FD86D60
+// D2Common.0x6FD86D60
 void __fastcall DRLGPRESET_FreeDrlgGridsFromPresetRoom(D2DrlgRoomStrc* pDrlgRoom)
 {
 	if (pDrlgRoom->pMaze)
@@ -954,13 +954,13 @@ void __fastcall DRLGPRESET_FreeDrlgGridsFromPresetRoom(D2DrlgRoomStrc* pDrlgRoom
 	}
 }
 
-//D2Common.0x6FD86D80
+// D2Common.0x6FD86D80
 void __fastcall DRLGPRESET_AllocPresetRoomData(D2DrlgRoomStrc* pDrlgRoom)
 {
 	pDrlgRoom->pMaze = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2DrlgPresetRoomStrc);
 }
 
-//D2Common.0x6FD86DC0
+// D2Common.0x6FD86DC0
 D2DrlgRoomStrc* __fastcall DRLGPRESET_InitPresetRoomData(D2DrlgLevelStrc* pLevel, D2DrlgMapStrc* pDrlgMap, D2DrlgCoordStrc* pDrlgCoord, uint32_t dwDT1Mask, int dwRoomFlags, int dwPresetFlags, D2DrlgGridStrc* a7)
 {
 	D2DrlgPresetRoomStrc* pDrlgPresetRoom = NULL;
@@ -997,7 +997,7 @@ D2DrlgRoomStrc* __fastcall DRLGPRESET_InitPresetRoomData(D2DrlgLevelStrc* pLevel
 	return pDrlgRoom;
 }
 
-//D2Common.0x6FD86E50
+// D2Common.0x6FD86E50
 void __fastcall DRLGPRESET_InitPresetRoomGrids(D2DrlgRoomStrc* pDrlgRoom)
 {
 	D2PresetUnitStrc* pPresetUnit = NULL;
@@ -1090,7 +1090,7 @@ void __fastcall DRLGPRESET_InitPresetRoomGrids(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD870F0
+// D2Common.0x6FD870F0
 void __fastcall DRLGPRESET_GetTombStoneTileCoords(D2DrlgRoomStrc* pDrlgRoom, D2CoordStrc** ppTombStoneTiles, int* pnTombStoneTiles)
 {
 	if (pDrlgRoom->nType == DRLGTYPE_PRESET)
@@ -1105,7 +1105,7 @@ void __fastcall DRLGPRESET_GetTombStoneTileCoords(D2DrlgRoomStrc* pDrlgRoom, D2C
 	}
 }
 
-//D2Common.0x6FD87130
+// D2Common.0x6FD87130
 void __fastcall DRLGPRESET_AddPresetRoomMapTiles(D2DrlgRoomStrc* pDrlgRoom)
 {
 	DRLGROOMTILE_AllocTileGrid(pDrlgRoom);
@@ -1247,7 +1247,7 @@ void __fastcall DRLGPRESET_AddPresetRoomMapTiles(D2DrlgRoomStrc* pDrlgRoom)
 	}
 }
 
-//D2Common.0x6FD87560
+// D2Common.0x6FD87560
 D2DrlgRoomStrc* __fastcall DRLGPRESET_BuildArea(D2DrlgLevelStrc* pLevel, D2DrlgMapStrc* pDrlgMap, int nFlags, BOOL bSingleRoom)
 {
 	if (pDrlgMap->pLvlPrestTxtRecord->dwOutdoors)
@@ -1304,7 +1304,7 @@ D2DrlgRoomStrc* __fastcall DRLGPRESET_BuildArea(D2DrlgLevelStrc* pLevel, D2DrlgM
 	return pDrlgRoom;
 }
 
-//D2Common.0x6FD87760
+// D2Common.0x6FD87760
 void __fastcall DRLGPRESET_BuildPresetArea(D2DrlgLevelStrc* pLevel, D2DrlgGridStrc* pDrlgGrid, int nFlags, D2DrlgMapStrc* pDrlgMap, BOOL bSingleRoom)
 {
 	int* pVisArray = DRLGROOM_GetVisArrayFromLevelId(pLevel->pDrlg, pLevel->nLevelId);
@@ -1497,13 +1497,13 @@ void __fastcall DRLGPRESET_BuildPresetArea(D2DrlgLevelStrc* pLevel, D2DrlgGridSt
 	}
 }
 
-//D2Common.0x6FD87E10
+// D2Common.0x6FD87E10
 void __fastcall DRLGPRESET_SetPickedFileInDrlgMap(D2DrlgMapStrc* pDrlgMap, int nPickedFile)
 {
 	pDrlgMap->nPickedFile = nPickedFile;
 }
 
-//D2Common.0x6FD87E20
+// D2Common.0x6FD87E20
 D2DrlgMapStrc* __fastcall DRLGPRESET_AllocDrlgMap(D2DrlgLevelStrc* pLevel, int nLvlPrestId, D2DrlgCoordStrc* pDrlgCoord, D2SeedStrc* pSeed)
 {
 	D2DrlgMapStrc* pDrlgMap = D2_CALLOC_STRC_POOL(pLevel->pDrlg->pMempool, D2DrlgMapStrc);
@@ -1533,19 +1533,19 @@ D2DrlgMapStrc* __fastcall DRLGPRESET_AllocDrlgMap(D2DrlgLevelStrc* pLevel, int n
 	return pDrlgMap;
 }
 
-//D2Common.0x6FD87F00
+// D2Common.0x6FD87F00
 int __fastcall DRLGPRESET_GetSizeX(int nLvlPrestId)
 {
 	return DATATBLS_GetLvlPrestTxtRecord(nLvlPrestId)->nSizeX;
 }
 
-//D2Common.0x6FD87F10
+// D2Common.0x6FD87F10
 int __fastcall DRLGPRESET_GetSizeY(int nLvlPrestId)
 {
 	return DATATBLS_GetLvlPrestTxtRecord(nLvlPrestId)->nSizeY;
 }
 
-//D2Common.0x6FD87F20
+// D2Common.0x6FD87F20
 void __fastcall DRLGPRESET_FreeDrlgMap(void* pMemPool, D2DrlgMapStrc* pDrlgMap)
 {
 	D2PresetUnitStrc* pNextPresetUnit = NULL;
@@ -1600,19 +1600,19 @@ void __fastcall DRLGPRESET_FreeDrlgMap(void* pMemPool, D2DrlgMapStrc* pDrlgMap)
 	}
 }
 
-//D2Common.0x6FD881A0 (#10008)
+// D2Common.0x6FD881A0 (#10008)
 int __fastcall DRLGPRESET_GetLevelPrestIdFromRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 {
 	return pDrlgRoom->pMaze->nLevelPrest;
 }
 
-//D2Common.0x6FD881B0 (#10009)
+// D2Common.0x6FD881B0 (#10009)
 char* __fastcall DRLGPRESET_GetPickedLevelPrestFilePathFromRoomEx(D2DrlgRoomStrc* pDrlgRoom)
 {
 	return pDrlgRoom->pMaze->pMap->pLvlPrestTxtRecord->szFile[pDrlgRoom->pMaze->pMap->nPickedFile];
 }
 
-//D2Common.0x6FD881D0
+// D2Common.0x6FD881D0
 void __fastcall DRLGPRESET_UpdatePops(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY, BOOL bOtherRoom)
 {
 	const int nTick = GetTickCount() + 500;
@@ -1690,7 +1690,7 @@ void __fastcall DRLGPRESET_UpdatePops(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY,
 	}
 }
 
-//D2Common.0x6FD88450
+// D2Common.0x6FD88450
 void __fastcall DRLGPRESET_TogglePopsVisibility(D2DrlgRoomStrc* pDrlgRoom, int nPopSubIndex, D2DrlgCoordStrc* pDrlgCoord, int nTick, BOOL nCellFlags)
 {
 	D2_ASSERT(pDrlgRoom->pTileGrid);
@@ -1756,7 +1756,7 @@ void __fastcall DRLGPRESET_TogglePopsVisibility(D2DrlgRoomStrc* pDrlgRoom, int n
 	}
 }
 
-//D2Common.0x6FD88610
+// D2Common.0x6FD88610
 void __fastcall DRLGPRESET_InitLevelData(D2DrlgLevelStrc* pLevel)
 {
 	D2LvlPrestTxt* pLvlPrestTxtRecord = NULL;
@@ -1781,7 +1781,7 @@ void __fastcall DRLGPRESET_InitLevelData(D2DrlgLevelStrc* pLevel)
 	DRLG_SetLevelPositionAndSize(pLevel->pDrlg, pLevel);
 }
 
-//D2Common.0x6FD886F0
+// D2Common.0x6FD886F0
 void __fastcall DRLGPRESET_GenerateLevel(D2DrlgLevelStrc* pLevel)
 {
 	D2LvlPrestTxt* pLvlPrestTxtRecord = NULL;
@@ -1835,7 +1835,7 @@ void __fastcall DRLGPRESET_GenerateLevel(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD88810
+// D2Common.0x6FD88810
 void __fastcall DRLGPRESET_ResetDrlgMap(D2DrlgLevelStrc* pLevel, BOOL bKeepPreset)
 {
 	pLevel->pPreset->pDrlgMap = NULL;
@@ -1847,7 +1847,7 @@ void __fastcall DRLGPRESET_ResetDrlgMap(D2DrlgLevelStrc* pLevel, BOOL bKeepPrese
 	}
 }
 
-//D2Common.0x6FD88850
+// D2Common.0x6FD88850
 int __fastcall DRLGPRESET_MapTileType(int nId)
 {
 	// TODO: use D2TileType

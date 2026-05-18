@@ -73,7 +73,7 @@ struct D2PartyExpStrc
 #pragma pack(pop)
 
 
-//D2Game.0x6FCBE2F0
+// D2Game.0x6FCBE2F0
 int32_t __fastcall SUNITDMG_SetHitClass(D2DamageStrc* pDamage, uint32_t nHitClass)
 {
     if (!(pDamage->dwHitClass & 0xF0))
@@ -85,7 +85,7 @@ int32_t __fastcall SUNITDMG_SetHitClass(D2DamageStrc* pDamage, uint32_t nHitClas
     return 0;
 }
 
-//D2Game.0x6FCBE310
+// D2Game.0x6FCBE310
 int32_t __fastcall SUNITDMG_GetColdEffect(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
 	if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -102,7 +102,7 @@ int32_t __fastcall SUNITDMG_GetColdEffect(D2GameStrc* pGame, D2UnitStrc* pUnit)
 	return pMonStatsTxtRecord->nColdEffect[pGame->nDifficulty];
 }
 
-//D2Game.0x6FCBE360
+// D2Game.0x6FCBE360
 void __fastcall SUNITDMG_RemoveFreezeState(D2UnitStrc* pUnit, int32_t nState, D2StatListStrc* pStatList)
 {
 	D2_MAYBE_UNUSED(pStatList);
@@ -147,7 +147,7 @@ void __fastcall SUNITDMG_RemoveFreezeState(D2UnitStrc* pUnit, int32_t nState, D2
 	EVENT_SetEvent(pGame, pUnit, EVENTTYPE_AITHINK, nAIDelay + pGame->dwGameFrame, 0, 0);
 }
 
-//D2Game.0x6FCBE420
+// D2Game.0x6FCBE420
 int32_t __fastcall SUNITDMG_ApplyDamageBonuses(D2UnitStrc* pUnit, int32_t bGetStats, D2UnitStrc* pItem, int32_t nMinDmg, int32_t nMaxDmg, int32_t nDamagePercent, int32_t nDamage, uint8_t nSrcDam)
 {
     int32_t nMinDamage = 0;
@@ -249,7 +249,7 @@ int32_t __fastcall SUNITDMG_ApplyDamageBonuses(D2UnitStrc* pUnit, int32_t bGetSt
     return MONSTERUNIQUE_CalculatePercentage(nDamage, nSrcDam, 128);
 }
 
-//D2Game.0x6FCBE7E0
+// D2Game.0x6FCBE7E0
 void __fastcall SUNITDMG_FillDamageValues(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, D2DamageStrc* pDamage, int32_t a5, uint8_t nSrcDam)
 {
 	if (!pAttacker || !pDefender)
@@ -727,7 +727,7 @@ void __fastcall SUNITDMG_FillDamageValues(D2GameStrc* pGame, D2UnitStrc* pAttack
 	sub_6FC7CA10(pAttacker, a5);
 }
 
-//D2Game.0x6FCBF400
+// D2Game.0x6FCBF400
 int32_t __fastcall SUNITDMG_CheckMonType(int32_t nMonType1, int32_t nMonType2)
 {
 	if (nMonType1 > 0 && nMonType1 < sgptDataTables->nMonTypeTxtRecordCount
@@ -739,7 +739,7 @@ int32_t __fastcall SUNITDMG_CheckMonType(int32_t nMonType1, int32_t nMonType2)
 	return 0;
 }
 
-//D2Game.0x6FCBF450
+// D2Game.0x6FCBF450
 int32_t __fastcall SUNITDMG_RollDamageValueInRange(D2UnitStrc* pUnit, int32_t nMinDamage, int32_t nMaxDamage, int32_t nMinDamageBonusPct, int32_t nMaxDamageBonusPct, int32_t nDamage)
 {
 	if (nMaxDamage > 0)
@@ -759,10 +759,10 @@ int32_t __fastcall SUNITDMG_RollDamageValueInRange(D2UnitStrc* pUnit, int32_t nM
 	return std::max(nDamage, 0);
 }
 
-//D2Game.0x6FCBF620
+// D2Game.0x6FCBF620
 void __fastcall SUNITDMG_CalculateTotalDamage(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, D2DamageStrc* pDamage)
 {
-	//D2Game.0x6FD3F090
+	// D2Game.0x6FD3F090
 	constexpr D2DamageStatTableStrc sgDamageStatTable[12] =
 	{
 		{ offsetof(D2DamageStrc, dwPhysDamage),	STAT_DAMAGERESIST,				-1,						-1,							-1,								-1,						DAMAGE_REDUCTION_PHYSICAL,	0, 1, "Dam", 8, 0, 0, 0 },
@@ -939,7 +939,7 @@ void __fastcall SUNITDMG_CalculateTotalDamage(D2GameStrc* pGame, D2UnitStrc* pAt
 	}
 }
 
-//D2Game.0x6FCBFB40
+// D2Game.0x6FCBFB40
 void __fastcall SUNITDMG_ApplyResistancesAndAbsorb(D2DamageInfoStrc* pDamageInfo, const D2DamageStatTableStrc* pDamageStatTableRecord, int32_t bDontAbsorb)
 {
 	int32_t* pValue = (int32_t*)((char*)pDamageInfo->pDamage + pDamageStatTableRecord->nOffsetInDamageStrc);
@@ -1065,7 +1065,7 @@ void __fastcall SUNITDMG_ApplyResistancesAndAbsorb(D2DamageInfoStrc* pDamageInfo
 	*pValue = nValue;
 }
 
-//D2Game.0x6FCBFE90
+// D2Game.0x6FCBFE90
 void __fastcall SUNITDMG_ExecuteEvents(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t bMissile, D2DamageStrc* pDamage)
 {
 	if (!sub_6FCBD900(pGame, pAttacker, pDefender) && !(pDamage->dwHitFlags & DAMAGEHITFLAG_4096))
@@ -1405,7 +1405,7 @@ void __fastcall SUNITDMG_ExecuteEvents(D2GameStrc* pGame, D2UnitStrc* pAttacker,
 	}
 }
 
-//D2Game.0x6FCC05D0
+// D2Game.0x6FCC05D0
 D2MonStatsTxt* __fastcall SUNITDMG_GetMonStatsTxtRecordFromUnit(D2UnitStrc* pUnit)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -1416,7 +1416,7 @@ D2MonStatsTxt* __fastcall SUNITDMG_GetMonStatsTxtRecordFromUnit(D2UnitStrc* pUni
     return nullptr;
 }
 
-//D2Game.0x6FCC05F0
+// D2Game.0x6FCC05F0
 int32_t __fastcall SUNITDMG_AddLeechedLife(D2UnitStrc* pUnit, int32_t nLifeLeeched)
 {
 	if (nLifeLeeched <= 0 || SUNIT_IsDead(pUnit) || STATES_CheckState(pUnit, STATE_DEATH_DELAY))
@@ -1437,7 +1437,7 @@ int32_t __fastcall SUNITDMG_AddLeechedLife(D2UnitStrc* pUnit, int32_t nLifeLeech
 	return nLifeLeeched;
 }
 
-//D2Game.0x6FCC0660
+// D2Game.0x6FCC0660
 int32_t __fastcall SUNITDMG_AddLeechedMana(D2UnitStrc* pUnit, int32_t nManaLeeched)
 {
 	if (nManaLeeched <= 0)
@@ -1458,7 +1458,7 @@ int32_t __fastcall SUNITDMG_AddLeechedMana(D2UnitStrc* pUnit, int32_t nManaLeech
 	return nManaLeeched;
 }
 
-//D2Game.0x6FCC06C0
+// D2Game.0x6FCC06C0
 void __fastcall SUNITDMG_ApplyPoisonDamage(D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nPoisonDamage, int32_t nPoisonLength)
 {
 	if (nPoisonLength <= 0 || nPoisonDamage <= 0)
@@ -1505,7 +1505,7 @@ void __fastcall SUNITDMG_ApplyPoisonDamage(D2UnitStrc* pAttacker, D2UnitStrc* pD
 	D2COMMON_10475_PostStatToStatList(pDefender, pNewStatList, 1);
 }
 
-//D2Game.0x6FCC0800
+// D2Game.0x6FCC0800
 void __fastcall SUNITDMG_ApplyBurnDamage(D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nBurnDamage, int32_t nBurnLength)
 {
 	if (nBurnLength <= 0 || nBurnDamage <= 0)
@@ -1552,7 +1552,7 @@ void __fastcall SUNITDMG_ApplyBurnDamage(D2UnitStrc* pAttacker, D2UnitStrc* pDef
 	D2COMMON_10475_PostStatToStatList(pDefender, pNewStatList, 1);
 }
 
-//D2Game.0x6FCC0940
+// D2Game.0x6FCC0940
 void __fastcall SUNITDMG_ApplyColdState(D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nColdLength)
 {
 	if (nColdLength <= 0)
@@ -1627,7 +1627,7 @@ void __fastcall SUNITDMG_ApplyColdState(D2UnitStrc* pAttacker, D2UnitStrc* pDefe
 	STATES_ToggleState(pDefender, STATE_SHATTER, 0);
 }
 
-//D2Game.0x6FCC0B90
+// D2Game.0x6FCC0B90
 void __fastcall SUNITDMG_RemoveShatterState(D2UnitStrc* pUnit, int32_t nState, D2StatListStrc* pStatList)
 {
 	D2_MAYBE_UNUSED(pStatList);
@@ -1645,7 +1645,7 @@ void __fastcall SUNITDMG_RemoveShatterState(D2UnitStrc* pUnit, int32_t nState, D
 	UNITS_UpdateAnimRateAndVelocity(pUnit, __FILE__, __LINE__);
 }
 
-//D2Game.0x6FCC0BE0
+// D2Game.0x6FCC0BE0
 void __fastcall SUNITDMG_ApplyFreezeState(D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nFreezeLength)
 {
 	if (nFreezeLength <= 0)
@@ -1736,7 +1736,7 @@ void __fastcall SUNITDMG_ApplyFreezeState(D2UnitStrc* pAttacker, D2UnitStrc* pDe
 	EVENT_SetEvent(pGame, pDefender, EVENTTYPE_AITHINK, pGame->dwGameFrame + nFreezeLength + 1, 0, 0);
 }
 
-//D2Game.0x6FCC0E20
+// D2Game.0x6FCC0E20
 void __fastcall SUNITDMG_FreeAttackerCombatList(D2GameStrc* pGame, D2UnitStrc* pAttacker)
 {
 	D2CombatStrc* pPrevious = nullptr;
@@ -1766,7 +1766,7 @@ void __fastcall SUNITDMG_FreeAttackerCombatList(D2GameStrc* pGame, D2UnitStrc* p
 	}
 }
 
-//D2Game.0x6FCC0E90
+// D2Game.0x6FCC0E90
 void __fastcall SUNITDMG_FreeAttackerDefenderCombatList(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender)
 {
 	if (!pAttacker || !pDefender)
@@ -1801,7 +1801,7 @@ void __fastcall SUNITDMG_FreeAttackerDefenderCombatList(D2GameStrc* pGame, D2Uni
 	}
 }
 
-//D2Game.0x6FCC0F10
+// D2Game.0x6FCC0F10
 void __fastcall SUNITDMG_KillMonster(D2GameStrc* pGame, D2UnitStrc* pDefender, D2UnitStrc* pAttacker, int32_t bPetKill)
 {
 	if (!pDefender)
@@ -2162,7 +2162,7 @@ void __fastcall SUNITDMG_ExecuteMissileDamage(D2GameStrc* pGame, D2UnitStrc* pAt
 	}
 }
 
-//D2Game.0x6FCC1870
+// D2Game.0x6FCC1870
 BOOL __fastcall sub_6FCC1870(D2UnitStrc* pUnit, D2DamageStrc* pDamage, int32_t nHitClass)
 {
 	if (STATES_CheckState(pUnit, STATE_FREEZE))
@@ -2233,7 +2233,7 @@ BOOL __fastcall sub_6FCC1870(D2UnitStrc* pUnit, D2DamageStrc* pDamage, int32_t n
 	return FALSE;
 }
 
-//D2Game.0x6FCC1A50
+// D2Game.0x6FCC1A50
 int32_t __fastcall SUNITDMG_GetHitClass(D2DamageStrc* pDamage, uint32_t nBaseHitClass)
 {
 	constexpr D2DamageHitClassMappingStrc sgDamageHitClassMapping[] =
@@ -2283,7 +2283,7 @@ int32_t __fastcall SUNITDMG_GetHitClass(D2DamageStrc* pDamage, uint32_t nBaseHit
 	return nBaseHitClass | nHitClass;
 }
 
-//D2Game.0x6FCC1AC0
+// D2Game.0x6FCC1AC0
 void __fastcall SUNITDMG_DrainItemDurability(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nUnused)
 {
 	constexpr D2DurabilityLossStrc sgDurabilityLossWeights[7] =
@@ -2393,7 +2393,7 @@ void __fastcall SUNITDMG_DrainItemDurability(D2GameStrc* pGame, D2UnitStrc* pAtt
 	SUNITDMG_FreeAttackerDefenderCombatList(pGame, pAttacker, pDefender);
 }
 
-//D2Game.0x6FCC1D70
+// D2Game.0x6FCC1D70
 D2DamageStrc* __fastcall SUNITDMG_GetDamageFromUnits(D2UnitStrc* pAttacker, D2UnitStrc* pDefender)
 {
 	if (!pAttacker || !pDefender)
@@ -2412,7 +2412,7 @@ D2DamageStrc* __fastcall SUNITDMG_GetDamageFromUnits(D2UnitStrc* pAttacker, D2Un
 	return nullptr;
 }
 
-//D2Game.0x6FCC1DC0
+// D2Game.0x6FCC1DC0
 bool __stdcall D2Game_10033(D2UnitStrc* pUnit, int32_t* a2, int32_t* a3)
 {
 	*a2 = ITEMS_RollLimitedRandomNumber(&pUnit->pSeed, *a2);
@@ -2446,7 +2446,7 @@ void __fastcall SUNITDMG_PreventMonsterHeal(D2UnitStrc* pAttacker, D2UnitStrc* p
 	}
 }
 
-//D2Game.0x6FCC1E70
+// D2Game.0x6FCC1E70
 int32_t __fastcall SUNITDMG_IsHitSuccessful(D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nStatValue, int32_t bMissile)
 {
 	if (!pDefender || !pAttacker)
@@ -2578,7 +2578,7 @@ int32_t __fastcall SUNITDMG_IsHitSuccessful(D2UnitStrc* pAttacker, D2UnitStrc* p
 	return 1;
 }
 
-//D2Game.0x6FCC2300
+// D2Game.0x6FCC2300
 uint16_t __fastcall SUNITDMG_GetResultFlags(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nStatValue, int32_t nRangeOffset)
 {
 	if (!pAttacker || !pDefender || pAttacker->dwUnitType != UNIT_PLAYER && pAttacker->dwUnitType != UNIT_MONSTER || pDefender->dwUnitType != UNIT_PLAYER && pDefender->dwUnitType != UNIT_MONSTER || !sub_6FCBD900(pGame, pAttacker, pDefender))
@@ -2660,7 +2660,7 @@ uint16_t __fastcall SUNITDMG_GetResultFlags(D2GameStrc* pGame, D2UnitStrc* pAtta
 	return wResultFlags;
 }
 
-//D2Game.0x6FCC2420
+// D2Game.0x6FCC2420
 void __fastcall SUNITDMG_AllocCombat(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, D2DamageStrc* pDamage, uint8_t nSrcDam)
 {
 	if (!pAttacker || !pDefender)
@@ -2707,7 +2707,7 @@ void __fastcall SUNITDMG_AllocCombat(D2GameStrc* pGame, D2UnitStrc* pAttacker, D
 	pAttacker->pCombat = pCombat;
 }
 
-//D2Game.0x6FCC2530
+// D2Game.0x6FCC2530
 int32_t __fastcall SUNITDMG_ApplyBlockOrDodge(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t bAvoid, int32_t bBlock)
 {
 	if (!bBlock)
@@ -2737,7 +2737,7 @@ int32_t __fastcall SUNITDMG_ApplyBlockOrDodge(D2GameStrc* pGame, D2UnitStrc* pAt
 	return BLOCKFLAG_BLOCK;
 }
 
-//D2Game.0x6FCC2610
+// D2Game.0x6FCC2610
 int32_t __fastcall SUNITDMG_ApplyDodge(D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t bAvoid)
 {
 	if (pDefender)
@@ -2810,7 +2810,7 @@ int32_t __fastcall SUNITDMG_ApplyDodge(D2UnitStrc* pAttacker, D2UnitStrc* pDefen
 	return BLOCKFLAG_NONE;
 }
 
-//D2Game.0x6FCC2850
+// D2Game.0x6FCC2850
 int32_t __fastcall SUNITDMG_GetWeaponBlock(D2UnitStrc* pUnit)
 {
 	if (!pUnit)
@@ -2842,7 +2842,7 @@ int32_t __fastcall SUNITDMG_GetWeaponBlock(D2UnitStrc* pUnit)
 	return nMax;
 }
 
-//D2Game.0x6FCC2910
+// D2Game.0x6FCC2910
 int32_t __fastcall SUNITDMG_SetMissileDamageFlagsForNearbyUnits(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nX, int32_t nY, int32_t nSize, D2DamageStrc* pDamage, int32_t a7, int32_t a8, int32_t(__fastcall* pfCallback)(D2GameStrc*, D2UnitStrc*, D2UnitStrc*), int32_t a10)
 {
 	D2ActiveRoomStrc* pRoom = D2GAME_GetRoom_6FC52070(UNITS_GetRoom(pUnit), nX, nY);
@@ -2908,7 +2908,7 @@ int32_t __fastcall SUNITDMG_SetMissileDamageFlagsForNearbyUnits(D2GameStrc* pGam
 	return bResult;
 }
 
-//D2Game.0x6FCC2BC0
+// D2Game.0x6FCC2BC0
 void __fastcall SUNITDMG_RollDamage(D2UnitStrc* pUnit, int32_t nSkillId, int32_t nSkillLevel, D2DamageStrc* pDamage)
 {
 	D2GAME_RollPhysicalDamage_6FD14EC0(pUnit, pDamage, nSkillId, nSkillLevel);
@@ -2916,7 +2916,7 @@ void __fastcall SUNITDMG_RollDamage(D2UnitStrc* pUnit, int32_t nSkillId, int32_t
 	D2GAME_RollElementalDamage_6FD14DD0(pUnit, pDamage, nSkillId, nSkillLevel);
 }
 
-//D2Game.0x6FCC2BF0
+// D2Game.0x6FCC2BF0
 void __fastcall SUNITDMG_RollSuckBloodDamage(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender, int32_t nSkillId, int32_t nSkillLevel, D2DamageStrc* pDamage)
 {
     if (SKILLS_GetSkillsTxtRecord(nSkillId))
@@ -2926,7 +2926,7 @@ void __fastcall SUNITDMG_RollSuckBloodDamage(D2GameStrc* pGame, D2UnitStrc* pAtt
     }
 }
 
-//D2Game.0x6FCC2C70
+// D2Game.0x6FCC2C70
 void __fastcall SUNITDMG_DistributeExperience(D2GameStrc* pGame, D2UnitStrc* pAttacker, D2UnitStrc* pDefender)
 {
 	D2UnitStrc* pPlayer = pAttacker;
@@ -3024,7 +3024,7 @@ void __fastcall SUNITDMG_DistributeExperience(D2GameStrc* pGame, D2UnitStrc* pAt
 	}
 }
 
-//D2Game.0x6FCC2EC0
+// D2Game.0x6FCC2EC0
 uint32_t __fastcall SUNITDMG_ComputeExperienceGain(D2GameStrc* pGame, D2UnitStrc* pAttacker, uint32_t nAttackerLevel, uint32_t nDefenderLevel, uint32_t nDefenderExperience)
 {
 	if (nDefenderExperience <= 0)
@@ -3133,7 +3133,7 @@ uint32_t __fastcall SUNITDMG_ComputeExperienceGain(D2GameStrc* pGame, D2UnitStrc
 	return std::min(nResult, nMaxExp);
 }
 
-//D2Game.0x6FCC3170
+// D2Game.0x6FCC3170
 void __fastcall SUNITDMG_AddExperienceForPlayer(D2GameStrc* pGame, D2UnitStrc* pUnit, uint32_t nOldLevel, uint32_t nExperienceGained)
 {
 	if (!pUnit || pUnit->dwUnitType != UNIT_PLAYER)
@@ -3156,7 +3156,7 @@ void __fastcall SUNITDMG_AddExperienceForPlayer(D2GameStrc* pGame, D2UnitStrc* p
 	}
 }
 
-//D2Game.0x6FCC3200
+// D2Game.0x6FCC3200
 void __fastcall SUNITDMG_PartyCallback_ComputePartyExperience(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pArg)
 {
 	D2PartyExpStrc* pPartyExp = (D2PartyExpStrc*)pArg;
@@ -3198,7 +3198,7 @@ void __fastcall SUNITDMG_PartyCallback_ComputePartyExperience(D2GameStrc* pGame,
 	return;
 }
 
-//D2Game.0x6FCC3360
+// D2Game.0x6FCC3360
 void __fastcall SUNITDMG_AddExperienceForHireling(D2GameStrc* pGame, D2UnitStrc* pPlayer, D2UnitStrc* pHireling, uint32_t nLevel, uint32_t nExperienceBonus)
 {
 	if (nExperienceBonus <= 0)
@@ -3250,7 +3250,7 @@ void __fastcall SUNITDMG_AddExperienceForHireling(D2GameStrc* pGame, D2UnitStrc*
 	}
 }
 
-//D2Game.0x6FCC34A0
+// D2Game.0x6FCC34A0
 void __fastcall SUNITDMG_AddExperience(D2GameStrc* pGame, D2UnitStrc* pUnit, uint32_t nExperienceBonus)
 {
 	if (!pUnit || (pUnit->dwUnitType != UNIT_PLAYER && pUnit->dwUnitType != UNIT_MONSTER))
@@ -3273,7 +3273,7 @@ void __fastcall SUNITDMG_AddExperience(D2GameStrc* pGame, D2UnitStrc* pUnit, uin
 	}
 }
 
-//D2Game.0x6FCC3510
+// D2Game.0x6FCC3510
 void __fastcall SUNITDMG_SetExperienceForTargetLevel(D2GameStrc* pGame, D2UnitStrc* pUnit, uint32_t nTargetLevel)
 {
 	if (!pUnit || (pUnit->dwUnitType != UNIT_PLAYER && pUnit->dwUnitType != UNIT_MONSTER))

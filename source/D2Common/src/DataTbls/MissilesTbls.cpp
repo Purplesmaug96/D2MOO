@@ -2,7 +2,7 @@
 #include <Calc.h>
 #include <Storm.h>
 
-//D2Common.0x6FD62EA0
+// D2Common.0x6FD62EA0
 int __fastcall DATATBLS_MapMissilesTxtKeywordToNumber(char* szKey)
 {
 	if (!SStrCmpI(szKey, "min", 32))
@@ -31,7 +31,7 @@ int __fastcall DATATBLS_MapMissilesTxtKeywordToNumber(char* szKey)
 	}
 }
 
-//D2Common.0x6FD62F20
+// D2Common.0x6FD62F20
 //TODO: Find a name
 int __fastcall sub_6FD62F20(char* szText, int* a2, int a3, int nKeywordNumber)
 {
@@ -116,7 +116,7 @@ int __fastcall sub_6FD62F20(char* szText, int* a2, int a3, int nKeywordNumber)
 	return nRow;
 }
 
-//D2Common.0x6FD630F0
+// D2Common.0x6FD630F0
 void __fastcall DATATBLS_MissileCalcLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn)
 {
 	int nBufferSize = 0;
@@ -143,7 +143,7 @@ void __fastcall DATATBLS_MissileCalcLinker(char* pSrc, void* pRecord, int nOffse
 	}
 }
 
-//D2Common.0x6FD63180
+// D2Common.0x6FD63180
 void __fastcall DATATBLS_LoadMissilesTxt(HD2ARCHIVE hArchive)
 {
 	D2BinFieldStrc pTbl[] =
@@ -320,7 +320,7 @@ void __fastcall DATATBLS_LoadMissilesTxt(HD2ARCHIVE hArchive)
 	DATATBLS_GetBinFileHandle(hArchive, "misscode", (void**)&sgptDataTables->pMissCode, (int*)&sgptDataTables->nMissCodeSize, &sgptDataTables->nMissCodeSizeEx);
 }
 
-//D2Common.0x6FD64B80
+// D2Common.0x6FD64B80
 void __fastcall DATATBLS_UnloadMissilesTxt()
 {
 	if (sgptDataTables->pMissCode)
@@ -345,7 +345,7 @@ void __fastcall DATATBLS_UnloadMissilesTxt()
 	sgptDataTables->nMissilesTxtRecordCount = 0;
 }
 
-//D2Common.0x6FD64BE0 (#10590)
+// D2Common.0x6FD64BE0 (#10590)
 int __stdcall DATATBLS_GetMissileVelocityFromMissilesTxt(int nMissileId, int nLevel)
 {
 	D2MissilesTxt* pMissilesTxtRecord = DATATBLS_GetMissilesTxtRecord(nMissileId);

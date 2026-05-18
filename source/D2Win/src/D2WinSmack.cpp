@@ -19,7 +19,7 @@ int32_t dword_6F96A8D8;
 int32_t dword_6F96A8DC;
 
 
-//D2Win.0x6F8AF710 (#10097)
+// D2Win.0x6F8AF710 (#10097)
 D2WinSmackStrc* __fastcall SMACK_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, int32_t(__stdcall* a5)(SMSGHANDLER_PARAMS*))
 {
 	D2WinSmackStrc* pSmack = D2_CALLOC_STRC(D2WinSmackStrc);
@@ -41,7 +41,7 @@ D2WinSmackStrc* __fastcall SMACK_Create(int32_t nX, int32_t nY, int32_t nWidth, 
 	return pSmack;
 }
 
-//D2Win.0x6F8AF7E0 (#10099)
+// D2Win.0x6F8AF7E0 (#10099)
 int32_t __stdcall SMACK_Decode(D2WinSmackStrc* pSmack, const char* szFileName, int32_t nVersion, int32_t nUnused, int32_t nUnused2)
 {
 	D2_ASSERT(pSmack->controlHeader.nType == D2WIN_SMACK);
@@ -62,7 +62,7 @@ int32_t __stdcall SMACK_Decode(D2WinSmackStrc* pSmack, const char* szFileName, i
 	return 1;
 }
 
-//D2Win.0x6F8AF860 (#10101)
+// D2Win.0x6F8AF860 (#10101)
 int32_t __stdcall SMACK_DeleteFile(D2WinSmackStrc* pSmack)
 {
 	D2_ASSERT(pSmack->controlHeader.nType == D2WIN_SMACK);
@@ -76,7 +76,7 @@ int32_t __stdcall SMACK_DeleteFile(D2WinSmackStrc* pSmack)
 	return 1;
 }
 
-//D2Win.0x6F8AF8B0 (#10100)
+// D2Win.0x6F8AF8B0 (#10100)
 int32_t __stdcall SMACK_SetCoordinates(D2WinSmackStrc* pSmack, int32_t nX, int32_t nY)
 {
 	D2_ASSERT(pSmack->controlHeader.nType == D2WIN_SMACK);
@@ -88,7 +88,7 @@ int32_t __stdcall SMACK_SetCoordinates(D2WinSmackStrc* pSmack, int32_t nX, int32
 	return 1;
 }
 
-//D2Win.0x6F8AF900 (#10098)
+// D2Win.0x6F8AF900 (#10098)
 int32_t __fastcall SMACK_Destroy(D2WinSmackStrc* pSmack)
 {
 	SMACK_DeleteFile(pSmack);
@@ -96,13 +96,13 @@ int32_t __fastcall SMACK_Destroy(D2WinSmackStrc* pSmack)
 	return CONTROL_RemoveFromList(&pSmack->controlHeader);
 }
 
-//D2Win.0x6F8AF950 (#10184)
+// D2Win.0x6F8AF950 (#10184)
 void __stdcall D2Win_10184()
 {
 	dword_6F96A8D8 = 1;
 }
 
-//D2Win.0x6F8AF960
+// D2Win.0x6F8AF960
 int32_t __fastcall SMACK_Draw(D2WinControlStrc* pControl)
 {
 	D2WinSmackStrc* pSmack = (D2WinSmackStrc*)pControl;
@@ -128,7 +128,7 @@ int32_t __fastcall SMACK_Draw(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8AFA40
+// D2Win.0x6F8AFA40
 int32_t __stdcall SMACK_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinSmackStrc* pSmack = (D2WinSmackStrc*)pMsg->hWindow;
@@ -143,7 +143,7 @@ int32_t __stdcall SMACK_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 	return pSmack->controlHeader.field_34(pMsg);
 }
 
-//D2Win.0x6F8AFA90 (#10208)
+// D2Win.0x6F8AFA90 (#10208)
 void __fastcall D2Win_10208(int32_t a1)
 {
 	dword_6F96A8DC = a1;

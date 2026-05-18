@@ -12,7 +12,7 @@
 #include "D2WinMain.h"
 
 
-//D2Win.0x6F8A4E90 (#10162)
+// D2Win.0x6F8A4E90 (#10162)
 D2WinAccountListStrc* __fastcall ACCOUNTLIST_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight, int32_t a5, void* a6)
 {
 	D2WinAccountListStrc* pAccountList = D2_CALLOC_STRC(D2WinAccountListStrc);
@@ -43,7 +43,7 @@ D2WinAccountListStrc* __fastcall ACCOUNTLIST_Create(int32_t nX, int32_t nY, int3
 	return pAccountList;
 }
 
-//D2Win.0x6F8A4F70 (#10163)
+// D2Win.0x6F8A4F70 (#10163)
 int32_t __fastcall ACCOUNTLIST_Destroy(D2WinAccountListStrc* pAccountList)
 {
 	D2_ASSERT(pAccountList->controlHeader.nType == D2WIN_ACCOUNTLIST);
@@ -53,7 +53,7 @@ int32_t __fastcall ACCOUNTLIST_Destroy(D2WinAccountListStrc* pAccountList)
 	return CONTROL_RemoveFromList(&pAccountList->controlHeader);
 }
 
-//D2Win.0x6F8A4FC0 (#10164)
+// D2Win.0x6F8A4FC0 (#10164)
 void __fastcall ACCOUNTLIST_FreeData(D2WinAccountListStrc* pAccountList)
 {
 	D2_ASSERT(pAccountList->controlHeader.nType == D2WIN_ACCOUNTLIST);
@@ -66,7 +66,7 @@ void __fastcall ACCOUNTLIST_FreeData(D2WinAccountListStrc* pAccountList)
 	}
 }
 
-//D2Win.0x6F8A5010 (#10165)
+// D2Win.0x6F8A5010 (#10165)
 void __fastcall ACCOUNTLIST_AllocData(D2WinAccountListStrc* pAccountList, const char* szText)
 {
 	D2_ASSERT(pAccountList->controlHeader.nType == D2WIN_ACCOUNTLIST);
@@ -91,7 +91,7 @@ void __fastcall ACCOUNTLIST_AllocData(D2WinAccountListStrc* pAccountList, const 
 	}
 }
 
-//D2Win.0x6F8A5080 (#10166)
+// D2Win.0x6F8A5080 (#10166)
 int32_t __fastcall ACCOUNTLIST_RemoveEntry(D2WinAccountListStrc* pAccountList, const char* szText)
 {
 	D2_ASSERT(pAccountList->controlHeader.nType == D2WIN_ACCOUNTLIST);
@@ -125,7 +125,7 @@ int32_t __fastcall ACCOUNTLIST_RemoveEntry(D2WinAccountListStrc* pAccountList, c
 	return 0;
 }
 
-//D2Win.0x6F8A5140 (#10167)
+// D2Win.0x6F8A5140 (#10167)
 int32_t __fastcall ACCOUNTLIST_GetTextFromSelectedEntry(D2WinAccountListStrc* pAccountList, char* szBuffer)
 {
 	D2_ASSERT(pAccountList->controlHeader.nType == D2WIN_ACCOUNTLIST);
@@ -141,7 +141,7 @@ int32_t __fastcall ACCOUNTLIST_GetTextFromSelectedEntry(D2WinAccountListStrc* pA
 	return 1;
 }
 
-//D2Win.0x6F8A5180
+// D2Win.0x6F8A5180
 int32_t __fastcall ACCOUNTLIST_Draw(D2WinControlStrc* pControl)
 {
 	D2WinAccountListStrc* pAccountList = (D2WinAccountListStrc*)pControl;
@@ -183,7 +183,7 @@ int32_t __fastcall ACCOUNTLIST_Draw(D2WinControlStrc* pControl)
 	return 1;
 }
 
-//D2Win.0x6F8A52E0
+// D2Win.0x6F8A52E0
 int32_t __stdcall ACCOUNTLIST_HandleMouseDown(SMSGHANDLER_PARAMS* pMsg)
 {
 	D2WinAccountListStrc* pAccountList = (D2WinAccountListStrc*)pMsg->hWindow;

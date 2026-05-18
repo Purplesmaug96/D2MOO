@@ -7,13 +7,13 @@
 #include "D2Collision.h"
 
 
-//D2Common.0x6FDD8480
+// D2Common.0x6FDD8480
 static const int gnFieldXOffsets[] = { 0, 1, 1, 1, 0, -1, -1, -1, 0 };
-//D2Common.0xFDD84A4
+// D2Common.0xFDD84A4
 static const int gnFieldYOffsets[] = { -1, -1, 0, 1, 1, 1, 0, -1, 0 };
 
 
-//D2Common.0x6FD51FC0
+// D2Common.0x6FD51FC0
 BOOL __fastcall DATATBLS_LoadExpFieldD2(HD2ARCHIVE hArchive)
 {
 	char szPath[80] = {};
@@ -26,7 +26,7 @@ BOOL __fastcall DATATBLS_LoadExpFieldD2(HD2ARCHIVE hArchive)
 	return DATATBLS_InitializeCollisionFieldTable(pExpField, nSize);
 }
 
-//D2Common.0x6FD52010 (#11089)
+// D2Common.0x6FD52010 (#11089)
 BOOL __stdcall DATATBLS_InitializeCollisionFieldTable(char* pExpField, int nSize)
 {
 	uint32_t v2 = *(uint32_t*)(pExpField + 2);
@@ -52,7 +52,7 @@ BOOL __stdcall DATATBLS_InitializeCollisionFieldTable(char* pExpField, int nSize
 	return TRUE;
 }
 
-//D2Common.0x6FD520F0 (#11090)
+// D2Common.0x6FD520F0 (#11090)
 BOOL __stdcall DATATBLS_FreeCollisionFieldTable()
 {
 	if (sgptDataTables->pFieldData)
@@ -70,26 +70,26 @@ BOOL __stdcall DATATBLS_FreeCollisionFieldTable()
 	return TRUE;
 }
 
-//D2Common.0x6FD52140 (#11091)
+// D2Common.0x6FD52140 (#11091)
 void __stdcall DATATBLS_GetCollisionFieldCenter(int* pCenterX, int* pCenterY)
 {
 	*pCenterX = sgptDataTables->pCollisionField.nCenterX;
 	*pCenterY = sgptDataTables->pCollisionField.nCenterY;
 }
 
-//D2Common.0x6FD52160 (#11092)
+// D2Common.0x6FD52160 (#11092)
 int __stdcall DATATBLS_GetCollisionFieldWidth()
 {
 	return sgptDataTables->pCollisionField.nWidth;
 }
 
-//D2Common.0x6FD52170 (#11093)
+// D2Common.0x6FD52170 (#11093)
 int __stdcall DATATBLS_GetCollisionFieldHeight()
 {
 	return sgptDataTables->pCollisionField.nHeight;
 }
 
-//D2Common.0x6FD52180 (#11094)
+// D2Common.0x6FD52180 (#11094)
 D2FieldStrc* __stdcall DATATBLS_AllocField()
 {
 	D2FieldStrc* pField = D2_ALLOC_STRC_POOL(nullptr, D2FieldStrc);
@@ -101,7 +101,7 @@ D2FieldStrc* __stdcall DATATBLS_AllocField()
 	return pField;
 }
 
-//D2Common.0x6FD521D0 (#11095)
+// D2Common.0x6FD521D0 (#11095)
 void __stdcall DATATBLS_FreeField(D2FieldStrc* pField)
 {
 	D2_ASSERT(pField);
@@ -109,7 +109,7 @@ void __stdcall DATATBLS_FreeField(D2FieldStrc* pField)
 	D2_FREE_POOL(nullptr, pField);
 }
 
-//D2Common.0x6FD52210 (#11096)
+// D2Common.0x6FD52210 (#11096)
 void __stdcall DATATBLS_SetFieldCoordinates(D2FieldStrc* pField, int nX, int nY)
 {
 	D2_ASSERT(pField);
@@ -118,7 +118,7 @@ void __stdcall DATATBLS_SetFieldCoordinates(D2FieldStrc* pField, int nX, int nY)
 	pField->nY = nY;
 }
 
-//D2Common.0x6FD52250 (#11097)
+// D2Common.0x6FD52250 (#11097)
 int __stdcall D2Common_11097(D2FieldStrc* pField, int nX, int nY)
 {
 	D2_ASSERT(pField);
@@ -126,7 +126,7 @@ int __stdcall D2Common_11097(D2FieldStrc* pField, int nX, int nY)
 	return *(&sgptDataTables->pFieldData[((nY - pField->nY) << 8) - pField->nX] + nX);
 }
 
-//D2Common.0x6FD522A0 (#11098)
+// D2Common.0x6FD522A0 (#11098)
 int __stdcall D2Common_11098(D2FieldStrc* pField, int* pX, int* pY)
 {
 
@@ -140,7 +140,7 @@ int __stdcall D2Common_11098(D2FieldStrc* pField, int* pX, int* pY)
 	return *(&sgptDataTables->pFieldData[((sgptDataTables->pCollisionField.nCenterY + *pY - pField->nY) << 8) - pField->nX] + *pX + sgptDataTables->pCollisionField.nCenterX) != 8;
 }
 
-//D2Common.0x6FD52360 (#11099)
+// D2Common.0x6FD52360 (#11099)
 BOOL __stdcall D2Common_11099(D2FieldStrc* pField, D2ActiveRoomStrc* pRoom, int nX, int nY, uint16_t fMask)
 {
 	if (pRoom)

@@ -13,7 +13,7 @@
 #include "UNIT/SUnit.h"
 
 
-//D2Game.0x6FD37BE8
+// D2Game.0x6FD37BE8
 D2NPCMessageTableStrc gpAct3Q0NpcMessages[] =
 {
 	{
@@ -37,7 +37,7 @@ D2NPCMessageTableStrc gpAct3Q0NpcMessages[] =
 };
 
 
-//D2Game.0x6FCA6B40
+// D2Game.0x6FCA6B40
 void __fastcall ACT3Q0_InitQuestData(D2QuestDataStrc* pQuestData)
 {
 	memset(pQuestData->pfCallback, 0x00, sizeof(pQuestData->pfCallback));
@@ -58,7 +58,7 @@ void __fastcall ACT3Q0_InitQuestData(D2QuestDataStrc* pQuestData)
 	pQuestData->pfActiveFilter = ACT3Q0_ActiveFilterCallback;
 }
 
-//D2Game.0x6FCA6BD0
+// D2Game.0x6FCA6BD0
 void __fastcall ACT3Q0_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (pQuestArg->nNPCNo != MONSTER_HRATLI)
@@ -74,7 +74,7 @@ void __fastcall ACT3Q0_Callback11_ScrollMessage(D2QuestDataStrc* pQuestData, D2Q
 	}
 }
 
-//D2Game.0x6FCA6C30
+// D2Game.0x6FCA6C30
 void __fastcall ACT3Q0_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (!pQuestArg->pTarget || pQuestArg->pTarget->dwClassId != MONSTER_HRATLI)
@@ -97,13 +97,13 @@ void __fastcall ACT3Q0_Callback00_NpcActivate(D2QuestDataStrc* pQuestData, D2Que
 	}
 }
 
-//D2Game.0x6FCA6CB0
+// D2Game.0x6FCA6CB0
 bool __fastcall ACT3Q0_ActiveFilterCallback(D2QuestDataStrc* pQuest, int32_t nNpcId, D2UnitStrc* pPlayer, D2BitBufferStrc* pQuestFlags, D2UnitStrc* pNPC)
 {
 	return nNpcId == MONSTER_HRATLI && !QUESTRECORD_GetQuestState(pQuestFlags, QUESTSTATEFLAG_A3Q0, QFLAG_REWARDGRANTED);
 }
 
-//D2Game.0x6FCA6CE0
+// D2Game.0x6FCA6CE0
 void __fastcall ACT3Q0_Callback13_PlayerStartedGame(D2QuestDataStrc* pQuestData, D2QuestArgStrc* pQuestArg)
 {
 	if (QUESTRECORD_GetQuestState(UNITS_GetPlayerData(pQuestArg->pPlayer)->pQuestData[pQuestArg->pGame->nDifficulty], QUESTSTATEFLAG_A3Q0, QFLAG_REWARDGRANTED) == 1)
@@ -112,7 +112,7 @@ void __fastcall ACT3Q0_Callback13_PlayerStartedGame(D2QuestDataStrc* pQuestData,
 	}
 }
 
-//D2Game.0x6FCA6D20
+// D2Game.0x6FCA6D20
 void __fastcall OBJECTS_InitFunction49_HratliStart(D2ObjInitFnStrc* pOp)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pOp->pGame, QUEST_A3Q0_HRATLIGOSSIP);
@@ -135,7 +135,7 @@ void __fastcall OBJECTS_InitFunction49_HratliStart(D2ObjInitFnStrc* pOp)
 	}
 }
 
-//D2Game.0x6FCA6DA0
+// D2Game.0x6FCA6DA0
 void __fastcall OBJECTS_InitFunction50_HratliEnd(D2ObjInitFnStrc* pOp)
 {
 	D2QuestDataStrc* pQuestData = QUESTS_GetQuestData(pOp->pGame, QUEST_A3Q0_HRATLIGOSSIP);

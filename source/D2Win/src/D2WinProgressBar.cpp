@@ -9,7 +9,7 @@
 #include "D2WinPalette.h"
 
 
-//D2Win.0x6F8AEED0 (#10091)
+// D2Win.0x6F8AEED0 (#10091)
 D2WinProgressBarStrc* __fastcall PROGRESSBAR_Create(int32_t nX, int32_t nY, int32_t nWidth, int32_t nHeight)
 {
 	D2WinProgressBarStrc* pProgressBar = D2_CALLOC_STRC(D2WinProgressBarStrc);
@@ -27,13 +27,13 @@ D2WinProgressBarStrc* __fastcall PROGRESSBAR_Create(int32_t nX, int32_t nY, int3
 	return pProgressBar;
 }
 
-//D2Win.0x6F8B1BF0 (#10092)
+// D2Win.0x6F8B1BF0 (#10092)
 int32_t __fastcall PROGRESSBAR_Destroy(D2WinControlStrc* pControl)
 {
 	return CONTROL_RemoveFromList(pControl);
 }
 
-//D2Win.0x6F8AEF70 (#10093)
+// D2Win.0x6F8AEF70 (#10093)
 int32_t __stdcall PROGRESSBAR_SetProgress(D2WinProgressBarStrc* pProgressBar, float fProgress)
 {
 	D2_ASSERT(pProgressBar->controlHeader.nType == D2WIN_PROGRESSBAR);
@@ -42,7 +42,7 @@ int32_t __stdcall PROGRESSBAR_SetProgress(D2WinProgressBarStrc* pProgressBar, fl
 	return 1;
 }
 
-//D2Win.0x6F8AEFB0
+// D2Win.0x6F8AEFB0
 int32_t __fastcall PROGRESSBAR_Draw(D2WinControlStrc* pControl)
 {
 	D2WinProgressBarStrc* pProgressBar = (D2WinProgressBarStrc*)pControl;

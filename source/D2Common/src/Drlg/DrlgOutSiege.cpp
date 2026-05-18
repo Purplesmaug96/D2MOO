@@ -44,13 +44,13 @@ struct D2DrlgOutSiegeInitStrc3
 };
 
 
-//D2Common.0x6FD84100
+// D2Common.0x6FD84100
 int __fastcall sub_6FD84100(D2DrlgLevelStrc* pLevel)
 {
 	return (pLevel->nLevelId == LEVEL_TUNDRAWASTELANDS) + 4;
 }
 
-//D2Common.0x6FD84110
+// D2Common.0x6FD84110
 void __fastcall DRLGOUTSIEGE_InitAct5OutdoorLevel(D2DrlgLevelStrc* pLevel)
 {
 	static const D2CoordStrc stru_6FDD09C8[] =
@@ -191,7 +191,7 @@ void __fastcall DRLGOUTSIEGE_InitAct5OutdoorLevel(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD844F0
+// D2Common.0x6FD844F0
 void __fastcall DRLGOUTSIEGE_PlaceCaves(D2DrlgLevelStrc* pLevel)
 {
 	static const D2DrlgOutSiegeInitStrc stru_6FDD0988[] =
@@ -243,7 +243,7 @@ void __fastcall DRLGOUTSIEGE_PlaceCaves(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD84580
+// D2Common.0x6FD84580
 void __fastcall DRLGOUTSIEGE_PlaceBarricadeEntrancesAndExits(D2DrlgLevelStrc* pLevel)
 {
 	for (int i = 0; i < pLevel->pOutdoors->nGridHeight; ++i)
@@ -283,7 +283,7 @@ void __fastcall DRLGOUTSIEGE_PlaceBarricadeEntrancesAndExits(D2DrlgLevelStrc* pL
 	}
 }
 
-//D2Common.0x6FD846C0
+// D2Common.0x6FD846C0
 void __fastcall sub_6FD846C0(D2DrlgLevelStrc* pLevel)
 {
 	D2DrlgOutdoorPackedGrid2InfoStrc tPackedInfo{ 0 };
@@ -292,7 +292,7 @@ void __fastcall sub_6FD846C0(D2DrlgLevelStrc* pLevel)
 	DRLGGRID_AlterGridFlag(&pLevel->pOutdoors->pGrid[2], pLevel->pOutdoors->nGridWidth - 2, pLevel->pOutdoors->nGridHeight - 3, tPackedInfo.nPackedValue, FLAG_OPERATION_OR);
 }
 
-//D2Common.0x6FD84700
+// D2Common.0x6FD84700
 //TODO: a1
 void __fastcall DRLGOUTSIEGE_AddACt5SecondaryBorder(D2DrlgLevelStrc* pLevel)
 {
@@ -316,7 +316,7 @@ void __fastcall DRLGOUTSIEGE_AddACt5SecondaryBorder(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD84780
+// D2Common.0x6FD84780
 int __fastcall sub_6FD84780(D2DrlgLevelStrc* pLevel, int nStyle, int a3)
 {
 	static const D2DrlgOutSiegeInitStrc2 stru_6FDD0A28[] =
@@ -353,7 +353,7 @@ int __fastcall sub_6FD84780(D2DrlgLevelStrc* pLevel, int nStyle, int a3)
 	D2_UNREACHABLE;
 }
 
-//D2Common.0x6FD84820
+// D2Common.0x6FD84820
 //TODO: v8
 BOOL __fastcall sub_6FD84820(D2DrlgLevelStrc* pLevel, int nX, int nY, int a4, int a5, unsigned int a6)
 {
@@ -371,7 +371,7 @@ BOOL __fastcall sub_6FD84820(D2DrlgLevelStrc* pLevel, int nX, int nY, int a4, in
 	return FALSE;
 }
 
-//D2Common.0x6FD84870
+// D2Common.0x6FD84870
 void __fastcall DRLGOUTSIEGE_PlaceSpecialPresets(D2DrlgLevelStrc* pLevel)
 {
 	static const D2DrlgOutSiegeInitStrc3 stru_6FDD0AF8[] =
@@ -421,7 +421,7 @@ void __fastcall DRLGOUTSIEGE_PlaceSpecialPresets(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD84910
+// D2Common.0x6FD84910
 void __fastcall DRLGOUTSIEGE_PlacePrisons(D2DrlgLevelStrc* pLevel)
 {
 	int nPrisonsPlaced = 0;
@@ -472,7 +472,7 @@ void __fastcall DRLGOUTSIEGE_PlacePrisons(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD84BB0
+// D2Common.0x6FD84BB0
 void __fastcall DRLGOUTSIEGE_ConnectBarricadeAndSiege(D2DrlgLevelStrc* pLevel)
 {
 	D2LvlPrestTxt* pLvlPrestTxtRecord = NULL;

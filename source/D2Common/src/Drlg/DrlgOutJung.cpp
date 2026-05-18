@@ -7,7 +7,7 @@
 
 //TODO: Find names, rename variables + globals
 
-//D2Common.0x6FD7FC20
+// D2Common.0x6FD7FC20
 //TODO: v19
 void __fastcall DRLGOUTJUNG_BuildJungle(D2DrlgLevelStrc* pLevel)
 {
@@ -87,7 +87,7 @@ void __fastcall DRLGOUTJUNG_BuildJungle(D2DrlgLevelStrc* pLevel)
 	}
 }
 
-//D2Common.0x6FD7FE50
+// D2Common.0x6FD7FE50
 //TODO: v5, v10
 void __fastcall DRLGOUTJUNG_BuildLowerKurast(D2DrlgLevelStrc* pLevel)
 {
@@ -95,7 +95,7 @@ void __fastcall DRLGOUTJUNG_BuildLowerKurast(D2DrlgLevelStrc* pLevel)
 	int nHeight = pLevel->nHeight / 8 - 1;
 	int v5 = (pLevel->nWidth / 8 - 1) / 2;
 	int v10 = 0;
-	
+
 	if (pLevel->pDrlg->bJungleInterlink)
 	{
 		v10 = 1;
@@ -127,7 +127,7 @@ void __fastcall DRLGOUTJUNG_BuildLowerKurast(D2DrlgLevelStrc* pLevel)
 	DRLGOUTDOORS_SpawnOutdoorLevelPresetEx(pLevel, nWidth, nHeight, LVLPREST_ACT3_SLUMS_BORDER_SE, -1, 0);
 }
 
-//D2Common.0x6FD7FFA0
+// D2Common.0x6FD7FFA0
 //TODO: v7, v8
 void __fastcall DRLGOUTJUNG_BuildKurastBazaar(D2DrlgLevelStrc* pLevel)
 {
@@ -165,7 +165,7 @@ void __fastcall DRLGOUTJUNG_BuildKurastBazaar(D2DrlgLevelStrc* pLevel)
 	DRLGOUTDOORS_SpawnOutdoorLevelPresetEx(pLevel, nWidth, nHeight, LVLPREST_ACT3_BURBS_BORDER_SE, -1, 0);
 }
 
-//D2Common.0x6FD800E0
+// D2Common.0x6FD800E0
 //TODO: v8
 void __fastcall DRLGOUTJUNG_BuildUpperKurast(D2DrlgLevelStrc* pLevel)
 {
@@ -204,7 +204,7 @@ void __fastcall DRLGOUTJUNG_BuildUpperKurast(D2DrlgLevelStrc* pLevel)
 	DRLGOUTDOORS_SpawnOutdoorLevelPresetEx(pLevel, nWidth, nHeight, LVLPREST_ACT3_METRO_BORDER_SE, -1, 0);
 }
 
-//D2Common.0x6FD80230
+// D2Common.0x6FD80230
 //TODO: Rename variables
 void __fastcall DRLGOUTJUNG_SpawnRandomPreset(D2DrlgLevelStrc* pLevel, int nLevelPrestId1, int nLevelPrestId2, int a4)
 {
@@ -230,7 +230,7 @@ void __fastcall DRLGOUTJUNG_SpawnRandomPreset(D2DrlgLevelStrc* pLevel, int nLeve
 	if (v8)
 	{
 		v11 = (int*)D2_ALLOC_POOL(pLevel->pDrlg->pMempool, 8 * v8);
-	
+
 		for (int i = 0; i < v8; ++i)
 		{
 			v12 = i / pLevel->pOutdoors->nGridWidth;

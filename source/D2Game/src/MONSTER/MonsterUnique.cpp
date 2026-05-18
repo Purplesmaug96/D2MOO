@@ -63,7 +63,7 @@ struct D2UnkUModStrc
 #pragma pack(pop)
 
 
-//D2Game.0x6FC6AC00
+// D2Game.0x6FC6AC00
 void __fastcall MONSTERUNIQUE_ToggleUnitFlag(D2UnitStrc* pUnit, int32_t nFlag, int32_t bSet)
 {
     if (!pUnit)
@@ -81,7 +81,7 @@ void __fastcall MONSTERUNIQUE_ToggleUnitFlag(D2UnitStrc* pUnit, int32_t nFlag, i
     }
 }
 
-//D2Game.0x6FC6AC30
+// D2Game.0x6FC6AC30
 uint8_t* __fastcall MONSTERUNIQUE_GetUMods(D2UnitStrc* pUnit)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -92,7 +92,7 @@ uint8_t* __fastcall MONSTERUNIQUE_GetUMods(D2UnitStrc* pUnit)
     return nullptr;
 }
 
-//D2Game.0x6FC6AC50
+// D2Game.0x6FC6AC50
 uint16_t __fastcall MONSTERUNIQUE_GetNameSeed(D2UnitStrc* pUnit)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -103,7 +103,7 @@ uint16_t __fastcall MONSTERUNIQUE_GetNameSeed(D2UnitStrc* pUnit)
     return 5382;
 }
 
-//D2Game.0x6FC6AC70
+// D2Game.0x6FC6AC70
 int32_t __fastcall MONSTERUNIQUE_CheckMonTypeFlag(D2UnitStrc* pUnit, uint16_t nFlag)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -114,7 +114,7 @@ int32_t __fastcall MONSTERUNIQUE_CheckMonTypeFlag(D2UnitStrc* pUnit, uint16_t nF
     return 0;
 }
 
-//D2Game.0x6FC6ACA0
+// D2Game.0x6FC6ACA0
 void __fastcall MONSTERUNIQUE_ToggleMonTypeFlag(D2UnitStrc* pUnit, uint16_t nFlag, int32_t bSet)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER || !pUnit->pMonsterData)
@@ -132,7 +132,7 @@ void __fastcall MONSTERUNIQUE_ToggleMonTypeFlag(D2UnitStrc* pUnit, uint16_t nFla
     }
 }
 
-//D2Game.0x6FC6ACD0
+// D2Game.0x6FC6ACD0
 int16_t __fastcall MONSTERUNIQUE_GetBossHcIdx(D2UnitStrc* pUnit)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -143,7 +143,7 @@ int16_t __fastcall MONSTERUNIQUE_GetBossHcIdx(D2UnitStrc* pUnit)
     return -1;
 }
 
-//D2Game.0x6FC6ACF0
+// D2Game.0x6FC6ACF0
 int32_t __fastcall MONSTERUNIQUE_HasUMods(D2UnitStrc* pUnit)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -154,7 +154,7 @@ int32_t __fastcall MONSTERUNIQUE_HasUMods(D2UnitStrc* pUnit)
     return 0;
 }
 
-//D2Game.0x6FC6AD10
+// D2Game.0x6FC6AD10
 int32_t __fastcall MONSTERUNIQUE_GetSuperUniqueBossHcIdx(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData && pUnit->pMonsterData->nTypeFlag & MONTYPEFLAG_SUPERUNIQUE)
@@ -165,7 +165,7 @@ int32_t __fastcall MONSTERUNIQUE_GetSuperUniqueBossHcIdx(D2GameStrc* pGame, D2Un
     return -1;
 }
 
-//D2Game.0x6FC6AD50
+// D2Game.0x6FC6AD50
 void __fastcall MONSTERUNIQUE_UMod1_RandomName(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (pUnit && bUnique && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pMonsterData)
@@ -174,7 +174,7 @@ void __fastcall MONSTERUNIQUE_UMod1_RandomName(D2UnitStrc* pUnit, int32_t nUMod,
     }
 }
 
-//D2Game.0x6FC6AD90
+// D2Game.0x6FC6AD90
 void __fastcall MONSTERUNIQUE_UMod2_HealthBonus(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -231,7 +231,7 @@ void __fastcall MONSTERUNIQUE_UMod2_HealthBonus(D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6AF70
+// D2Game.0x6FC6AF70
 int32_t __fastcall MONSTERUNIQUE_CalculatePercentage(int32_t a1, int32_t a2, int32_t a3)
 {
     if (!a3)
@@ -262,7 +262,7 @@ int32_t __fastcall MONSTERUNIQUE_CalculatePercentage(int32_t a1, int32_t a2, int
     return a2 * (int64_t)a1 / a3;
 }
 
-//D2Game.0x6FC6AFF0
+// D2Game.0x6FC6AFF0
 void __fastcall MONSTERUNIQUE_UMod4_LevelBonus(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER)
@@ -272,7 +272,7 @@ void __fastcall MONSTERUNIQUE_UMod4_LevelBonus(D2UnitStrc* pUnit, int32_t nUMod,
     }
 }
 
-//D2Game.0x6FC6B030
+// D2Game.0x6FC6B030
 void __fastcall MONSTERUNIQUE_UMod16_Champion(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -332,7 +332,7 @@ void __fastcall MONSTERUNIQUE_UMod16_Champion(D2UnitStrc* pUnit, int32_t nUMod, 
     }
 }
 
-//D2Game.0x6FC6B210
+// D2Game.0x6FC6B210
 void __fastcall MONSTERUNIQUE_UMod36_Ghostly(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -378,7 +378,7 @@ void __fastcall MONSTERUNIQUE_UMod36_Ghostly(D2UnitStrc* pUnit, int32_t nUMod, i
     STATLIST_AddUnitStat(pUnit, STAT_COLDLENGTH, 150, 0);
 }
 
-//D2Game.0x6FC6B3A0
+// D2Game.0x6FC6B3A0
 void __fastcall MONSTERUNIQUE_UMod37_Fanatic(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && bUnique)
@@ -388,7 +388,7 @@ void __fastcall MONSTERUNIQUE_UMod37_Fanatic(D2UnitStrc* pUnit, int32_t nUMod, i
     }
 }
 
-//D2Game.0x6FC6B3E0
+// D2Game.0x6FC6B3E0
 void __fastcall MONSTERUNIQUE_UMod38_Possessed(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER || !bUnique)
@@ -407,7 +407,7 @@ void __fastcall MONSTERUNIQUE_UMod38_Possessed(D2UnitStrc* pUnit, int32_t nUMod,
     MONSTERUNIQUE_UMod16_Champion(pUnit, nUMod, bUnique);
 }
 
-//D2Game.0x6FC6B4B0
+// D2Game.0x6FC6B4B0
 void __fastcall MONSTERUNIQUE_UMod39_Berserk(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER || !pUnit->pGame || !bUnique)
@@ -430,7 +430,7 @@ void __fastcall MONSTERUNIQUE_UMod39_Berserk(D2UnitStrc* pUnit, int32_t nUMod, i
     STATLIST_AddUnitStat(pUnit, STAT_ITEM_TOHIT_PERCENT, nDamage, 0);
 }
 
-//D2Game.0x6FC6B5D0
+// D2Game.0x6FC6B5D0
 void __fastcall MONSTERUNIQUE_UMod41_AlwaysRun(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pUnit->pGame)
@@ -439,7 +439,7 @@ void __fastcall MONSTERUNIQUE_UMod41_AlwaysRun(D2UnitStrc* pUnit, int32_t nUMod,
     }
 }
 
-//D2Game.0x6FC6B610
+// D2Game.0x6FC6B610
 void __fastcall MONSTERUNIQUE_UMod8_Resistant(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER || !bUnique)
@@ -586,7 +586,7 @@ void __fastcall MONSTERUNIQUE_UMod8_Resistant(D2UnitStrc* pUnit, int32_t nUMod, 
     }
 }
 
-//D2Game.0x6FC6B8C0
+// D2Game.0x6FC6B8C0
 void __fastcall MONSTERUNIQUE_UMod26_Teleport(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && bUnique)
@@ -652,7 +652,7 @@ void __fastcall MONSTERUNIQUE_UMod30_AuraEnchanted(D2UnitStrc* pUnit, int32_t nU
     D2GAME_AssignSkill_6FD13800(pUnit, 0, gAuraMods[nIndex].nSkillId, -1);
 }
 
-//D2Game.0x6FC6BA70
+// D2Game.0x6FC6BA70
 void __fastcall MONSTERUNIQUE_UMod5_Strong(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -696,7 +696,7 @@ void __fastcall MONSTERUNIQUE_UMod5_Strong(D2UnitStrc* pUnit, int32_t nUMod, int
     STATLIST_AddUnitStat(pUnit, STAT_ITEM_TOHIT_PERCENT, nToHitPercent, 0);
 }
 
-//D2Game.0x6FC6BB80
+// D2Game.0x6FC6BB80
 void __fastcall MONSTERUNIQUE_UMod6_Fast(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -714,7 +714,7 @@ void __fastcall MONSTERUNIQUE_UMod6_Fast(D2UnitStrc* pUnit, int32_t nUMod, int32
     STATLIST_AddUnitStat(pUnit, STAT_VELOCITYPERCENT, nVelocity, 0);
 }
 
-//D2Game.0x6FC6BC10
+// D2Game.0x6FC6BC10
 void __fastcall MONSTERUNIQUE_UMod9_FireEnchanted(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -766,7 +766,7 @@ void __fastcall MONSTERUNIQUE_UMod9_FireEnchanted(D2UnitStrc* pUnit, int32_t nUM
     MONSTERUNIQUE_UMod8_Resistant(pUnit, nUMod, bUnique);
 }
 
-//D2Game.0x6FC6BDD0
+// D2Game.0x6FC6BDD0
 void __fastcall MONSTERUNIQUE_UMod17_LightningEnchanted(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -818,7 +818,7 @@ void __fastcall MONSTERUNIQUE_UMod17_LightningEnchanted(D2UnitStrc* pUnit, int32
     MONSTERUNIQUE_UMod8_Resistant(pUnit, nUMod, bUnique);
 }
 
-//D2Game.0x6FC6BF90
+// D2Game.0x6FC6BF90
 void __fastcall MONSTERUNIQUE_UMod18_ColdEnchanted(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -872,7 +872,7 @@ void __fastcall MONSTERUNIQUE_UMod18_ColdEnchanted(D2UnitStrc* pUnit, int32_t nU
     MONSTERUNIQUE_UMod8_Resistant(pUnit, nUMod, bUnique);
 }
 
-//D2Game.0x6FC6C160
+// D2Game.0x6FC6C160
 void __fastcall MONSTERUNIQUE_UMod23_PoisonEnchanted(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -926,7 +926,7 @@ void __fastcall MONSTERUNIQUE_UMod23_PoisonEnchanted(D2UnitStrc* pUnit, int32_t 
     MONSTERUNIQUE_UMod8_Resistant(pUnit, nUMod, bUnique);
 }
 
-//D2Game.0x6FC6C340
+// D2Game.0x6FC6C340
 void __fastcall MONSTERUNIQUE_UMod25_ManaSteal(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
@@ -978,7 +978,7 @@ void __fastcall MONSTERUNIQUE_UMod25_ManaSteal(D2UnitStrc* pUnit, int32_t nUMod,
     MONSTERUNIQUE_UMod8_Resistant(pUnit, nUMod, bUnique);
 }
 
-//D2Game.0x6FC6C4F0
+// D2Game.0x6FC6C4F0
 void __fastcall MONSTERUNIQUE_CastAmplifyDamage(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3, int32_t a4)
 {
     if (!a4 || ((uint8_t)ITEMS_RollRandomNumber(&pUnit->pSeed) & 3u) < 1)
@@ -997,7 +997,7 @@ void __fastcall MONSTERUNIQUE_CastAmplifyDamage(D2GameStrc* pGame, D2UnitStrc* p
     sub_6FD14770(pGame, 3, pUnit, nSkillLevel, nRange, MONSTERUNIQUE_CurseCallback_ApplyAmplifyDamage);
 }
 
-//D2Game.0x6FC6C5B0
+// D2Game.0x6FC6C5B0
 void __fastcall MONSTERUNIQUE_CurseCallback_ApplyAmplifyDamage(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pTarget, int32_t nSkillLevel)
 {
     if (!sub_6FCBD900(pGame, pUnit, pTarget))
@@ -1047,7 +1047,7 @@ void __fastcall MONSTERUNIQUE_CurseCallback_ApplyAmplifyDamage(D2GameStrc* pGame
     }
 }
 
-//D2Game.0x6FC6C710
+// D2Game.0x6FC6C710
 void __fastcall MONSTERUNIQUE_FireEnchantedModeChange(D2GameStrc* pGame, D2UnitStrc* pBoss, int32_t nUMod, int32_t bUnique)
 {
     if (bUnique && (!pBoss || pBoss->dwAnimMode == MONMODE_DEATH))
@@ -1056,7 +1056,7 @@ void __fastcall MONSTERUNIQUE_FireEnchantedModeChange(D2GameStrc* pGame, D2UnitS
     }
 }
 
-//D2Game.0x6FC6C740
+// D2Game.0x6FC6C740
 void __fastcall MONSTERUNIQUE_CastCorpseExplode(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     const int32_t nX = CLIENTS_GetUnitX(pUnit);
@@ -1087,7 +1087,7 @@ void __fastcall MONSTERUNIQUE_CastCorpseExplode(D2GameStrc* pGame, D2UnitStrc* p
     SUNITDMG_SetMissileDamageFlagsForNearbyUnits(pGame, pMissile, nX, nY, pGame->nDifficulty + 4, &damage, 0, 0, nullptr, 0x581u);
 }
 
-//D2Game.0x6FC6C9E0
+// D2Game.0x6FC6C9E0
 void __fastcall MONSTERUNIQUE_CastCorpseExplode2(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     const int32_t nX = CLIENTS_GetUnitX(pUnit);
@@ -1105,7 +1105,7 @@ void __fastcall MONSTERUNIQUE_CastCorpseExplode2(D2GameStrc* pGame, D2UnitStrc* 
     SUNITDMG_SetMissileDamageFlagsForNearbyUnits(pGame, pMissile, nX, nY, 6, &damage, 0, 0, nullptr, 0x583);
 }
 
-//D2Game.0x6FC6CAB0
+// D2Game.0x6FC6CAB0
 void __fastcall MONSTERUNIQUE_CastNova(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!bUnique)
@@ -1132,7 +1132,7 @@ void __fastcall MONSTERUNIQUE_CastNova(D2GameStrc* pGame, D2UnitStrc* pUnit, int
     sub_6FD14170(pGame, pUnit, pUnit, MISSILE_NOVA, 0, nSkillLevel, DATATBLS_GetMissileVelocityFromMissilesTxt(MISSILE_NOVA, 0));
 }
 
-//D2Game.0x6FC6CB40
+// D2Game.0x6FC6CB40
 void __fastcall MONSTERUNIQUE_CastLightUniqueMissile(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!bUnique)
@@ -1190,7 +1190,7 @@ void __fastcall MONSTERUNIQUE_CastLightUniqueMissile(D2GameStrc* pGame, D2UnitSt
     }
 }
 
-//D2Game.0x6FC6CD30
+// D2Game.0x6FC6CD30
 void __fastcall sub_6FC6CD30(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (bUnique && (!pUnit || pUnit->dwAnimMode != MONMODE_GETHIT))
@@ -1199,7 +1199,7 @@ void __fastcall sub_6FC6CD30(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6CD60
+// D2Game.0x6FC6CD60
 void __fastcall MONSTERUNIQUE_CastColdUniqueMissile(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!bUnique)
@@ -1211,14 +1211,14 @@ void __fastcall MONSTERUNIQUE_CastColdUniqueMissile(D2GameStrc* pGame, D2UnitStr
     sub_6FD14170(pGame, pUnit, pUnit, MISSILE_COLDUNIQUE, 0, nLevel, DATATBLS_GetMissileVelocityFromMissilesTxt(MISSILE_FROSTNOVA, 0));
 }
 
-//D2Game.0x6FC6CDB0
+// D2Game.0x6FC6CDB0
 void __fastcall MONSTERUNIQUE_CastCorpsePoisonCloud(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     const int32_t nLevel = std::max(STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), 1);
     sub_6FD11420(pGame, MISSILE_CORPSEPOISONCLOUD, pUnit, 0, nLevel, 0, 0, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit), 1);
 }
 
-//D2Game.0x6FC6CE50
+// D2Game.0x6FC6CE50
 void __fastcall MONSTERUNIQUE_KillMinions(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (pUnit && pUnit->dwAnimMode != MONMODE_DEATH)
@@ -1244,7 +1244,7 @@ void __fastcall MONSTERUNIQUE_KillMinions(D2GameStrc* pGame, D2UnitStrc* pUnit, 
     D2GAME_ModeChange_6FC65220(pGame, &modeChange, 1);
 }
 
-//D2Game.0x6FC6CEC0
+// D2Game.0x6FC6CEC0
 void __fastcall MONSTERUNIQUE_MinionCallback_KillMinion(D2UnitStrc* pUnit, void* pGameArg, void* pUnused)
 {
     D2GameStrc* pGame = (D2GameStrc*)pGameArg;
@@ -1260,7 +1260,7 @@ void __fastcall MONSTERUNIQUE_MinionCallback_KillMinion(D2UnitStrc* pUnit, void*
     }
 }
 
-//D2Game.0x6FC6CF10
+// D2Game.0x6FC6CF10
 void __fastcall sub_6FC6CF10(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     int32_t nMinDamage = STATLIST_UnitGetStatValue(pUnit, STAT_MINDAMAGE, 0);
@@ -1276,7 +1276,7 @@ void __fastcall sub_6FC6CF10(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6CF90
+// D2Game.0x6FC6CF90
 void __fastcall sub_6FC6CF90(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MISSILE)
@@ -1304,7 +1304,7 @@ void __fastcall sub_6FC6CF90(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     STATLIST_SetUnitStat(pUnit, STAT_MAXDAMAGE, std::max(nMaxDamage, 0), 0);
 }
 
-//D2Game.0x6FC6D030
+// D2Game.0x6FC6D030
 void __fastcall MONSTERUNIQUE_ScarabModeChange(D2GameStrc* pGame, D2UnitStrc* pBoss, int32_t nUMod, int32_t bUnique)
 {
     if (!pBoss || pBoss->dwAnimMode == MONMODE_GETHIT || pBoss->dwAnimMode == MONMODE_DEATH)
@@ -1313,7 +1313,7 @@ void __fastcall MONSTERUNIQUE_ScarabModeChange(D2GameStrc* pGame, D2UnitStrc* pB
     }
 }
 
-//D2Game.0x6FC6D060
+// D2Game.0x6FC6D060
 void __fastcall MONSTERUNIQUE_CastBugLightningMissile(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     D2MissileStrc missileParams = {};
@@ -1344,7 +1344,7 @@ void __fastcall MONSTERUNIQUE_CastBugLightningMissile(D2GameStrc* pGame, D2UnitS
     }
 }
 
-//D2Game.0x6FC6D1C0
+// D2Game.0x6FC6D1C0
 void __fastcall MONSTERUNIQUE_ApplyElementalDamage(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     constexpr int32_t dword_6FD28C38[5][3] =
@@ -1422,7 +1422,7 @@ void __fastcall MONSTERUNIQUE_ApplyElementalDamage(D2GameStrc* pGame, D2UnitStrc
     }
 }
 
-//D2Game.0x6FC6D410
+// D2Game.0x6FC6D410
 D2MonUModTxt* __fastcall MONSTERUNIQUE_GetMonUModTxtRecord(uint32_t nUMod)
 {
     if (nUMod < sgptDataTables->nMonUModTxtRecordCount)
@@ -1433,7 +1433,7 @@ D2MonUModTxt* __fastcall MONSTERUNIQUE_GetMonUModTxtRecord(uint32_t nUMod)
     return nullptr;
 }
 
-//D2Game.0x6FC6D440
+// D2Game.0x6FC6D440
 void __fastcall sub_6FC6D440(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MISSILE)
@@ -1442,7 +1442,7 @@ void __fastcall sub_6FC6D440(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6D690
+// D2Game.0x6FC6D690
 void __fastcall MONSTERUNIQUE_StealBeltItem(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!bUnique)
@@ -1555,7 +1555,7 @@ void __fastcall MONSTERUNIQUE_QuestCompleteModeChange(D2GameStrc* pGame, D2UnitS
     }
 }
 
-//D2Game.0x6FC6D8B0
+// D2Game.0x6FC6D8B0
 void __fastcall MONSTERUNIQUE_CastQueenPoisonCloudMissile(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     D2MissileStrc missileParams = {};
@@ -1585,7 +1585,7 @@ void __fastcall MONSTERUNIQUE_CastQueenPoisonCloudMissile(D2GameStrc* pGame, D2U
     }
 }
 
-//D2Game.0x6FC6DA40
+// D2Game.0x6FC6DA40
 void __fastcall sub_6FC6DA40(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!bUnique || !pUnit || pUnit->dwUnitType != UNIT_MISSILE)
@@ -1654,7 +1654,7 @@ void __fastcall sub_6FC6DA40(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6DCB0
+// D2Game.0x6FC6DCB0
 void __fastcall MONSTERUNIQUE_LightningEnchantedModeChange(D2GameStrc* pGame, D2UnitStrc* pBoss, int32_t nUMod, int32_t bUnique)
 {
     if (bUnique && pBoss && pBoss->dwAnimMode == MONMODE_GETHIT)
@@ -1663,7 +1663,7 @@ void __fastcall MONSTERUNIQUE_LightningEnchantedModeChange(D2GameStrc* pGame, D2
     }
 }
 
-//D2Game.0x6FC6DCE0
+// D2Game.0x6FC6DCE0
 void __fastcall MONSTERUNIQUE_ColdEnchantedModeChange(D2GameStrc* pGame, D2UnitStrc* pBoss, int32_t nUMod, int32_t bUnique)
 {
     if ((bUnique || nUMod != 18) && (!pBoss || pBoss->dwAnimMode == MONMODE_DEATH))
@@ -1672,7 +1672,7 @@ void __fastcall MONSTERUNIQUE_ColdEnchantedModeChange(D2GameStrc* pGame, D2UnitS
     }
 }
 
-//D2Game.0x6FC6DD20
+// D2Game.0x6FC6DD20
 void __fastcall sub_6FC6DD20(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit)
@@ -1694,7 +1694,7 @@ void __fastcall sub_6FC6DD20(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6DDE0
+// D2Game.0x6FC6DDE0
 void __fastcall sub_6FC6DDE0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit)
@@ -1738,7 +1738,7 @@ void __fastcall sub_6FC6DDE0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6DFA0
+// D2Game.0x6FC6DFA0
 void __fastcall MONSTERUNIQUE_ApplyShatterState(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwAnimMode == MONMODE_DEATH)
@@ -1747,7 +1747,7 @@ void __fastcall MONSTERUNIQUE_ApplyShatterState(D2GameStrc* pGame, D2UnitStrc* p
     }
 }
 
-//D2Game.0x6FC6DFC0
+// D2Game.0x6FC6DFC0
 void __fastcall sub_6FC6DFC0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (SUNIT_IsDead(pUnit))
@@ -1775,7 +1775,7 @@ void __fastcall sub_6FC6DFC0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     }
 }
 
-//D2Game.0x6FC6E070
+// D2Game.0x6FC6E070
 void __fastcall MONSTERUNIQUE_SetTrapDamage(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     int32_t nLevel = 2;
@@ -1833,7 +1833,7 @@ void __fastcall MONSTERUNIQUE_SetTrapDamage(D2GameStrc* pGame, D2UnitStrc* pUnit
     }
 }
 
-//D2Game.0x6FC6E240
+// D2Game.0x6FC6E240
 void __fastcall sub_6FC6E240(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit)
@@ -1853,7 +1853,7 @@ void __fastcall sub_6FC6E240(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     SUNITDMG_SetMissileDamageFlagsForNearbyUnits(pGame, pUnit, CLIENTS_GetUnitX(pUnit), CLIENTS_GetUnitY(pUnit), pMonStatsTxtRecord->wAiParam[2][pGame->nDifficulty] * STATLIST_UnitGetStatValue(pUnit, STAT_LEVEL, 0), &damage, 0, 0, nullptr, 0);
 }
 
-//D2Game.0x6FC6E390
+// D2Game.0x6FC6E390
 void __fastcall MONSTERUNIQUE_SuicideModeChange(D2GameStrc* pGame, D2UnitStrc* pBoss, int32_t nUMod, int32_t bUnique)
 {
     if (!pBoss || pBoss->dwAnimMode == MONMODE_DEATH || pBoss->dwAnimMode == MONMODE_DEAD)
@@ -1871,7 +1871,7 @@ void __fastcall MONSTERUNIQUE_SuicideModeChange(D2GameStrc* pGame, D2UnitStrc* p
     }
 }
 
-//D2Game.0x6FC6E410
+// D2Game.0x6FC6E410
 void __fastcall MONSTERUNIQUE_CastSuicideExplodeMissile(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit)
@@ -1926,7 +1926,7 @@ void __fastcall MONSTERUNIQUE_CastSuicideExplodeMissile(D2GameStrc* pGame, D2Uni
     }
 }
 
-//D2Game.0x6FC6E700
+// D2Game.0x6FC6E700
 void __fastcall MONSTERUNIQUE_CreatePainWorm(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (!pUnit || pUnit->dwAnimMode == MONMODE_DEATH)
@@ -1936,7 +1936,7 @@ void __fastcall MONSTERUNIQUE_CreatePainWorm(D2GameStrc* pGame, D2UnitStrc* pUni
     }
 }
 
-//D2Game.0x6FC6E730
+// D2Game.0x6FC6E730
 void __fastcall sub_6FC6E730(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     if (SUNIT_IsDead(pUnit))
@@ -1948,13 +1948,13 @@ void __fastcall sub_6FC6E730(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod
     EVENT_SetEvent(pGame, pUnit, EVENTTYPE_MONUMOD, pGame->dwGameFrame + 75, 0, 0);
 }
 
-//D2Game.0x6FC6E770
+// D2Game.0x6FC6E770
 void __fastcall sub_6FC6E770(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     sub_6FC6E780(pGame, pUnit, 0, 0);
 }
 
-//D2Game.0x6FC6E780
+// D2Game.0x6FC6E780
 void __fastcall sub_6FC6E780(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pMissile, int32_t nIndex)
 {
     constexpr D2UnkUModStrc stru_6FD2F0C8[43] =
@@ -2040,31 +2040,31 @@ void __fastcall sub_6FC6E780(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* p
     }
 }
 
-//D2Game.0x6FC6E860
+// D2Game.0x6FC6E860
 void __fastcall sub_6FC6E860(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     sub_6FC6E780(pGame, pUnit, 0, 1);
 }
 
-//D2Game.0x6FC6E870
+// D2Game.0x6FC6E870
 void __fastcall D2GAME_MONSTERS_AiFunction08_6FC6E870(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     sub_6FC6E780(pGame, pUnit, 0, 2);
 }
 
-//D2Game.0x6FC6E890
+// D2Game.0x6FC6E890
 void __fastcall sub_6FC6E890(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     sub_6FC6E780(pGame, pUnit, 0, 3);
 }
 
-//D2Game.0x6FC6E8A0
+// D2Game.0x6FC6E8A0
 void __fastcall sub_6FC6E8A0(D2GameStrc* pGame, D2UnitStrc* pUnit)
 {
     sub_6FC6E780(pGame, pUnit, 0, 4);
 }
 
-//D2Game.0x6FC6E8B0
+// D2Game.0x6FC6E8B0
 void __fastcall sub_6FC6E8B0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* pMissile)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER && pMissile)
@@ -2073,7 +2073,7 @@ void __fastcall sub_6FC6E8B0(D2GameStrc* pGame, D2UnitStrc* pUnit, D2UnitStrc* p
     }
 }
 
-//D2Game.0x6FC6E8D0
+// D2Game.0x6FC6E8D0
 D2UnitStrc* __fastcall sub_6FC6E8D0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2RoomCoordListStrc* pRoomCoordList, int32_t nSuperUniqueId, int32_t a5, uint16_t nX, uint16_t nY, int32_t a8)
 {
     D2UnitStrc* pMonster = D2GAME_SpawnMonster_6FC6F220(pGame, pRoom, pRoomCoordList, nX, nY, -1, nSuperUniqueId, a8);
@@ -2087,7 +2087,7 @@ D2UnitStrc* __fastcall sub_6FC6E8D0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, 
     return pMonster;
 }
 
-//D2Game.0x6FC6E940
+// D2Game.0x6FC6E940
 void __fastcall sub_6FC6E940(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3)
 {
     if (!pGame || pGame->nDifficulty >= 3u)
@@ -2207,7 +2207,7 @@ void __fastcall sub_6FC6E940(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t a3)
     }
 }
 
-//D2Game.0x6FC6EBE0
+// D2Game.0x6FC6EBE0
 D2MonsterDataStrc* __fastcall MONSTERUNIQUE_GetMonsterData(D2UnitStrc* pUnit)
 {
     if (pUnit && pUnit->dwUnitType == UNIT_MONSTER)
@@ -2218,7 +2218,7 @@ D2MonsterDataStrc* __fastcall MONSTERUNIQUE_GetMonsterData(D2UnitStrc* pUnit)
     return nullptr;
 }
 
-//D2Game.0x6FC6EBF0
+// D2Game.0x6FC6EBF0
 int32_t __fastcall MONSTERUNIQUE_GetUModCount(uint8_t* pUMods)
 {
     int32_t nIndex = 0;
@@ -2230,7 +2230,7 @@ int32_t __fastcall MONSTERUNIQUE_GetUModCount(uint8_t* pUMods)
     return nIndex;
 }
 
-//D2Game.0x6FC6EC10
+// D2Game.0x6FC6EC10
 BOOL __fastcall sub_6FC6EC10(D2UnitStrc* pUnit, D2MonUModTxt* pMonUModTxtRecord, int32_t bExpansion)
 {
     if (!pMonUModTxtRecord->nEnabled)
@@ -2306,7 +2306,7 @@ BOOL __fastcall sub_6FC6EC10(D2UnitStrc* pUnit, D2MonUModTxt* pMonUModTxtRecord,
 	return TRUE;
 }
 
-//D2Game.0x6FC6EE90
+// D2Game.0x6FC6EE90
 int32_t __fastcall sub_6FC6EE90(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* a3)
 {
     if (!pGame || pGame->nDifficulty >= 3u)
@@ -2356,7 +2356,7 @@ int32_t __fastcall sub_6FC6EE90(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t* a
     return 0;
 }
 
-//D2Game.0x6FC6F160
+// D2Game.0x6FC6F160
 uint32_t __fastcall MONSTERUNIQUE_CheckMonModeFlag(int32_t nMonsterId, int32_t nFlag)
 {
     D2MonStats2Txt* pMonStats2TxtRecord = MONSTERREGION_GetMonStats2TxtRecord(nMonsterId);
@@ -2369,7 +2369,7 @@ uint32_t __fastcall MONSTERUNIQUE_CheckMonModeFlag(int32_t nMonsterId, int32_t n
     return 0;
 }
 
-//D2Game.0x6FC6F1D0
+// D2Game.0x6FC6F1D0
 uint32_t __fastcall MONSTERUNIQUE_CheckMonStatsFlag(int32_t nMonsterId, int32_t nFlag)
 {
     D2MonStatsTxt* pMonStatsTxtRecord = MONSTERMODE_GetMonStatsTxtRecord(nMonsterId);
@@ -2381,7 +2381,7 @@ uint32_t __fastcall MONSTERUNIQUE_CheckMonStatsFlag(int32_t nMonsterId, int32_t 
     return 0;
 }
 
-//D2Game.0x6FC6F220
+// D2Game.0x6FC6F220
 D2UnitStrc* __fastcall D2GAME_SpawnMonster_6FC6F220(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2RoomCoordListStrc* pRoomCoordList, int32_t nX, int32_t nY, int32_t nUnitGUID, int32_t nClassId, int32_t a8)
 {
     if (!nX && !nY)
@@ -2469,7 +2469,7 @@ D2UnitStrc* __fastcall D2GAME_SpawnMonster_6FC6F220(D2GameStrc* pGame, D2ActiveR
     return pMonster;
 }
 
-//D2Game.0x6FC6F440
+// D2Game.0x6FC6F440
 void __fastcall D2GAME_SpawnMinions_6FC6F440(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, D2RoomCoordListStrc* pRoomCoordList, D2UnitStrc* pUnit, int32_t bSpawnMinions, int32_t nMinGroup, int32_t nMaxGroup)
 {
     if (bSpawnMinions)
@@ -2572,7 +2572,7 @@ void __fastcall D2GAME_SpawnMinions_6FC6F440(D2GameStrc* pGame, D2ActiveRoomStrc
     }
 }
 
-//D2Game.0x6FC6F670
+// D2Game.0x6FC6F670
 void __fastcall sub_6FC6F670(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     constexpr UModInitFunc dword_6FD2F018[] =
@@ -2630,7 +2630,7 @@ void __fastcall sub_6FC6F670(D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
     }
 }
 
-//D2Game.0x6FC6F690
+// D2Game.0x6FC6F690
 D2UnitStrc* __fastcall D2GAME_SpawnSuperUnique_6FC6F690(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nX, int32_t nY, int32_t nSuperUnique)
 {
     if (pGame->nDifficulty >= 3u)
@@ -2819,7 +2819,7 @@ D2UnitStrc* __fastcall D2GAME_SpawnSuperUnique_6FC6F690(D2GameStrc* pGame, D2Act
     return pMonster;
 }
 
-//D2Game.0x6FC6FBA0
+// D2Game.0x6FC6FBA0
 D2UnitStrc* __fastcall sub_6FC6FBA0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nX, int32_t nY, int32_t nClassId, int32_t nUnitGUID, uint16_t nNameSeed, int32_t bChampion, int32_t bSuperUnique, int16_t nBossHcIdx, uint8_t* pUMods)
 {
     D2UnitStrc* pMonster = D2GAME_SpawnMonster_6FC6F220(pGame, pRoom, 0, nX, nY, nUnitGUID, nClassId, 1);
@@ -2901,7 +2901,7 @@ D2UnitStrc* __fastcall sub_6FC6FBA0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, 
     return pMonster;
 }
 
-//D2Game.0x6FC6FDC0
+// D2Game.0x6FC6FDC0
 D2UnitStrc* __fastcall sub_6FC6FDC0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nX, int32_t nY, int32_t nClassId, int32_t nUnitGUID, uint8_t* pUMods)
 {
     D2UnitStrc* pMonster = sub_6FC6A0F0(pGame, pRoom, nX, nY, nClassId, 1, nUnitGUID, -1, 98);
@@ -2944,7 +2944,7 @@ D2UnitStrc* __fastcall sub_6FC6FDC0(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, 
     return pMonster;
 }
 
-//D2Game.0x6FC6FF10
+// D2Game.0x6FC6FF10
 void __fastcall D2GAME_BOSSES_AssignUMod_6FC6FF10(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nUMod, int32_t bUnique)
 {
     uint8_t* pUMods = MONSTERUNIQUE_GetUMods(pUnit);
@@ -2975,7 +2975,7 @@ void __fastcall D2GAME_BOSSES_AssignUMod_6FC6FF10(D2GameStrc* pGame, D2UnitStrc*
     }
 }
 
-//D2Game.0x6FC6FFD0
+// D2Game.0x6FC6FFD0
 void __fastcall D2GAME_MONSTERS_Unk_6FC6FFD0(D2GameStrc* pGame, D2UnitStrc* pUnit, uint8_t nUMod)
 {
     if (!pUnit || pUnit->dwUnitType != UNIT_MONSTER)
