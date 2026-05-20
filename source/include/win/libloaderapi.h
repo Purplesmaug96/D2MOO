@@ -2,7 +2,10 @@
 
 #include "__windows_shim_msvcrt.h"
 
+#ifdef __linux__
 #include <dlfcn.h>
+#endif
+
 #include <malloc.h>
 #include <string.h>
 #include <sys/time.h>
@@ -40,6 +43,8 @@ static inline DWORD GetModuleFileNameA(HMODULE hModule, LPSTR lpFilename, DWORD 
 	strncpy(lpFilename, hModule->name, nSize);
 	return TRUE;
 }
+
+#ifdef __linux__
 
 static inline FARPROC GetProcAddress(HMODULE hModule, LPCSTR lpProcName);
 
@@ -104,6 +109,25 @@ static inline BOOL FreeLibrary(HMODULE hModule) {
 
 	return FALSE;
 }
+
+#else
+
+static inline HMODULE LoadLibraryA(LPCSTR lpLibFileName) {
+	printf("Stubbed function LoadLibraryA called (only supported on linux)\n");
+	return NULL;
+}
+
+static inline FARPROC GetProcAddress(HMODULE hModule, LPCSTR lpProcName) {
+	printf("Stubbed function GetProcAddress called (only supported on linux)\n");
+	return NULL;
+}
+
+static inline BOOL FreeLibrary(HMODULE hModule) {
+	printf("Stubbed function FreeLibrary called (only supported on linux)\n");
+	return FALSE;
+}
+
+#endif
 
 static inline HMODULE GetModuleHandleA(LPCSTR lpModuleName) {
 	printf("Stubbed function GetModuleHandleA called\n");

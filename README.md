@@ -1,11 +1,11 @@
 # D2MOOPortable - A project to make D2MOO more portable to other systems
 
-| | Windows | Linux | MacOS | Android |
-| - | - | - | - | - |
-| **Builds** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
-| **Executes** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` |
-| **Runs** | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
-| **Playable** | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
+| | Windows | Linux | MacOS | Android | Wii |
+| - | - | - | - | - | - |
+| **Builds** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `✅ Yes` |
+| **Executes** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `❓ Unknown` |
+| **Runs** | `❌ No` | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
+| **Playable** | `❌ No` | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
 
 (Windows builds are being worked on)
 

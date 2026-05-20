@@ -4,6 +4,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <sys/types.h>
 
 #include "windef.h"
 #include "winnt.h"

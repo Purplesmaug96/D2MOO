@@ -55,7 +55,7 @@
 #define _Acquires_lock_(x)
 #endif
 
-#ifndef _Acquires_lock_
+#ifndef _Releases_lock_
 #define _Releases_lock_(x)
 #endif
 

@@ -747,6 +747,13 @@ __attribute__((visibility("default"))) JNIEXPORT int JNICALL SDL_main(int argc, 
 }
 }
 #else
+#ifdef __wii__
+#undef main
+long sysconf(int name) {
+	printf("Stubbed function sysconf called (name:%s) (not supported on Wii)\n", name);
+	return 0;
+}
+#endif
 int main(int argc, char* argv[]) {
 	printf("main called\n");
 	return WinMain(NULL, NULL, ArgvToCommandLineC(argc, argv), 1);

@@ -1,3 +1,7 @@
+if(${CMAKE_SYSTEM_NAME} MATCHES "NintendoWii")
+add_definitions(-Wno-attributes)
+endif()
+
 add_subdirectory(D2CommonDefinitions)
 
 if(WIN32)

@@ -4,7 +4,11 @@
 
 #include <stdio.h>
 #include <string.h>
+
+#if defined(__linux__) || defined(__ANDROID__)
 #include <sys/mman.h>
+#endif
+
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -31,6 +35,7 @@ static inline BOOL IsBadCodePtr(FARPROC lpfn) {
 		return FALSE;
 	}
 
+#if defined(__linux__) || defined(__ANDROID__)
 	// Taken from https://renatocunha.com/2015/12/msync-pointer-validity/
 
 	/* get the page size */
@@ -39,6 +44,7 @@ static inline BOOL IsBadCodePtr(FARPROC lpfn) {
 	void* base = (void*)((((size_t)lpfn) / page_size) * page_size);
 	/* call msync, if it returns non-zero, return false */
 	return msync(base, page_size, MS_ASYNC) == 0;
+#endif
 }
 
 static inline DWORD GetCurrentDirectoryA(DWORD nBufferLength, LPTSTR lpBuffer) {
