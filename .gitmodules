@@ -17,3 +17,7 @@
 [submodule "external/sdl2_image"]
 	path = external/sdl2_image
 	url = https://github.com/libsdl-org/SDL_image.git
+[submodule "external/sdl2-wii"]
+	path = external/sdl2-wii
+	url = https://github.com/devkitPro/SDL.git
+	branch = ogc-sdl-2.30-dev
