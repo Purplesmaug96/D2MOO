@@ -21,13 +21,61 @@
 #include <x86intrin.h>
 #endif
 
-#define __stdcall
-#define __cdecl
-#define __fastcall
-#define __vectorcall
+#ifndef __windows_shim
 
+#ifndef __stdcall
+#define __stdcall
+#endif
+
+#ifndef __cdecl
+#define __cdecl
+#endif
+
+#ifndef __fastcall
+#define __fastcall
+#endif
+
+#ifndef __vectorcall
+#define __vectorcall
+#endif
+
+#ifndef __declspec
 #define __declspec(x)
+#endif
+
+#ifndef __forceinline
 #define __forceinline __attribute__((always_inline)) inline
+#endif
+
+#ifndef CALLBACK
+#define CALLBACK __stdcall
+#endif
+
+#ifndef __Acquires_lock_
+#define _Acquires_lock_(x)
+#endif
+
+#ifndef _Acquires_lock_
+#define _Releases_lock_(x)
+#endif
+
+#ifndef _Requires_lock_held_
+#define _Requires_lock_held_(x)
+#endif
+
+#ifndef _Curr_
+#define _Curr_ NULL
+#endif
+
+#ifndef _Analysis_assume_
+#define _Analysis_assume_(x)
+#endif
+
+#ifndef _strcmpi
+#define _strcmpi strcasecmp
+#endif
+
+#endif
 
 #define __windows_shim
 
@@ -304,19 +352,6 @@ static inline char* _strrev(char* str) {
 	return str;
 }
 
-#define CALLBACK __stdcall
-
-#define _Acquires_lock_(x)
-#define _Releases_lock_(x)
-
-#define _Requires_lock_held_(x)
-
-#define _Curr_ NULL
-
 typedef int LCID;
-
-#define _Analysis_assume_(x)
-
-#define _strcmpi strcasecmp
 
 #pragma diagnostic pop
