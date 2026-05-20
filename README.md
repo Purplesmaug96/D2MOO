@@ -3,7 +3,7 @@
 | | Windows | Linux | MacOS | Android | Nintendo Wii |
 | - | - | - | - | - | - |
 | **Builds** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `✅ Yes` |
-| **Executes** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `❓ Unknown` |
+| **Executes** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `❌ No` |
 | **Runs** | `❌ No` | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
 | **Playable** | `❌ No` | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
 
