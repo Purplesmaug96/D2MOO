@@ -9,6 +9,8 @@ set(SDL_SHARED ON CACHE BOOL "" FORCE)
 set(SDL_STATIC OFF CACHE BOOL "" FORCE)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "NintendoWii")
+add_compile_definitions(STDC_HEADERS HAVE_STDDEF_H HAVE_STDINT_H HAVE_STRING_H HAVE_STDIO_H LACKS_SYS_MMAN_H)
+add_definitions(-DHAVE_MMAP=false	)
 add_subdirectory(sdl2-wii EXCLUDE_FROM_ALL)
 else()
 add_subdirectory(sdl2 EXCLUDE_FROM_ALL)
