@@ -41,7 +41,7 @@ int32_t gbPaused_6FA8D84C;
 int32_t gbWindowState_6FA8D850;
 HINSTANCE ghInstance;
 
-SDL_Window* window = NULL;
+SDL_Window* gpWindow = NULL;
 uint32_t windowFlags = 0;
 SDL_SysWMinfo wmInfo;
 WNDPROC g_oldProc;
@@ -270,8 +270,8 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 		windowFlags |= SDL_WINDOW_FULLSCREEN;
 	}
 
-	window = SDL_CreateWindow("Diablo II", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, nWidth, nHeight, windowFlags);
-	if (window == NULL) {
+	gpWindow = SDL_CreateWindow("Diablo II", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, nWidth, nHeight, windowFlags);
+	if (gpWindow == NULL) {
 		static char szLocalBuffer[256];
 		static char errBuf[256];
 		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to open window!\nFlags: %u\nSDL Error: %s\n", windowFlags, SDL_GetErrorMsg(errBuf, 256)), __FILE__, __LINE__);
@@ -286,7 +286,7 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 	HideCursor();
 
 	SDL_VERSION(&wmInfo.version);
-	SDL_GetWindowWMInfo(window, &wmInfo);
+	SDL_GetWindowWMInfo(gpWindow, &wmInfo);
 #ifdef _WIN32
 	ghWnd = wmInfo.info.win.window;
 	if (ghWnd == NULL) {
@@ -305,7 +305,7 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 #else
 	BOOL createSurfaceSucceeded;
 	if (gnDisplayType == DISPLAYTYPE_GLIDE) {
-		createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface((HWND)(void*)window, gnResolutionMode);
+		createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface((HWND)(void*)gpWindow, gnResolutionMode);
 	} else {
 		createSurfaceSucceeded = gpGraphicsInterface->pfCreateSurface(ghWnd, gnResolutionMode);
 	}
@@ -335,8 +335,8 @@ int32_t __stdcall WINDOW_Destroy() {
 		bWindowDestroyed = 0;
 	}
 
-	if (window != NULL) {
-		SDL_DestroyWindow(window);
+	if (gpWindow != NULL) {
+		SDL_DestroyWindow(gpWindow);
 	}
 
 	ChangeDisplaySettingsA(nullptr, 0);
@@ -366,7 +366,7 @@ int32_t __stdcall WINDOW_GetState() {
 
 	gbWindowState_6FA8D850 = bPaused;
 	if (bPaused) {
-		SDL_RaiseWindow(window);
+		SDL_RaiseWindow(gpWindow);
 		WINDOW_ShowAll();
 		ShowCursor();
 	} else {
@@ -378,7 +378,7 @@ int32_t __stdcall WINDOW_GetState() {
 	gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 #else
 	if (gnDisplayType == DISPLAYTYPE_GLIDE) {
-		gpGraphicsInterface->pfPauseSurface((HWND)(void*)window, gnResolutionMode, gbWindowState_6FA8D850);
+		gpGraphicsInterface->pfPauseSurface((HWND)(void*)gpWindow, gnResolutionMode, gbWindowState_6FA8D850);
 	} else {
 		gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 	}
@@ -471,7 +471,7 @@ int32_t __stdcall WINDOW_Resize(D2GameResolutionMode nResolution, int32_t bForce
 			exit(-1);
 		}
 
-		SDL_SetWindowSize(window, nWidth, nHeight);
+		SDL_SetWindowSize(gpWindow, nWidth, nHeight);
 	}
 
 #ifndef D2_GLIDE_AS_SDLRENDERER
@@ -479,7 +479,7 @@ int32_t __stdcall WINDOW_Resize(D2GameResolutionMode nResolution, int32_t bForce
 #else
 	int32_t bResult;
 	if (gnDisplayType == DISPLAYTYPE_GLIDE) {
-		bResult = gpGraphicsInterface->pfChangeRes((HWND)(void*)window, nResolution);
+		bResult = gpGraphicsInterface->pfChangeRes((HWND)(void*)gpWindow, nResolution);
 	} else {
 		bResult = gpGraphicsInterface->pfChangeRes(ghWnd, nResolution);
 	}
@@ -507,7 +507,7 @@ void __stdcall WINDOW_EndCutScene(D2GameResolutionMode nResolution) {
 	if (gbWindowState_6FA8D850 != gbPaused_6FA8D84C && ghWnd && (gbPaused_6FA8D84C || !IsIconic(ghWnd))) {
 		gbWindowState_6FA8D850 = gbPaused_6FA8D84C;
 		if (gbPaused_6FA8D84C) {
-			SDL_RaiseWindow(window);
+			SDL_RaiseWindow(gpWindow);
 			WINDOW_ShowAll();
 			ShowCursor();
 		} else {
@@ -519,7 +519,7 @@ void __stdcall WINDOW_EndCutScene(D2GameResolutionMode nResolution) {
 		gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 #else
 		if (gnDisplayType == DISPLAYTYPE_GLIDE) {
-			gpGraphicsInterface->pfPauseSurface((HWND)(void*)window, gnResolutionMode, gbWindowState_6FA8D850);
+			gpGraphicsInterface->pfPauseSurface((HWND)(void*)gpWindow, gnResolutionMode, gbWindowState_6FA8D850);
 		} else {
 			gpGraphicsInterface->pfPauseSurface(ghWnd, gnResolutionMode, gbWindowState_6FA8D850);
 		}
@@ -600,7 +600,7 @@ void __stdcall WINDOW_UpdatePlacement() {
 		if (pWindowPlacement->hWnd) {
 			pWindowPlacement->windowPlacement.length = sizeof(WINDOWPLACEMENT);
 			GetWindowPlacement(pWindowPlacement->hWnd, &pWindowPlacement->windowPlacement);
-			SDL_HideWindow(window);
+			SDL_HideWindow(gpWindow);
 		}
 	}
 }

@@ -35,7 +35,14 @@ BOOL __fastcall D2SDLRender_pfClose() {
 	return TRUE;
 }
 
+static bool bSDLRendererInited = false;
+
 bool D2SDLRender_Init() {
+	if (bSDLRendererInited) {
+		printf("D2SDLRenderer has already been initialized; ignoring call to D2SDLRenderer_Init");
+		return false;
+	}
+
 #ifdef _WIN32
 	AllocConsole();
 	FILE* fDummy;
@@ -106,6 +113,16 @@ bool D2SDLRender_Init() {
 
 extern "C" {
 D2GraphicsInterfaceStrc* GraphicsInterface() {
+	if (!bSDLRendererInited) {
+		D2SDLRender_Init();
+	}
+	return Interface;
+}
+
+D2GraphicsInterfaceStrc* D2SDLRender_GraphicsInterface() {
+	if (!bSDLRendererInited) {
+		D2SDLRender_Init();
+	}
 	return Interface;
 }
 }

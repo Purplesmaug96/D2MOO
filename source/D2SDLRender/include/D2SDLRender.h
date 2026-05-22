@@ -129,3 +129,7 @@ static inline void _FUNC_ASSERT(const char* condBuf, const char* file, const int
 	} while (0)
 
 bool D2SDLRender_Init();
+
+extern "C" {
+D2GraphicsInterfaceStrc* D2SDLRender_GraphicsInterface();
+}

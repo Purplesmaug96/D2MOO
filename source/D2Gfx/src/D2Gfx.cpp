@@ -52,6 +52,27 @@ constexpr const char* gszDriverDllNames[NUMBER_OF_DISPLAYTYPES] = {
 };
 #endif
 
+#ifdef D2MOO_STATIC_LIBS
+// clang-format: off
+#include "D2SDLRender.h"
+// clang-format: on
+
+const void* lpDriverInterface[NUMBER_OF_DISPLAYTYPES] = {
+	NULL,
+	NULL, // D2Gdi
+	NULL,
+	NULL, // D2DDraw
+#ifdef D2_GLIDE_AS_SDLRENDERER
+	(void*)&D2SDLRender_GraphicsInterface, // D2SDLRender
+#else
+	NULL, // D2Glide
+#endif
+	NULL, // D2OpenGL
+	NULL, // D2Direct3D
+	NULL  // D2Rave
+};
+#endif
+
 WNDPROC gpfWndProc;
 PALETTEENTRY gpPalette_6FA8D278[256];
 
@@ -114,6 +135,8 @@ int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, Displ
 		return 0;
 	}
 
+#ifdef D2MOO_SHARED_LIBS
+
 	ghRenderModule = LoadLibraryA(gszDriverDllNames[nDisplayType]);
 	if (!ghRenderModule) {
 		char szErrorMessage[256] = {};
@@ -122,7 +145,20 @@ int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, Displ
 		exit(-1);
 	}
 
+#endif
+
 	FOG_10233(gszDriverDllNames[nDisplayType], 1);
+
+#ifdef D2MOO_STATIC_LIBS
+
+	D2GraphicsInterfaceStrc*(__fastcall * pfGetGraphicsInterface)() = (D2GraphicsInterfaceStrc * (__fastcall*)()) lpDriverInterface[nDisplayType];
+
+	if (!pfGetGraphicsInterface) {
+		FOG_DisplayHalt("Error interfacing with Gfx interface", __FILE__, __LINE__);
+		exit(-1);
+	}
+
+#else
 
 #ifdef _WIN32
 	D2GraphicsInterfaceStrc*(__fastcall * pfGetGraphicsInterface)() = (D2GraphicsInterfaceStrc * (__fastcall*)()) GetProcAddress(ghRenderModule, (LPCSTR)10000);
@@ -140,6 +176,8 @@ int32_t __stdcall D2GFX_Initialize(HINSTANCE hInstance, WNDPROC pfWndProc, Displ
 		FOG_DisplayHalt(szErrorMessage, __FILE__, __LINE__);
 		exit(-1);
 	}
+
+#endif
 
 	gpGraphicsInterface = pfGetGraphicsInterface();
 	gpGraphicsInterface->pfSetOption(8, bWindowed == 1);
@@ -205,9 +243,13 @@ int32_t __stdcall D2GFX_Release() {
 		}
 	}
 
+#ifdef D2MOO_SHARED_LIBS
 	D2_ASSERT(ghRenderModule != nullptr);
 
 	const int32_t bResult = FreeLibrary(ghRenderModule);
+#else
+	const int32_t bResult = true;
+#endif
 	FOG_10233(gszDriverDllNames[gnDisplayType], 0);
 	ghRenderModule = nullptr;
 	gpGraphicsInterface = nullptr;

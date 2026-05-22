@@ -50,7 +50,6 @@ const void* lpD2ModuleInterface[] = {
 #endif
 	(void*)&D2EClientInterface
 };
-
 #endif
 
 #define cmdidx(m) offsetof(D2ConfigStrc, m)
@@ -369,7 +368,7 @@ void GAMEAPI ParseCmdValue(char* s) {
 D2_MODULES LoadCurrentlySelectedModule(D2ConfigStrc* pCfg) {
 	if (geModState >= MODULE_NONE && geModState < D2_MODULES_COUNT) {
 #ifdef D2MOO_STATIC_LIBS
-		return (*(ModuleInitPointer*)lpD2ModuleInterface[geModState])(pCfg);
+		return ((ModuleInitPointer)lpD2ModuleInterface[geModState])(pCfg);
 #else
 		if (HMODULE hModule = LoadLibraryA(lpszD2Module[geModState])) {
 			if (FARPROC pQueryInterface = GetProcAddress(hModule, PROC_QUERYINT)) {
@@ -390,6 +389,9 @@ D2_MODULES LoadCurrentlySelectedModule(D2ConfigStrc* pCfg) {
 		}
 #endif
 	}
+	char szErrMsg[100];
+	sprintf(szErrMsg, "geModState is invalid (%d)", geModState, 0);
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, ERRMSG_TITLE, szErrMsg, NULL);
 	return MODULE_NONE;
 }
 

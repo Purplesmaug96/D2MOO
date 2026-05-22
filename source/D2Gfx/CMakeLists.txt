@@ -22,4 +22,8 @@ target_sources(${D2GfxImplName}
     include/Window.h
 )
 
+if(NOT BUILD_SHARED_LIBS)
+target_link_libraries(${D2GfxImplName} PRIVATE D2SDLRender)
+endif()
+
 D2MOO_target_source_group(D2Gfx)
