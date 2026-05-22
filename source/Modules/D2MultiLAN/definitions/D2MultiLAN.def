@@ -1,0 +1,4 @@
+LIBRARY		D2SDLRENDER
+EXPORTS
+	QueryInterface
+	DllMain

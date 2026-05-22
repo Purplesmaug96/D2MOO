@@ -9,6 +9,8 @@
 
 (Windows builds are being worked on)
 
+Everything in source/Modules are stubs.
+
 # Original README.md:
 
 # D2MOO - Diablo II Method and Ordinal Overhaul

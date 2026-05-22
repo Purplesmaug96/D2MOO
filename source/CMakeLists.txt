@@ -19,7 +19,8 @@ add_subdirectory(D2Gfx)
 add_subdirectory(D2Sound)
 add_subdirectory(D2MCPClient)
 add_subdirectory(D2Win)
-add_subdirectory(D2Launch)
+
+add_subdirectory(Modules)
 
 if (WIN32)
 	add_subdirectory(D2Debugger)

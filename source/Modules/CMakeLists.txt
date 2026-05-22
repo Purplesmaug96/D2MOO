@@ -1,0 +1,6 @@
+add_subdirectory(D2Client)
+add_subdirectory(D2Server)
+add_subdirectory(D2Multi)
+add_subdirectory(D2Launch)
+add_subdirectory(D2MultiLAN)
+add_subdirectory(D2EClient)
