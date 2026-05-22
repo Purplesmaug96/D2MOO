@@ -25,7 +25,9 @@ void* __stdcall D2LaunchInterface(void*) { return (void*)MODULE_NONE; }
 // A global variable to hold the actual function pointer
 static ModuleInitPointer gInterface = D2LaunchInterface;
 
+#ifdef D2MOO_SHARED_LIBS
 void* __stdcall QueryInterface() {
 	return (void*)&gInterface;
 }
+#endif
 }

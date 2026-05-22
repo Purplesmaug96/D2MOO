@@ -31,6 +31,16 @@ if(D2MOO_IS_ROOT_PROJECT) # Let parent project decide wether to use its own patc
 	endif()
 endif()
 
+if(BUILD_SHARED_LIBS)
+
+add_compile_definitions(D2MOO_SHARED_LIBS)
+
+else()
+
+add_compile_definitions(D2MOO_STATIC_LIBS)
+
+endif()
+
 option(D2MOO_INSTALL "Should we install the D2MOO targets?" ${D2MOO_IS_ROOT_PROJECT})
 option(D2MOO_WITH_STATIC_TESTS "Enable static tests for struct layouts. Use for original game only, not mods." ON)
 cmake_dependent_option(D2MOO_BUILD_TESTS

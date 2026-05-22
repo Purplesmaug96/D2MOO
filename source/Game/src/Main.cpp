@@ -27,6 +27,32 @@
 
 // Thanks to galaxyhaxz for providing the base to work on ! https://github.com/galaxyhaxz/d2src
 
+#ifdef D2MOO_STATIC_LIBS
+// clang-format: off
+#include "D2Client.h"
+#include "D2Launch.h"
+#include "D2Multi.h"
+#include "D2Server.h"
+#if D2_HAS_MULTILAN
+#include "D2MultiLAN.h"
+#endif
+#include "D2EClient.h"
+// clang-format: on
+
+const void* lpD2ModuleInterface[] = {
+	NULL,
+	(void*)&D2ClientInterface,
+	(void*)&D2ServerInterface,
+	(void*)&D2MultiInterface,
+	(void*)&D2LaunchInterface,
+#if D2_HAS_MULTILAN
+	(void*)&D2MultiLANInterface,
+#endif
+	(void*)&D2EClientInterface
+};
+
+#endif
+
 #define cmdidx(m) offsetof(D2ConfigStrc, m)
 // 1.10f: Game.0x
 D2CmdArgStrc gaCmdArguments[] = {
@@ -342,6 +368,9 @@ void GAMEAPI ParseCmdValue(char* s) {
 // 1.10f: 0x4014D0 (Inlined)
 D2_MODULES LoadCurrentlySelectedModule(D2ConfigStrc* pCfg) {
 	if (geModState >= MODULE_NONE && geModState < D2_MODULES_COUNT) {
+#ifdef D2MOO_STATIC_LIBS
+		return (*(ModuleInitPointer*)lpD2ModuleInterface[geModState])(pCfg);
+#else
 		if (HMODULE hModule = LoadLibraryA(lpszD2Module[geModState])) {
 			if (FARPROC pQueryInterface = GetProcAddress(hModule, PROC_QUERYINT)) {
 				gpCurrentModuleInterface = (void*)pQueryInterface();
@@ -359,6 +388,7 @@ D2_MODULES LoadCurrentlySelectedModule(D2ConfigStrc* pCfg) {
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, ERRMSG_TITLE, szErrMsg, NULL);
 			// MessageBoxA(NULL, szErrMsg, ERRMSG_TITLE, MB_ICONERROR);
 		}
+#endif
 	}
 	return MODULE_NONE;
 }

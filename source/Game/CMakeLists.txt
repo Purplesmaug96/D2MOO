@@ -39,13 +39,18 @@ target_link_libraries(Game
 	SDL2::SDL2
 )
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 find_package(json-c CONFIG)
 target_link_libraries(Game PRIVATE json-c::json-c)
 target_compile_definitions(Game PRIVATE __windows_shim_has_jsonc)
 endif()
 
-if (NOT ANDROID)
+
+if(NOT BUILD_SHARED_LIBS)
+target_link_libraries(Game PRIVATE D2Client D2Server D2Multi D2Launch D2MultiLAN D2EClient)
+endif()
+
+if(NOT ANDROID)
 set_target_properties(Game PROPERTIES OUTPUT_NAME Game.D2MOO)
 endif()
 
