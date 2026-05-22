@@ -2,5 +2,5 @@
 
 extern "C" {
 void* __stdcall QueryInterface();
-void* __stdcall UnkFunc(void*);
+void* __stdcall D2ServerInterface(void*);
 }

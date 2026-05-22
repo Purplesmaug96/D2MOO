@@ -20,10 +20,10 @@ enum D2_MODULES {
 extern "C" {
 
 typedef void*(__stdcall* ModuleInitPointer)(void*);
-void* __stdcall UnkFunc(void*) { return (void*)MODULE_NONE; }
+void* __stdcall D2MultiInterface(void*) { return (void*)MODULE_NONE; }
 
 // A global variable to hold the actual function pointer
-static ModuleInitPointer gInterface = UnkFunc;
+static ModuleInitPointer gInterface = D2MultiInterface;
 
 void* __stdcall QueryInterface() {
 	return (void*)&gInterface;
