@@ -31,14 +31,14 @@ if(D2MOO_IS_ROOT_PROJECT) # Let parent project decide wether to use its own patc
 	endif()
 endif()
 
+if(ANDROID)
+set(BUILD_SHARED_LIBS OFF)
+endif()
+
 if(BUILD_SHARED_LIBS)
-
 add_compile_definitions(D2MOO_SHARED_LIBS)
-
 else()
-
 add_compile_definitions(D2MOO_STATIC_LIBS)
-
 endif()
 
 option(D2MOO_INSTALL "Should we install the D2MOO targets?" ${D2MOO_IS_ROOT_PROJECT})
