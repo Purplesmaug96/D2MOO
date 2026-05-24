@@ -76,12 +76,16 @@ if(WIN32)
 
 # Note: we only use squall for a few headers
 # We may want to use the whole library at some point though.
+
 add_library(squallstorm
-	squall/storm/thread/CCritSect.cpp
+#	squall/storm/thread/CCritSect.cpp
+	empty.cpp
 )
-target_include_directories(squallstorm SYSTEM PUBLIC squall)
-target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_WIN)
+
+# target_include_directories(squallstorm SYSTEM PUBLIC squall)
+target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_WIN WHOA_STORM_FLAVOR_DIABLO2)
 add_library(squall::Storm ALIAS squallstorm)
+
 
 else()
 

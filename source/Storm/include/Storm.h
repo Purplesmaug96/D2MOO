@@ -29,6 +29,10 @@
 // |- D2Client.dll     :  35
 // |- D2Lang.dll       :   4
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /// Not imported by any .dll
 D2FUNC_DLL_NP(STORM, SNetCreateGame, BOOL, __stdcall, (char* Source, char* a2, char* a3, int a4, int a5, int a6, char* a7, char* a8, int* playerid), 0x1dbb0); // Storm.#101
 
@@ -1166,3 +1170,7 @@ D2FUNC_DLL_NP(STORM, SUniConvert913, int, __stdcall, (int a1, int a2, int a3), 0
 
 /// Not imported by any .dll
 D2FUNC_DLL_NP(STORM, SUniConvert914, int, __stdcall, (int a1, int a2, int a3), 0x2d590); // Storm.#914
+
+#ifdef __cplusplus
+}
+#endif
