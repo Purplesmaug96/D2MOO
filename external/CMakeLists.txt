@@ -85,8 +85,8 @@ add_library(squallstorm
 	empty.cpp
 )
 
-# target_include_directories(squallstorm SYSTEM PUBLIC squall)
-target_compile_definitions(squallstorm PUBLIC WHOA_SYSTEM_WIN WHOA_STORM_FLAVOR_DIABLO2)
+target_include_directories(squallstorm SYSTEM PUBLIC squall)
+add_compile_definitions(WHOA_SYSTEM_WIN WHOA_STORM_FLAVOR_DIABLO2)
 add_library(squall::Storm ALIAS squallstorm)
 
 

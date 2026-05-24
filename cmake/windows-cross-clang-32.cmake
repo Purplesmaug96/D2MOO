@@ -48,7 +48,7 @@ set(CMAKE_MODULE_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
 # This satisfies _malloc, _free, _memset, etc., using the core runtime libraries.
 # 1. Provide the exact standard static/import libraries for modern UCRT mapping
 # Order matters: ucrt.lib resolves the modern __imp__malloc and stdio macros.
-set(STD_LIBS "msvcprt.lib msvcrt.lib vcruntime.lib ucrt.lib user32.lib gdi32.lib shell32.lib kernel32.lib oldnames.lib")
+set(STD_LIBS "msvcprt.lib msvcrt.lib vcruntime.lib ucrt.lib user32.lib gdi32.lib shell32.lib advapi32.lib kernel32.lib oldnames.lib")
 set(CMAKE_C_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
 set(CMAKE_CXX_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
 

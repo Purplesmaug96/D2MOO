@@ -814,7 +814,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 
 			if (bCouldOpenService) {
 				SERVICE_TABLE_ENTRYA DispatchTable[] = {
+#ifdef _WIN32
+					{ SVC_NAME, D2ServerServiceMain }, // NOLINT(clang-diagnostic-writable-strings)
+#else
 					{ SVC_NAME, (void*)D2ServerServiceMain }, // NOLINT(clang-diagnostic-writable-strings)
+#endif
 					{ NULL, NULL }
 				};
 
@@ -878,7 +882,11 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLin
 // 1.10f: Game.0x401ED0
 VOID WINAPI D2ServerServiceMain(DWORD dwArgc, LPTSTR* lpszArgv) {
 	gbD2ServerStopEvent = TRUE;
+#ifdef _WIN32
+	ghD2ServerServiceStatus = RegisterServiceCtrlHandlerA(SVC_NAME, D2ServerServiceHandlerProc);
+#else
 	ghD2ServerServiceStatus = RegisterServiceCtrlHandlerA(SVC_NAME, (void*)D2ServerServiceHandlerProc);
+#endif
 	SetServiceStatus(ghD2ServerServiceStatus, &gD2ServerServiceStatus);
 	char* rBuf;
 	GameInit(dwArgc, (const char**)lpszArgv, &rBuf);
