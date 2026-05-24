@@ -1,5 +1,7 @@
 #include "ErrorManager.h"
 
+#include <stdio.h>
+
 #include <SDL2/SDL_messagebox.h>
 
 // Fog.#10023

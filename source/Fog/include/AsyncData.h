@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdint.h>
 #include <windef.h>
 
 #ifndef __windows_shim

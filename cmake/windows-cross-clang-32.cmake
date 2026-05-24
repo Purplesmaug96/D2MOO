@@ -34,17 +34,22 @@ include_directories(SYSTEM
 
 set(CRT_LIB_DIR "${WIN_SDK_DIR}/crt/lib/x86")
 set(UM_LIB_DIR "${WIN_SDK_DIR}/sdk/lib/um/x86")
+set(UCRT_LIB_DIR "${WIN_SDK_DIR}/sdk/lib/ucrt/x86")
 
-set(LINK_FLAGS "/libpath:\"${CRT_LIB_DIR}\" /libpath:\"${UM_LIB_DIR}\" /nodefaultlib")
+set(LINK_FLAGS "/libpath:\"${CRT_LIB_DIR}\" /libpath:\"${UCRT_LIB_DIR}\" /libpath:\"${UM_LIB_DIR}\" /nodefaultlib")
 
 set(CMAKE_EXE_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
 set(CMAKE_SHARED_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
 set(CMAKE_MODULE_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
 
-# Fix 2: Bypass the modern VS startup library entry point completely
-# This tells CMake: If the target name is NOT "SDL2", add the entry point.
-# If it IS "SDL2", add nothing.
-add_link_options("$<IF:$<STREQUAL:$<TARGET_PROPERTY:NAME>,SDL2>,,/entry:DllMain@12>")
+# This satisfies _malloc, _free, _memset, etc., using the core runtime libraries.
+# 1. Provide the exact standard static/import libraries for modern UCRT mapping
+# Order matters: ucrt.lib resolves the modern __imp__malloc and stdio macros.
+set(STD_LIBS "ucrt.lib vcruntime.lib msvcrt.lib kernel32.lib oldnames.lib")
 
-set(CMAKE_C_STANDARD_LIBRARIES "kernel32.lib msvcrt.lib oldnames.lib" CACHE STRING "" FORCE)
-set(CMAKE_CXX_STANDARD_LIBRARIES "kernel32.lib msvcrt.lib oldnames.lib" CACHE STRING "" FORCE)
+set(CMAKE_C_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
+set(CMAKE_CXX_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
+
+# 4. Target-Specific Entry Point Logic (The Generator Expression)
+# Adds the /entry switch for everything except SDL2
+add_link_options("$<IF:$<STREQUAL:$<TARGET_PROPERTY:NAME>,SDL2>,,/entry:DllMain@12>")
