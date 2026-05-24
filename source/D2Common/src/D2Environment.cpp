@@ -1,5 +1,5 @@
 #include "D2Environment.h"
-#include <math.h>
+#include <cmath>
 
 #include <sysinfoapi.h>
 

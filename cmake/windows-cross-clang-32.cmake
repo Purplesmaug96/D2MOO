@@ -48,11 +48,10 @@ set(CMAKE_MODULE_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
 # This satisfies _malloc, _free, _memset, etc., using the core runtime libraries.
 # 1. Provide the exact standard static/import libraries for modern UCRT mapping
 # Order matters: ucrt.lib resolves the modern __imp__malloc and stdio macros.
-set(STD_LIBS "msvcprt.lib ucrt.lib vcruntime.lib msvcrt.lib kernel32.lib oldnames.lib")
-
+set(STD_LIBS "msvcprt.lib msvcrt.lib vcruntime.lib ucrt.lib user32.lib gdi32.lib shell32.lib kernel32.lib oldnames.lib")
 set(CMAKE_C_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
 set(CMAKE_CXX_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
 
 # 4. Target-Specific Entry Point Logic (The Generator Expression)
 # Adds the /entry switch for everything except SDL2
-add_link_options("$<IF:$<STREQUAL:$<TARGET_PROPERTY:NAME>,SDL2>,,/entry:DllMain@12>")
+# add_link_options("$<IF:$<STREQUAL:$<TARGET_PROPERTY:NAME>,SDL2>,,/entry:DllMain@12>")
