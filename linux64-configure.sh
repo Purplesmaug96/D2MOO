@@ -1,1 +1,0 @@
-cmake -B build64 --toolchain cmake/linux-64.cmake -DD2MOO_INSTALL=OFF -DBUILD_SHARED_LIBS=OFF -DWHOA_STORM_FLAVOR=DIABLO2 -DCMAKE_BUILD_TYPE=Debug .
