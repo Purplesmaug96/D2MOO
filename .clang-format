@@ -55,3 +55,6 @@ PointerAlignment: Left
 # Gaps things
 MaxEmptyLinesToKeep: 1
 KeepEmptyLinesAtTheStartOfBlocks: false
+
+# No sorting includes
+SortIncludes: false
