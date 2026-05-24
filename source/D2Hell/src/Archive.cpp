@@ -235,10 +235,8 @@ D2ArchiveHandleStrc* __fastcall ARCHIVE_LoadMPQFile(const char* szModuleName, co
 	while (1) {
 		pMpqHandle->hArchive = ARCHIVE_FindAndOpenArchive(pMpqHandle->szPath, szFileName, szModuleName, szLabel, nPriority, hFile != 0);
 		if (pMpqHandle->hArchive) {
-			printf("Successfully loaded %s\n", szFileName);
 			return pMpqHandle;
 		}
-		printf("Failed to load %s\n", szFileName);
 		if (!pfShowMessage || !pfShowMessage()) {
 			break;
 		}

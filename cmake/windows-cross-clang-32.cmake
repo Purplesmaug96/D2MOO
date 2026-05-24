@@ -20,9 +20,12 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-# Fix 1: Stop the compiler from injecting modern security/RTTI stubs
 set(CMAKE_C_FLAGS "/Zl /GS- -msse3 /D_MBCS /DSDL_JOYSTICK_XINPUT" CACHE STRING "" FORCE)
-set(CMAKE_CXX_FLAGS "/Zl /GS- /GR- /EHs- -msse3 /D_MBCS /DSDL_JOYSTICK_XINPUT" CACHE STRING "" FORCE)
+set(CMAKE_CXX_FLAGS "/Zl /GS- /GR- /EHs- /Gr -msse3 /D_MBCS /DSDL_JOYSTICK_XINPUT" CACHE STRING "" FORCE)
+
+# Keep your previous fallback blocks active
+add_compile_definitions(_HAS_NODISCARD=1)
+add_compile_definitions(__CLR_ALLOWED=0)
 
 include_directories(SYSTEM
     "${WIN_SDK_DIR}/crt/include"
@@ -45,7 +48,7 @@ set(CMAKE_MODULE_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
 # This satisfies _malloc, _free, _memset, etc., using the core runtime libraries.
 # 1. Provide the exact standard static/import libraries for modern UCRT mapping
 # Order matters: ucrt.lib resolves the modern __imp__malloc and stdio macros.
-set(STD_LIBS "ucrt.lib vcruntime.lib msvcrt.lib kernel32.lib oldnames.lib")
+set(STD_LIBS "msvcprt.lib ucrt.lib vcruntime.lib msvcrt.lib kernel32.lib oldnames.lib")
 
 set(CMAKE_C_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
 set(CMAKE_CXX_STANDARD_LIBRARIES "${STD_LIBS}" CACHE STRING "" FORCE)
