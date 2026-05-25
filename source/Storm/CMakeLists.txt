@@ -2,9 +2,7 @@
 D2MOO_prepare_targets(Storm)
 
 target_link_libraries(${StormImplName} PUBLIC D2CommonDefinitions squall::Storm)
-if(WIN32)
-target_compile_definitions(${StormImplName} PUBLIC)
-else()
+if(NOT WIN32)
 target_compile_definitions(${StormImplName} PUBLIC WITH_SQUALL=1)
 endif()
 

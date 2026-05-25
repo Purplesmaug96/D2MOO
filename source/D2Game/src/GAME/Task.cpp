@@ -1,6 +1,10 @@
 #include "GAME/Task.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <ntdef.h>
+#endif
 #include <profileapi.h>
 #include <sysinfoapi.h>
 

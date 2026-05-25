@@ -49,7 +49,7 @@
 
 #pragma warning(disable : 28159)
 
-#ifdef _WIN32 // Fails on linux
+#ifdef _WIN32a // Fails on linux. and on windows, via clang.
 static_assert(offsetof(D2GameStrc, lpCriticalSection) == 0x18, "Make sure TSHashObject<D2GameStrc,HASHKEY_NONE> has the correct size.");
 static_assert(sizeof(D2GameDataTableStrc) == 0x68, "Make sure D2GameDataTableStrc has the correct size.");
 #endif

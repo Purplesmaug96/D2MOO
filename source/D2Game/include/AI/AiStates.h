@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 #pragma pack(1)
 
 enum D2C_AiSpecialState : uint32_t {

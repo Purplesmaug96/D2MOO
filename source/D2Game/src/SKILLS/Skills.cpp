@@ -158,7 +158,7 @@ constexpr SkillStartFunc gpSkillSrvStartFnTable_6FD408B0[] = {
 	nullptr,
 };
 
-static const SkillDoFunc gpSkillSrvDoFnTable_6FD40A20[] = {
+extern const SkillDoFunc gpSkillSrvDoFnTable_6FD40A20[] = {
 	nullptr,
 	SKILLS_SrvDo001_Attack_LeftHandSwing,
 	SKILLS_SrvDo002_Kick_PowerStrike_MonIceSpear_Impale_Bash_Stun_Concentrate_BearSmite_Vengeance_Berserk_FireClaws,
@@ -351,7 +351,7 @@ static const SkillDoFunc gpSkillSrvDoFnTable_6FD40A20[] = {
 	nullptr,
 	nullptr,
 };
-static const int32_t gnSkillSrvDoFns = std::size(gpSkillSrvDoFnTable_6FD40A20);
+extern const int32_t gnSkillSrvDoFns = std::size(gpSkillSrvDoFnTable_6FD40A20);
 
 // D2Game.0x6FD0F8B0
 int32_t __fastcall sub_6FD0F8B0(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_t nValue) {

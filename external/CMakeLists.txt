@@ -81,8 +81,7 @@ if(WIN32)
 # We may want to use the whole library at some point though.
 
 add_library(squallstorm
-#	squall/storm/thread/CCritSect.cpp
-	empty.cpp
+	squall/storm/thread/CCritSect.cpp
 )
 
 target_include_directories(squallstorm SYSTEM PUBLIC squall)
