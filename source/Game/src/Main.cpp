@@ -6,10 +6,6 @@
 #include <winbase.h>
 #include <windef.h>
 #include <winsvc.h>
-
-// #define libwin_LASTERROR_LOCAL
-// #include <errhandlingapi.h>
-
 #include <winreg.h>
 
 #include <SDL2/SDL.h>

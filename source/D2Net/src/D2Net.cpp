@@ -7,10 +7,6 @@
 #include <sysinfoapi.h>
 #include <winnt.h>
 
-#ifndef _WIN32
-#include "libwin_local_wsa_lasterror.h"
-#endif
-
 #pragma warning(disable : 28159)
 
 int32_t dword_6FC0B264;

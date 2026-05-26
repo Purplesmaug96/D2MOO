@@ -35,10 +35,6 @@
 #include <string.h>
 #include <winbase.h>
 #include <winerror.h>
-#define libwin_LASTERROR_LOCAL // This doesn't work for some reason??
-#ifdef libwin
-#include <libwin_local_lasterror.h>
-#endif
 #include <errhandlingapi.h>
 
 #include <Fog.h>

@@ -91,9 +91,7 @@ add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 add_compile_options(/FIwindows.h)
 endif()
 
-if (NOT WIN32)
-	include_directories(external/libwin/include)
-endif()
+link_libraries(libwin)
 
 if(ANDROID)
     link_libraries(log)

@@ -108,5 +108,10 @@ target_include_directories(stb SYSTEM
 )
 add_library(stb::stb ALIAS stb)
 
+if(NOT WIN32)
+set(LIBWIN_HEADER_ONLY FALSE)
+add_subdirectory(libwin)
+endif()
+
 # Restore BUILD_SHARED_LIBS
 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_BACKUP})
