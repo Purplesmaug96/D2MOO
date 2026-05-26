@@ -7,7 +7,7 @@
 #include <windef.h>
 #include <winsvc.h>
 
-// #define __WINDOWS_SHIM_LASTERROR_LOCAL
+// #define libwin_LASTERROR_LOCAL
 // #include <errhandlingapi.h>
 
 #include <winreg.h>

@@ -35,9 +35,9 @@
 #include <string.h>
 #include <winbase.h>
 #include <winerror.h>
-#define __WINDOWS_SHIM_LASTERROR_LOCAL // This doesn't work for some reason??
-#ifdef __windows_shim
-#include <__windows_shim_local_lasterror.h>
+#define libwin_LASTERROR_LOCAL // This doesn't work for some reason??
+#ifdef libwin
+#include <libwin_local_lasterror.h>
 #endif
 #include <errhandlingapi.h>
 

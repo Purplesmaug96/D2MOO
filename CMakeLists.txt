@@ -83,7 +83,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fpermissive -Wno-inv
 endif()
 
 if(NOT WIN32)
-add_compile_options(-include ${CMAKE_CURRENT_SOURCE_DIR}/source/include/win/__windows_shim_msvcrt.h)
+add_compile_options(-include ${CMAKE_CURRENT_SOURCE_DIR}/external/libwin/include/libwin_msvcrt.h)
 endif()
 
 if(MSVC)
@@ -91,9 +91,8 @@ add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 add_compile_options(/FIwindows.h)
 endif()
 
-include_directories(source/include)
 if (NOT WIN32)
-	include_directories(source/include/win)
+	include_directories(external/libwin/include)
 endif()
 
 if(ANDROID)

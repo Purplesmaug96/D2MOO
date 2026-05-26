@@ -8,7 +8,7 @@
 #include <winnt.h>
 
 #ifndef _WIN32
-#include "__windows_shim_local_wsa_lasterror.h"
+#include "libwin_local_wsa_lasterror.h"
 #endif
 
 #pragma warning(disable : 28159)

@@ -42,7 +42,7 @@ target_link_libraries(Game
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 find_package(json-c CONFIG)
 target_link_libraries(Game PRIVATE json-c::json-c)
-target_compile_definitions(Game PRIVATE __windows_shim_has_jsonc)
+target_compile_definitions(Game PRIVATE libwin_has_jsonc)
 endif()
 
 
