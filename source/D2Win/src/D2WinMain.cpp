@@ -817,7 +817,11 @@ LRESULT __stdcall D2Win_MAINWINDOW_WndProc_6F8AD9B0(HWND hWnd, UINT Msg, WPARAM 
 	int v5 = 0;
 	LRESULT v6 = 0;
 
+#ifdef _WIN32
 	if (SMsgDispatchMessage(hWnd, Msg, wParam, lParam, &v5, &v6) && v5) {
+#else
+	if (SMsgDispatchMessage(hWnd, Msg, wParam, lParam, &v5, (int32_t*)&v6) && v5) {
+#endif
 		return v6;
 	}
 

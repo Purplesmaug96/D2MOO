@@ -37,6 +37,7 @@ endif()
 
 if(BUILD_SHARED_LIBS)
 add_compile_definitions(D2MOO_SHARED_LIBS)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 else()
 add_compile_definitions(D2MOO_STATIC_LIBS)
 endif()
