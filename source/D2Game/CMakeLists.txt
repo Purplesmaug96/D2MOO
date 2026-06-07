@@ -12,6 +12,7 @@ target_link_libraries(${D2GameImplName}
     Fog
     winmm # For timeGetTime()
 )
+target_link_options(D2Game PRIVATE "/force:multiple")
 else()
 target_link_libraries(${D2GameImplName}
   PRIVATE

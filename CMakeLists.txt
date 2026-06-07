@@ -91,7 +91,9 @@ add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 add_compile_options(/FIwindows.h)
 endif()
 
-link_libraries(libwin)
+if(NOT WIN32)
+	link_libraries(libwin)
+endif()
 
 if(ANDROID)
     link_libraries(log)
@@ -100,6 +102,12 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+if(NOT WIN32)
+add_compile_definitions(WITH_SQUALL=1)
+else()
+add_compile_definitions(WITH_SQUALL_WIN=1)
+endif()
 
 add_subdirectory(source)
 

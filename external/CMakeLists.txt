@@ -82,6 +82,12 @@ if(WIN32)
 
 add_library(squallstorm
 	squall/storm/thread/CCritSect.cpp
+	squall/storm/Memory.cpp
+	squall/storm/Error.cpp
+	squall/storm/error/win/Error.cpp
+	squall/storm/hash/Hashkey.cpp
+	squall/storm/String.cpp
+	squall/storm/string/bjhash.cpp
 )
 
 target_include_directories(squallstorm SYSTEM PUBLIC squall)

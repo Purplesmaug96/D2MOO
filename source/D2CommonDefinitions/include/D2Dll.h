@@ -11,6 +11,12 @@
 #define D2FUNC_DLL_NP(DLL, NAME, RETURN, CONV, ARGS, OFFSET) \
 	DLL##_DLL_DECL RETURN CONV NAME ARGS;
 
+#define D2FUNC_DLL_ALT(DLL, NAME, RETURN, CONV, ARGS, OFFSET) \
+	DLL##_DLL_DECL RETURN CONV DLL##_##NAME ARGS;
+
+#define D2FUNC_DLL_NP_ALT(DLL, NAME, RETURN, CONV, ARGS, OFFSET) \
+	DLL##_DLL_DECL RETURN CONV NAME ARGS;
+
 template <typename T>
 constexpr auto default_or_void() -> T { return {}; }
 template <>

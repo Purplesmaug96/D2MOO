@@ -39,7 +39,7 @@ set(CRT_LIB_DIR "${WIN_SDK_DIR}/crt/lib/x86")
 set(UM_LIB_DIR "${WIN_SDK_DIR}/sdk/lib/um/x86")
 set(UCRT_LIB_DIR "${WIN_SDK_DIR}/sdk/lib/ucrt/x86")
 
-set(LINK_FLAGS "/libpath:\"${CRT_LIB_DIR}\" /libpath:\"${UCRT_LIB_DIR}\" /libpath:\"${UM_LIB_DIR}\" /nodefaultlib")
+set(LINK_FLAGS "/errorlimit:0 /libpath:\"${CRT_LIB_DIR}\" /libpath:\"${UCRT_LIB_DIR}\" /libpath:\"${UM_LIB_DIR}\" /nodefaultlib")
 
 set(CMAKE_EXE_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
 set(CMAKE_SHARED_LINKER_FLAGS "${LINK_FLAGS}" CACHE STRING "" FORCE)
