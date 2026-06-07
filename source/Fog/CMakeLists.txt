@@ -44,5 +44,5 @@ if(D2MOO_WITH_STATIC_TESTS)
       statictests/Fog_staticchecks.cpp
   )
 endif()
-`
+
 D2MOO_target_source_group(Fog)
