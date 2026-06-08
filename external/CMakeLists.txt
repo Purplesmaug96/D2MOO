@@ -114,7 +114,7 @@ target_include_directories(stb SYSTEM
 )
 add_library(stb::stb ALIAS stb)
 
-if(NOT WIN32)
+if(NOT WIN32 AND NOT MINGW)
 set(LIBWIN_HEADER_ONLY FALSE)
 add_subdirectory(libwin)
 endif()

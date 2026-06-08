@@ -83,7 +83,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-write-strings -fpermissive  -Wno-invali
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fpermissive -Wno-invalid-offsetof -Wno-multichar")
 endif()
 
-if(NOT WIN32)
+if(NOT WIN32 AND NOT MINGW)
 add_compile_options(-include ${CMAKE_CURRENT_SOURCE_DIR}/external/libwin/include/libwin_msvcrt.h)
 endif()
 
@@ -92,7 +92,7 @@ add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 add_compile_options(/FIwindows.h)
 endif()
 
-if(NOT WIN32)
+if(NOT WIN32 AND NOT MINGW)
 	link_libraries(libwin)
 endif()
 
