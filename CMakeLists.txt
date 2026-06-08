@@ -79,8 +79,8 @@ set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(NOT WIN32)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-write-strings -fpermissive  -Wno-invalid-offsetof -Wno-multichar -Wno-old-style-definition")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fpermissive -Wno-invalid-offsetof -Wno-multichar")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-invalid-offsetof -Wno-multichar -Wno-old-style-definition")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-write-strings -Wno-invalid-offsetof -Wno-multichar")
 endif()
 
 if(NOT WIN32 AND NOT MINGW)
