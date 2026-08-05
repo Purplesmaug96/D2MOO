@@ -127,8 +127,11 @@ static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell) {
 			nX += nCount;
 		}
 
-		if (nX == nWidth && pSrc < pSrcEnd && *pSrc == 0x80) {
-			pSrc++; // consume per-row terminator (rows are [RLE data][0x80])
+		if (nX < nWidth) {
+			memset(pDest + (size_t)nX * 4, 0, (size_t)(nWidth - nX) * 4);
+		}
+		while (pSrc < pSrcEnd && *pSrc == 0x80) {
+			pSrc++; // consume per-row terminators (rows are [RLE data][0x80])
 		}
 	}
 
