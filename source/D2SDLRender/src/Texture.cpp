@@ -86,12 +86,14 @@ static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell) {
 	}
 
 	const uint8_t* pSrc = CelGetPixelData(pCell);
+	const uint8_t* pSrcEnd = pSrc + pCell->dwLength;
 	uint32_t nBudget = len * 2 + nHeight * 2;
 
 	for (uint32_t nRow = 0; nRow < nHeight; ++nRow) {
-		uint32_t nDestRow = (pCell->bFlip & 1) ? (nHeight - 1 - nRow) : nRow;
+		uint32_t nDestRow = (pCell->bFlip & 1) ? nRow : (nHeight - 1 - nRow);
 		uint8_t* pDest = pixels + (size_t)nDestRow * nWidth * 4;
 		uint32_t nX = 0;
+		const uint8_t* pRowStart = pSrc;
 
 		while (nX < nWidth) {
 			if (nBudget-- == 0) {
@@ -123,6 +125,10 @@ static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell) {
 				}
 			}
 			nX += nCount;
+		}
+
+		if (nX == nWidth && pSrc < pSrcEnd && *pSrc == 0x80) {
+			pSrc++; // consume per-row terminator (rows are [RLE data][0x80])
 		}
 	}
 
@@ -161,16 +167,6 @@ CelTextureStrc GetTexFromCel(D2GfxDataStrc* pData) {
 		D2GfxCellStrc** pFrames = (D2GfxCellStrc**)((uint8_t*)pCellFile + 0x18);
 		uint32_t nIndex = (uint32_t)nFileDir * (uint32_t)pCellFile->nFrames + nFrame;
 		uintptr_t entry = (uintptr_t)pFrames[nIndex];
-
-		if (nFrame == 0) {
-			uint32_t* dump = (uint32_t*)pCellFile;
-			for (int i = 0; i < 2; i++) {
-				uintptr_t e = (uintptr_t)pFrames[i];
-				if (e >= 0x10000u) {
-					uint32_t* d = (uint32_t*)(uintptr_t)e;
-				}
-			}
-		}
 
 		if (entry >= 0x10000u) {
 			MEMORY_BASIC_INFORMATION mbi;
