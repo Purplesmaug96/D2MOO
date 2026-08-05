@@ -34,15 +34,15 @@ struct D2GfxCellNodeStrc {
 };
 
 struct D2GfxCellStrc {
-	BOOL bFlip;					  // 0x00
+	BOOL bFlip;					  // 0x00 - bit0: invert vertical row order
 	uint32_t dwWidth;			  // 0x04
 	uint32_t dwHeight;			  // 0x08
 	int32_t nXOffset;			  // 0x0C
 	int32_t nYOffset;			  // 0x10
 	uint32_t unk0x14;			  // 0x14
-	D2GfxCellNodeStrc* pCellNode; // 0x18
-	uint32_t dwLength;			  // 0x1C
-	uint8_t* pPixels;			  // 0x20
+	D2GfxCellNodeStrc* pCellNode; // 0x18 - hardware cell node (set by CelFileNormalize)
+	uint32_t dwLength;			  // 0x1C - length of the RLE pixel data
+	uint8_t* pPixels;			  // 0x20 - placeholder; the RLE pixel data begins INLINE at the address of this field
 };
 
 struct D2CellFileStrc {
@@ -57,7 +57,9 @@ struct D2CellFileStrc {
 	uint32_t dwTermination;	  // 0x0C
 	int32_t nDirections;	  // 0x10
 	int32_t nFrames;		  // 0x14
-	D2GfxCellStrc* pGfxCells; // 0x18
+	// 0x18: INLINE frame pointer table: D2GfxCellStrc* pFrames[nDirections * nFrames]
+	// (no pointer field here! entries are absolute after CelFileNormalize,
+	//  file-relative offsets (from pCellFile) if CelFileNormalize skipped the patch)
 };
 
 struct D2GfxDataStrc {

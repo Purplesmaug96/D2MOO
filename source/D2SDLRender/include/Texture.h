@@ -5,8 +5,6 @@
 #define CEL_TEXTURE_POOL_SIZE 1024
 
 #ifndef _TEXTURE_CPP
-extern SDL_Texture* cel_textures[CEL_TEXTURE_POOL_SIZE];
-
 extern LPPALETTEENTRY gPalette;
 extern D2PaletteTableStrc* gPaletteTables;
 #endif
@@ -16,4 +14,12 @@ extern D2PaletteTableStrc* gPaletteTables;
 void __fastcall D2SDLRender_SetPalette(LPPALETTEENTRY pPalette);
 void __fastcall D2SDLRender_SetPaletteTables(D2PaletteTableStrc* pPaletteTables);
 
-SDL_Texture* GetTexFromCel(D2CellFileStrc* pCellFile, uint32_t* nWidth, uint32_t* nHeight);
+typedef struct {
+	SDL_Texture* texture;
+	uint32_t nWidth;
+	uint32_t nHeight;
+	int32_t nXOffset;
+	int32_t nYOffset;
+} CelTextureStrc;
+
+CelTextureStrc GetTexFromCel(D2GfxDataStrc* pData);
