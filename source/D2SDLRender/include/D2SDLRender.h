@@ -58,6 +58,15 @@ static inline void FUNC_STUB_ARGS(const char* func, const char* fmt, ...) {
 
 #endif
 
+#define FUNC_LOG_DISABLE_STRAIGHT_LOG
+#ifdef FUNC_LOG_DISABLE_STRAIGHT_LOG
+
+static inline void FUNC_LOG(const char* func) {}
+
+static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {}
+
+#else
+
 static inline void FUNC_LOG(const char* func) {
 	printf("D2SDLRender: Logged function '%s' called\n", func);
 	fflush(stdout);
@@ -72,6 +81,8 @@ static inline void FUNC_LOG_ARGS(const char* func, const char* fmt, ...) {
 	printf("D2SDLRender: Logged function '%s' called, args: %s\n", func, argsBuf);
 	fflush(stdout);
 }
+
+#endif
 
 static inline void FUNC_LOGSEMI(const char* func) {
 	printf("D2SDLRender: Logged  and semi-implemented function '%s' called\n", func);
