@@ -90,6 +90,7 @@ endif()
 if(MSVC)
 add_compile_definitions(WIN32_LEAN_AND_MEAN NOMINMAX)
 add_compile_options(/FIwindows.h)
+add_compile_options(/Zc:strictStrings-)
 endif()
 
 if(NOT WIN32 AND NOT MINGW)

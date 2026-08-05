@@ -8,6 +8,14 @@ add_executable(D2CommonTests D2CommonTests.cpp)
 target_link_libraries(D2CommonTests PRIVATE doctest::doctest ${D2CommonImplName})
 target_compile_features(D2CommonTests PRIVATE cxx_std_17)
 
+if(WIN32 AND TARGET SDL2)
+    add_custom_command(TARGET D2CommonTests POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:SDL2>
+            $<TARGET_FILE_DIR:D2CommonTests>
+    )
+endif()
+
 set_target_properties(D2CommonTests PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/workingDirectory
 )

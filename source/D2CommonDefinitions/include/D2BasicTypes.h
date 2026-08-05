@@ -8,7 +8,8 @@ typedef int32_t BOOL;
 
 // We want all of the structures to be packed since they come from reverse engineering
 // This also means that if we use external headers, they should be included before this header.
-#pragma warning(error : 4820 4121)
+// Note: C4820 (padding) is NOT elevated because external headers (SDL2, squall) legitimately trigger it
+#pragma warning(error : 4121)
 #pragma warning(error : 4189)	 // A variable is declared and initialized but not used.
 #pragma warning(error : 4456)	 // declaration of 'identifier' hides previous local declaration
 #pragma warning(disable : 28612) // "The enum type 'xxxx' is unscoped. Prefer 'enum class' over 'enum'"

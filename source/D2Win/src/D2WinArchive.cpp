@@ -82,6 +82,7 @@ BOOL __stdcall ARCHIVE_ShowInsertPlayDiscMessage() {
 // D2Win.0x6F8A5B40 (#10183)
 BOOL __stdcall ARCHIVE_ShowInsertCinematicsDisc() {
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Diablo II", "Insert Cinematics Disc", NULL);
+	return TRUE;
 	// return MessageBoxA(WINDOW_GetWindow(), "Insert Cinematics Disc", "Diablo II", MB_ICONWARNING | MB_OKCANCEL) == 1;
 }
 

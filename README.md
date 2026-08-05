@@ -2,12 +2,10 @@
 
 | | Windows | Linux | MacOS | Android | Nintendo Wii |
 | - | - | - | - | - | - |
-| **Builds** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `✅ Yes` |
-| **Executes** | `❌ No` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `❌ No` |
+| **Builds** | `✅ Yes` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `✅ Yes` |
+| **Executes** | `✅ Yes` | `✅ Yes` | `❓ Unknown` | `✅ Yes` | `❌ No` |
 | **Runs** | `❌ No` | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
 | **Playable** | `❌ No` | `❌ No` | `❌ No` | `❌ No` | `❌ No` |
-
-(Windows builds are being worked on)
 
 Everything in source/Modules are stubs.
 

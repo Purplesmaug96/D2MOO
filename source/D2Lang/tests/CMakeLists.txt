@@ -9,6 +9,14 @@ target_link_libraries(D2LangTests PRIVATE doctest::doctest ${D2LangImplName})
 target_compile_definitions(D2LangTests PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN)
 target_compile_features(D2LangTests PRIVATE cxx_std_17)
 
+if(WIN32 AND TARGET SDL2)
+    add_custom_command(TARGET D2LangTests POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            $<TARGET_FILE:SDL2>
+            $<TARGET_FILE_DIR:D2LangTests>
+    )
+endif()
+
 set_target_properties(D2LangTests PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/workingDirectory
 )
