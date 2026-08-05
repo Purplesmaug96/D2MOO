@@ -23,8 +23,10 @@ BOOL __fastcall D2SDLRender_StartDraw(int32_t bClear, uint8_t nRed, uint8_t nGre
 	FUNC_LOG_ARGS("D2SDLRender_StartDraw", "bClear: %d, nRed: %u, nGreen: %u, nBlue: %b", bClear, nRed, nGreen, nBlue);
 	FUNC_ASSERT(screenTexture != NULL);
 	SDL_SetRenderTarget(renderer, screenTexture);
-	SDL_SetRenderDrawColor(renderer, nAmbientRed, nAmbientGreen, nAmbientBlue, 255);
-	SDL_RenderClear(renderer);
+	// Maybe we're supposed to use nAmbiend* instead of the args? idk
+	SDL_SetRenderDrawColor(renderer, nRed, nGreen, nBlue, 255);
+	// If we respect bClear stuff looks way broken
+	/*if (bClear) */SDL_RenderClear(renderer);
 	return TRUE;
 }
 
