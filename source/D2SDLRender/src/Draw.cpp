@@ -82,10 +82,17 @@ void RenderSquare(SDL_Texture* tex, float nStartPosX, float nStartPosY, float nE
 	}
 
 	for (int i = 0; i < 4; i++) {
+		#ifdef USE_SDL3
+		verts[i].color.r = nRed / 255.0f;
+		verts[i].color.g = nGreen / 255.0f;
+		verts[i].color.b = nBlue / 255.0f;
+		verts[i].color.a = 1.0f;
+		#else
 		verts[i].color.r = nRed;
 		verts[i].color.g = nGreen;
 		verts[i].color.b = nBlue;
 		verts[i].color.a = 255;
+		#endif
 	}
 
 	int indices[6] = { 0, 1, 2, 1, 3, 2 };
