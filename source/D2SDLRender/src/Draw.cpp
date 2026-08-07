@@ -34,7 +34,11 @@ BOOL __fastcall D2SDLRender_EndDraw() {
 	FUNC_LOG("D2SDLRender_EndDraw");
 	FUNC_ASSERT(screenTexture != NULL);
 	SDL_SetRenderTarget(renderer, NULL);
+	#ifdef USE_SDL3
+	SDL_RenderTexture(renderer, screenTexture, NULL, NULL);
+	#else
 	SDL_RenderCopy(renderer, screenTexture, NULL, NULL);
+	#endif
 	SDL_RenderPresent(renderer);
 	return TRUE;
 }

@@ -1,5 +1,10 @@
 #include "Window.h"
+
+#ifdef USE_SDL3
+#include <SDL3/SDL_platform.h>
+#else
 #include <SDL2/SDL_platform.h>
+#endif
 
 // Causes issue if not forced off
 #define SDL_haptic_h_
@@ -16,9 +21,100 @@
 
 #include <Fog.h>
 
+#ifdef USE_SDL3
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_hidapi.h>
+
+#ifdef SDL_ENABLE
+#undef SDL_ENABLE
+#endif
+#define SDL_ENABLE true
+
+#ifdef SDL_DISABLE
+#undef SDL_DISABLE
+#endif
+#define SDL_DISABLE false
+
+#ifdef SDLK_a
+#undef SDLK_a
+#endif
+#define SDLK_a SDLK_A
+
+#ifdef SDLK_z
+#undef SDLK_z
+#endif
+#define SDLK_z SDLK_Z
+
+#ifdef SDL_KEYDOWN
+#undef SDL_KEYDOWN
+#endif
+#define SDL_KEYDOWN SDL_EVENT_KEY_DOWN
+
+#ifdef SDL_KEYUP
+#undef SDL_KEYUP
+#endif
+#define SDL_KEYUP SDL_EVENT_KEY_UP
+
+#ifdef SDL_MOUSEMOTION
+#undef SDL_MOUSEMOTION
+#endif
+#define SDL_MOUSEMOTION SDL_EVENT_MOUSE_MOTION
+
+#ifdef SDL_MOUSEBUTTONDOWN
+#undef SDL_MOUSEBUTTONDOWN
+#endif
+#define SDL_MOUSEBUTTONDOWN SDL_EVENT_MOUSE_BUTTON_DOWN
+
+#ifdef SDL_MOUSEBUTTONUP
+#undef SDL_MOUSEBUTTONUP
+#endif
+#define SDL_MOUSEBUTTONUP SDL_EVENT_MOUSE_BUTTON_UP
+
+#ifdef SDL_MOUSEWHEEL
+#undef SDL_MOUSEWHEEL
+#endif
+#define SDL_MOUSEWHEEL SDL_EVENT_MOUSE_WHEEL
+
+#ifdef SDL_WINDOWEVENT
+#undef SDL_WINDOWEVENT
+#endif
+#define SDL_WINDOWEVENT SDL_EVENT_WINDOW_FIRST
+
+#ifdef SDL_WINDOWEVENT_RESIZED
+#undef SDL_WINDOWEVENT_RESIZED
+#endif
+#define SDL_WINDOWEVENT_RESIZED SDL_EVENT_WINDOW_RESIZED
+
+#ifdef SDL_WINDOWEVENT_SIZE_CHANGED
+#undef SDL_WINDOWEVENT_SIZE_CHANGED
+#endif
+#define SDL_WINDOWEVENT_SIZE_CHANGED SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED
+
+#ifdef SDL_WINDOWEVENT_CLOSE
+#undef SDL_WINDOWEVENT_CLOSE
+#endif
+#define SDL_WINDOWEVENT_CLOSE SDL_EVENT_WINDOW_CLOSE_REQUESTED
+
+#ifdef SDL_WINDOWEVENT_FOCUS_GAINED
+#undef SDL_WINDOWEVENT_FOCUS_GAINED
+#endif
+#define SDL_WINDOWEVENT_FOCUS_GAINED SDL_EVENT_WINDOW_FOCUS_GAINED
+
+#ifdef SDL_WINDOWEVENT_FOCUS_LOST
+#undef SDL_WINDOWEVENT_FOCUS_LOST
+#endif
+#define SDL_WINDOWEVENT_FOCUS_LOST SDL_EVENT_WINDOW_FOCUS_LOST
+
+#ifdef SDL_WINDOW_SHOWN
+#undef SDL_WINDOW_SHOWN
+#endif
+#define SDL_WINDOW_SHOWN 0
+
+#else
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_hidapi.h>
 #include <SDL2/SDL_syswm.h>
+#endif
 
 #include "CmnSubtile.h"
 #include "D2Gfx.h"
@@ -43,19 +139,26 @@ HINSTANCE ghInstance;
 
 SDL_Window* gpWindow = NULL;
 uint32_t windowFlags = 0;
-SDL_SysWMinfo wmInfo;
 WNDPROC g_oldProc;
 extern WNDPROC gpfWndProc;
 
 static void ShowCursor() {
 	if (!gbCursorDisplayed) {
+		#ifdef USE_SDL3
+		SDL_ShowCursor();
+		#else
 		SDL_ShowCursor(SDL_ENABLE);
+		#endif
 		gbCursorDisplayed = 1;
 	}
 }
 static void HideCursor() {
 	if (gbCursorDisplayed) {
+		#ifdef USE_SDL3
+		SDL_HideCursor();
+		#else
 		SDL_ShowCursor(SDL_DISABLE);
+		#endif
 		gbCursorDisplayed = 0;
 	}
 }
@@ -106,21 +209,43 @@ WPARAM MapSDLKeyToVK(SDL_Keycode key) {
 }
 
 // The Translator Function
-int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
+#ifdef USE_SDL3
+bool SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event)
+#else
+int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event)
+#endif
+{
 	UINT uMsg = 0;
 	WPARAM wParam = 0;
 	LPARAM lParam = 0;
 
 	switch (event->type) {
-	// --- WINDOW EVENTS ---
+#ifdef USE_SDL3
+	// --- WINDOW EVENTS (SDL3) ---
+	case SDL_EVENT_WINDOW_RESIZED:
+	case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+		uMsg = WM_SIZE;
+		lParam = MAKELPARAM(event->window.data1, event->window.data2);
+		wParam = SIZE_RESTORED;
+		break;
+	case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+		uMsg = WM_CLOSE;
+		break;
+	case SDL_EVENT_WINDOW_FOCUS_GAINED:
+		uMsg = WM_SETFOCUS;
+		break;
+	case SDL_EVENT_WINDOW_FOCUS_LOST:
+		uMsg = WM_KILLFOCUS;
+		break;
+#else
+	// --- WINDOW EVENTS (SDL2) ---
 	case SDL_WINDOWEVENT:
 		switch (event->window.event) {
 		case SDL_WINDOWEVENT_RESIZED:
 		case SDL_WINDOWEVENT_SIZE_CHANGED:
 			uMsg = WM_SIZE;
-			// Windows expects width and height in the low/high words of lParam
 			lParam = MAKELPARAM(event->window.data1, event->window.data2);
-			wParam = SIZE_RESTORED; // Simplified assumption
+			wParam = SIZE_RESTORED;
 			break;
 		case SDL_WINDOWEVENT_CLOSE:
 			uMsg = WM_CLOSE;
@@ -133,12 +258,16 @@ int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
 			break;
 		}
 		break;
+#endif
 
-	// --- MOUSE MOVEMENT ---
+		// --- MOUSE MOVEMENT ---
+#ifdef USE_SDL3
+	case SDL_EVENT_MOUSE_MOTION:
+#else
 	case SDL_MOUSEMOTION:
+#endif
 		uMsg = WM_MOUSEMOVE;
 		lParam = MAKELPARAM(event->motion.x, event->motion.y);
-		// Reconstruct the modifier state for wParam
 		if (event->motion.state & SDL_BUTTON_LMASK) {
 			wParam |= MK_LBUTTON;
 		}
@@ -150,70 +279,102 @@ int SDLCALL DispatchSDLToWndProc(void* userdata, SDL_Event* event) {
 		}
 		break;
 
-	// --- MOUSE CLICKS ---
+		// --- MOUSE CLICKS ---
+#ifdef USE_SDL3
+	case SDL_EVENT_MOUSE_BUTTON_DOWN:
+	case SDL_EVENT_MOUSE_BUTTON_UP:
+#else
 	case SDL_MOUSEBUTTONDOWN:
 	case SDL_MOUSEBUTTONUP:
+#endif
 		lParam = MAKELPARAM(event->button.x, event->button.y);
 		if (event->button.button == SDL_BUTTON_LEFT) {
+#ifdef USE_SDL3
+			uMsg = (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) ? WM_LBUTTONDOWN : WM_LBUTTONUP;
+#else
 			uMsg = (event->type == SDL_MOUSEBUTTONDOWN) ? WM_LBUTTONDOWN : WM_LBUTTONUP;
+#endif
 		} else if (event->button.button == SDL_BUTTON_RIGHT) {
+#ifdef USE_SDL3
+			uMsg = (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) ? WM_RBUTTONDOWN : WM_RBUTTONUP;
+#else
 			uMsg = (event->type == SDL_MOUSEBUTTONDOWN) ? WM_RBUTTONDOWN : WM_RBUTTONUP;
+#endif
 		} else if (event->button.button == SDL_BUTTON_MIDDLE) {
+#ifdef USE_SDL3
+			uMsg = (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) ? WM_MBUTTONDOWN : WM_MBUTTONUP;
+#else
 			uMsg = (event->type == SDL_MOUSEBUTTONDOWN) ? WM_MBUTTONDOWN : WM_MBUTTONUP;
+#endif
 		}
 		break;
 
-	// --- MOUSE WHEEL ---
+		// --- MOUSE WHEEL ---
+#ifdef USE_SDL3
+	case SDL_EVENT_MOUSE_WHEEL:
+#else
 	case SDL_MOUSEWHEEL:
+#endif
 		uMsg = WM_MOUSEWHEEL;
-		// Win32 expects wheel delta in the high-order word of wParam.
-		// SDL normalizes scrolling (often 1 or -1). Win32 uses WHEEL_DELTA (120).
 		wParam = MAKEWPARAM(0, event->wheel.y * WHEEL_DELTA);
-		// Note: Win32 lParam normally contains screen coordinates of the cursor here.
-		// SDL doesn't package them in the wheel event, so we pass 0 unless you manually
-		// track and inject the last known mouse position.
 		break;
 
-	// --- KEYBOARD EVENTS ---
+		// --- KEYBOARD EVENTS ---
+#ifdef USE_SDL3
+	case SDL_EVENT_KEY_DOWN:
+	case SDL_EVENT_KEY_UP:
+		uMsg = (event->type == SDL_EVENT_KEY_DOWN) ? WM_KEYDOWN : WM_KEYUP;
+		wParam = MapSDLKeyToVK(event->key.key);
+
+		lParam = 1;
+		lParam |= (event->key.scancode << 16);
+
+		if (event->type == SDL_EVENT_KEY_UP) {
+			lParam |= (1 << 31);
+			lParam |= (1 << 30);
+		} else if (event->key.repeat) {
+			lParam |= (1 << 30);
+		}
+		break;
+#else
 	case SDL_KEYDOWN:
 	case SDL_KEYUP:
 		uMsg = (event->type == SDL_KEYDOWN) ? WM_KEYDOWN : WM_KEYUP;
 		wParam = MapSDLKeyToVK(event->key.keysym.sym);
 
-		// Win32 packs a lot of data into the keyboard lParam (repeat count, scancode, flags)
-		lParam = 1;									  // Repeat count (low 16 bits)
-		lParam |= (event->key.keysym.scancode << 16); // Scan code
+		lParam = 1;
+		lParam |= (event->key.keysym.scancode << 16);
 
 		if (event->type == SDL_KEYUP) {
-			lParam |= (1 << 31); // Transition state flag (1 for keyup)
-			lParam |= (1 << 30); // Previous key state flag (1 if key was down before)
+			lParam |= (1 << 31);
+			lParam |= (1 << 30);
 		} else if (event->key.repeat) {
-			lParam |= (1 << 30); // Previous state flag is 1 for repeated down events
+			lParam |= (1 << 30);
 		}
 		break;
+#endif
 
-	// --- TEXT INPUT ---
+		// --- TEXT INPUT ---
+#ifdef USE_SDL3
+	case SDL_EVENT_TEXT_INPUT:
+#else
 	case SDL_TEXTINPUT:
-		// SDL_TEXTINPUT roughly correlates to WM_CHAR, which is usually generated
-		// by TranslateMessage() in a standard Win32 loop.
+#endif
 		uMsg = WM_CHAR;
-		wParam = (WPARAM)event->text.text[0]; // Naive cast, works for basic ASCII
-		lParam = 1;							  // Repeat count
+		wParam = (WPARAM)event->text.text[0];
+		lParam = 1;
 		break;
 
 	default:
-		// Unhandled event types (controllers, touch, dragging)
 		return 0;
 	}
 
-	// If we successfully translated to a Win32 message, dispatch it
 	if (uMsg != 0) {
 		return gpfWndProc(ghWnd, uMsg, wParam, lParam);
 	}
 
 	return 0;
 }
-
 // D2Gfx.0x6FA74450 (#10023)
 int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolution) {
 	if (FindWindowA("Diablo II", 0)) {
@@ -257,11 +418,15 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 	printf("Initializing SDL from WINDOW_Create\n");
 	fflush(stdout);
 	uint32_t sdlInitFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
+	#ifdef USE_SDL3
+	const bool sdlInitReturn = SDL_Init(sdlInitFlags);
+	if (!sdlInitReturn) {
+	#else
 	const int sdlInitReturn = SDL_Init(sdlInitFlags);
 	if (sdlInitReturn != 0) {
+	#endif
 		static char szLocalBuffer[256];
-		static char errBuf[256];
-		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to initialize SDL!\nFlags: %u\nReturn code: %u\nSDL Error: %s\n", sdlInitFlags, sdlInitReturn, SDL_GetErrorMsg(errBuf, 256)), __FILE__, __LINE__);
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to initialize SDL!\nFlags: %u\nReturn code: %u\nSDL Error: %s\n", sdlInitFlags, sdlInitReturn, SDL_GetError()), __FILE__, __LINE__);
 		exit(-1);
 	}
 
@@ -270,11 +435,14 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 		windowFlags |= SDL_WINDOW_FULLSCREEN;
 	}
 
+	#ifdef USE_SDL3
+	gpWindow = SDL_CreateWindow("Diablo II", nWidth, nHeight, windowFlags);
+	#else
 	gpWindow = SDL_CreateWindow("Diablo II", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, nWidth, nHeight, windowFlags);
+	#endif
 	if (gpWindow == NULL) {
 		static char szLocalBuffer[256];
-		static char errBuf[256];
-		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to open window!\nFlags: %u\nSDL Error: %s\n", windowFlags, SDL_GetErrorMsg(errBuf, 256)), __FILE__, __LINE__);
+		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to open window!\nFlags: %u\nSDL Error: %s\n", windowFlags, SDL_GetError()), __FILE__, __LINE__);
 		exit(-1);
 	}
 
@@ -285,17 +453,33 @@ int32_t __stdcall WINDOW_Create(int32_t bWindowed, D2GameResolutionMode nResolut
 	// }
 	HideCursor();
 
-	SDL_VERSION(&wmInfo.version);
-	SDL_GetWindowWMInfo(gpWindow, &wmInfo);
+#ifdef USE_SDL3
 #ifdef _WIN32
-	ghWnd = wmInfo.info.win.window;
-	if (ghWnd == NULL) {
-		static char szLocalBuffer[256];
-		FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
-		exit(-1);
-	}
+    // SDL3 uses properties to fetch platform handles cleanly without types
+    ghWnd = (HWND)SDL_GetPointerProperty(SDL_GetWindowProperties(gpWindow), SDL_PROP_WINDOW_WIN32_HWND_POINTER, NULL);
+    if (ghWnd == NULL) {
+        static char szLocalBuffer[256];
+        FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL3 (it's NULL)\n"), __FILE__, __LINE__);
+        exit(-1);
+    }
 #else
-	ghWnd = NULL;
+    ghWnd = NULL;
+#endif
+#else
+    // Legacy SDL2 path
+	SDL_SysWMinfo wmInfo;
+    SDL_VERSION(&wmInfo.version);
+    SDL_GetWindowWMInfo(gpWindow, &wmInfo);
+#ifdef _WIN32
+    ghWnd = wmInfo.info.win.window;
+    if (ghWnd == NULL) {
+        static char szLocalBuffer[256];
+        FOG_DisplayHalt(FOG_csprintf(szLocalBuffer, "Failed to get ghWnd from SDL (it's NULL)\n"), __FILE__, __LINE__);
+        exit(-1);
+    }
+#else
+    ghWnd = NULL;
+#endif
 #endif
 
 	SDL_AddEventWatch(DispatchSDLToWndProc, NULL); // g_oldProc = (WNDPROC)SetWindowLongPtr(ghWnd, GWLP_WNDPROC, (LONG_PTR)gpfWndProc);

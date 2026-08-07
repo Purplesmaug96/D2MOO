@@ -1,8 +1,6 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-#include <SDL2/SDL.h>
-
 #include "D2SDLRender.h"
 
 #define _TEXTURE_CPP
@@ -136,7 +134,11 @@ static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell) {
 	}
 
 	int pitch = (int)(nWidth * 4);
+	#ifdef USE_SDL3
+	if (!SDL_UpdateTexture(tex, NULL, pixels, pitch)) {
+	#else
 	if (SDL_UpdateTexture(tex, NULL, pixels, pitch) != 0) {
+	#endif
 		free(pixels);
 		SDL_DestroyTexture(tex);
 		return NULL;

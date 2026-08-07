@@ -13,10 +13,39 @@ add_compile_definitions(STDC_HEADERS HAVE_STDDEF_H HAVE_STDINT_H HAVE_STRING_H H
 add_definitions(-DHAVE_MMAP=false	)
 add_subdirectory(sdl2-wii EXCLUDE_FROM_ALL)
 else()
-add_subdirectory(sdl2 EXCLUDE_FROM_ALL)
-if(WIN32 AND TARGET SDL2)
-    target_link_options(SDL2 PRIVATE "/noentry" "-nodefaultlib:dll_dllmain_stub.obj")
+
+if(USE_SDL3)
+	set(SDL_LIBC ON FORCE)
+    add_subdirectory(sdl3 EXCLUDE_FROM_ALL)
+    
+    if(WIN32 AND TARGET SDL3-shared)
+
+        target_link_options(SDL3-shared PRIVATE "-nodefaultlib:dll_dllmain_stub.obj")
+    endif()
+    
+    if(WIN32 AND TARGET SDL3-shared)
+        add_custom_target(SDL3-copy-to-bin ALL
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_FILE:SDL3-shared>
+                ${CMAKE_BINARY_DIR}/bin/$<CONFIG>
+            DEPENDS SDL3-shared
+        )
+    endif()
+    
+    add_library(SDL INTERFACE)
+    target_link_libraries(SDL INTERFACE SDL3::SDL3)
+
+else()
+    add_subdirectory(sdl2 EXCLUDE_FROM_ALL)
+    
+    if(WIN32 AND TARGET SDL2-shared)
+        target_link_options(SDL2-shared PRIVATE "-nodefaultlib:dll_dllmain_stub.obj")
+    endif()
+    
+    add_library(SDL INTERFACE)
+    target_link_libraries(SDL INTERFACE SDL2::SDL2)
 endif()
+
 endif()
 # add_subdirectory(sdl2_image EXCLUDE_FROM_ALL)
 

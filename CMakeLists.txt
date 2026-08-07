@@ -68,6 +68,13 @@ if(NOT ${CMAKE_SIZEOF_VOID_P} EQUAL 4)
   message(WARNING "Diablo2 is 32bits only, 64bits build are unsupported. Invoke CMake with '-A Win32'")
 endif()
 
+option(USE_SDL3 "Use sdl3? if disabled, sdl2 will be used." ON)
+if (USE_SDL3)
+	add_compile_definitions(USE_SDL3)
+else()
+	add_compile_definitions(USE_SDL2)
+endif()
+
 # It is always easier to navigate in an IDE when projects are organized in folders.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 

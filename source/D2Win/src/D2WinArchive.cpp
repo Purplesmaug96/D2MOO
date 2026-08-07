@@ -2,7 +2,11 @@
 
 #include <algorithm>
 
+#ifdef USE_SDL3
+#include <SDL3/SDL.h>
+#else
 #include <SDL2/SDL.h>
+#endif
 
 #include <Archive.h>
 #include <D2CMP.h>

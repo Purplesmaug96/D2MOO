@@ -36,7 +36,7 @@ target_link_libraries(Game
 	D2Gfx
 	D2Sound
 	D2MCPClient
-	SDL2::SDL2
+	SDL
 )
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")

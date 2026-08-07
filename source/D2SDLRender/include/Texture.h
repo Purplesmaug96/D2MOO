@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include "D2SDLRender.h"
 
 #define CEL_TEXTURE_POOL_SIZE 1024
 

@@ -9,7 +9,7 @@ target_link_libraries(${D2WinImplName}
     Storm
     D2Sound
     stb::stb
-	SDL2::SDL2
+	SDL
   PUBLIC
     D2Hell
 )

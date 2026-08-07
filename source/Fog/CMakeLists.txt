@@ -1,7 +1,7 @@
 
 D2MOO_prepare_targets(Fog)
 
-target_link_libraries(${FogImplName} PUBLIC D2CommonDefinitions Storm SDL2::SDL2)
+target_link_libraries(${FogImplName} PUBLIC D2CommonDefinitions Storm SDL)
 
 target_sources(${FogImplName}
   PRIVATE

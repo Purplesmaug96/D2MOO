@@ -1,7 +1,5 @@
 #include <stdint.h>
 
-#include <SDL2/SDL.h>
-
 #include "D2SDLRender.h"
 
 #include "Texture.h"

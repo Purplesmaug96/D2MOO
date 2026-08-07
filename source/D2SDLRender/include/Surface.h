@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SDL2/SDL.h>
 #include <windef.h>
 
 #include "D2Gfx.h"

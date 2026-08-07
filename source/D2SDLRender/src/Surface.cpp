@@ -1,5 +1,3 @@
-#include <SDL2/SDL.h>
-
 #include "D2Gfx.h"
 
 #include "D2SDLRender.h"
@@ -41,9 +39,15 @@ BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionM
 	FUNC_ASSERT(window != NULL);
 	FUNC_ASSERT(renderer == NULL);
 
+	#ifdef USE_SDL3
+	renderer = SDL_CreateRenderer(window, NULL);
+	FUNC_ASSERT(renderer != NULL);
+	SDL_SetRenderVSync(renderer, 1);
+	#else
 	rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 	renderer = SDL_CreateRenderer(window, -1, rendererFlags);
 	FUNC_ASSERT(renderer != NULL);
+	#endif
 
 	GetResFromResMode(&nResW, &nResH, nResolutionMode);
 
