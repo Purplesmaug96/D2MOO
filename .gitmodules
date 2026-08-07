@@ -24,3 +24,6 @@
 [submodule "external/libwin"]
 	path = external/libwin
 	url = https://github.com/Purplesmaug96/libwin.git
+[submodule "external/sdl3"]
+	path = external/sdl3
+	url = https://github.com/libsdl-org/SDL.git
