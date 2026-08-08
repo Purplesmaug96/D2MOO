@@ -8,6 +8,13 @@
 
 #include "D2Gfx.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#include <sys/mman.h>
+#endif
+
 LPPALETTEENTRY gPalette = NULL;
 D2PaletteTableStrc* gPaletteTables = NULL;
 
@@ -91,7 +98,6 @@ static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell) {
 		uint32_t nDestRow = (pCell->bFlip & 1) ? nRow : (nHeight - 1 - nRow);
 		uint8_t* pDest = pixels + (size_t)nDestRow * nWidth * 4;
 		uint32_t nX = 0;
-		const uint8_t* pRowStart = pSrc;
 
 		while (nX < nWidth) {
 			if (nBudget-- == 0) {
@@ -134,11 +140,11 @@ static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell) {
 	}
 
 	int pitch = (int)(nWidth * 4);
-	#ifdef USE_SDL3
+#ifdef USE_SDL3
 	if (!SDL_UpdateTexture(tex, NULL, pixels, pitch)) {
-	#else
+#else
 	if (SDL_UpdateTexture(tex, NULL, pixels, pitch) != 0) {
-	#endif
+#endif
 		free(pixels);
 		SDL_DestroyTexture(tex);
 		return NULL;
@@ -174,8 +180,15 @@ CelTextureStrc GetTexFromCel(D2GfxDataStrc* pData) {
 		uintptr_t entry = (uintptr_t)pFrames[nIndex];
 
 		if (entry >= 0x10000u) {
+#ifdef _WIN32
 			MEMORY_BASIC_INFORMATION mbi;
 			if (VirtualQuery((LPCVOID)entry, &mbi, sizeof(mbi)) && mbi.State == MEM_COMMIT) {
+#else
+			const size_t nPageSize = (size_t)sysconf(_SC_PAGESIZE);
+			const uintptr_t nPageStart = entry & ~(uintptr_t)(nPageSize - 1);
+			unsigned char bResident = 0;
+			if (mincore((void*)nPageStart, nPageSize, &bResident) == 0 && (bResident & 1)) {
+#endif
 				D2GfxCellStrc* c = (D2GfxCellStrc*)entry;
 				if ((c->bFlip == 0 || c->bFlip == 1) && c->dwWidth > 0 && c->dwWidth < 4096 &&
 					c->dwHeight > 0 && c->dwHeight < 4096 && c->dwLength < 0x100000) {
