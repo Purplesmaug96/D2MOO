@@ -39,15 +39,15 @@ BOOL __fastcall D2SDLRender_CreateSurface(SDL_Window* pWindow, D2GameResolutionM
 	FUNC_ASSERT(window != NULL);
 	FUNC_ASSERT(renderer == NULL);
 
-	#ifdef USE_SDL3
+#ifdef USE_SDL3
 	renderer = SDL_CreateRenderer(window, NULL);
 	FUNC_ASSERT(renderer != NULL);
 	SDL_SetRenderVSync(renderer, 1);
-	#else
+#else
 	rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 	renderer = SDL_CreateRenderer(window, -1, rendererFlags);
 	FUNC_ASSERT(renderer != NULL);
-	#endif
+#endif
 
 	GetResFromResMode(&nResW, &nResH, nResolutionMode);
 
@@ -75,8 +75,8 @@ BOOL __fastcall D2SDLRender_ChangeRes(SDL_Window* pWindow, D2GameResolutionMode 
 	FUNC_LOG_ARGS("D2SDLRender_ChangeRes", "pWindow: %p, bForceResize: %d", pWindow, bForceResize);
 	FUNC_ASSERT(screenTexture != NULL);
 	SDL_DestroyTexture(screenTexture);
-	screenTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET, nResW, nResH);
 	GetResFromResMode(&nResW, &nResH, bForceResize);
+	screenTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET, nResW, nResH);
 	return TRUE;
 }
 

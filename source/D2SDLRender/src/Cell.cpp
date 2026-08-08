@@ -1,4 +1,6 @@
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "D2SDLRender.h"
 
@@ -15,11 +17,15 @@ static void DrawCel(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY) {
 	if (celTex.texture == NULL) {
 		return;
 	}
+	// if (getenv("D2SDL_DEBUG_POS")) {
+	// 	fprintf(stderr, "CelDraw: pos=(%d,%d) off=(%d,%d) size=(%u,%u)\n",
+	// 		nPosX, nPosY, celTex.nXOffset, celTex.nYOffset, celTex.nWidth, celTex.nHeight);
+	// }
 	RenderSquare(celTex.texture,
-				 nPosX - celTex.nXOffset,
-				 nPosY - celTex.nYOffset,
-				 nPosX - celTex.nXOffset + (float)celTex.nWidth,
-				 nPosY - celTex.nYOffset + (float)celTex.nHeight,
+				 nPosX + celTex.nXOffset,
+				 nPosY + celTex.nYOffset,
+				 nPosX + celTex.nXOffset + (float)celTex.nWidth,
+				 nPosY + celTex.nYOffset + (float)celTex.nHeight,
 				 255, 255, 255);
 }
 
