@@ -12,11 +12,7 @@
 
 #include "D2Gfx.h"
 
-extern "C" {
-int __stdcall D2CMP_CelGetOffsetX(struct D2CellFileStrc* pCelFile);
-int __stdcall D2CMP_CelGetOffsetY(struct D2CellFileStrc* pCelFile);
-struct D2CellFileStrc* __stdcall D2CMP_CelGetHandle(struct D2GfxDataStrc* pData);
-}
+#include "D2CMP.h"
 
 static void DrawCel(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY) {
 	CelTextureStrc celTex = GetTexFromCel(pData);
