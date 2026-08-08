@@ -12,20 +12,31 @@
 
 #include "D2Gfx.h"
 
+extern "C" {
+int __stdcall D2CMP_CelGetOffsetX(struct D2CellFileStrc* pCelFile);
+int __stdcall D2CMP_CelGetOffsetY(struct D2CellFileStrc* pCelFile);
+struct D2CellFileStrc* __stdcall D2CMP_CelGetHandle(struct D2GfxDataStrc* pData);
+}
+
 static void DrawCel(D2GfxDataStrc* pData, int32_t nPosX, int32_t nPosY) {
 	CelTextureStrc celTex = GetTexFromCel(pData);
 	if (celTex.texture == NULL) {
 		return;
 	}
-	// if (getenv("D2SDL_DEBUG_POS")) {
-	// 	fprintf(stderr, "CelDraw: pos=(%d,%d) off=(%d,%d) size=(%u,%u)\n",
-	// 		nPosX, nPosY, celTex.nXOffset, celTex.nYOffset, celTex.nWidth, celTex.nHeight);
-	// }
+
+	int32_t offX = 0;
+	int32_t offY = 0;
+	D2CellFileStrc* h = D2CMP_CelGetHandle(pData);
+	if (h) {
+		offX = D2CMP_CelGetOffsetX(h);
+		offY = D2CMP_CelGetOffsetY(h);
+	}
+
 	RenderSquare(celTex.texture,
-				 nPosX + celTex.nXOffset,
-				 nPosY + celTex.nYOffset,
-				 nPosX + celTex.nXOffset + (float)celTex.nWidth,
-				 nPosY + celTex.nYOffset + (float)celTex.nHeight,
+				 nPosX + offX,
+				 nPosY + offY,
+				 nPosX + offX + (float)celTex.nWidth,
+				 nPosY + offY + (float)celTex.nHeight,
 				 255, 255, 255);
 }
 
