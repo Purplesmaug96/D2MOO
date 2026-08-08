@@ -8,6 +8,18 @@
 #include <winsvc.h>
 #include <winreg.h>
 
+#ifdef _WIN32
+void AttachConsoleForStd(void) {
+	// If launched from cmd, the parent may have a console.
+	if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+		freopen("CONOUT$", "w", stdout);
+		freopen("CONOUT$", "w", stderr);
+		setvbuf(stdout, NULL, _IONBF, 0);
+		setvbuf(stderr, NULL, _IONBF, 0);
+	}
+}
+#endif
+
 #ifdef USE_SDL3
 #include <SDL3/SDL.h>
 #else
@@ -797,6 +809,10 @@ int main(int argc, char* argv[]) {
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, INT nShowCmd) {
 	ghCurrentProcess = hInstance;
 	gnCmdShow = nShowCmd;
+
+	#ifdef _WIN32
+	AttachConsoleForStd();
+	#endif
 
 	printf("GetVersion returns %u\n", GetVersion());
 
