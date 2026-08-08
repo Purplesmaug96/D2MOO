@@ -69,7 +69,7 @@ static SDL_Texture* LoadTextureFromCel(D2GfxCellStrc* pCell) {
 		return NULL;
 	}
 
-	SDL_Texture* tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
+	SDL_Texture* tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888,
 										 SDL_TEXTUREACCESS_STATIC, nWidth, nHeight);
 	if (!tex) {
 		return NULL;
