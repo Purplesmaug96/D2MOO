@@ -718,7 +718,10 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[],
 
 	tCfg.bDirect = true;
 
-	return GameStart(ghCurrentProcess, &tCfg, MODULE_LAUNCHER, pCrashReason);
+	// Use the module chosen from command line (e.g. "-server"), default to LAUNCHER
+	D2_MODULES nStartModule = (nChosenModule != MODULE_NONE) ? (D2_MODULES)nChosenModule : MODULE_LAUNCHER;
+	printf("GameInit: Starting module %d (chosen=%d)\n", nStartModule, nChosenModule);
+	return GameStart(ghCurrentProcess, &tCfg, nStartModule, pCrashReason);
 }
 
 #ifndef _WIN32
@@ -800,6 +803,7 @@ long sysconf(int name) {
 #endif
 int main(int argc, char* argv[]) {
 	printf("main called\n");
+	fflush(stdout);
 	return WinMain(NULL, NULL, ArgvToCommandLineC(argc, argv), 1);
 }
 #endif

@@ -92,6 +92,13 @@ endif()
 
 if(NOT WIN32 AND NOT MINGW)
 add_compile_options(-include ${CMAKE_CURRENT_SOURCE_DIR}/external/libwin/include/libwin_msvcrt.h)
+add_compile_options(-D_fdopen=fdopen)
+# squall's storm headers check __windows_shim to decide between inline
+# typedefs (HANDLE/HWND/LPOVERLAPPED) and libwin's winnt.h/windows.h.
+# Without this, source/ TUs get conflicting declarations once Storm.h
+# pulls in libwin headers. Added after add_subdirectory(external) so
+# squall's own targets are unaffected.
+add_compile_definitions(__windows_shim)
 endif()
 
 if(MSVC)

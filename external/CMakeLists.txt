@@ -132,6 +132,9 @@ target_link_libraries(squallstorm INTERFACE storm)
 target_include_directories(squallstorm SYSTEM INTERFACE squall)
 add_library(squall::Storm ALIAS squallstorm)
 add_library(Storm ALIAS squallstorm)
+target_include_directories(squallstorm INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/../source/Storm/include)
+target_compile_definitions(squallstorm INTERFACE D2MOO_STATIC_LIBS)
+target_compile_options(squallstorm INTERFACE "-DSTORM_DLL_DECL=")
 
 endif()
 

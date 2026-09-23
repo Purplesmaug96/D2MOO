@@ -3,6 +3,10 @@ D2MOO_prepare_targets(D2Gfx)
 
 target_link_libraries(${D2GfxImplName} PRIVATE Fog Storm D2CommonDefinitions SDL)
 
+target_include_directories(${D2GfxImplName} PRIVATE
+    ${CMAKE_SOURCE_DIR}/source/D2SDLRender/include
+)
+
 target_sources(${D2GfxImplName}
   PRIVATE
     src/CmnSubtile.cpp
