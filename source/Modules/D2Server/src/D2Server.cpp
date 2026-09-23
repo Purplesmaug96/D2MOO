@@ -42,9 +42,13 @@ static struct _InitFlush { _InitFlush() { setvbuf(stdout, NULL, _IOLBF, 0); setv
 
 extern int32_t SERVER_GetClientPacketSize(D2PacketBufferStrc* pBuffer, uint32_t nBufferSize, int32_t* pSize);
 
-// Size of the fixed 0xFF (frame/tick) packet and other protocol constants
-constexpr uint8_t  D2GS_HDR_COMPRESSNEG     = 0xAF; // S->C compression negotiate
-constexpr uint8_t  D2GS_HDR_GAMELOGON       = 0x68; // C->S game logon
+// Size of the fixed 0xFF (frame/tick) packet and other protocol constants.
+// NOTE: the accept greeting is NOT a bare 0xAF byte.  The reference BNet
+// game server (D2GS trunk, both 1.11b and 1.13c) sends GSPacket0xAF =
+// { CHAR type=0xAF; CHAR suffix=0x01 } = the 2 bytes AF 01 on accept.
+constexpr uint8_t  D2GS_HDR_COMPRESSNEG     = 0xAF; // S->C compression negotiate (type byte)
+constexpr uint8_t  D2GS_SUFFIX_COMPRESSNEG  = 0x01; // ... suffix byte (GSPacket0xAF.suffix)
+constexpr uint8_t  D2GS_HDR_GAMELOGON       = 0x68; // C->S game logon (GSPacket0x68, 37 bytes)
 constexpr uint8_t  D2GS_HDR_STARTGAME      = 0x5C; // S->C start game (join accepted)
 constexpr uint8_t  D2GS_HDR_ENTERGAME      = 0x6A; // C->S enter game environment
 constexpr uint8_t  D2GS_HDR_SAVEDATA       = 0x6B; // C->S save data chunk
@@ -76,7 +80,7 @@ enum D2_MODULES {
 static std::atomic<bool> g_bServerRunning{false};
 static std::atomic<bool> g_bShutdownRequested{false};
 static int g_nServerPort = 6113;
-static int g_nGamePort = 6112;
+static int g_nGamePort = 4000;
 static int g_nListenSocket = -1;
 static std::mutex g_PlayerListMutex;
 static std::mutex g_GameListMutex;
@@ -181,13 +185,16 @@ void __amsg_exit(int code) {
 // ============================================================
 // D2 protocol dispatch (client <-> game server)
 // ------------------------------------------------------------
-// Implements the D2GS accept sequence (see BNETDocs "Diablo II
-// Game Server Accept Sequence"):
+// Implements the D2GS accept sequence verified against the working
+// BNet game server reference (D2GS 1.11b/1.13c trunk.c):
 //
-//   S->C  [0xAF] compression negotiate       (sent on accept)
-//   C->S  [0x68] D2GS_GAMELOGON
-//   S->C  [0x5C] D2GS_STARTGAME (+ player GUID)
-//   C->S  [0x6A] D2GS_ENTERGAMEENVIRONMENT
+//   S->C  [0xAF 0x01] compression negotiate (GSPacket0xAF, 2 bytes)
+//   C->S  [0x68]      GAMELOGON (GSPacket0x68, 37 bytes:
+//                     type, DWORD hash, WORD token, CHAR charid,
+//                     DWORD ver, DWORD res1, DWORD res2,
+//                     CHAR bReserved, CHAR charname[16])
+//   S->C  [0x5C]      D2GS_STARTGAME (+ player GUID)
+//   C->S  [0x6A]      D2GS_ENTERGAMEENVIRONMENT
 //   ...   game packets flow after that
 //
 // Frames are self-framing (first byte = header, size from the
@@ -204,6 +211,23 @@ struct D2ServerPacketStartGame {
 };
 #pragma pack(pop)
 static_assert(sizeof(D2ServerPacketStartGame) == 5, "StartGame packet must be 5 bytes");
+
+// GSPacket0x68 (D2GS/trunk.h) — the real GAMELOGON the retail client sends.
+// 37 bytes total: 1 + 4 + 2 + 1 + 4 + 4 + 4 + 1 + 16.
+#pragma pack(push, 1)
+struct D2ServerPacketGameLogon {
+    uint8_t  nHeader;      // 0x68
+    uint32_t dwHash;       // session hash
+    uint16_t wToken;       // join token
+    uint8_t  bCharId;      // character id
+    uint32_t dwVersion;    // client/game version
+    uint32_t dwReserved1;
+    uint32_t dwReserved2;
+    uint8_t  bReserved;
+    char     szCharName[16];
+};
+#pragma pack(pop)
+static_assert(sizeof(D2ServerPacketGameLogon) == 37, "GAMELOGON packet must be 37 bytes");
 
 static const char* D2Server_PacketName(uint8_t nHeader) {
     switch (nHeader) {
@@ -294,10 +318,24 @@ static void D2Server_DispatchPacket(PlayerConnection& player, const uint8_t* pDa
     D2Server_HexDump("recv frame", player.playerId, pData, nLen);
 
     switch (nHeader) {
-    case D2GS_HDR_GAMELOGON: { // 0x68 — client confirms it can log on
+    case D2GS_HDR_GAMELOGON: { // 0x68 — GSPacket0x68 GAMELOGON (37 bytes)
         if (player.authenticated) {
             return;
         }
+        if (nLen < sizeof(D2ServerPacketGameLogon)) {
+            printf("[D2Server] Player %u GAMELOGON too short (%u bytes), ignoring\n",
+                   player.playerId, nLen);
+            break;
+        }
+        const D2ServerPacketGameLogon* pLogon = (const D2ServerPacketGameLogon*)pData;
+        char szCharName[17] = {};
+        memcpy(szCharName, pLogon->szCharName, sizeof(pLogon->szCharName));
+        szCharName[sizeof(pLogon->szCharName)] = '\0';
+        memcpy(player.playerName, szCharName, sizeof(player.playerName) - 1);
+        player.playerName[sizeof(player.playerName) - 1] = '\0';
+        printf("[D2Server] Player %u GAMELOGON char='%s' token=%u ver=%u hash=%08X\n",
+               player.playerId, szCharName, pLogon->wToken, pLogon->dwVersion, pLogon->dwHash);
+
         player.authenticated = true;
         player.playerGUID = player.playerId; // assign a game server unit GUID
         D2ServerPacketStartGame reply;
@@ -411,10 +449,11 @@ static void* ServerAcceptThread(void* arg) {
                 }
                 printf("[D2Server] Player %u assigned\n", player.playerId);
 
-                // Step 1 of the D2GS accept sequence: tell the client the
-                // server's compression mode with a single 0xAF byte.
-                const uint8_t nCompressNegotiate = D2GS_HDR_COMPRESSNEG;
-                D2Server_SendFrame(player, &nCompressNegotiate, 1);
+                // Step 1 of the D2GS accept sequence: greet the client with
+                // GSPacket0xAF = { type=0xAF; suffix=0x01 } (2 bytes),
+                // exactly as the reference D2GS trunk sends on accept.
+                const uint8_t nGreet[2] = { D2GS_HDR_COMPRESSNEG, D2GS_SUFFIX_COMPRESSNEG };
+                D2Server_SendFrame(player, nGreet, sizeof(nGreet));
             }
         }
     }
@@ -525,18 +564,29 @@ static void* GameWorkerThread(void* arg) {
                     }
 
                     int32_t nSize = 0;
-                    // D2PacketBufferStrc is data[1976]; our buffer layout matches,
-                    // and the function only reads data[0..nAvail-1] (data is the
-                    // first member of the struct).
-                    D2PacketBufferStrc* pView = (D2PacketBufferStrc*)(player->recvBuf + nConsumed);
-                    if (!SERVER_GetClientPacketSize(pView, nAvail, &nSize) || nSize <= 0) {
-                        // Frame incomplete (variable-size packet) or buffer empty:
-                        // wait for more bytes.
-                        break;
-                    }
-                    if ((uint32_t)nSize > nAvail) {
-                        // Fixed-size frame not fully received yet.
-                        break;
+                    // The pre-auth GAMELOGON is NOT the 1-byte Clt68 frame the
+                    // libD2Net table implies (that entry is for the in-game
+                    // context).  D2GS trunk waits for a full GSPacket0x68
+                    // (37 bytes) before it considers the accept sequence done.
+                    if (!player->authenticated && nHeader == D2GS_HDR_GAMELOGON) {
+                        nSize = (int32_t)sizeof(D2ServerPacketGameLogon);
+                        if ((uint32_t)nSize > nAvail) {
+                            break; // wait for the rest of the 37-byte logon
+                        }
+                    } else {
+                        // D2PacketBufferStrc is data[1976]; our buffer layout matches,
+                        // and the function only reads data[0..nAvail-1] (data is the
+                        // first member of the struct).
+                        D2PacketBufferStrc* pView = (D2PacketBufferStrc*)(player->recvBuf + nConsumed);
+                        if (!SERVER_GetClientPacketSize(pView, nAvail, &nSize) || nSize <= 0) {
+                            // Frame incomplete (variable-size packet) or buffer empty:
+                            // wait for more bytes.
+                            break;
+                        }
+                        if ((uint32_t)nSize > nAvail) {
+                            // Fixed-size frame not fully received yet.
+                            break;
+                        }
                     }
                     if ((uint32_t)nSize > D2GS_MAX_PACKET) {
                         printf("[D2Server] Player %u oversized frame %u bytes, disconnecting\n",
