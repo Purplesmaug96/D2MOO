@@ -4,6 +4,7 @@ D2MOO_prepare_targets(D2Server)
 target_sources(${D2ServerImplName}
   PRIVATE
 	src/D2Server.cpp
+	src/d2gs_huffman.cpp
 
     include/D2Server.h
 )

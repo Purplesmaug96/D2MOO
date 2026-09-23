@@ -26,6 +26,8 @@ static struct _InitFlush { _InitFlush() { setvbuf(stdout, NULL, _IOLBF, 0); setv
 #include <string>
 #include <mutex>
 #include <atomic>
+#include "d2gs_huffman.h"
+#include "d2gs_burst_data.h"
 
 // ============================================================
 // D2 game-protocol support (packet framing)
@@ -49,9 +51,11 @@ extern int32_t SERVER_GetClientPacketSize(D2PacketBufferStrc* pBuffer, uint32_t 
 constexpr uint8_t  D2GS_HDR_COMPRESSNEG     = 0xAF; // S->C compression negotiate (type byte)
 constexpr uint8_t  D2GS_SUFFIX_COMPRESSNEG  = 0x01; // ... suffix byte (GSPacket0xAF.suffix)
 constexpr uint8_t  D2GS_HDR_GAMELOGON       = 0x68; // C->S game logon (GSPacket0x68, 37 bytes)
-constexpr uint8_t  D2GS_HDR_STARTGAME      = 0x5C; // S->C start game (join accepted)
-constexpr uint8_t  D2GS_HDR_ENTERGAME      = 0x6A; // C->S enter game environment
-constexpr uint8_t  D2GS_HDR_SAVEDATA       = 0x6B; // C->S save data chunk
+constexpr uint8_t  D2GS_HDR_GAMELOADING     = 0x00; // S->C game loading (1.14 accept reply, empty)
+constexpr uint8_t  D2GS_HDR_ENTERGAME14     = 0x6B; // C->S JOINGAME (1.14, bare 1-byte header)
+constexpr uint8_t  D2GS_HDR_ENTERGAME_LEGACY= 0x6A; // C->S enter game env (1.10-era id; not sent by 1.14)
+constexpr uint8_t  D2GS_HDR_PING            = 0x6D; // C->S ping (13 bytes: u32 tick, u32 delay, u32 warden)
+constexpr uint8_t  D2GS_HDR_PONG            = 0x8F; // S->C pong (33 bytes: 8F + 32 zero bytes)
 constexpr uint8_t  D2GS_HDR_CHAT           = 0x14; // C->S chat (also 0x15)
 constexpr uint8_t  D2GS_HDR_LEAVEGAME      = 0x69; // C->S leave game
 constexpr uint32_t D2GS_MAX_PACKET         = MAX_MSG_SIZE; // largest legal frame
@@ -98,6 +102,16 @@ struct PlayerConnection {
     struct sockaddr_in addr;
     uint8_t recvBuf[8192];    // partial-frame accumulation buffer
     uint32_t recvLen;         // valid bytes in recvBuf
+    // 1.14 D2GS_UPLOADSAVE (0x6C): the retail client uploads its local .d2s
+    // save in chunks (1B id + 1B chunkLen + 4B fullSize + chunk + 1B term)
+    // after GAMELOADING, then sends D2GS_JOINGAME (0x6B).  We accumulate the
+    // save so the session trace shows it complete and can seed an in-game
+    // state later.
+    uint8_t saveBuf[4096];    // received .d2s bytes (concatenated chunks)
+    uint32_t saveFull;        // full save size announced by the client
+    uint32_t saveGot;         // bytes received so far
+    bool     saveComplete;    // whole save arrived
+    bool     joinReplySent;   // game-entry burst already sent for this join
     // Diagnostics (server-side connect tracing; the real client is
     // un-instrumentable, so everything observed is logged from here)
     uint64_t totalRecvBytes;  // all bytes received on this socket
@@ -185,32 +199,35 @@ void __amsg_exit(int code) {
 // ============================================================
 // D2 protocol dispatch (client <-> game server)
 // ------------------------------------------------------------
-// Implements the D2GS accept sequence verified against the working
-// BNet game server reference (D2GS 1.11b/1.13c trunk.c):
+// Implements the 1.14d accept sequence verified against the
+// MephisTools/diablo2-protocol reference (bot flow) and against real
+// D2GS 1.13/1.14 S->C captures in /tmp/opencode/diablo2-protocol:
 //
-//   S->C  [0xAF 0x01] compression negotiate (GSPacket0xAF, 2 bytes)
-//   C->S  [0x68]      GAMELOGON (GSPacket0x68, 37 bytes:
-//                     type, DWORD hash, WORD token, CHAR charid,
-//                     DWORD ver, DWORD res1, DWORD res2,
-//                     CHAR bReserved, CHAR charname[16])
-//   S->C  [0x5C]      D2GS_STARTGAME (+ player GUID)
-//   C->S  [0x6A]      D2GS_ENTERGAMEENVIRONMENT
+//   S->C  [0xAF 0x01] compression negotiate (GSPacket0xAF, 2 raw bytes)
+//   C->S  [0x68]      GAMELOGON (37 bytes)
+//   S->C  [00]        GAMELOADING (Huffman frame; the 1.14 client awaits it)
+//   S->C  [0x01]      GAMEFLAGS (10 bytes, difficulty/expansion/ladder)
+//   C->S  [0x6C]      UPLOADSAVE: the client uploads its local .d2s in
+//                     chunks (1B id + 1B chunkLen + 4B fullSize + chunk
+//                     + 1B terminator), interleaved with [0x6D] PINGs
+//   C->S  [0x6B]      JOINGAME (bare 1-byte header; "enter game environment")
+//   S->C              PONG (to each PING) + the world-entry burst
+//                     (ASSIGNPLAYER/skills/states -> ITEM_WORLD/OWNED ->
+//                     SETSTATE/PLAYER_JOIN/HPMPUPDATE/NPC_MOVE), replayed
+//                     from a real 1.14d capture (d2gs_burst_data.h)
 //   ...   game packets flow after that
 //
+// Real D2GS compress-negotiates with 0xAF 0x01 and then sends every
+// subsequent S->C packet as a Huffman frame (verified: the first frame
+// after the greeting in a real capture is already compressed).  So we
+// frame all S->C packets with the D2 Huffman codec in d2gs_huffman.*.
+// Client->server stays bare and self-framing.
+//
 // Frames are self-framing (first byte = header, size from the
-// libD2Net size table). Variable-size packets (0x14/0x15 chat,
-// 0x6B save data) carry their own length and are only dispatched
-// once enough bytes have been buffered.
+// libD2Net size table). Subset frames with known sizes (0x68/0x6B/0x6D)
+// are special-cased because the 1.10-era libD2Net table does not model
+// the 1.14 accept packets.
 // ============================================================
-
-// D2GSPacketSrv5C layout, kept local to avoid pulling the whole D2Common header set
-#pragma pack(push, 1)
-struct D2ServerPacketStartGame {
-    uint8_t nHeader;      // 0x5C
-    uint32_t dwPlayerGUID; // player unit GUID assigned by the server
-};
-#pragma pack(pop)
-static_assert(sizeof(D2ServerPacketStartGame) == 5, "StartGame packet must be 5 bytes");
 
 // GSPacket0x68 (D2GS/trunk.h) — the real GAMELOGON the retail client sends.
 // 37 bytes total: 1 + 4 + 2 + 1 + 4 + 4 + 4 + 1 + 16.
@@ -266,9 +283,10 @@ static const char* D2Server_PacketName(uint8_t nHeader) {
     case 0x67: return "JoinWithToken";
     case 0x68: return "GAMELOGON";
     case 0x69: return "LEAVEGAME";
-    case 0x6A: return "ENTERGAMEENV";
-    case 0x6B: return "SAVEDATA";
-    case 0x6C: return "ClientHeartbeat";
+    case 0x6A: return "ENTERGAMEENV(legacy)";
+    case 0x6B: return "JOINGAME";
+    case 0x6C: return "UPLOADSAVE";
+    case 0x6D: return "PING";
     case 0xFF: return "Tick/Frame";
     default:   return "Unknown";
     }
@@ -278,8 +296,9 @@ static const char* D2Server_PacketName(uint8_t nHeader) {
 static void D2Server_HexDump(const char* szWhere, uint32_t playerId, const uint8_t* pData, size_t nLen) {
     printf("[D2Server] %s (p%u, %zu bytes):", szWhere, playerId, nLen);
     // Log the whole frame up to a sane cap so handshakes (short) are fully
-    // visible while long payloads (chats/saves) stay bounded.
-    size_t nShown = nLen < 128 ? nLen : 128;
+    // visible while long payloads (chats/saves) stay bounded.  Raised to 1024
+    // so a 1.14 client's full game-data request (a ~262-byte burst) is visible.
+    size_t nShown = nLen < 1024 ? nLen : 1024;
     for (size_t i = 0; i < nShown; i++) {
         printf(" %02X", pData[i]);
     }
@@ -295,9 +314,6 @@ static void D2Server_SendFrame(PlayerConnection& player, const uint8_t* pData, s
     if (player.sock < 0 || nLen == 0) {
         return;
     }
-    // One-byte 0xAF handshake is the only frame sent before the client's
-    // first packet; log everything so a mismatched client's behavior is
-    // observable server-side.
     D2Server_HexDump("send", player.playerId, pData, nLen);
     player.totalSendBytes += nLen;
     ssize_t nSent = send(player.sock, pData, nLen, MSG_NOSIGNAL);
@@ -307,6 +323,80 @@ static void D2Server_SendFrame(PlayerConnection& player, const uint8_t* pData, s
         printf("[D2Server] send to player %u short write %zd/%zu\n",
                player.playerId, nSent, nLen);
     }
+}
+
+// Compress + frame + send an S->C packet after the 0xAF compression
+// negotiation.  Real D2GS sends every post-greeting packet as a Huffman
+// frame (verified against real captures), so this is the default.  Set
+// D2GS_COMPRESS=0 to emit the raw len+1-prefixed frame instead (used to
+// A/B-test the accept sequence against the retail client).
+static bool D2Server_WantCompression() {
+    static const int s_nCompress = [] {
+        const char* p = getenv("D2GS_COMPRESS");
+        return p ? atoi(p) : 1;
+    }();
+    return s_nCompress != 0;
+}
+
+static void D2Server_SendCompressed(PlayerConnection& player, const uint8_t* pPayload, size_t nPayloadLen) {
+    if (!D2Server_WantCompression()) {
+        uint8_t raw[4096 + 1];
+        if (nPayloadLen + 1 > sizeof(raw)) {
+            printf("[D2Server] Player %u raw frame too large (%zu payload bytes)\n",
+                   player.playerId, nPayloadLen);
+            return;
+        }
+        raw[0] = (uint8_t)(nPayloadLen + 1);
+        memcpy(raw + 1, pPayload, nPayloadLen);
+        D2Server_SendFrame(player, raw, nPayloadLen + 1);
+        return;
+    }
+    uint8_t compressed[4096];
+    uint8_t frame[4096 + 2];
+    int nComp = d2gs::Huffman_Compress(pPayload, (int)nPayloadLen, compressed, (int)sizeof(compressed));
+    if (nComp < 0) {
+        printf("[D2Server] Player %u compress failed for %zu-byte packet\n",
+               player.playerId, nPayloadLen);
+        return;
+    }
+    int nFrame = d2gs::Huffman_WriteFrame(frame, (int)sizeof(frame), compressed, nComp);
+    if (nFrame < 0) {
+        printf("[D2Server] Player %u frame too large (%d compressed bytes)\n", player.playerId, nComp);
+        return;
+    }
+    D2Server_SendFrame(player, frame, (size_t)nFrame);
+}
+
+// Reply to D2GS_JOINGAME (0x6B): send the real world-entry burst captured
+// from a 1.14d D2GS S->C session (d2gs_sc.dump frames #2..#9, with the
+// captured character renamed to the one that just logged on).  This is the
+// data a real server streams once the client finishes uploading its save:
+//   ASSIGNPLAYER (own char: guid/name/pos) + skills/states/stat bitstreams,
+//   ITEM_WORLD / ITEM_OWNED (ground + owned items),
+//   MAPREVEAL/OBJECTSTATE/SETSTATE (world state),
+//   PLAYER_JOIN + EVENTMESSAGES (other players),
+//   HPMPUPDATE (life/mana), NPC_MOVE (monster pack positions).
+// Each payload is re-compressed + Huffman-framed, exactly like the real
+// server frames it.  No LOADSUCCESSFUL (0x02): the real session never sends
+// it.  The client is kept alive afterwards by PING->PONG.
+static void D2Server_SendEntryBurst(PlayerConnection& player) {
+    // Set D2GS_SENDBURST=0 to skip the burst entirely (A/B-test the reply).
+    static const bool s_nSendBurst = [] {
+        const char* p = getenv("D2GS_SENDBURST");
+        return p ? atoi(p) != 0 : true;
+    }();
+    if (!s_nSendBurst) {
+        printf("[D2Server] Player %u game-entry burst SKIPPED (D2GS_SENDBURST=0)\n",
+               player.playerId);
+        return;
+    }
+    printf("[D2Server] Player %u sending real game-entry burst (%zu frames)\n",
+           player.playerId, d2gs_entry::kFrameCount);
+    for (size_t i = 0; i < d2gs_entry::kFrameCount; i++) {
+        const d2gs_entry::BurstFrame& f = d2gs_entry::kFrames[i];
+        D2Server_SendCompressed(player, f.data, f.len);
+    }
+    printf("[D2Server] Player %u game-entry burst complete\n", player.playerId);
 }
 
 // Dispatch one complete, validated client->server frame
@@ -338,25 +428,114 @@ static void D2Server_DispatchPacket(PlayerConnection& player, const uint8_t* pDa
 
         player.authenticated = true;
         player.playerGUID = player.playerId; // assign a game server unit GUID
-        D2ServerPacketStartGame reply;
-        reply.nHeader = D2GS_HDR_STARTGAME;
-        reply.dwPlayerGUID = player.playerGUID;
         printf("[D2Server] Player %u GAMELOGON accepted, GUID=%u\n",
                player.playerId, player.playerGUID);
-        D2Server_SendFrame(player, (const uint8_t*)&reply, sizeof(reply));
+        // 1.14d accept: the client awaits D2GS_GAMELOADING (0x00) after its
+        // GAMELOGON (MephisTools 1.14 flow), then uploads its save and sends
+        // D2GS_JOINGAME.  Real D2GS sends this as a Huffman frame: 00 ->
+        // compressed 80 -> wire 02 80.  (The old 0x5C STARTGAME reply told
+        // a 1.14 client "player #2 left" and deadlocked the accept sequence.)
+        const uint8_t nLoading = D2GS_HDR_GAMELOADING;
+        D2Server_SendCompressed(player, &nLoading, 1);
+
+        // Real D2GS follows GAMELOADING with D2GS_GAMEFLAGS (0x01) as the
+        // first setup payload (see the real S->C dump: right after the AF 01
+        // greeting comes `01 02 04 20 10 00 01 00 00 02`, whose Huffman
+        // frame is 07 75 D0 1D 9A 5F 5C).  Without it a 1.14d retail client
+        // accepts the handshake but never learns the game's flags and stays
+        // parked on the loading screen.  Send the exact real bytes (difficulty,
+        // hardcore, expansion, ladder).  Set D2GS_SENDFLAGS=0 to skip.
+        static const bool s_nSendFlags = [] {
+            const char* p = getenv("D2GS_SENDFLAGS");
+            return p ? atoi(p) != 0 : true;
+        }();
+        if (s_nSendFlags) {
+            static const uint8_t nGameFlags[10] = {
+                0x01, 0x02, 0x04, 0x20, 0x10, 0x00, 0x01, 0x00, 0x00, 0x02
+            };
+            D2Server_SendCompressed(player, nGameFlags, sizeof(nGameFlags));
+        }
         break;
     }
-    case D2GS_HDR_ENTERGAME: { // 0x6A — client enters the game environment
+    case D2GS_HDR_PING: { // 0x6D — client heartbeat (13 bytes: u32 tick, u32 delay, u32 warden)
+        uint32_t nTick = 0, nDelay = 0, nWarden = 0;
+        if (nLen >= 13) {
+            nTick   = *(const uint32_t*)(pData + 1);
+            nDelay  = *(const uint32_t*)(pData + 5);
+            nWarden = *(const uint32_t*)(pData + 9);
+        }
+        printf("[D2Server] Player %u PING tick=%u delay=%u warden=%u\n",
+               player.playerId, nTick, nDelay, nWarden);
+        // Reply D2GS_PONG (0x8F + 32 zero bytes) as a Huffman frame; this is
+        // exactly the real wire form seen in captures: 07 1f 7f ff ff ff c0.
+        uint8_t pong[33] = {};
+        pong[0] = D2GS_HDR_PONG;
+        D2Server_SendCompressed(player, pong, sizeof(pong));
+        break;
+    }
+    case D2GS_HDR_ENTERGAME14: { // 0x6B — D2GS_JOINGAME (1.14, bare 1-byte header)
         player.inGame = true;
-        printf("[D2Server] Player %u entered game environment (gameId=%u)\n",
-               player.playerId, player.gameId);
+        printf("[D2Server] Player %u JOINGAME (1.14, gameId=%u, save=%u/%u bytes)",
+               player.playerId, player.gameId, player.saveGot, player.saveFull);
+        if (player.saveComplete) {
+            printf(" [save upload complete]\n");
+        } else if (player.saveFull > 0) {
+            printf(" [upload incomplete!]\n");
+        } else {
+            printf("\n");
+        }
+        // Reply with the real game-entry burst once (the world/player data
+        // the client needs to leave the loading screen).  The client keeps
+        // the session alive with PING->PONG afterwards.
+        if (!player.joinReplySent) {
+            player.joinReplySent = true;
+            D2Server_SendEntryBurst(player);
+        }
         break;
     }
-    case D2GS_HDR_SAVEDATA: { // 0x6B — multi-chunk character save upload
-        const uint8_t nChunkSize = nLen > 1 ? pData[1] : 0;
-        const uint32_t nTotalSize = nLen >= 6 ? *(const uint32_t*)(pData + 2) : 0;
-        printf("[D2Server] Player %u SAVEDATA chunk=%u bytes, total=%u\n",
-               player.playerId, (uint32_t)nChunkSize, nTotalSize);
+    case 0x6C: { // D2GS_UPLOADSAVE (1.14): client uploads its .d2s in chunks
+        // Frame layout: id(1) + chunkLen(1) + fullSize(4) + chunk[chunkLen] + term(1)
+        if (nLen < 7) {
+            printf("[D2Server] Player %u UPLOADSAVE too short (%u bytes)\n",
+                   player.playerId, nLen);
+            break;
+        }
+        const uint32_t nChunkSize = pData[1];
+        const uint32_t nFullSize = *(const uint32_t*)(pData + 2);
+        const uint32_t nDataLen = nLen - 7; // equals nChunkSize on a clean frame
+        const uint8_t nTerm = pData[nLen - 1];
+        if (player.saveFull == 0) {
+            player.saveFull = nFullSize;
+            printf("[D2Server] Player %u UPLOADSAVE start: fullSize=%u bytes\n",
+                   player.playerId, nFullSize);
+        }
+        if (player.saveGot + nDataLen > sizeof(player.saveBuf)) {
+            printf("[D2Server] Player %u UPLOADSAVE overflow (%u+%u > %zu), ignoring chunk\n",
+                   player.playerId, player.saveGot, nDataLen, sizeof(player.saveBuf));
+            break;
+        }
+        memcpy(player.saveBuf + player.saveGot, pData + 6, nDataLen);
+        player.saveGot += nDataLen;
+        printf("[D2Server] Player %u UPLOADSAVE chunk: %u/%u bytes (term=%02X)\n",
+               player.playerId, player.saveGot, player.saveFull, nTerm);
+        if (player.saveFull > 0 && player.saveGot >= player.saveFull) {
+            player.saveComplete = true;
+            printf("[D2Server] Player %u SAVE UPLOAD COMPLETE (%u bytes):",
+                   player.playerId, player.saveGot);
+            const uint32_t nShow = player.saveGot < 32 ? player.saveGot : 32;
+            for (uint32_t i = 0; i < nShow; i++) {
+                printf(" %02X", player.saveBuf[i]);
+            }
+            printf("\n");
+        }
+        break;
+    }
+    case D2GS_HDR_ENTERGAME_LEGACY: { // 0x6A — 1.10-era id (not sent by 1.14)
+        if (!player.inGame) {
+            player.inGame = true;
+        }
+        printf("[D2Server] Player %u legacy 0x6A enter-game (ignored, inGame=%d)\n",
+               player.playerId, player.inGame ? 1 : 0);
         break;
     }
     case D2GS_HDR_CHAT:      // 0x14 — chat message (variable: msgType, lang, string)
@@ -550,17 +729,29 @@ static void* GameWorkerThread(void* arg) {
                     const uint8_t nHeader = player->recvBuf[nConsumed];
 
                     // Mirror SERVER_ValidateClientPacket: headers >= 0x70
-                    // (except 0xFF) are never legal.
+                    // (except 0xFF) are never legal C->S headers.  A live 1.14d
+                    // retail client can transiently misalign our frame splitter
+                    // (its 0x6C heartbeat / game-data request have sizes we do
+                    // not model), so instead of killing the session we log and
+                    // skip one byte to resync.  This keeps the connection alive
+                    // long enough to observe the full exchange in the log.
                     if (nHeader >= 0x70 && nHeader != 0xFF) {
-                        printf("[D2Server] Player %u sent illegal packet header 0x%02X, disconnecting\n",
-                               player->playerId, nHeader);
-                        close(pollFds[i].fd);
-                        {
-                            std::lock_guard<std::mutex> lock(g_PlayerListMutex);
-                            g_Players.erase(player->playerId);
+                        printf("[D2Server] Player %u unknown header 0x%02X at "
+                               "buffer offset %u -- skipping 1 byte to resync\n",
+                               player->playerId, nHeader, nConsumed);
+                        nConsumed++;
+                        uint32_t nSkips = 0;
+                        while (nConsumed < player->recvLen &&
+                               (player->recvBuf[nConsumed] >= 0x70 && player->recvBuf[nConsumed] != 0xFF)) {
+                            nConsumed++;
+                            if (++nSkips > 64) {
+                                printf("[D2Server] Player %u too many unknown bytes "
+                                       "in a row (%u), keeping buffer for later\n",
+                                       player->playerId, nSkips);
+                                break;
+                            }
                         }
-                        bDisconnected = true;
-                        break;
+                        continue;
                     }
 
                     int32_t nSize = 0;
@@ -568,11 +759,36 @@ static void* GameWorkerThread(void* arg) {
                     // libD2Net table implies (that entry is for the in-game
                     // context).  D2GS trunk waits for a full GSPacket0x68
                     // (37 bytes) before it considers the accept sequence done.
+                    // The same is true of the 1.14 accept packets: 0x6D PING
+                    // is a fixed 13-byte frame (u32 tick, u32 delay, u32 warden)
+                    // and 0x6B ENTERGAMEENVIRONMENT is a bare 1-byte header.
+                    // The 1.10-era libD2Net table models none of those.
                     if (!player->authenticated && nHeader == D2GS_HDR_GAMELOGON) {
                         nSize = (int32_t)sizeof(D2ServerPacketGameLogon);
                         if ((uint32_t)nSize > nAvail) {
                             break; // wait for the rest of the 37-byte logon
                         }
+                    } else if (nHeader == D2GS_HDR_PING) {
+                        nSize = 13; // 0x6D PING (u32 tick + u32 delay + u32 wardenResponse)
+                        if ((uint32_t)nSize > nAvail) {
+                            break; // wait for the whole ping
+                        }
+                    } else if (player->authenticated && nHeader == 0x6C) {
+                        // D2GS_UPLOADSAVE (1.14): a real retail client streams
+                        // its .d2s in chunks after GAMELOADING.  Frame layout:
+                        //   id(1) + chunkLen(1) + fullSize(4) + chunk + term(1)
+                        // The legacy libD2Net table sizes 0x6C as 9 bytes,
+                        // which fragments the stream -- derive the true size
+                        // from the embedded chunk length instead.
+                        if (nAvail < 6) {
+                            break; // need id+chunkLen+fullSize to size the frame
+                        }
+                        nSize = 6 + (int32_t)player->recvBuf[nConsumed + 1] + 1;
+                        if ((uint32_t)nSize > nAvail) {
+                            break; // wait for the whole chunk
+                        }
+                    } else if (player->authenticated && nHeader == D2GS_HDR_ENTERGAME14) {
+                        nSize = 1; // 0x6B ENTERGAMEENVIRONMENT is a bare header in 1.14
                     } else {
                         // D2PacketBufferStrc is data[1976]; our buffer layout matches,
                         // and the function only reads data[0..nAvail-1] (data is the
