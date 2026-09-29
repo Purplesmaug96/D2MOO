@@ -1,10 +1,10 @@
 // Engine game-server host data ownership.
 // <GAME/Game.h> drags squall's Memory.hpp (SMem*/TSFixedArray templates) in,
-// which cannot coexist with the module's own d2server.h (it redeclares
-// SMem*/SFile* with different types -> ambiguous overloads whenever a squall
-// template is instantiated).  So the only TU that builds the heavy D2Game
-// header is EngineHost.cpp; the host in D2Server.cpp talks to it through the
-// small C API below and forward-declared GAME_* entry points.
+// which cannot be included from D2Server.cpp (it collides with the Win32
+// declarations D2Server.cpp relies on -> ambiguous overloads whenever a
+// squall template is instantiated).  So the only TU that builds the heavy
+// D2Game header is EngineHost.cpp; the host in D2Server.cpp talks to it
+// through the small C API below and forward-declared GAME_* entry points.
 #pragma once
 
 #include <cstdint>

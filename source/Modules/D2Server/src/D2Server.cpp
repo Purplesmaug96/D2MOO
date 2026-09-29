@@ -19,7 +19,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <poll.h>
-#include "d2server.h"
+#include <windows.h>
 
 // Force stdout/stderr to be line-buffered for immediate output
 #include <unistd.h>
@@ -218,28 +218,90 @@ static uint32_t g_NextGameId = 1;
 static const int kNumWorkers = 2;
 
 // ============================================================
-// Forward declarations for decompiled functions
-// Use d2server.h declarations where available
+// Retail D2Server.dll entry points the startup path calls
 // ============================================================
+// The decompiled D2Server module (d2server.cpp + d2server_globals.cpp)
+// has been removed: of the 562 functions it defined, only the eleven
+// below were ever reachable, and none of them did any work.  They are
+// kept here so the call sites in D2Server_MainLoop / shutdown keep
+// compiling and behaving exactly as before.
+//
+// FOG_InitErrorMgr and FOG_SetLogPrefix also have definitions in
+// libFog (the D2FUNC_DLL_STUB bodies), and SERVER_Initialize /
+// SERVER_Release / SERVER_SetHackListEnabled have real retail
+// implementations in libD2Net.  These local definitions interpose on
+// them or are interposed on, depending on library load order -- that
+// is pre-existing behaviour and is preserved deliberately here, since
+// dropping the definitions would silently start calling into libD2Net.
+// D2Lang_Initialize, D2Lang_Uninitialize and D2COMMON_10983 have no
+// implementation in any library, so these are their only definition.
 
-extern "C" {
-    // Server core — defined in d2server.cpp
-    extern int Server_MainEntry(void* hInstance, void* hPrevInstance, char* lpCmdLine, int nCmdShow);
+int __cdecl SERVER_Initialize(int a, int b) { (void)a; (void)b; return 0; }
+int __cdecl SERVER_Release() { return 0; }
+int __cdecl SERVER_SetHackListEnabled(int a) { (void)a; return 0; }
+int __cdecl FOG_InitErrorMgr() { return 0; }
+void __cdecl FOG_SetLogPrefix(char* a, char* b, int c) { (void)a; (void)b; (void)c; }
+int __cdecl D2Lang_Initialize() { return 0; }
+int __cdecl D2Lang_Uninitialize() { return 0; }
+int __cdecl D2COMMON_10983() { return 0; }
 
-    // Game data — defined in d2server.cpp
-    extern void GameData_PoolInit(unsigned int* param_1);
-    extern void GameDataPool_DetachAll(int* param_1);
+// ------------------------------------------------------------
+// Performance counters
+// ------------------------------------------------------------
+// Initialised once from D2Server_MainLoop before the worker threads
+// start.  The decompiled readers (Console_GraphSetFrameRate and the
+// Perf_* console helpers) belonged to the decompiled module's GDI
+// console UI, which this port never runs -- the server is headless
+// with FOG's GUI disabled -- so these counters are currently
+// write-only.  The call sites and these definitions can both go if
+// the startup sequence is trimmed.
+
+static LARGE_INTEGER g_PerfFrequency = {};
+static LARGE_INTEGER g_PerfStartupCount = {};
+static LARGE_INTEGER g_PerfSnapshotCount = {};
+static int g_bPerfAvailable = 0;
+static int g_nPerfFramePeriodLow = 0;
+static int g_nPerfFramePeriodHigh = 0;
+static int g_nPerfFrameDeadlineLow = 0;
+static int g_nPerfFrameDeadlineHigh = 0;
+static int g_PerfScratch1 = 0;
+static int g_PerfScratch2 = 0;
+
+void Perf_InitSystem(void) {
+    if (QueryPerformanceFrequency(&g_PerfFrequency)) {
+        g_bPerfAvailable = 1;
+        g_PerfScratch1 = 0;
+        g_PerfScratch2 = 0;
+        QueryPerformanceCounter(&g_PerfStartupCount);
+    } else {
+        g_bPerfAvailable = 0;
+    }
 }
 
-// Functions declared in d2server.h — use those declarations (C++ linkage)
-// Perf functions not in header — provide forward declarations
-extern void Perf_InitSystem(void);
-extern void Perf_InitFrameTimer(unsigned int);
-extern void Perf_SnapshotCounter(void);
+// Frame period = counter frequency / target FPS; the first frame
+// deadline is stored as a 64-bit count split across two 32-bit words.
+void __fastcall Perf_InitFrameTimer(unsigned int dwTargetFPS) {
+    LARGE_INTEGER freq;
+    LARGE_INTEGER now;
+    QueryPerformanceFrequency(&freq);
+
+    const uint64_t nPeriod = dwTargetFPS ? (uint64_t)freq.QuadPart / dwTargetFPS : 0;
+    g_nPerfFramePeriodLow = (int)(uint32_t)nPeriod;
+    g_nPerfFramePeriodHigh = (int)(uint32_t)(nPeriod >> 32);
+
+    QueryPerformanceCounter(&now);
+    const uint64_t nDeadline = (uint64_t)now.QuadPart + nPeriod;
+    g_nPerfFrameDeadlineLow = (int)(uint32_t)nDeadline;
+    g_nPerfFrameDeadlineHigh = (int)(uint32_t)(nDeadline >> 32);
+}
+
+void Perf_SnapshotCounter(void) {
+    QueryPerformanceCounter(&g_PerfSnapshotCount);
+}
 
 // ============================================================
 // Linux-compatible Windows API stubs
-// Only define if not already provided by d2server.h or libwin
+// Only define if not already provided by libwin
 // ============================================================
 
 #ifndef _WIN32
@@ -1762,8 +1824,8 @@ static void D2Server_DispatchPacket(PlayerConnection& player, const uint8_t* pDa
         char szCharName[17] = {};
         memcpy(szCharName, pLogon->szCharName, sizeof(pLogon->szCharName));
         szCharName[sizeof(pLogon->szCharName)] = '\0';
-        memcpy(player.playerName, szCharName, sizeof(player.playerName) - 1);
-        player.playerName[sizeof(player.playerName) - 1] = '\0';
+        memcpy(player.playerName, szCharName, sizeof(szCharName) - 1);
+        player.playerName[sizeof(szCharName) - 1] = '\0';
         printf("[D2Server] Player %u GAMELOGON char='%s' token=%u ver=%u hash=%08X\n",
                player.playerId, szCharName, pLogon->wToken, pLogon->dwVersion, pLogon->dwHash);
 
