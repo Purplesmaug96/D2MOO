@@ -267,7 +267,10 @@ uint32_t CRC32_Compute(void* pData, size_t dwSize) {
 	uint32_t nCRC32 = 0xFFFFFFFFu;
 	for (int i = 0; i < dwSize; i++) {
 		const uint8_t nByte = ((uint8_t*)pData)[i];
-		nCRC32 = sgCrc32LookupTable[nCRC32 ^ nByte] ^ (nCRC32 >> 8);
+		// The table holds 256 entries; the standard CRC32 progression masks the
+		// index to 8 bits.  (Decompiler lost the mask: nCRC32 ^ nByte can be as
+		// large as 0xFFFFFFFF, which indexed the table out of bounds.)
+		nCRC32 = sgCrc32LookupTable[(nCRC32 ^ nByte) & 0xFF] ^ (nCRC32 >> 8);
 	}
 	return nCRC32;
 }

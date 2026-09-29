@@ -721,6 +721,9 @@ int GAMEAPI GameInit(DWORD dwNumServicesArgs, const char* lpServiceArgVectors[],
 	// Use the module chosen from command line (e.g. "-server"), default to LAUNCHER
 	D2_MODULES nStartModule = (nChosenModule != MODULE_NONE) ? (D2_MODULES)nChosenModule : MODULE_LAUNCHER;
 	printf("GameInit: Starting module %d (chosen=%d)\n", nStartModule, nChosenModule);
+
+	FOG_SetGuiEnabled(nStartModule != MODULE_SERVER);
+
 	return GameStart(ghCurrentProcess, &tCfg, nStartModule, pCrashReason);
 }
 

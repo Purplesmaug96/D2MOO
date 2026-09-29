@@ -127,22 +127,40 @@ void __fastcall DATATBLS_MonStatsSkillModeLinker(char* pSrc, void* pRecord, int 
 void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 	long long v21 = 0; // TODO: Check / Remove
 
-	char* szMonsterName = NULL;
-	int nNextInClass = 0;
 	int nWalkAnimSpeed = 0;
 	int nCounter = 0;
 	int nChainId = 0;
 	int nBaseId = 0;
 	int nRunAnimSpeed = 0;
-	int nId = 0;
-	bool bFoundInChain = false;
 
+	// Retail 1.14d MonStats.txt, verified against the shipped d2data.mpq
+	// header (229 columns) and against the field list recovered from the
+	// real D2Common.dll's DATATBLS_LoadMonStatsTxt (219 fields, record size
+	// 0x31E).  1.14d carries no Id / NextInClass / NextInClass-style columns
+	// at all: the record ordinal IS the monster id, and the variant family is
+	// named by BaseId, which is a 1-based GROUP id (txt rows 0-4 carry
+	// BaseId 1, rows 5-9 carry 2, rows 10-14 carry 3, ...).  Both are derived
+	// after the load by the repair pass below, which is also what resolves
+	// BaseId to the group's representative row so every pMonStatsTxt[nBaseId]
+	// consumer indexes the right record.
+	//
+	// 1.10f-only columns that 1.14d dropped (MonSound, UMonSound,
+	// MonStatsEx, MonType, MonProp, AI, TransLvl, spawn, spawnx/y/mode,
+	// minion1/2, PartyMin/Max, sparsePopulate, aip6-8, aidel*, aidist*,
+	// threat, Drain*, Crit, ColdEffect*, SendSkills, TCQuestId/CP,
+	// NoShldBlock, noaura, nomultishot) are intentionally absent from this
+	// list.  D2MonStatsTxt keeps their struct slots so every consumer still
+	// compiles, but they read as 0.  A missing column leaves the field
+	// zeroed (FOG_10207 / FindColumnIndex), which is the desired outcome
+	// here rather than a silent garbage value.
 	D2BinFieldStrc pTbl[] = {
 		{ "Id", TXTFIELD_NAMETOINDEX, 0, 0, &sgptDataTables->pMonStatsLinker },
 		{ "BaseId", TXTFIELD_NAMETOWORD, 0, 2, &sgptDataTables->pMonStatsLinker },
 		{ "NextInClass", TXTFIELD_NAMETOWORD, 0, 4, &sgptDataTables->pMonStatsLinker },
 		{ "NameStr", TXTFIELD_KEYTOWORD, 0, 6, (void*)DATATBLS_GetStringIdFromReferenceString },
+		{ "Class", TXTFIELD_KEYTOWORD, 0, 6, (void*)DATATBLS_GetStringIdFromReferenceString },
 		{ "DescStr", TXTFIELD_KEYTOWORD, 0, 8, (void*)DATATBLS_GetStringIdFromReferenceString },
+		{ "Descriptor", TXTFIELD_KEYTOWORD, 0, 8, (void*)DATATBLS_GetStringIdFromReferenceString },
 		{ "Code", TXTFIELD_RAW, 0, 16, NULL },
 		{ "TransLvl", TXTFIELD_BYTE, 0, 77, NULL },
 		{ "MonSound", TXTFIELD_NAMETOWORD, 0, 20, &sgptDataTables->pMonSoundsLinker },
@@ -167,33 +185,46 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 		{ "Run", TXTFIELD_WORD, 0, 52, NULL },
 		{ "Align", TXTFIELD_BYTE, 0, 76, NULL },
 		{ "enabled", TXTFIELD_BIT, 25, 12, NULL },
+		{ "Spawned", TXTFIELD_BIT, 25, 12, NULL },
 		{ "rangedtype", TXTFIELD_BIT, 28, 12, NULL },
 		{ "placespawn", TXTFIELD_BIT, 23, 12, NULL },
 		{ "isSpawn", TXTFIELD_BIT, 0, 12, NULL },
+		{ "Spawned", TXTFIELD_BIT, 0, 12, NULL },
 		{ "isMelee", TXTFIELD_BIT, 1, 12, NULL },
 		{ "noRatio", TXTFIELD_BIT, 2, 12, NULL },
 		{ "SetBoss", TXTFIELD_BIT, 4, 12, NULL },
 		{ "BossXfer", TXTFIELD_BIT, 5, 12, NULL },
 		{ "boss", TXTFIELD_BIT, 6, 12, NULL },
+		{ "eBoss", TXTFIELD_BIT, 6, 12, NULL },
 		{ "primeevil", TXTFIELD_BIT, 7, 12, NULL },
 		{ "opendoors", TXTFIELD_BIT, 3, 12, NULL },
+		{ "eOpenDoors", TXTFIELD_BIT, 3, 12, NULL },
 		{ "npc", TXTFIELD_BIT, 8, 12, NULL },
+		{ "IsNPC", TXTFIELD_BIT, 8, 12, NULL },
 		{ "interact", TXTFIELD_BIT, 9, 12, NULL },
 		{ "inventory", TXTFIELD_BIT, 24, 12, NULL },
 		{ "inTown", TXTFIELD_BIT, 10, 12, NULL },
 		{ "lUndead", TXTFIELD_BIT, 11, 12, NULL },
+		{ "eLUndead", TXTFIELD_BIT, 11, 12, NULL },
 		{ "hUndead", TXTFIELD_BIT, 12, 12, NULL },
+		{ "eHUndead", TXTFIELD_BIT, 12, 12, NULL },
 		{ "demon", TXTFIELD_BIT, 13, 12, NULL },
+		{ "eDemon", TXTFIELD_BIT, 13, 12, NULL },
 		{ "flying", TXTFIELD_BIT, 14, 12, NULL },
+		{ "eFlying", TXTFIELD_BIT, 14, 12, NULL },
 		{ "killable", TXTFIELD_BIT, 15, 12, NULL },
 		{ "switchai", TXTFIELD_BIT, 16, 12, NULL },
+		{ "Switch", TXTFIELD_BIT, 16, 12, NULL },
 		{ "noaura", TXTFIELD_BIT, 27, 12, NULL },
 		{ "nomultishot", TXTFIELD_BIT, 17, 12, NULL },
 		{ "neverCount", TXTFIELD_BIT, 18, 12, NULL },
 		{ "petIgnore", TXTFIELD_BIT, 19, 12, NULL },
 		{ "deathDmg", TXTFIELD_BIT, 20, 12, NULL },
+		{ "DeathDamage", TXTFIELD_BIT, 20, 12, NULL },
 		{ "genericSpawn", TXTFIELD_BIT, 21, 12, NULL },
+		{ "eSpawnCol", TXTFIELD_BIT, 21, 12, NULL },
 		{ "zoo", TXTFIELD_BIT, 22, 12, NULL },
+		{ "IsCritter", TXTFIELD_BIT, 22, 12, NULL },
 		{ "MissA1", TXTFIELD_NAMETOWORD, 0, 58, &sgptDataTables->pMissilesLinker },
 		{ "MissA2", TXTFIELD_NAMETOWORD, 0, 60, &sgptDataTables->pMissilesLinker },
 		{ "MissS1", TXTFIELD_NAMETOWORD, 0, 62, &sgptDataTables->pMissilesLinker },
@@ -224,18 +255,23 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 		{ "aidist(N)", TXTFIELD_BYTE, 0, 83, NULL },
 		{ "aidist(H)", TXTFIELD_BYTE, 0, 84, NULL },
 		{ "aip1", TXTFIELD_WORD, 0, 86, NULL },
+		{ "AIParam1", TXTFIELD_WORD, 0, 86, NULL },
 		{ "aip1(N)", TXTFIELD_WORD, 0, 88, NULL },
 		{ "aip1(H)", TXTFIELD_WORD, 0, 90, NULL },
 		{ "aip2", TXTFIELD_WORD, 0, 92, NULL },
+		{ "AIParam2", TXTFIELD_WORD, 0, 92, NULL },
 		{ "aip2(N)", TXTFIELD_WORD, 0, 94, NULL },
 		{ "aip2(H)", TXTFIELD_WORD, 0, 96, NULL },
 		{ "aip3", TXTFIELD_WORD, 0, 98, NULL },
+		{ "AIParam3", TXTFIELD_WORD, 0, 98, NULL },
 		{ "aip3(N)", TXTFIELD_WORD, 0, 100, NULL },
 		{ "aip3(H)", TXTFIELD_WORD, 0, 102, NULL },
 		{ "aip4", TXTFIELD_WORD, 0, 104, NULL },
+		{ "AIParam4", TXTFIELD_WORD, 0, 104, NULL },
 		{ "aip4(N)", TXTFIELD_WORD, 0, 106, NULL },
 		{ "aip4(H)", TXTFIELD_WORD, 0, 108, NULL },
 		{ "aip5", TXTFIELD_WORD, 0, 110, NULL },
+		{ "AIParam5", TXTFIELD_WORD, 0, 110, NULL },
 		{ "aip5(N)", TXTFIELD_WORD, 0, 112, NULL },
 		{ "aip5(H)", TXTFIELD_WORD, 0, 114, NULL },
 		{ "aip6", TXTFIELD_WORD, 0, 116, NULL },
@@ -272,8 +308,11 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 		{ "Exp(N)", TXTFIELD_WORD, 0, 214, NULL },
 		{ "Exp(H)", TXTFIELD_WORD, 0, 216, NULL },
 		{ "A1TH", TXTFIELD_WORD, 0, 194, NULL },
+		{ "A1ToHit", TXTFIELD_WORD, 0, 194, NULL },
 		{ "A1TH(N)", TXTFIELD_WORD, 0, 196, NULL },
+		{ "A1ToHit(N)", TXTFIELD_WORD, 0, 196, NULL },
 		{ "A1TH(H)", TXTFIELD_WORD, 0, 198, NULL },
+		{ "A1ToHit(H)", TXTFIELD_WORD, 0, 198, NULL },
 		{ "A1MinD", TXTFIELD_WORD, 0, 218, NULL },
 		{ "A1MinD(N)", TXTFIELD_WORD, 0, 220, NULL },
 		{ "A1MinD(H)", TXTFIELD_WORD, 0, 222, NULL },
@@ -281,8 +320,11 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 		{ "A1MaxD(N)", TXTFIELD_WORD, 0, 226, NULL },
 		{ "A1MaxD(H)", TXTFIELD_WORD, 0, 228, NULL },
 		{ "A2TH", TXTFIELD_WORD, 0, 200, NULL },
+		{ "A2ToHit", TXTFIELD_WORD, 0, 200, NULL },
 		{ "A2TH(N)", TXTFIELD_WORD, 0, 202, NULL },
+		{ "A2ToHit(N)", TXTFIELD_WORD, 0, 202, NULL },
 		{ "A2TH(H)", TXTFIELD_WORD, 0, 204, NULL },
+		{ "A2ToHit(H)", TXTFIELD_WORD, 0, 204, NULL },
 		{ "A2MinD", TXTFIELD_WORD, 0, 230, NULL },
 		{ "A2MinD(N)", TXTFIELD_WORD, 0, 232, NULL },
 		{ "A2MinD(H)", TXTFIELD_WORD, 0, 234, NULL },
@@ -290,8 +332,11 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 		{ "A2MaxD(N)", TXTFIELD_WORD, 0, 238, NULL },
 		{ "A2MaxD(H)", TXTFIELD_WORD, 0, 240, NULL },
 		{ "S1TH", TXTFIELD_WORD, 0, 206, NULL },
+		{ "S1ToHit", TXTFIELD_WORD, 0, 206, NULL },
 		{ "S1TH(N)", TXTFIELD_WORD, 0, 208, NULL },
+		{ "S1ToHit(N)", TXTFIELD_WORD, 0, 208, NULL },
 		{ "S1TH(H)", TXTFIELD_WORD, 0, 210, NULL },
+		{ "S1ToHit(H)", TXTFIELD_WORD, 0, 210, NULL },
 		{ "S1MinD", TXTFIELD_WORD, 0, 242, NULL },
 		{ "S1MinD(N)", TXTFIELD_WORD, 0, 244, NULL },
 		{ "S1MinD(H)", TXTFIELD_WORD, 0, 246, NULL },
@@ -299,17 +344,23 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 		{ "S1MaxD(N)", TXTFIELD_WORD, 0, 250, NULL },
 		{ "S1MaxD(H)", TXTFIELD_WORD, 0, 252, NULL },
 		{ "El1Mode", TXTFIELD_CODETOBYTE, 0, 254, &sgptDataTables->pMonModeLinker },
+		{ "ElMode", TXTFIELD_CODETOBYTE, 0, 254, &sgptDataTables->pMonModeLinker },
 		{ "El1Type", TXTFIELD_CODETOBYTE, 0, 257, &sgptDataTables->pElemTypesLinker },
+		{ "ElType", TXTFIELD_CODETOBYTE, 0, 257, &sgptDataTables->pElemTypesLinker },
 		{ "El1Pct", TXTFIELD_BYTE, 0, 260, NULL },
+		{ "ElPct", TXTFIELD_BYTE, 0, 260, NULL },
 		{ "El1Pct(N)", TXTFIELD_BYTE, 0, 261, NULL },
 		{ "El1Pct(H)", TXTFIELD_BYTE, 0, 262, NULL },
 		{ "El1MinD", TXTFIELD_WORD, 0, 270, NULL },
+		{ "ElMinD", TXTFIELD_WORD, 0, 270, NULL },
 		{ "El1MinD(N)", TXTFIELD_WORD, 0, 272, NULL },
 		{ "El1MinD(H)", TXTFIELD_WORD, 0, 274, NULL },
 		{ "El1MaxD", TXTFIELD_WORD, 0, 288, NULL },
+		{ "ElMaxD", TXTFIELD_WORD, 0, 288, NULL },
 		{ "El1MaxD(N)", TXTFIELD_WORD, 0, 290, NULL },
 		{ "El1MaxD(H)", TXTFIELD_WORD, 0, 292, NULL },
 		{ "El1Dur", TXTFIELD_WORD, 0, 306, NULL },
+		{ "ElDur", TXTFIELD_WORD, 0, 306, NULL },
 		{ "El1Dur(N)", TXTFIELD_WORD, 0, 308, NULL },
 		{ "El1Dur(H)", TXTFIELD_WORD, 0, 310, NULL },
 		{ "El2Mode", TXTFIELD_CODETOBYTE, 0, 255, &sgptDataTables->pMonModeLinker },
@@ -344,39 +395,66 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 		{ "ColdEffect(N)", TXTFIELD_BYTE, 0, 361, NULL },
 		{ "ColdEffect(H)", TXTFIELD_BYTE, 0, 362, NULL },
 		{ "ResDm", TXTFIELD_WORD, 0, 324, NULL },
+		{ "DamageResist", TXTFIELD_WORD, 0, 324, NULL },
 		{ "ResDm(N)", TXTFIELD_WORD, 0, 326, NULL },
+		{ "DamageResist(N)", TXTFIELD_WORD, 0, 326, NULL },
 		{ "ResDm(H)", TXTFIELD_WORD, 0, 328, NULL },
+		{ "DamageResist(H)", TXTFIELD_WORD, 0, 328, NULL },
 		{ "ResMa", TXTFIELD_WORD, 0, 330, NULL },
+		{ "MagicResist", TXTFIELD_WORD, 0, 330, NULL },
 		{ "ResMa(N)", TXTFIELD_WORD, 0, 332, NULL },
+		{ "MagicResist(N)", TXTFIELD_WORD, 0, 332, NULL },
 		{ "ResMa(H)", TXTFIELD_WORD, 0, 334, NULL },
+		{ "MagicResist(H)", TXTFIELD_WORD, 0, 334, NULL },
 		{ "ResFi", TXTFIELD_WORD, 0, 336, NULL },
+		{ "FireResist", TXTFIELD_WORD, 0, 336, NULL },
 		{ "ResFi(N)", TXTFIELD_WORD, 0, 338, NULL },
+		{ "FireResist(N)", TXTFIELD_WORD, 0, 338, NULL },
 		{ "ResFi(H)", TXTFIELD_WORD, 0, 340, NULL },
+		{ "FireResist(H)", TXTFIELD_WORD, 0, 340, NULL },
 		{ "ResLi", TXTFIELD_WORD, 0, 342, NULL },
+		{ "LightResist", TXTFIELD_WORD, 0, 342, NULL },
 		{ "ResLi(N)", TXTFIELD_WORD, 0, 344, NULL },
+		{ "LightResist(N)", TXTFIELD_WORD, 0, 344, NULL },
 		{ "ResLi(H)", TXTFIELD_WORD, 0, 346, NULL },
+		{ "LightResist(H)", TXTFIELD_WORD, 0, 346, NULL },
 		{ "ResCo", TXTFIELD_WORD, 0, 348, NULL },
+		{ "ColdResist", TXTFIELD_WORD, 0, 348, NULL },
 		{ "ResCo(N)", TXTFIELD_WORD, 0, 350, NULL },
+		{ "ColdResist(N)", TXTFIELD_WORD, 0, 350, NULL },
 		{ "ResCo(H)", TXTFIELD_WORD, 0, 352, NULL },
+		{ "ColdResist(H)", TXTFIELD_WORD, 0, 352, NULL },
 		{ "ResPo", TXTFIELD_WORD, 0, 354, NULL },
+		{ "PoisonResist", TXTFIELD_WORD, 0, 354, NULL },
 		{ "ResPo(N)", TXTFIELD_WORD, 0, 356, NULL },
+		{ "PoisonResist(N)", TXTFIELD_WORD, 0, 356, NULL },
 		{ "ResPo(H)", TXTFIELD_WORD, 0, 358, NULL },
+		{ "PoisonResist(H)", TXTFIELD_WORD, 0, 358, NULL },
 		{ "SendSkills", TXTFIELD_DWORD2, 0, 364, NULL },
 		{ "Skill1", TXTFIELD_NAMETOWORD, 0, 368, &sgptDataTables->pSkillsLinker },
 		{ "Sk1mode", TXTFIELD_CUSTOMLINK, 0, 0, (void*)DATATBLS_MonStatsSkillModeLinker },
+		{ "ModeS1", TXTFIELD_CUSTOMLINK, 0, 0, (void*)DATATBLS_MonStatsSkillModeLinker },
 		{ "Sk1lvl", TXTFIELD_BYTE, 0, 408, NULL },
+		{ "Skill1Lvl", TXTFIELD_BYTE, 0, 408, NULL },
 		{ "Skill2", TXTFIELD_NAMETOWORD, 0, 370, &sgptDataTables->pSkillsLinker },
 		{ "Sk2mode", TXTFIELD_CUSTOMLINK, 0, 1, (void*)DATATBLS_MonStatsSkillModeLinker },
+		{ "ModeS2", TXTFIELD_CUSTOMLINK, 0, 1, (void*)DATATBLS_MonStatsSkillModeLinker },
 		{ "Sk2lvl", TXTFIELD_BYTE, 0, 409, NULL },
+		{ "Skill2Lvl", TXTFIELD_BYTE, 0, 409, NULL },
 		{ "Skill3", TXTFIELD_NAMETOWORD, 0, 372, &sgptDataTables->pSkillsLinker },
 		{ "Sk3mode", TXTFIELD_CUSTOMLINK, 0, 2, (void*)DATATBLS_MonStatsSkillModeLinker },
+		{ "ModeS3", TXTFIELD_CUSTOMLINK, 0, 2, (void*)DATATBLS_MonStatsSkillModeLinker },
 		{ "Sk3lvl", TXTFIELD_BYTE, 0, 410, NULL },
+		{ "Skill3Lvl", TXTFIELD_BYTE, 0, 410, NULL },
 		{ "Skill4", TXTFIELD_NAMETOWORD, 0, 374, &sgptDataTables->pSkillsLinker },
 		{ "Sk4mode", TXTFIELD_CUSTOMLINK, 0, 3, (void*)DATATBLS_MonStatsSkillModeLinker },
+		{ "ModeS4", TXTFIELD_CUSTOMLINK, 0, 3, (void*)DATATBLS_MonStatsSkillModeLinker },
 		{ "Sk4lvl", TXTFIELD_BYTE, 0, 411, NULL },
+		{ "Skill4Lvl", TXTFIELD_BYTE, 0, 411, NULL },
 		{ "Skill5", TXTFIELD_NAMETOWORD, 0, 376, &sgptDataTables->pSkillsLinker },
 		{ "Sk5mode", TXTFIELD_CUSTOMLINK, 0, 4, (void*)DATATBLS_MonStatsSkillModeLinker },
 		{ "Sk5lvl", TXTFIELD_BYTE, 0, 412, NULL },
+		{ "Skill5Lvl", TXTFIELD_BYTE, 0, 412, NULL },
 		{ "Skill6", TXTFIELD_NAMETOWORD, 0, 378, &sgptDataTables->pSkillsLinker },
 		{ "Sk6mode", TXTFIELD_CUSTOMLINK, 0, 5, (void*)DATATBLS_MonStatsSkillModeLinker },
 		{ "Sk6lvl", TXTFIELD_BYTE, 0, 413, NULL },
@@ -399,64 +477,181 @@ void __fastcall DATATBLS_LoadMonStatsTxt(HD2ARCHIVE hArchive) {
 
 	D2_ASSERT(sgptDataTables->nMonStatsTxtRecordCount < SHRT_MAX);
 
+	// ---------------------------------------------------------------------
+	// Post-load identity + family resolution.
+	//
+	// Which of the two vocabularies the installed monstats.txt uses decides
+	// what has to be derived here:
+	//
+	// 1.13c carries real Id / NextInClass / BaseId columns.  Id is the row
+	// ordinal, NextInClass already links the variant family and BaseId is a
+	// row index.  Nothing to derive -- only an out-of-range BaseId needs
+	// repairing (a row whose BaseId cell is empty stores 0xFFFF).
+	//
+	// 1.14d dropped all three.  There the record ordinal IS the monster id
+	// (the client keys units on it and the MONSTER_* constants are ordinals
+	// into this table) and BaseId is a 1-based GROUP id, not a row index:
+	// txt rows 0-4 carry BaseId 1, rows 5-9 carry 2, rows 10-14 carry 3,
+	// and so on, with Gheed=33 and Akara=34 each their own group.  So the
+	// group id is mapped to the ordinal of the first row carrying it (the
+	// family's representative), stored in nBaseId, and the members are
+	// linked in row order through nNextInClass with nChainId / nMaxChainId
+	// giving position and size.  A single-member family points at itself,
+	// which keeps the walk below terminating.
+	//
+	// Feeding the 1.14d group id straight in as a row index -- which is what
+	// the decomp's 1.10f pass did -- silently indexed a different monster for
+	// every row, so each variant's walk/run speed came from a stranger.
+	//
+	// Detection: a 1.14d file leaves nId 0 on every row (the Id entry did not
+	// resolve), a 1.13c file has nId == row ordinal, so any non-zero nId
+	// means the Id column was present.
+	// ---------------------------------------------------------------------
 	if (sgptDataTables->nMonStatsTxtRecordCount > 0) {
-		nCounter = 0;
-		do {
-			bFoundInChain = false;
+		const int32_t nRecordCount = sgptDataTables->nMonStatsTxtRecordCount;
 
-			nChainId = 0;
-			nId = sgptDataTables->pMonStatsTxt[nCounter].nBaseId;
-
-			do {
-				if (sgptDataTables->pMonStatsTxt[nId].nBaseId != sgptDataTables->pMonStatsTxt[nCounter].nBaseId && sgptDataTables->bCompileTxt) {
-					szMonsterName = FOG_10255(sgptDataTables->pMonStatsLinker, sgptDataTables->pMonStatsTxt[nId].nId, 0);
-					FOG_Trace("BaseId/NextInClass chain -- unexpected baseid for monster '%s' (%d)", szMonsterName);
-				}
-
-				if (nId == nCounter) {
-					bFoundInChain = true;
-					sgptDataTables->pMonStatsTxt[nCounter].nChainId = nChainId;
-				}
-
-				nNextInClass = sgptDataTables->pMonStatsTxt[nId].nNextInClass;
-
-				++nChainId;
-				if (nId == nNextInClass) {
-					if (sgptDataTables->bCompileTxt) {
-						szMonsterName = FOG_10255(sgptDataTables->pMonStatsLinker, sgptDataTables->pMonStatsTxt[nId].nId, 0);
-						FOG_Trace("BaseId/NextInClass chain -- monster '%s' (%d) pointing to itself", szMonsterName);
-					}
-					break;
-				}
-
-				nId = nNextInClass;
-
-				if (nChainId > 255) {
-					if (sgptDataTables->bCompileTxt) {
-						szMonsterName = FOG_10255(sgptDataTables->pMonStatsLinker, sgptDataTables->pMonStatsTxt[nNextInClass].nId, 0);
-						FOG_Trace("BaseId/NextInClass chain exceeded 255 entries at monster '%s' (%d)", szMonsterName);
-					}
-					break;
-				}
-			} while (nNextInClass >= 0);
-
-			if (!bFoundInChain && sgptDataTables->bCompileTxt) {
-				szMonsterName = FOG_10255(sgptDataTables->pMonStatsLinker, sgptDataTables->pMonStatsTxt[nCounter].nId, 0);
-				FOG_Trace("BaseId/NextInClass monster '%s' (%d) not found in chain", szMonsterName);
+		bool bHasIdColumn = false;
+		for (nCounter = 0; nCounter < nRecordCount; ++nCounter) {
+			if (sgptDataTables->pMonStatsTxt[nCounter].nId != 0) {
+				bHasIdColumn = true;
+				break;
 			}
-			sgptDataTables->pMonStatsTxt[nCounter].nMaxChainId = nChainId;
+		}
 
-			++nCounter;
-		} while (nCounter < sgptDataTables->nMonStatsTxtRecordCount);
+		if (bHasIdColumn) {
+			// 1.13c: Id / NextInClass / BaseId are all real columns, so the
+			// only thing missing is the chain position / chain size.  Id and
+			// NextInClass hold linker names ("skeleton1", "skeleton2", ...,
+			// empty at the end of a family) and those linker indices are
+			// assigned in row order, so they index pMonStatsTxt directly.
+			// Walk each family from its head exactly as the decomp did, minus
+			// the FOG_Trace diagnostics, and publish nChainId / nMaxChainId.
+			for (nCounter = 0; nCounter < nRecordCount; ++nCounter) {
+				if (sgptDataTables->pMonStatsTxt[nCounter].nBaseId < 0 ||
+					sgptDataTables->pMonStatsTxt[nCounter].nBaseId >= nRecordCount) {
+					sgptDataTables->pMonStatsTxt[nCounter].nBaseId = (int16_t)nCounter;
+				}
+
+				// Walk from the family HEAD (nBaseId), not from this row, so
+				// nMaxChainId comes out as the size of the whole family and
+				// nChainId as this row's position in it.  Starting at this row
+				// would instead report the number of members still ahead of
+				// it, which shrinks by one per row.
+				nChainId = 0;
+				int16_t nWalk = sgptDataTables->pMonStatsTxt[nCounter].nBaseId;
+
+				while (nWalk >= 0 && nWalk < nRecordCount) {
+					if (nWalk == nCounter) {
+						sgptDataTables->pMonStatsTxt[nCounter].nChainId = (uint8_t)nChainId;
+					}
+
+					const int16_t nNext = sgptDataTables->pMonStatsTxt[nWalk].nNextInClass;
+
+					++nChainId;
+					if (nWalk == nNext || nChainId > 255) {
+						break;
+					}
+
+					nWalk = nNext;
+				}
+
+				sgptDataTables->pMonStatsTxt[nCounter].nMaxChainId = (uint8_t)nChainId;
+			}
+		} else {
+			// Group ids are 1-based and sparse; index them by value.  Sized from
+			// the observed maximum so an out-of-range value cannot overrun.
+			int32_t nMaxGroupId = 0;
+			for (nCounter = 0; nCounter < nRecordCount; ++nCounter) {
+				const int32_t nGroupId = sgptDataTables->pMonStatsTxt[nCounter].nBaseId;
+				if (nGroupId > nMaxGroupId) {
+					nMaxGroupId = nGroupId;
+				}
+				sgptDataTables->pMonStatsTxt[nCounter].nId = (int16_t)nCounter;
+			}
+
+			const int32_t nGroupSlots = nMaxGroupId + 1;
+			int16_t* pnGroupFirst = (int16_t*)D2_ALLOC(nGroupSlots * sizeof(int16_t));
+			int16_t* pnGroupPrev = (int16_t*)D2_ALLOC(nGroupSlots * sizeof(int16_t));
+			int16_t* pnGroupSize = (int16_t*)D2_ALLOC(nGroupSlots * sizeof(int16_t));
+
+			for (nCounter = 0; nCounter < nGroupSlots; ++nCounter) {
+				pnGroupFirst[nCounter] = -1;
+				pnGroupPrev[nCounter] = -1;
+				pnGroupSize[nCounter] = 0;
+			}
+
+			// First pass: remember the representative and link members in order.
+			for (nCounter = 0; nCounter < nRecordCount; ++nCounter) {
+				int32_t nGroupId = sgptDataTables->pMonStatsTxt[nCounter].nBaseId;
+				if (nGroupId < 0 || nGroupId >= nGroupSlots) {
+					// Not a usable group id: give the row its own family.
+					nGroupId = nCounter;
+				}
+
+				if (pnGroupFirst[nGroupId] < 0) {
+					pnGroupFirst[nGroupId] = (int16_t)nCounter;
+				} else {
+					sgptDataTables->pMonStatsTxt[pnGroupPrev[nGroupId]].nNextInClass = (int16_t)nCounter;
+				}
+
+				pnGroupPrev[nGroupId] = (int16_t)nCounter;
+				++pnGroupSize[nGroupId];
+			}
+
+			// Second pass: close each ring and publish the resolved base row.
+			for (nCounter = 0; nCounter < nRecordCount; ++nCounter) {
+				int32_t nGroupId = sgptDataTables->pMonStatsTxt[nCounter].nBaseId;
+				if (nGroupId < 0 || nGroupId >= nGroupSlots) {
+					nGroupId = nCounter;
+				}
+
+				// pnGroupFirst is -1 for an unused slot, so 0 is a valid
+				// representative: group 1 (Skeleton, Returned, BoneWarrior,
+				// BurningDead, Horror) starts at row 0 and must not fall
+				// through to the nCounter fallback.
+				const int16_t nFirst = pnGroupFirst[nGroupId];
+
+				if (sgptDataTables->pMonStatsTxt[nCounter].nNextInClass <= 0) {
+					sgptDataTables->pMonStatsTxt[nCounter].nNextInClass = nFirst >= 0 ? nFirst : (int16_t)nCounter;
+				}
+
+				sgptDataTables->pMonStatsTxt[nCounter].nBaseId = nFirst >= 0 ? nFirst : (int16_t)nCounter;
+			}
+
+			// Third pass: chain position / chain size, and close the last member
+			// of each family back onto the representative.
+			for (nCounter = 0; nCounter < nGroupSlots; ++nCounter) {
+				const int16_t nSize = pnGroupSize[nCounter];
+				if (nSize <= 0) {
+					continue;
+				}
+
+				int16_t nIdx = pnGroupFirst[nCounter];
+				for (nChainId = 0; nChainId < nSize && nIdx >= 0; ++nChainId) {
+					sgptDataTables->pMonStatsTxt[nIdx].nChainId = (uint8_t)nChainId;
+					sgptDataTables->pMonStatsTxt[nIdx].nMaxChainId = (uint8_t)nSize;
+					if (nChainId + 1 >= nSize) {
+						sgptDataTables->pMonStatsTxt[nIdx].nNextInClass = pnGroupFirst[nCounter];
+					}
+					nIdx = sgptDataTables->pMonStatsTxt[nIdx].nNextInClass;
+				}
+			}
+
+			D2_FREE(pnGroupFirst);
+			D2_FREE(pnGroupPrev);
+			D2_FREE(pnGroupSize);
+		} // !bHasIdColumn
 	}
 
 	nCounter = 0;
 	while (nCounter < sgptDataTables->nMonStatsTxtRecordCount) {
+		// nBaseId is guaranteed to be a valid in-range row index by the
+		// group-resolution pass above, so the 1.10f-era out-of-range
+		// repair (nBaseId = nCounter) is no longer needed here -- and
+		// running it unconditionally used to be what corrupted every
+		// variant's anim speed, since a valid-but-wrong row index is
+		// indistinguishable from a good one by this test alone.
 		nBaseId = sgptDataTables->pMonStatsTxt[nCounter].nBaseId;
-		if (nBaseId < 0 || nBaseId >= sgptDataTables->nMonStatsTxtRecordCount) {
-			sgptDataTables->pMonStatsTxt[nCounter].nBaseId = nCounter;
-			nBaseId = nCounter;
-		}
 
 		nWalkAnimSpeed = DATATBLS_GetAnimDataRecord(0, nBaseId, MONMODE_WALK, 1, 0)->dwAnimSpeed;
 		if (nBaseId != nCounter) {
@@ -1914,7 +2109,7 @@ int __fastcall DATATBLS_CheckNestedMonsterTypes(int nMonType1, int nMonType2) {
 				return 1;
 			}
 
-			if (nMonsterType >= sgptDataTables->nMonTypeTxtRecordCount) {
+			if (nMonsterType < 0 || nMonsterType >= sgptDataTables->nMonTypeTxtRecordCount) {
 				break;
 			}
 
@@ -2131,6 +2326,15 @@ void __fastcall DATATBLS_LoadMonLvlTxt(HD2ARCHIVE hArchive) {
 void __fastcall DATATBLS_MonPresetPlaceLinker(char* pSrc, void* pRecord, int nOffset, int nPosition, int nTxtRow, int nTxtColumn) {
 	int nRow = 0;
 
+	D2_MAYBE_UNUSED(nOffset);
+	D2_MAYBE_UNUSED(nPosition);
+	D2_MAYBE_UNUSED(nTxtRow);
+	D2_MAYBE_UNUSED(nTxtColumn);
+
+	// pRecord is this row's D2MonPresetTxt and the field's nFieldOffset is 0,
+	// so nType lands at +1 and wPlace at +2.  A Place cell holds either a
+	// superunique display name, a monstats Id or a monplace code; nType says
+	// which of the three it resolved against.
 	if (pRecord) {
 		*((uint8_t*)pRecord + 1) = 0;
 		*((uint16_t*)pRecord + 1) = 0;

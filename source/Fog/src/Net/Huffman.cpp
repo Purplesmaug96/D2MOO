@@ -1,6 +1,43 @@
-// D2GS Huffman codec implementation (see d2gs_huffman.h for details).
-#include "d2gs_huffman.h"
-#include "d2gs_huffman_tables.h"
+// Fog huffman codec (real implementations)
+// ---------------------------------------------------------------------
+// The D2 wire protocol uses a proprietary fixed-table Huffman codec.
+// libD2Net.so imports the FOG_1022x symbols below; D2NET_10006 compresses
+// every S->C frame through FOG_10223 before handing it to FOG_10157,
+// and the client-side path of D2Net decompresses with FOG_10224.
+//
+// The codec those entry points drive lives in this same translation
+// unit.  Its interface (namespace d2gs, framing rules, wire-format
+// notes) is documented in HuffmanCodec.h and its tables are in
+// HuffmanTables.h; both are public Fog headers because D2Server frames
+// the same wire format when it is built against the engine rather than
+// the capture-replay path.
+
+#include <Fog.h>
+
+#include <cstdint>
+
+#include <HuffmanCodec.h>
+#include <HuffmanTables.h>
+
+// FOG_10222: pre-compress hook; D2NET_10006 ignores its return.
+int FOG_10222(const uint8_t* pBuffer, int nSize) {
+	return 0;
+}
+
+// FOG_10223: huffman-compress.
+int FOG_10223(uint8_t* pDst, int nDstCap, const uint8_t* pSrc, int nSrcLen) {
+	return d2gs::Huffman_Compress(pSrc, nSrcLen, pDst, nDstCap);
+}
+
+// FOG_10224: huffman-decompress.
+int FOG_10224(char* pDst, int nDstCap, uint8_t* pSrc, int nSrcLen) {
+	return d2gs::Huffman_Decompress(pSrc, nSrcLen, (uint8_t*)pDst, nDstCap);
+}
+
+// FOG_10219: client-side stream verify; unused on the server.
+int FOG_10219(uint8_t* pBuffer) {
+	return 0;
+}
 
 namespace d2gs {
 

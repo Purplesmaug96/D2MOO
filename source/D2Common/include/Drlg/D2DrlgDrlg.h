@@ -233,7 +233,7 @@ struct D2ActiveRoomStrc // Used to be called D2RoomStrc
 
 struct D2RoomTileStrc {
 	D2DrlgRoomStrc* pDrlgRoom;		 // 0x00
-	D2LvlWarpTxt* pLvlWarpTxtRecord; // 0x04
+	int32_t nWarpId;				 // 0x04 lvlwarp row index (-1 = none)
 	BOOL bEnabled;					 // 0x08
 	D2DrlgTileDataStrc* unk0x0C;	 // 0x0C
 	D2DrlgTileDataStrc* unk0x10;	 // 0x10

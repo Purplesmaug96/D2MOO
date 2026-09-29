@@ -11,11 +11,11 @@
 // D2Common.0x6FD78780
 D2ActiveRoomStrc* __fastcall DRLGWARP_GetDestinationRoom(D2DrlgRoomStrc* pDrlgRoom, int nSourceLevel, int* pDestinationLevel, D2LvlWarpTxt** ppLvlWarpTxtRecord) {
 	for (D2RoomTileStrc* pSourceRoomTile = pDrlgRoom->pRoomTiles; pSourceRoomTile; pSourceRoomTile = pSourceRoomTile->pNext) {
-		if (pSourceRoomTile->pLvlWarpTxtRecord->dwLevelId == nSourceLevel) {
+		if (pSourceRoomTile->nWarpId == nSourceLevel) {
 			for (D2RoomTileStrc* pDestinationRoomTile = pSourceRoomTile->pDrlgRoom->pRoomTiles; pDestinationRoomTile; pDestinationRoomTile = pDestinationRoomTile->pNext) {
 				if (pDestinationRoomTile->pDrlgRoom == pDrlgRoom) {
-					*pDestinationLevel = pDestinationRoomTile->pLvlWarpTxtRecord->dwLevelId;
-					*ppLvlWarpTxtRecord = pDestinationRoomTile->pLvlWarpTxtRecord;
+					*pDestinationLevel = pDestinationRoomTile->nWarpId;
+					*ppLvlWarpTxtRecord = DATATBLS_GetLvlWarpTxtRecord(pDestinationRoomTile->nWarpId);
 
 					if (!pSourceRoomTile->pDrlgRoom->pRoom) {
 						DRLGACTIVATE_InitializeRoomEx(pSourceRoomTile->pDrlgRoom);
@@ -40,7 +40,7 @@ void __fastcall DRLGWARP_ToggleRoomTilesEnableFlag(D2DrlgRoomStrc* pDrlgRoom, BO
 // D2Common.0x6FD78810
 void __fastcall DRLGWARP_UpdateWarpRoomSelect(D2DrlgRoomStrc* pDrlgRoom, int nLevelId) {
 	for (D2RoomTileStrc* pRoomTile = pDrlgRoom->pRoomTiles; pRoomTile; pRoomTile = pRoomTile->pNext) {
-		if (pRoomTile->pLvlWarpTxtRecord->dwLevelId == nLevelId) {
+		if (pRoomTile->nWarpId == nLevelId) {
 			if (pRoomTile->unk0x0C) {
 				for (D2DrlgTileDataStrc* i = pRoomTile->unk0x0C; i; i = i->unk0x20) {
 					i->dwFlags &= 0xFFFFFFF7;
@@ -57,7 +57,7 @@ void __fastcall DRLGWARP_UpdateWarpRoomSelect(D2DrlgRoomStrc* pDrlgRoom, int nLe
 // D2Common.0x6FD78870
 void __fastcall DRLGWARP_UpdateWarpRoomDeselect(D2DrlgRoomStrc* pDrlgRoom, int nLevelId) {
 	for (D2RoomTileStrc* pRoomTile = pDrlgRoom->pRoomTiles; pRoomTile; pRoomTile = pRoomTile->pNext) {
-		if (pRoomTile->pLvlWarpTxtRecord->dwLevelId == nLevelId) {
+		if (pRoomTile->nWarpId == nLevelId) {
 			if (pRoomTile->unk0x10) {
 				for (D2DrlgTileDataStrc* i = pRoomTile->unk0x10; i; i = i->unk0x20) {
 					i->dwFlags &= 0xFFFFFFF7;
@@ -242,13 +242,21 @@ int* __fastcall DRLGWARP_GetWarpIdArrayFromLevelId(D2DrlgStrc* pDrlg, int nLevel
 
 // 1.10f:D2Common.0x6FD78D10
 // 1.11 :D2Common.0x6FD77400
-int __fastcall DRLGWARP_GetWarpDestinationFromArray(D2DrlgLevelStrc* pLevel, uint8_t nArrayId) {
+// The array element is a lvlwarp *row index*, not a destination level id --
+// cross-checked against the shipped data: the Blood Moor (levels.txt id 2) has
+// Warp0..Warp7 = 2,-1,-1,-1,0,1,2,3, and lvlwarp rows 0..3 are the four
+// "Wilderness to Cave" warps.  Retail 1.14d feeds this straight into
+// DATATBLS_GetLvlWarpTxtRecord.
+int __fastcall DRLGWARP_GetWarpIdFromArray(D2DrlgLevelStrc* pLevel, uint8_t nArrayId) {
 	return DRLGWARP_GetWarpIdArrayFromLevelId(pLevel->pDrlg, pLevel->nLevelId)[nArrayId];
 }
 
-// D2Common.0x6FD78D80
-D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromWarpIdAndDirection(D2DrlgLevelStrc* pLevel, uint8_t nWarpId, char szDirection) {
-	return DATATBLS_GetLvlWarpTxtRecordFromLevelIdAndDirection(DRLGWARP_GetWarpDestinationFromArray(pLevel, nWarpId), szDirection);
+// 1.11 replaces the 1.10f "...AndDirection" variant: lvlwarp.txt has no
+// Direction column, so retail just indexes the record.  Verified in
+// D2Common.dll: walk pDrlg->pWarp for pLevel->nLevelId, take &warp[0x24],
+// index it with the packed tile's style, then DATATBLS_GetLvlWarpTxtRecord().
+D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromWarpId(D2DrlgLevelStrc* pLevel, uint8_t nWarpId) {
+	return DATATBLS_GetLvlWarpTxtRecord(DRLGWARP_GetWarpIdFromArray(pLevel, nWarpId));
 }
 
 // D2Common.0x6FD78DF0
@@ -263,8 +271,8 @@ D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromUnit(D2DrlgRoomStrc* pD
 	}
 
 	while (pRoomTile) {
-		if (pRoomTile->pLvlWarpTxtRecord->dwLevelId == nClassId && pRoomTile->bEnabled) {
-			return pRoomTile->pLvlWarpTxtRecord;
+		if (pRoomTile->nWarpId == nClassId && pRoomTile->bEnabled) {
+			return DATATBLS_GetLvlWarpTxtRecord(pRoomTile->nWarpId);
 		}
 
 		pRoomTile = pRoomTile->pNext;

@@ -393,11 +393,14 @@ FOGASTNodeStrc* __fastcall DATATBLS_Evaluate_HandleNewOp(FOGASTNodeStrc* pASTBuf
 // Helper function
 static void DATATBLS_ResolveConstantLink(char* szLinkName, FOGExpressionParserContextStrc* pCalc, FOGCalcExpressionParserTokenType* pOutTokenType, int* pTokenAssociatedValue, CalcGetLinkerIndex_t pfnLinkParse) {
 	BOOL bHasResolvedToConstant = FALSE;
+	// When no operation is pending (nPendingOps == 0), index -1 would read
+	// before tPendingOperationsASTs; clamp to the (zero-initialized) slot 0.
+	const int nContextIndex = pCalc->nPendingOps > 0 ? pCalc->nPendingOps - 1 : 0;
 	const int32_t nLinkerIndex = pfnLinkParse(
 		szLinkName,
 		&bHasResolvedToConstant,
-		pCalc->tPendingOperationsASTs[pCalc->nPendingOps - 1],
-		pCalc->tLinkerIndex[pCalc->nPendingOps - 1]);
+		pCalc->tPendingOperationsASTs[nContextIndex],
+		pCalc->tLinkerIndex[nContextIndex]);
 	if (nLinkerIndex >= 0) {
 		*pOutTokenType = bHasResolvedToConstant ? TOKEN_CUSTOM_RAW_CONSTANT : TOKEN_CUSTOM_FUNCTION_PARAMETER_CONSTANT;
 		*pTokenAssociatedValue = nLinkerIndex;
@@ -446,11 +449,12 @@ static const char* DATATBLS_ParseSublinkToken(const char* szExpression, FOGExpre
 	tLinkNameBuffer[nLinkNameSize] = 0;
 
 	BOOL bHasResolvedToConstant = FALSE;
+	const int nContextIndex = pCalc->nPendingOps > 0 ? pCalc->nPendingOps - 1 : 0;
 	const int32_t nLinkerIndex = pfnLinkParse(
 		tLinkNameBuffer,
 		&bHasResolvedToConstant,
-		pCalc->tPendingOperationsASTs[pCalc->nPendingOps - 1],
-		pCalc->tLinkerIndex[pCalc->nPendingOps - 1]);
+		pCalc->tPendingOperationsASTs[nContextIndex],
+		pCalc->tLinkerIndex[nContextIndex]);
 	if (nLinkerIndex >= 0) {
 		*pOutTokenType = TOKEN_CUSTOM_RAW_CONSTANT;
 		*pTokenAssociatedValue = nLinkerIndex;

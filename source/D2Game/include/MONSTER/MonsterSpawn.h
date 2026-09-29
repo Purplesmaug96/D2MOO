@@ -46,8 +46,19 @@ D2UnitStrc* __fastcall D2GAME_SpawnNormalMonster_6FC68E30(D2UnkMonCreateStrc* pM
 
 // D2Game.0x6FC69B60
 void __fastcall MONSTERSPAWN_EquipAncientBarbarians(D2UnitStrc* pUnit);
-// D2Game.0x6FC69C00
-void __fastcall sub_6FC69C00(int32_t a1, D2UnitStrc* a2);
+// D2Game.0x6FC69C00 -- takes the create struct, not a class id.  The
+// decomp's `(int32_t)v85` cast is a decompiler artifact from the 32-bit
+// build; the definition in MonsterSpawn.cpp is authoritative.
+void __fastcall sub_6FC69C00(D2UnkMonCreateStrc* pMonCreate, D2UnitStrc* pUnit);
+// 1.14d: 0x005B21B0 (inlined in 1.10) -- assigns the behavioural UMod for
+// the scripted-monster classes that need one (suicide minions, reanimated
+// hordes, bone prisons, Duriel, the trap monsters, ...).
+void __fastcall MONSTERSPAWN_SetupNormalMods(D2UnkMonCreateStrc* pMonCreate, D2UnitStrc* pUnit);
+// D2Game.0x6FC69B40
+void __fastcall MONSTERSPAWN_SetupBossMods(D2UnkMonCreateStrc* pMonCreate, D2UnitStrc* pUnit);
+// D2Game.0x6FC68E30 -- the engine's single "create a monster at this point"
+// entry point.  Every spawner funnels through it.
+D2UnitStrc* __fastcall D2GAME_SpawnNormalMonster_6FC68E30(D2UnkMonCreateStrc* pMonCreate);
 // D2Game.0x6FC69F10
 D2UnitStrc* __fastcall D2GAME_SpawnMonster_6FC69F10(D2GameStrc* pGame, D2ActiveRoomStrc* pRoom, int32_t nX, int32_t nY, int32_t nMonsterId, int32_t nAnimMode, int32_t a7, int16_t nFlags);
 // D2Game.0x6FC69F70

@@ -164,6 +164,10 @@ struct D2PlayerDataStrc {
 	uint32_t dwHostileDelay;			  // 0x160
 	uint32_t unk0x164;					  // 0x164
 	uint32_t dwGameFrame;				  // 0x168
+	uint32_t bQuestInitSent;			  // 0x16C - engine-internal: the 0x5E/0x28/0x29
+										  //   quest record block has been sent to this
+										  //   client already (QUESTS_SequenceCycler can
+										  //   run twice on a newbie-save join).
 };
 
 #pragma pack()

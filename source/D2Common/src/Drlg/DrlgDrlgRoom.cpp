@@ -546,7 +546,7 @@ void __fastcall sub_6FD77BB0(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom) {
 				pLevel = DRLG_GetLevel(pDrlgRoom->pLevel->pDrlg, pSourceVisArray[nWarpId]);
 
 				pDestinationVisArray = DRLGROOM_GetVisArrayFromLevelId(pDrlgRoom->pLevel->pDrlg, pSourceVisArray[nWarpId]);
-				nWarpDestination = DRLGWARP_GetWarpDestinationFromArray(pDrlgRoom->pLevel, nWarpId);
+				nWarpDestination = DRLGWARP_GetWarpIdFromArray(pDrlgRoom->pLevel, nWarpId);
 
 				if (!pLevel->pFirstRoomEx) {
 					DRLG_InitLevel(pLevel);
@@ -661,7 +661,7 @@ BOOL __fastcall sub_6FD77F00(void* pMemPool, D2DrlgRoomStrc* pDrlgRoom1, uint8_t
 
 				pRoomTile = D2_CALLOC_STRC_POOL(pDrlgRoom1->pLevel->pDrlg->pMempool, D2RoomTileStrc);
 				pRoomTile->pDrlgRoom = pDrlgRoom2;
-				pRoomTile->pLvlWarpTxtRecord = DRLGWARP_GetLvlWarpTxtRecordFromWarpIdAndDirection(pDrlgRoom1->pLevel, nWarpId, 'b');
+				pRoomTile->nWarpId = DRLGWARP_GetWarpIdFromArray(pDrlgRoom1->pLevel, nWarpId);
 				pRoomTile->bEnabled = 1;
 				pRoomTile->pNext = pDrlgRoom1->pRoomTiles;
 				pDrlgRoom1->pRoomTiles = pRoomTile;

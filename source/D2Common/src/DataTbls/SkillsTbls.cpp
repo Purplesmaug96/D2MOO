@@ -249,8 +249,6 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive) {
 	D2TxtLinkStrc* pSkillDescLinker = NULL;
 	D2TxtLinkStrc* pMonStatsLinker = NULL;
 	D2TxtLinkStrc* pRangeLinker = NULL;
-	FILE* pSkillDescCodeBin = NULL;
-	FILE* pSkillsCodeBin = NULL;
 	void* pTmpSkillDescTxt = NULL;
 	void* pTmpMonStatsTxt = NULL;
 	int nHighestClassSkillCount = 0;
@@ -682,13 +680,10 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive) {
 			}
 		}
 
+		// As in DATATBLS_CompileTxt: retail cached these two expression tables
+		// to a loose .bin next to the process, but both are re-read straight
+		// from the MPQ below, so the write only produced junk files.
 		if (sgptDataTables->bCompileTxt && sgptDataTables->pSkillsCode) {
-			wsprintfA(szFileName, "%s\\%s.bin", "DATA\\GLOBAL\\EXCEL", "skillscode");
-			fopen_s(&pSkillsCodeBin, szFileName, "wb");
-			if (pSkillsCodeBin) {
-				FileLockAndWrite(sgptDataTables->pSkillsCode, sgptDataTables->nSkillsCodeSize, 1u, pSkillsCodeBin);
-				fclose(pSkillsCodeBin);
-			}
 			D2_FREE_POOL(nullptr, sgptDataTables->pSkillsCode);
 		}
 	}
@@ -700,12 +695,6 @@ void __fastcall DATATBLS_LoadSkills_SkillDescTxt(HD2ARCHIVE hArchive) {
 	sgptDataTables->nSkillsCodeSize = dwSize;
 
 	if (sgptDataTables->bCompileTxt && sgptDataTables->pSkillDescCode) {
-		wsprintfA(szFileName, "%s\\%s.bin", "DATA\\GLOBAL\\EXCEL", "skilldesccode");
-		fopen_s(&pSkillDescCodeBin, szFileName, "wb");
-		if (pSkillDescCodeBin) {
-			FileLockAndWrite(sgptDataTables->pSkillDescCode, sgptDataTables->nSkillDescCodeSize, 1, pSkillDescCodeBin);
-			fclose(pSkillDescCodeBin);
-		}
 		D2_FREE_POOL(nullptr, sgptDataTables->pSkillDescCode);
 	}
 

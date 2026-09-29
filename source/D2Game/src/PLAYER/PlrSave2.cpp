@@ -1472,18 +1472,49 @@ int32_t __fastcall PLRSAVE2_ProcessSaveFile(D2GameStrc* pGame, D2ClientStrc* pCl
 
 		const uint8_t nAct = CLIENTS_GetActNo(pClient);
 		PLAYERSTATS_SetStatsForStartingAct(pGame, pPlayer, nAct);
+
+		// Starting-item placement grants the scroll/book skills and announces
+		// their quantities with 0x22.  The retail stream delivers the 0x94
+		// base-skill list before any 0x22 (the client's 0x22 handler aborts on
+		// a missing skill node), so hold those announces back and flush them
+		// only after the 0x94 sent below has gone out.
+		D2GAME_PACKETS_BeginDefer0x22();
 		PLAYER_CreateStartItemsFromCharStatsTxt(pPlayer, pGame, (void*)(uintptr_t)nAct);
+		D2GAME_PACKETS_EndDefer0x22(pClient);
 
 		pPlayerData->nLeftSkillId = 0;
 		pPlayerData->nRightSkillId = 0;
 
 		if (nAct == ACT_I) {
 			D2CharStatsTxt* pCharStatsTxtRecord = PLRSAVE2_GetCharStatsTxtRecord(pPlayer ? pPlayer->dwClassId : -1);
-			if (pCharStatsTxtRecord && pCharStatsTxtRecord->wStartSkill && SKILLS_GetHighestLevelSkillFromUnitAndId(pPlayer, pCharStatsTxtRecord->wStartSkill)) {
+			// The old guard also demanded SKILLS_GetHighestLevelSkillFromUnitAndId()
+			// already return the start skill.  A character built from a
+			// header-only save has *no* skills yet, so that call always returned
+			// NULL and the assignment below was dead code -- every new character
+			// came out of this branch with an empty skill list.  Range-check the
+			// id against skills.txt instead, the way Player.cpp:165 does for the
+			// start-item single-skill stat.
+			if (pCharStatsTxtRecord && pCharStatsTxtRecord->wStartSkill > 0 &&
+				pCharStatsTxtRecord->wStartSkill < sgptDataTables->nSkillsTxtRecordCount) {
 				D2GAME_AssignSkill_6FD13800(pPlayer, 0, pCharStatsTxtRecord->wStartSkill, -1);
 				pPlayerData->nRightSkillId = pCharStatsTxtRecord->wStartSkill;
 			}
 		}
+
+		// PLRSAVE2_ReadSkills() is the only other caller of sub_6FC3DCA0(), and
+		// a header-only newbie save never reaches it, so the client would never
+		// be told what skills the character has.  Send the list here, the same
+		// way the save-file path does.  Safe before the 0x03 act packet: the
+		// client's 0x94 handler (0x45dd60) only looks the unit up by guid and
+		// never touches the act global, and guid 1 is already bound by the
+		// ASSIGNPLAYER that CLIENTS_AddPlayerToGame sent ahead of us.
+		sub_6FC3DCA0(pClient, pPlayer);
+
+		// The deferred scroll/book 0x22s are sent once the player's base skill
+		// list is known to the client, mirroring the retail packet order
+		// (0x94 then 0x22) and the retail bIsCorpse=0 predicate for live
+		// players.
+		D2GAME_PACKETS_FlushDeferred0x22();
 
 		QUESTS_SequenceCycler(pGame, pPlayer, 1);
 		*ppPlayer = pPlayer;

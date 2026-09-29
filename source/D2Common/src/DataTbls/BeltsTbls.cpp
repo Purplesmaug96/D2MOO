@@ -74,7 +74,11 @@ void __fastcall DATATBLS_LoadBeltsTxt(HD2ARCHIVE hArchive) {
 
 	gpBeltsTxtTable = (D2BeltsTxt*)DATATBLS_CompileTxt(hArchive, "belts", pTbl, &nRecordCount, sizeof(D2BeltsTxt));
 
-	D2_ASSERT((nRecordCount / NUM_GAME_RESOLUTIONS) == BELT_IDX_COUNT_PER_RESOLUTION);
+	// The old d2data.mpq belts.txt only carries the 640x480 set (7 rows);
+	// the 1.14d belts.bin has both resolutions (14 rows). Server-side
+	// callers (D2Inventory.cpp / ItemMode.cpp) always request bHigherRes=0,
+	// so require one resolution's worth of records instead of an exact match.
+	D2_ASSERT(nRecordCount >= BELT_IDX_COUNT_PER_RESOLUTION);
 }
 
 // D2Common.0x6FD493A0

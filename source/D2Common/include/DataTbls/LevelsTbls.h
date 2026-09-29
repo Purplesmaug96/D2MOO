@@ -187,20 +187,26 @@ struct D2LvlTypesTxt {
 	uint32_t dwExpansion; // 0x784
 };
 
+// Retail 1.14d D2Common.0x6FD61DE (verified against D2Common.dll): the record
+// is 0x24 bytes and the compiled columns are exactly these nine.  1.10f also
+// declared dwLevelId / dwTiles / szDirection, but retail's lvlwarp.txt has no
+// such columns, so the game never sees them -- the warp *row index* is what the
+// DRLG passes around (see DATATBLS_GetLvlWarpTxtRecord).
 struct D2LvlWarpTxt {
-	uint32_t dwLevelId;	   // 0x00
-	uint32_t dwSelectX;	   // 0x04
-	uint32_t dwSelectY;	   // 0x08
-	uint32_t dwSelectDX;   // 0x0C
-	uint32_t dwSelectDY;   // 0x10
-	uint32_t dwExitWalkX;  // 0x14
-	uint32_t dwExitWalkY;  // 0x18
-	uint32_t dwOffsetX;	   // 0x1C
-	uint32_t dwOffsetY;	   // 0x20
-	uint32_t dwLitVersion; // 0x24
-	uint32_t dwTiles;	   // 0x28
-	char szDirection[4];   // 0x30
+	uint32_t dwSelectX;    // 0x00
+	uint32_t dwSelectY;    // 0x04
+	uint32_t dwSelectDX;   // 0x08
+	uint32_t dwSelectDY;   // 0x0C
+	uint32_t dwExitWalkX;  // 0x10
+	uint32_t dwExitWalkY;  // 0x14
+	uint32_t dwOffsetX;    // 0x18
+	uint32_t dwOffsetY;    // 0x1C
+	uint32_t dwLitVersion; // 0x20
 };
+
+// Retail passes 0x24 as the record size to DATATBLS_CompileTxt, and
+// DATATBLS_GetLvlWarpTxtRecord indexes with a stride of 0x24.
+static_assert(sizeof(D2LvlWarpTxt) == 0x24, "D2LvlWarpTxt must match retail's 0x24-byte lvlwarp record");
 
 #pragma pack()
 
@@ -248,8 +254,11 @@ D2LvlPrestTxt* __fastcall DATATBLS_GetLvlPrestTxtRecordFromLevelId(int nLevelId)
 void __fastcall DATATBLS_LoadLvlWarpTxt(HD2ARCHIVE hArchive);
 // D2Common.0x6FD61DD0
 void __fastcall DATATBLS_UnloadLvlWarpTxt();
-// D2Common.0x6FD61DE0
-D2LvlWarpTxt* __fastcall DATATBLS_GetLvlWarpTxtRecordFromLevelIdAndDirection(int nLevelId, char szDirection);
+// Retail 1.14d replaces the 1.10f "lookup by level id and direction" with a
+// plain indexed fetch; -1 means "no warp".  Verified in D2Common.dll:
+// D2_ASSERT(sgptWarpDefs); if (nIndex == -1) return NULL;
+// return &sgptWarpDefs[nIndex];  (record stride 0x24)
+D2LvlWarpTxt* __fastcall DATATBLS_GetLvlWarpTxtRecord(int nIndex);
 // D2Common.0x6FD61E60
 void __fastcall DATATBLS_LoadLvlMazeTxt(HD2ARCHIVE hArchive);
 // D2Common.0x6FD61F90

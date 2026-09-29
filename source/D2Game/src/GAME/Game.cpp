@@ -23,7 +23,10 @@
 #include <DataTbls/ItemsTbls.h>
 #include <DataTbls/MonsterTbls.h>
 #include <DataTbls/ObjectsTbls.h>
+#include <D2Monsters.h>
 #include <UselessOrdinals.h>
+#include <DataTbls/LevelsIds.h>
+#include <DataTbls/MonsterIds.h>
 
 #include "GAME/Arena.h"
 #include "GAME/CCmd.h"
@@ -36,6 +39,7 @@
 #include "ITEMS/Items.h"
 #include "MONSTER/MonsterMode.h"
 #include "MONSTER/MonsterRegion.h"
+#include "MONSTER/MonsterSpawn.h"
 #include "OBJECTS/ObjRgn.h"
 #include "OBJECTS/Objects.h"
 #include "PLAYER/PlayerList.h"
@@ -154,6 +158,7 @@ D2GameGUID __fastcall GAME_GetGameGUIDFromGameId(uint16_t nGameId) {
 	}
 
 	LeaveCriticalSection(&gCriticalSection_6FD45800);
+
 	return nGUID;
 }
 
@@ -445,6 +450,17 @@ BOOL __stdcall GAME_CreateNewEmptyGame(char* szGameName, const char* szPassword,
 	D2_ASSERT(*pHGame == D2GameReservedSlotHandle);
 	*pHGame = hGame;
 	LeaveCriticalSection(&gCriticalSection_6FD45800);
+
+	// Register the game GUID in the per-tick game list.  The decompiled port
+	// only ever *clears* entries here (GAME_CloseGame), so creation must add
+	// them; without this, GAME_UpdateGamesProgress / GAME_UpdateClients /
+	// GAME_CloseAllGames iterate an all-zero list and the game never ticks.
+	for (int32_t i = 0; i < (int32_t)std::size(gnGamesGUIDs_6FD447F8); ++i) {
+		if (!gnGamesGUIDs_6FD447F8[i]) {
+			gnGamesGUIDs_6FD447F8[i] = (int32_t)(uintptr_t)GetHashValueFromGameHandle(hGame);
+			break;
+		}
+	}
 
 	pGame->nSyncTimer = FOG_10055_GetSyncTime();
 	if (pGame->nSyncTimer <= 1) {

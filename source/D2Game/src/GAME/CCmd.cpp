@@ -182,8 +182,19 @@ void __fastcall CCMD_ProcessClientMessage(void* pData, int32_t nPacketSize) {
 
 	pClient->dwLastPacketTick = GetTickCount();
 
+	// The list-1 entry is [u32 dwClientId][client packet], and the queued
+	// length covers BOTH -- the network layer counts the header byte too.
+	// Every in-game handler validates the packet's exact byte count against
+	// what the client put on the wire (0x13 interact is 9 bytes, 0x16 pick
+	// up is 13, ...), so the header has to come off before dispatch;
+	// otherwise every in-game packet misses its size test, the handler
+	// returns 3 and the client is logged as a cheater with its input
+	// silently dropped (no walking, no interacting, no stash).
+	const int32_t nClientPacketSize = nPacketSize > 4 ? nPacketSize - 4 : 0;
+
 	D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(pClient, 0);
-	if (pPlayer && pPlayer->dwUnitType == UNIT_PLAYER && D2GAME_PACKET_Handler_6FC89320(pGame, pPlayer, pPacket, nPacketSize) >= 3 && pGame->nGameType != 3) {
+	if (pPlayer && pPlayer->dwUnitType == UNIT_PLAYER && nClientPacketSize > 0 &&
+		D2GAME_PACKET_Handler_6FC89320(pGame, pPlayer, pPacket, nClientPacketSize) >= 3 && pGame->nGameType != 3) {
 		GAME_LogMessage(3, "[HACKLIST]  ProcessClientMessage: Client %d '%s' believed to be cheating. Command was %d", nClientId, pClient->szName, *pPacket);
 		sub_6FC36C20(pGame, nClientId, __FILE__, __LINE__);
 	}

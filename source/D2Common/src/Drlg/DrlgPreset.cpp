@@ -1821,7 +1821,7 @@ D2DrlgRoomStrc* __fastcall DRLGPRESET_BuildArea(D2DrlgLevelStrc* pLevel, D2DrlgM
 void __fastcall DRLGPRESET_BuildPresetArea(D2DrlgLevelStrc* pLevel, D2DrlgGridStrc* pDrlgGrid, int nFlags, D2DrlgMapStrc* pDrlgMap, BOOL bSingleRoom) {
 	int* pVisArray = DRLGROOM_GetVisArrayFromLevelId(pLevel->pDrlg, pLevel->nLevelId);
 	for (int i = 0; i < 8; ++i) {
-		if (pVisArray[i] && DRLGWARP_GetWarpDestinationFromArray(pLevel, i) == -1) {
+		if (pVisArray[i] && DRLGWARP_GetWarpIdFromArray(pLevel, i) == -1) {
 			nFlags |= (DRLGROOMFLAG_HAS_WARP_0 << i);
 		}
 	}

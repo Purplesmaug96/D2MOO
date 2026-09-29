@@ -80,7 +80,10 @@ void __fastcall DATATBLS_LoadInventoryTxt(HD2ARCHIVE hArchive) {
 	};
 
 	sgptDataTables->pInventoryTxt = (D2InventoryTxt*)DATATBLS_CompileTxt(hArchive, "inventory", pTbl, &sgptDataTables->nInventoryTxtRecordCount, sizeof(D2InventoryTxt));
-	D2_ASSERT(sgptDataTables->nInventoryTxtRecordCount == NUM_INVENTORY_PAGE_STATS * NUM_GAME_RESOLUTIONS);
+	// The old d2data.mpq inventory.txt carries one extra row (33 vs the 32 of
+	// the 1.14d inventory.bin); only records 0..31 (PAGE * RESOLUTION) are
+	// ever indexed, so require at least that many instead of an exact match.
+	D2_ASSERT(sgptDataTables->nInventoryTxtRecordCount >= NUM_INVENTORY_PAGE_STATS * NUM_GAME_RESOLUTIONS);
 }
 
 // D2Common.0x6FD54F10

@@ -465,7 +465,7 @@ void __fastcall DRLG_ComputeLevelWarpInfo(D2DrlgLevelStrc* pLevel) {
 		if ((pDrlgRoom->dwFlags & DRLGROOMFLAG_HAS_WARP_MASK) != 0 && !bHasWarp) {
 			int nWarpIndex = 0;
 			for (int warpMask = DRLGROOMFLAG_HAS_WARP_0; (warpMask & DRLGROOMFLAG_HAS_WARP_MASK) != 0; warpMask <<= 1) {
-				if (pDrlgRoom->dwFlags & warpMask && DRLGWARP_GetWarpDestinationFromArray(pLevel, nWarpIndex) != -1) {
+				if (pDrlgRoom->dwFlags & warpMask && DRLGWARP_GetWarpIdFromArray(pLevel, nWarpIndex) != -1) {
 					bHasWarp = true;
 				}
 				nWarpIndex++;

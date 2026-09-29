@@ -29,9 +29,10 @@ D2ActiveRoomStrc* __fastcall sub_6FD788D0(D2DrlgStrc* pDrlg, int nLevelId, int n
 D2DrlgRoomStrc* __fastcall DRLGWARP_GetWaypointRoomExFromLevel(D2DrlgLevelStrc* pLevel, int* pX, int* pY);
 // D2Common.0x6FD78CC0
 int* __fastcall DRLGWARP_GetWarpIdArrayFromLevelId(D2DrlgStrc* pDrlg, int nLevelId);
-// D2Common.0x6FD78D10
-int __fastcall DRLGWARP_GetWarpDestinationFromArray(D2DrlgLevelStrc* pLevel, uint8_t nArrayId);
-// D2Common.0x6FD78D80
-D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromWarpIdAndDirection(D2DrlgLevelStrc* pLevel, uint8_t nWarpId, char szDirection);
+// 1.11: the array element is a lvlwarp *row index* (not a destination level id)
+// and lvlwarp.txt has no Direction column, so neither the old
+// "GetWarpDestinationFromArray" name nor the "...AndDirection" accessor survive.
+int __fastcall DRLGWARP_GetWarpIdFromArray(D2DrlgLevelStrc* pLevel, uint8_t nArrayId);
+D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromWarpId(D2DrlgLevelStrc* pLevel, uint8_t nWarpId);
 // D2Common.0x6FD78DF0
 D2LvlWarpTxt* __fastcall DRLGWARP_GetLvlWarpTxtRecordFromUnit(D2DrlgRoomStrc* pDrlgRoom, D2UnitStrc* pUnit);

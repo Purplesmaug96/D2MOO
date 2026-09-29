@@ -1653,11 +1653,17 @@ BOOL __stdcall sub_6F8A32B0(int a1, int nItemType) {
 			}
 
 			D2ItemTypesTxt* pItemTypesTxtRecord = &gpItemTypesTxt_6F8FD244[v5];
-			if (pItemTypesTxtRecord->nEquiv1) {
+			// nEquiv1/nEquiv2 are int16 linker indices; the shipped
+			// 1.14d itemtypes.bin stores 0xFFFF (-1) in an empty reference
+			// cell, so both tests have to be signed "> 0".  Testing for mere
+			// non-zero-ness pushes -1 and stalls the walk on its first
+			// step, so no type was ever found to be equivalent to its
+			// parent (see DATATBLS_CheckItemTypesEquivalenceNested).
+			if (pItemTypesTxtRecord->nEquiv1 > 0) {
 				++nStackIndex;
 				itemTypeStack[nStackIndex] = pItemTypesTxtRecord->nEquiv1;
 
-				if (pItemTypesTxtRecord->nEquiv2) {
+				if (pItemTypesTxtRecord->nEquiv2 > 0) {
 					++nStackIndex;
 					itemTypeStack[nStackIndex] = pItemTypesTxtRecord->nEquiv2;
 				}

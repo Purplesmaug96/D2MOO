@@ -126,19 +126,18 @@ uint32_t __stdcall DATATBLS_GetCurrentLevelFromExp(int nClass, uint32_t dwExperi
 
 // D2Common.0x6FD49760
 void __fastcall DATATBLS_GetBinFileHandle(HD2ARCHIVE hArchive, const char* szFile, void** ppFileHandle, int* pSize, int* pSizeEx) {
-	FILE* pFile = NULL;
 	size_t dwSize = 0;
 	char szFilePath[MAX_PATH] = {};
 
 	wsprintfA(szFilePath, "%s\\%s.bin", "DATA\\GLOBAL\\EXCEL", szFile);
 
+	// Retail wrote the compiled table out as a loose DATA\GLOBAL\EXCEL\<name>.bin
+	// here and expected the next run to read that file back.  Every read on this
+	// port goes through ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT, i.e. straight
+	// out of the MPQ, so the loose file was never opened again -- it just left a
+	// junk file named with literal backslashes in the working directory.  The
+	// caller's buffer is still released and refilled from the archive.
 	if (sgptDataTables->bCompileTxt && *ppFileHandle) {
-		fopen_s(&pFile, szFilePath, "wb");
-		if (pFile) {
-			FileLockAndWrite(*ppFileHandle, *pSize, 1, pFile);
-
-			fclose(pFile);
-		}
 		D2_FREE_POOL(nullptr, *ppFileHandle);
 	}
 
@@ -520,7 +519,6 @@ void __stdcall DATATBLS_WriteBinFile(char* szFileName, void* pWriteBuffer, size_
 // D2Common.0x6FD4FD70 (#10578)
 void* __stdcall DATATBLS_CompileTxt(HD2ARCHIVE hArchive, const char* szName, D2BinFieldStrc* pTbl, int* pRecordCount, size_t dwSize) {
 	D2BinFileStrc* pBinFile = NULL;
-	FILE* pFile = NULL;
 	void* pData = NULL;
 	void* pTxt = NULL;
 	int nRecordCount = 0;
@@ -545,14 +543,33 @@ void* __stdcall DATATBLS_CompileTxt(HD2ARCHIVE hArchive, const char* szName, D2B
 		pTxt = D2_CALLOC_POOL(nullptr, dwSize * nRecordCount);
 		FOG_10207(pBinFile, pTbl, pTxt, nRecordCount, dwSize);
 		FOG_FreeBinFile(pBinFile);
+		D2_FREE_POOL(nullptr, pData);
+		pData = NULL;
 
-		wsprintfA(szFilePath, "%s\\%s%s", "DATA\\GLOBAL\\EXCEL", szName, ".bin");
-		fopen_s(&pFile, szFilePath, "wb");
-		if (pFile) {
-			FileLockAndWrite(&nRecordCount, 4, 1, pFile);
-			FileLockAndWrite(pTxt, dwSize * nRecordCount, 1, pFile);
-			fclose(pFile);
+		// Retail dumped the compiled table to a loose DATA\GLOBAL\EXCEL\<name>.bin
+		// as a cache for the next run.  Nothing on this port ever reads it back --
+		// both the .txt above and the .bin below are pulled through
+		// ARCHIVE_ALLOC_BUFFER_AND_READ_FILE_TO_IT, i.e. out of the MPQ -- so on
+		// POSIX the write only littered the working directory with one junk file
+		// per table, named with literal backslashes.  Dropped.
+		//
+		// The .txt just compiled is also the table's data source unless the
+		// caller asked for the .bin. Falling through would read and compile
+		// the very same .txt a second time, and FOG_10207 registers every
+		// linker-backed field (items "code", bodylocs, skills, monstats, ...)
+		// on each pass. Two registrations per row means
+		// FOG_GetLinkIndex() stops returning the table row index, which is
+		// the invariant DATATBLS_GetItemRecordFromItemCode relies on when it
+		// hands back &pItemsTxt[id] unchecked: "hp1" resolved to
+		// 2*(306+202)+79 = 1095 with only 662 item records, the item unit
+		// creation then failed, and PLAYER_CreateStartItem dereferenced NULL.
+		if (!DATATBLS_LoadFromBin) {
+			if (pRecordCount) {
+				*pRecordCount = nRecordCount;
+			}
+			return pTxt;
 		}
+
 		D2_FREE_POOL(nullptr, pTxt);
 	}
 
@@ -706,6 +723,17 @@ void __stdcall DATATBLS_LoadAllTxts(HD2ARCHIVE hArchive, int a2, int a3) {
 		{ "ExpRatio", TXTFIELD_DWORD, 0, 28, NULL },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
+
+	// bCompileTxt records which source the current pass reads.  Nothing ever
+	// set it, so it stayed 0 and every table guarded by
+	// `if (sgptDataTables->bCompileTxt)` inside DATATBLS_LoadSomeTxts was
+	// silently skipped: playerclass, bodylocs, storepage, elemtypes,
+	// hitclass, colors, hiredesc, monmode, plrmode, monai, monplace,
+	// skillcalc, misscalc and events all stayed NULL.  Among other things
+	// that left pMonPlaceLinker empty, so every `place_*` row of
+	// monpreset.txt (i.e. every monster spawn authored in a .dsb unit
+	// record) failed to resolve.  The flag is exactly !DATATBLS_LoadFromBin.
+	sgptDataTables->bCompileTxt = !DATATBLS_LoadFromBin;
 
 	DATATBLS_LoadSomeTxts(hArchive);
 	DATATBLS_LoadItemTypesTxt(hArchive);

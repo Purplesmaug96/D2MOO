@@ -1053,33 +1053,44 @@ void __fastcall QUESTS_SequenceCycler(D2GameStrc* pGame, D2UnitStrc* pPlayer, in
 		}
 	}
 
-	D2GSPacketSrv5E packet5E = {};
+	// The 0x5E/0x28/0x29 quest-record block is the per-player "here is the quest
+	// state" handshake.  QUESTS_SequenceCycler() itself can legally be invoked
+	// twice for the same player (e.g. a newbie save goes through
+	// PLRSAVE2_ProcessSaveFile() which cycles with bGameEnter=1, and then
+	// D2GAME_SAVE_GetUnitDataFromFile_6FC8CB40() cycles again with bGameEnter=0),
+	// but the block must only hit the wire once -- the real capture shows exactly
+	// one 0x5E/0x28/0x29 per join.  Guard it per player.
+	if (!pPlayerData->bQuestInitSent) {
+		pPlayerData->bQuestInitSent = 1;
 
-	for (int32_t i = 0; i < std::size(gpQuestInitTable); ++i) {
-		D2QuestDataStrc* pQuest = QUESTS_GetQuestData(pGame, gpQuestInitTable[i].nChainNo);
+		D2GSPacketSrv5E packet5E = {};
 
-		D2_ASSERT(pQuest);
+		for (int32_t i = 0; i < std::size(gpQuestInitTable); ++i) {
+			D2QuestDataStrc* pQuest = QUESTS_GetQuestData(pGame, gpQuestInitTable[i].nChainNo);
 
-		packet5E.unk0x001[i] = pQuest->bNotIntro;
-	}
+			D2_ASSERT(pQuest);
 
-	D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__);
+			packet5E.unk0x001[i] = pQuest->bNotIntro;
+		}
 
-	packet5E.nHeader = 0x5E;
-	D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet5E, sizeof(packet5E));
+		D2ClientStrc* pClient = SUNIT_GetClientFromPlayer(pPlayer, __FILE__, __LINE__);
 
-	D2GAME_SendPacket0x28_6FC3F2F0(pClient, 0x28u, 6u, 0, pQuestFlags, 0);
+		packet5E.nHeader = 0x5E;
+		D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet5E, sizeof(packet5E));
 
-	QUESTS_SendCurrentFlags(pGame, pClient);
+		D2GAME_SendPacket0x28_6FC3F2F0(pClient, 0x28u, 6u, 0, pQuestFlags, 0);
 
-	D2QuestDataStrc* pQuestData1 = pGame->pQuestControl->pLastQuest;
-	while (pQuestData1 && pQuestData1->nQuestNo != 1) {
-		pQuestData1 = pQuestData1->pPrev;
-	}
-	if (pQuestData1 && ACT1Q1_CanClientFXBeTriggered(pQuestData1)) {
-		D2GSPacketSrv89 packet89 = {};
-		packet89.nHeader = 0x89;
-		D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet89, sizeof(packet89));
+		QUESTS_SendCurrentFlags(pGame, pClient);
+
+		D2QuestDataStrc* pQuestData1 = pGame->pQuestControl->pLastQuest;
+		while (pQuestData1 && pQuestData1->nQuestNo != 1) {
+			pQuestData1 = pQuestData1->pPrev;
+		}
+		if (pQuestData1 && ACT1Q1_CanClientFXBeTriggered(pQuestData1)) {
+			D2GSPacketSrv89 packet89 = {};
+			packet89.nHeader = 0x89;
+			D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet89, sizeof(packet89));
+		}
 	}
 }
 

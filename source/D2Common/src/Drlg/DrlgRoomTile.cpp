@@ -509,7 +509,11 @@ void __fastcall DRLGROOMTILE_LoadInitRoomTiles(D2DrlgRoomStrc* pDrlgRoom, D2Drlg
 // D2Common.0x6FD89360
 BOOL __fastcall DRLGROOMTILE_AddWarp(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY, uint32_t nPackedTileInformation, int nTileType) {
 	D2C_PackedTileInformation nTileInformation{ nPackedTileInformation };
-	D2LvlWarpTxt* pLvlWarpTxtRecord = DRLGWARP_GetLvlWarpTxtRecordFromWarpIdAndDirection(pDrlgRoom->pLevel, nTileInformation.nTileStyle, nTileType == TILETYPE_WALL_RIGHT_EXIT ? 'r' : 'l');
+	// The preset tile is identified by its lvlwarp row index, which is also what
+	// DRLGWARP_UpdateWarpRoomSelect / DUNGEON_GetWarpTileFromRoomAndSourceLevelId
+	// later match the live unit's class id against.
+	const int nWarpId = DRLGWARP_GetWarpIdFromArray(pDrlgRoom->pLevel, nTileInformation.nTileStyle);
+	D2LvlWarpTxt* pLvlWarpTxtRecord = DATATBLS_GetLvlWarpTxtRecord(nWarpId);
 
 	if (pLvlWarpTxtRecord) {
 		int nPosX = nX - pDrlgRoom->nTileXPos;
@@ -521,7 +525,7 @@ BOOL __fastcall DRLGROOMTILE_AddWarp(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY, 
 			nPosX += pLvlWarpTxtRecord->dwOffsetX;
 			nPosY += pLvlWarpTxtRecord->dwOffsetY;
 
-			DRLGROOM_AllocPresetUnit(pDrlgRoom, pDrlgRoom->pLevel->pDrlg->pMempool, UNIT_TILE, pLvlWarpTxtRecord->dwLevelId, OBJMODE_NEUTRAL, nPosX, nPosY);
+			DRLGROOM_AllocPresetUnit(pDrlgRoom, pDrlgRoom->pLevel->pDrlg->pMempool, UNIT_TILE, nWarpId, OBJMODE_NEUTRAL, nPosX, nPosY);
 
 			return TRUE;
 		}
@@ -532,26 +536,19 @@ BOOL __fastcall DRLGROOMTILE_AddWarp(D2DrlgRoomStrc* pDrlgRoom, int nX, int nY, 
 
 // Helper functions
 static D2RoomTileStrc* DRLGROOMTILE_FindDestinationWarpTile(D2DrlgRoomStrc* pDrlgRoom, D2C_PackedTileInformation nTileInformation) {
-	const int nDestinationLevelId = DRLGWARP_GetWarpDestinationFromArray(pDrlgRoom->pLevel, nTileInformation.nTileStyle);
+	const int nWarpId = DRLGWARP_GetWarpIdFromArray(pDrlgRoom->pLevel, nTileInformation.nTileStyle);
 	D2RoomTileStrc* pWarpTile = pDrlgRoom->pRoomTiles;
-	while (pWarpTile && pWarpTile->pLvlWarpTxtRecord->dwLevelId != nDestinationLevelId) {
+	while (pWarpTile && pWarpTile->nWarpId != nWarpId) {
 		pWarpTile = pWarpTile->pNext;
 	}
 	return pWarpTile;
 }
 
+// 1.11: no Direction column in lvlwarp.txt, so the 1.10f "update the record to
+// match the exit side" step is gone -- the row already describes both sides.
 static D2LvlWarpTxt* DRLGROOMTILE_UpdateAndGetLvlWarpTxtRecord(D2RoomTileStrc* pWarpTile, int nTileType) {
-	D2LvlWarpTxt* pLvlWarpTxtRecord = pWarpTile->pLvlWarpTxtRecord;
-	D2_ASSERT(pLvlWarpTxtRecord);
-
-	if (pLvlWarpTxtRecord->szDirection[0] != 'b') {
-		const char szDirection = nTileType == TILETYPE_WALL_RIGHT_EXIT ? 'r' : 'l';
-
-		if (pLvlWarpTxtRecord->szDirection[0] != szDirection) {
-			pWarpTile->pLvlWarpTxtRecord = DATATBLS_GetLvlWarpTxtRecordFromLevelIdAndDirection(pLvlWarpTxtRecord->dwLevelId, szDirection);
-		}
-	}
-	return pWarpTile->pLvlWarpTxtRecord;
+	D2_ASSERT(pWarpTile);
+	return DATATBLS_GetLvlWarpTxtRecord(pWarpTile->nWarpId);
 }
 
 // 1.10f:D2Common.0x6FD89410
@@ -578,7 +575,6 @@ void __fastcall DRLGROOMTILE_LoadWallWarpTiles(D2DrlgRoomStrc* pDrlgRoom, D2Drlg
 		}
 
 		if (pWarpDef->dwLitVersion) {
-			nTileInformation.nTileSequence |= pWarpDef->dwTiles;
 			D2TileLibraryEntryStrc* pTileCache = DRLGROOMTILE_GetTileCache(pDrlgRoom, nTileType, nTileInformation.nPackedValue);
 			if (D2DrlgTileDataStrc* pDrlgTileData = DRLGROOMTILE_InitWallTileData(pDrlgRoom, &pWarpTile->unk0x0C, pDrlgRoom->nTileXPos + pTileData->nPosX, pTileData->nPosY + pDrlgRoom->nTileYPos, nTileInformation.nPackedValue, pTileCache, nTileType)) {
 				pDrlgTileData->dwFlags |= MAPTILE_HIDDEN;

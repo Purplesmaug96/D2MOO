@@ -94,6 +94,13 @@ void __fastcall D2GAME_PACKETS_SendPacket0x96_WalkVerify_6FC3DA90(D2ClientStrc* 
 void __fastcall D2GAME_PACKETS_SendPacket0x21_UpdateSkills_6FC3DB50(D2ClientStrc* pClient, D2UnitStrc* pUnit, WORD nSkillId, BYTE nSkillLevel, BYTE a4);
 // D2Game.0x6FC3DBE0
 void __fastcall D2GAME_PACKETS_SendPacket0x22_6FC3DBE0(D2ClientStrc* pClient, BYTE nUnitType, int32_t nUnitGUID, int16_t nSkillId, char a5);
+// Newbie-join 0x22 deferral: hold scroll/book skill-quantity announcements
+// made while the starting items are placed, and flush them once the 0x94
+// base-skill-list packet has gone out (client asserts 0xAD6 on a missing
+// skill node otherwise).
+void D2GAME_PACKETS_BeginDefer0x22(void);
+int32_t D2GAME_PACKETS_EndDefer0x22(D2ClientStrc* pClient);
+void D2GAME_PACKETS_FlushDeferred0x22(void);
 // D2Game.0x6FC3DC60
 void __fastcall D2GAME_PACKETS_SendPacket0x23_6FC3DC60(D2ClientStrc* pClient, BYTE nUnitType, int32_t nUnitGUID, BYTE a4, WORD a5, int32_t a6);
 // D2Game.0x6FC3DCA0

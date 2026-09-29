@@ -168,7 +168,12 @@ void __fastcall DATATBLS_LoadObjectsTxt(HD2ARCHIVE hArchive) {
 
 	for (int i = 0; i < sgptDataTables->nObjectsTxtRecordCount; ++i) {
 		memset(sgptDataTables->pObjectsTxt[i].wszName, 0x00, sizeof(sgptDataTables->pObjectsTxt[i].wszName));
-		Unicode::strncpy(sgptDataTables->pObjectsTxt[i].wszName, D2LANG_GetStringByReferenceString(sgptDataTables->pObjectsTxt[i].szName), sizeof(sgptDataTables->pObjectsTxt[i].szName));
+		const Unicode* wszName = D2LANG_GetStringByReferenceString(sgptDataTables->pObjectsTxt[i].szName);
+		if (wszName) {
+			Unicode::strncpy(sgptDataTables->pObjectsTxt[i].wszName, wszName, sizeof(sgptDataTables->pObjectsTxt[i].szName));
+		} else {
+			Unicode::toUnicode(sgptDataTables->pObjectsTxt[i].wszName, sgptDataTables->pObjectsTxt[i].szName, sizeof(sgptDataTables->pObjectsTxt[i].szName) - 1);
+		}
 
 		for (int j = 0; j < 8; ++j) {
 			sgptDataTables->pObjectsTxt[i].dwFrameCnt[j] <<= 8;

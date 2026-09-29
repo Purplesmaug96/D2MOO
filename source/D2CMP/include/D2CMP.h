@@ -159,15 +159,15 @@ D2FUNC_DLL(D2CMP, GetGfxFileExtension, const char*, __stdcall, (BOOL bAllowCompr
 D2FUNC_DLL(D2CMP, InitSpriteCache, void, __stdcall, (void* pMemPool, int dwSpriteCacheSize, int dwSize, unsigned int dwMemoryOverride), 0xB9F0)									 // D2CMP.#10052
 D2FUNC_DLL(D2CMP, FlushSpriteCache, void, __stdcall, (BOOL bRealloc), 0xBBF0)																									 // D2CMP.#10053
 D2FUNC_DLL(D2CMP, SetCompressedDataMode, void, __stdcall, (BOOL bAllowCompressedMode), 0xB9C0)																					 // D2CMP.#10054
-D2FUNC_DLL(D2CMP, 10077_GetTileType, int, __stdcall, (D2TileLibraryEntryStrc * pTileLibraryEntry), 0xFFF0)																		 // D2CMP.#10077
-D2FUNC_DLL(D2CMP, 10078_GetTileStyle, int, __stdcall, (D2TileLibraryEntryStrc * pTileLibraryEntry), 0xFF30)																		 // D2CMP.#10078
+D2CMP_DLL_DECL int __stdcall D2CMP_10077_GetTileType(D2TileLibraryEntryStrc* pTileLibraryEntry);																		 // D2CMP.#10077
+D2CMP_DLL_DECL int __stdcall D2CMP_10078_GetTileStyle(D2TileLibraryEntryStrc* pTileLibraryEntry);																		 // D2CMP.#10078
 // Material flags
-D2FUNC_DLL(D2CMP, 10079_GetTileFlags, int, __stdcall, (D2TileLibraryEntryStrc * pTileLibraryEntry), 0xFF60)																							 // D2CMP.#10079
-D2FUNC_DLL(D2CMP, 10081_GetTileRarity, int, __stdcall, (D2TileLibraryEntryStrc * pTileLibraryEntry), 0xFFC0)																						 // D2CMP.#10081
-D2FUNC_DLL(D2CMP, 10082_GetTileSequence, int, __stdcall, (D2TileLibraryEntryStrc * pTileLibraryEntry), 0xFFF0)																						 // D2CMP.#10082
-D2FUNC_DLL(D2CMP, 10085_GetTileFlagArray, uint8_t*, __stdcall, (D2TileLibraryEntryStrc * pTileLibraryEntry), 0x10080)																				 // D2CMP.#10085
-D2FUNC_DLL(D2CMP, 10087_LoadTileLibrarySlot, void, __stdcall, (D2TileLibraryHashStrc * *ppTileLibraryHash, const char* szFileName), 0xFDE0)															 // D2CMP.#10087
-D2FUNC_DLL(D2CMP, 10088_GetTiles, int, __stdcall, (D2TileLibraryHashStrc * *ppTileLibraryHash, int nType, int nStyle, int nSequence, D2TileLibraryEntryStrc** pTileList, int nTileListSize), 0xFE70) // D2CMP.#10088
+D2CMP_DLL_DECL int __stdcall D2CMP_10079_GetTileFlags(D2TileLibraryEntryStrc* pTileLibraryEntry);																							 // D2CMP.#10079
+D2CMP_DLL_DECL int __stdcall D2CMP_10081_GetTileRarity(D2TileLibraryEntryStrc* pTileLibraryEntry);																						 // D2CMP.#10081
+D2CMP_DLL_DECL int __stdcall D2CMP_10082_GetTileSequence(D2TileLibraryEntryStrc* pTileLibraryEntry);																						 // D2CMP.#10082
+D2CMP_DLL_DECL uint8_t* __stdcall D2CMP_10085_GetTileFlagArray(D2TileLibraryEntryStrc* pTileLibraryEntry);																				 // D2CMP.#10085
+D2CMP_DLL_DECL void __stdcall D2CMP_10087_LoadTileLibrarySlot(D2TileLibraryHashStrc** ppTileLibraryHash, const char* szFileName);															 // D2CMP.#10087
+D2CMP_DLL_DECL int __stdcall D2CMP_10088_GetTiles(D2TileLibraryHashStrc** ppTileLibraryHash, int nType, int nStyle, int nSequence, D2TileLibraryEntryStrc** pTileList, int nTileListSize); // D2CMP.#10088
 D2FUNC_DLL(D2CMP, MixPalette, uint8_t*, __stdcall, (uint8_t nTrans, int nColor), 0xB760)																											 // D2CMP.#10098
 D2FUNC_DLL(D2CMP, SpriteFreeAsyncLoads, void, __stdcall, (), 0xE000)																																 // D2CMP.#10099
 D2FUNC_DLL(D2CMP, TileFreeAsyncLoads, void, __stdcall, (), 0xE860)																																	 // D2CMP.#10102

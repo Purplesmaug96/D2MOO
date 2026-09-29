@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <limits.h>
+#include <utility>
 
 #include <D2BitManip.h>
 #include <Fog.h>
@@ -51,16 +52,19 @@ static PacketStatId PACKET_StatToPacketStatId(uint16_t wStat) {
 }
 
 // D2Game.0x6FC3C640
+// NOTE(D2MOO): the 53-byte game-list entry is 0xB2 in the client size table
+// (Game.exe 0x730AE8); 0xB1 is unsizable there and the client would abandon
+// the rest of the frame.  The decomp had this one off by one.
 int32_t __fastcall sub_6FC3C640(int32_t nClientId, int16_t nGameId, int16_t nClientCount, const char* szGameName) {
-	D2GSPacketSrvB1 packetB1 = {};
+	D2GSPacketSrvB2 packetB2 = {};
 
-	packetB1.nHeader = 0xB1;
-	packetB1.nGameId = nGameId;
-	packetB1.nClientCount = nClientCount;
+	packetB2.nHeader = 0xB2;
+	packetB2.nGameId = nGameId;
+	packetB2.nClientCount = nClientCount;
 
-	SStrCopy(packetB1.szGameName, szGameName, 0x10u);
+	SStrCopy(packetB2.szGameName, szGameName, 0x10u);
 
-	return D2NET_10006(0, nClientId, &packetB1, sizeof(packetB1));
+	return D2NET_10006(0, nClientId, &packetB2, sizeof(packetB2));
 }
 
 // D2Game.0x6FC3C690
@@ -82,13 +86,15 @@ void __fastcall sub_6FC3C6B0(int32_t nClientId) {
 }
 
 // D2Game.0x6FC3C6D0
+// NOTE(D2MOO): likewise, the 5-byte error code is 0xB4 on the wire (0xB3 is
+// variable, sized as BYTE@1 + 7), per Game.exe 0x730AE8.
 void __fastcall sub_6FC3C6D0(int32_t nClientId, uint32_t nErrorCode) {
-	D2GSPacketSrvB3 packetB3 = {};
+	D2GSPacketSrvB4 packetB4 = {};
 
-	packetB3.nHeader = 0xB3;
-	packetB3.nErrorCode = nErrorCode;
+	packetB4.nHeader = 0xB4;
+	packetB4.dwType = nErrorCode;
 
-	D2NET_10006(0, nClientId, &packetB3, sizeof(packetB3));
+	D2NET_10006(0, nClientId, &packetB4, sizeof(packetB4));
 }
 
 // D2Game.0x6FC3C6F0
@@ -868,10 +874,62 @@ void __fastcall D2GAME_PACKETS_SendPacket0x21_UpdateSkills_6FC3DB50(D2ClientStrc
 	}
 }
 
+// Deferred 0x22 sends for the newbie-save start-item burst.
+//
+// The retail client's 0x22 handler (Game.exe 0x45DDB0) does a skill-node
+// lookup (0x6439b0) on the player and hits a fatal assert 0xAD6 when the node
+// does not exist.  The only thing that creates those nodes client-side is the
+// 0x94 base-skill-list packet (Game.exe 0x647110 via 0x647280), and the retail
+// stream always delivers 0x94 *before* 0x22 (Jorvius capture: 94@0x2C, 22@0x6E
+// in the same frame).
+//
+// PLRSAVE2_ProcessSaveFile's newbie branch used to let
+// PLAYER_CreateStartItemsFromCharStatsTxt() emit the scroll/book 0x22s while
+// placing the starting items -- i.e. BEFORE the 0x94 it sends afterwards.  The
+// old bIsCorpse translation (inverted) produced bIsCorpse=1 there, so the
+// client skipped the packets and never crashed; but it also never applied the
+// scroll-skill quantity, and the wire diverged from retail (retail sends
+// bIsCorpse=0 for a live player).  With the predicate fixed, the 0x22 would
+// reach the client with no skill node present and abort it -- so the newbie
+// path now holds its 0x22s in this buffer and flushes them only after its 0x94
+// has gone out.
+//
+// The window is single-threaded by construction (one join, one worker, inside
+// PLRSAVE2_ProcessSaveFile), so a plain file-scope buffer is sufficient.
+
+static constexpr int MAX_DEFERRED_22 = 64;
+static D2ClientStrc* gpDeferred22Client = nullptr;
+static std::pair<int16_t, uint8_t> g_Deferred22[MAX_DEFERRED_22];
+static int g_nDeferred22 = 0;
+static bool g_bDefer22Active = false;
+
+void D2GAME_PACKETS_BeginDefer0x22() {
+	g_bDefer22Active = true;
+	gpDeferred22Client = nullptr;
+	g_nDeferred22 = 0;
+}
+
+int32_t D2GAME_PACKETS_EndDefer0x22(D2ClientStrc* pClient) {
+	g_bDefer22Active = false;
+	gpDeferred22Client = pClient;
+	return g_nDeferred22;
+}
+
 // D2Game.0x6FC3DBE0
 void __fastcall D2GAME_PACKETS_SendPacket0x22_6FC3DBE0(D2ClientStrc* pClient, BYTE nUnitType, int32_t nUnitGUID, int16_t nSkillId, char a5) {
 	D2GameStrc* pGame = CLIENTS_GetGame(pClient);
 	D2UnitStrc* pUnit = SUNIT_GetServerUnit(pGame, nUnitType, nUnitGUID);
+
+	// During the newbie start-item burst the client has not seen the 0x94
+	// skill list yet, so queue scroll/book skill-quantity announcements and
+	// let PLRSAVE2_ProcessSaveFile flush them right after it sends 0x94.
+	if (g_bDefer22Active) {
+		if (g_nDeferred22 < MAX_DEFERRED_22) {
+			g_Deferred22[g_nDeferred22] = { nSkillId, (uint8_t)a5 };
+			++g_nDeferred22;
+		}
+		return;
+	}
 
 	D2GSPacketSrv22 packet22 = {};
 
@@ -880,9 +938,42 @@ void __fastcall D2GAME_PACKETS_SendPacket0x22_6FC3DBE0(D2ClientStrc* pClient, BY
 	packet22.nUnitGUID = nUnitGUID;
 	packet22.nSkillId = nSkillId;
 	packet22.nQuantity = a5;
-	packet22.bIsCorpse = (!pUnit || !STATES_CheckState(pUnit, STATE_PLAYERBODY));
+	// A corpse keeps the dead player's unit around with STATE_PLAYERBODY set;
+	// skill-quantity announcements from a corpse must not be applied to the
+	// live skillbar (the client's 0x22 handler skips bIsCorpse!=0 packets).
+	// Retail sends bIsCorpse=0 for a live player; the previous translation of
+	// this field was inverted and emitted 1 for every live player.
+	packet22.bIsCorpse = (pUnit && STATES_CheckState(pUnit, STATE_PLAYERBODY));
 
 	D2GAME_PACKETS_SendPacket_6FC3C710(pClient, &packet22, sizeof(packet22));
+}
+
+void D2GAME_PACKETS_FlushDeferred0x22() {
+	if (g_nDeferred22 <= 0 || !gpDeferred22Client) {
+		g_nDeferred22 = 0;
+		gpDeferred22Client = nullptr;
+		return;
+	}
+
+	D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(gpDeferred22Client, FALSE);
+	const uint8_t nUnitType = pPlayer ? UNIT_PLAYER : 6;
+	const int32_t nUnitGUID = pPlayer ? (int32_t)pPlayer->dwUnitId : 1;
+
+	for (int i = 0; i < g_nDeferred22; ++i) {
+		D2GSPacketSrv22 packet22 = {};
+
+		packet22.nHeader = 0x22;
+		packet22.nUnitType = nUnitType;
+		packet22.nUnitGUID = nUnitGUID;
+		packet22.nSkillId = g_Deferred22[i].first;
+		packet22.nQuantity = g_Deferred22[i].second;
+		packet22.bIsCorpse = (pPlayer && STATES_CheckState(pPlayer, STATE_PLAYERBODY));
+
+		D2GAME_PACKETS_SendPacket_6FC3C710(gpDeferred22Client, &packet22, sizeof(packet22));
+	}
+
+	g_nDeferred22 = 0;
+	gpDeferred22Client = nullptr;
 }
 
 // D2Game.0x6FC3DC60

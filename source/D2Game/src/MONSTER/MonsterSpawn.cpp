@@ -223,524 +223,277 @@ D2UnitStrc* __fastcall sub_6FC68D70(D2GameStrc* pGame, D2UnitStrc* pUnit, int32_
 
 // 1.10f:D2Game.0x6FC68E30) --------------------------------------------------------
 // 1.11: D2Game.0x6FCE79E0
-D2UnitStrc* __fastcall D2GAME_SpawnNormalMonster_6FC68E30(D2UnkMonCreateStrc* pMonCreate) {
-	return nullptr;
+// The ring of cells at Chebyshev distance exactly nRadius from (nCx, nCy),
+// walked clockwise from (nCx + nRadius, nCy - nRadius).  There are exactly
+// 8 * nRadius of them, which is the loop bound the placement search uses.
+static void MONSTERSPAWN_GetRingPoint(int32_t nCx, int32_t nCy, int32_t nRadius, int32_t nIndex, int32_t* pX, int32_t* pY) {
+	if (nRadius <= 0) {
+		*pX = nCx;
+		*pY = nCy;
+		return;
+	}
 
-	//    D2UnkMonCreateStrc* v1; // ebp@1
-	//    int32_t nMonsterId; // eax@1
-	//    int32_t v3; // edi@2
-	//    D2MonStatsTxt* ptMonStatsTxtRecord; // edx@3
-	//    int32_t v5; // eax@6
-	//    int32_t v6; // edx@8
-	//    D2MonStats2Txt* v7; // eax@8
-	//    D2MonStats2Txt* v8; // edi@8
-	//    D2ActiveRoomStrc* v9; // ebx@9
-	//    int16_t v10; // cx@9
-	//    int32_t v11; // eax@9
-	//    int32_t v12; // eax@14
-	//    int32_t v13; // edx@16
-	//    int32_t v14; // esi@18
-	//    int32_t v15; // eax@19
-	//    int32_t v16; // ecx@20
-	//    BYTE v17; // al@22
-	//    D2C_MonsterIds v18; // eax@23
-	//    D2ActiveRoomStrc** v19; // ecx@27
-	//    DWORD v20; // eax@29
-	//    int64_t v21; // qax@31
-	//    int32_t v22; // esi@33
-	//    int32_t v23; // esi@36
-	//    int32_t v24; // ebp@38
-	//    int32_t v25; // edi@38
-	//    int32_t v26; // esi@39
-	//    int32_t v27; // edi@45
-	//    int32_t v28; // eax@47
-	//    int32_t v29; // esi@47
-	//    uint32_t v30; // edx@51
-	//    D2ActiveRoomStrc* v31; // eax@52
-	//    int32_t v32; // ecx@55
-	//    int32_t v33; // ebp@61
-	//    uint32_t v34; // eax@61
-	//    int64_t v35; // qax@61
-	//    int32_t v36; // edx@61
-	//    uint64_t v37; // kr20_8@61
-	//    __int32_t64 v38; // qcx@61
-	//    uint64_t v39; // kr18_8@61
-	//    int32_t v40; // edi@61
-	//    uint32_t v41; // edx@63
-	//    int64_t v42; // qax@65
-	//    int64_t v43; // qax@66
-	//    int32_t v44; // edx@70
-	//    int64_t v45; // qax@72
-	//    int64_t v46; // qax@73
-	//    __int32_t64 v47; // qax@76
-	//    uint32_t v48; // kr08_4@76
-	//    __int32_t64 v49; // qax@76
-	//    int64_t v50; // qax@78
-	//    uint32_t v51; // edx@80
-	//    int32_t v52; // ebx@80
-	//    int32_t v53; // ebp@80
-	//    int32_t v54; // edi@83
-	//    int32_t v55; // eax@90
-	//    int32_t v56; // ebx@112
-	//    D2UnitStrc* result; // eax@113
-	//    D2UnkMonCreateStrc* v58; // edi@116
-	//    D2ActiveRoomStrc* v59; // ebp@116
-	//    D2UnitStrc* v60; // esi@116
-	//    int32_t v61; // eax@117
-	//    D2RoomCoordListStrc* v62; // eax@119
-	//    D2MonsterDataStrc* v63; // ecx@122
-	//    int32_t v64; // eax@130
-	//    D2GameStrc* v65; // edi@130
-	//    D2MonStatsTxt* v66; // ecx@132
-	//    int32_t v67; // ebp@152
-	//    D2GameStrc* v68; // edi@152
-	//    D2ActiveRoomStrc* v69; // ebx@152
-	//    D2MonStatsTxt* v70; // eax@152
-	//    int32_t v71; // eax@153
-	//    int32_t v72; // ST40_4@167
-	//    int32_t v73; // ST3C_4@167
-	//    int32_t v74; // eax@167
-	//    int32_t v75; // [sp+3Ch] [bp-ACh]@142
-	//    int32_t v76; // [sp+3Ch] [bp-ACh]@172
-	//    int32_t v77; // [sp+40h] [bp-A8h]@142
-	//    int32_t v78; // [sp+40h] [bp-A8h]@170
-	//    int32_t v79; // [sp+40h] [bp-A8h]@172
-	//    int32_t pNumRooms; // [sp+54h] [bp-94h]@35
-	//    uint32_t v81; // [sp+58h] [bp-90h]@20
-	//    D2ActiveRoomStrc** pFloorCount; // [sp+5Ch] [bp-8Ch]@22
-	//    int32_t nX; // [sp+60h] [bp-88h]@22
-	//    D2ActiveRoomStrc* pRoom; // [sp+64h] [bp-84h]@9
-	//    D2UnkMonCreateStrc* v85; // [sp+68h] [bp-80h]@1
-	//    int32_t v86; // [sp+6Ch] [bp-7Ch]@68
-	//    int32_t nY; // [sp+70h] [bp-78h]@22
-	//    uint32_t nCollisionFlags; // [sp+74h] [bp-74h]@10
-	//    D2DrlgTileDataStrc* v89; // [sp+78h] [bp-70h]@15
-	//    int32_t v90; // [sp+7Ch] [bp-6Ch]@9
-	//    int32_t v91; // [sp+80h] [bp-68h]@15
-	//    uint32_t v92; // [sp+84h] [bp-64h]@80
-	//    int32_t v93; // [sp+88h] [bp-60h]@80
-	//    D2MonStatsTxt* v94; // [sp+8Ch] [bp-5Ch]@3
-	//    int32_t v95; // [sp+90h] [bp-58h]@68
-	//    uint32_t v96; // [sp+94h] [bp-54h]@80
-	//    int32_t v97; // [sp+98h] [bp-50h]@15
-	//    int32_t v98; // [sp+9Ch] [bp-4Ch]@15
-	//    int32_t v99; // [sp+A0h] [bp-48h]@15
-	//    int32_t v100; // [sp+A4h] [bp-44h]@15
-	//    int32_t v101; // [sp+A8h] [bp-40h]@61
-	//    D2MonStats2Txt* v102; // [sp+B0h] [bp-38h]@8
-	//    uint32_t v103; // [sp+B4h] [bp-34h]@80
-	//    uint32_t v104; // [sp+BCh] [bp-2Ch]@76
-	//    int32_t v105; // [sp+C4h] [bp-24h]@76
-	//    int32_t a2; // [sp+C8h] [bp-20h]@15
-	//    int32_t v107; // [sp+CCh] [bp-1Ch]@15
-	//    int32_t v108; // [sp+D0h] [bp-18h]@15
-	//    int32_t v109; // [sp+D4h] [bp-14h]@15
-	//    int32_t v110; // [sp+D8h] [bp-10h]@38
-	//    int32_t v111; // [sp+DCh] [bp-Ch]@38
+	const int32_t nRight = 2 * nRadius + 1; // right edge, corners included
+	const int32_t nBottom = 2 * nRadius;	// bottom edge
+	const int32_t nLeft = 2 * nRadius;		// left edge
+	const int32_t nTop = 2 * nRadius - 1;	// top edge, corners already taken
+
+	const int32_t nTotal = nRight + nBottom + nLeft + nTop;
+	nIndex = ((nIndex % nTotal) + nTotal) % nTotal;
+
+	if (nIndex < nRight) {
+		*pX = nCx + nRadius;
+		*pY = nCy - nRadius + nIndex;
+	} else if ((nIndex -= nRight) < nBottom) {
+		*pX = nCx + nRadius - 1 - nIndex;
+		*pY = nCy + nRadius;
+	} else if ((nIndex -= nBottom) < nLeft) {
+		*pX = nCx - nRadius;
+		*pY = nCy + nRadius - 1 - nIndex;
+	} else {
+		nIndex -= nLeft;
+		*pX = nCx - nRadius + 1 + nIndex;
+		*pY = nCy - nRadius;
+	}
+}
+
+// D2Game.0x6FC68E30
+D2UnitStrc* __fastcall D2GAME_SpawnNormalMonster_6FC68E30(D2UnkMonCreateStrc* pMonCreate) {
+	// This is the engine's one and only "make a monster appear here" entry
+	// point: D2GAME_SpawnMonster_6FC69F10, sub_6FC6A030, the room populator
+	// and the boss spawners all funnel through it.  While it was stubbed to
+	// `return nullptr` nothing could be placed at all -- every caller treats
+	// a NULL return as "this point is unusable" and moves on -- so a level
+	// could never be populated no matter what MonStats said.
 	//
-	//    v1 = pMonCreate;
-	//    v85 = pMonCreate;
-	//    nMonsterId = pMonCreate->nMonsterId;
-	//    if (nMonsterId < 0
-	//        || (v3 = sgptDataTables->nMonStatsTxtRecordCount, nMonsterId >= v3)
-	//        || (ptMonStatsTxtRecord = sgptDataTables->pMonStatsTxt, (v94 = &ptMonStatsTxtRecord[nMonsterId]) == 0)
-	//        || nMonsterId < 0
-	//        || nMonsterId >= v3
-	//        || (v5 = ptMonStatsTxtRecord[nMonsterId].wMonStatsEx, v5 < 0)
-	//        || v5 >= sgptDataTables->nMonStats2TxtRecordCount
-	//        || (v6 = 77 * v5, v7 = sgptDataTables->pMonStats2Txt, v8 = &v7[4 * v6 / 0x134u], v102 = &v7[4 * v6 / 0x134u], !v8))
-	//        return 0;
-	//    v9 = pMonCreate->pRoom;
-	//    v10 = pMonCreate->nFlags;
-	//    pRoom = v1->pRoom;
-	//    v11 = v8->nSpawnCol;
-	//    LOWORD(v90) = v10;
-	//    switch (v11)
-	//    {
-	//    case 1:
-	//        nCollisionFlags = 0x1C0u;
-	//        break;
-	//    case 2:
-	//        nCollisionFlags = COLLIDE_MASK_PLACEMENT;
-	//        break;
-	//    case 3:
-	//        nCollisionFlags = 0;
-	//        break;
-	//    default:
-	//        nCollisionFlags = COLLIDE_MASK_MONSTER_PATH;
-	//        break;
-	//    }
-	//    v12 = v1->pRoomCoordList;
-	//    if (v12)
-	//    {
-	//        CopyRect((LPRECT)&v97, (const RECT*)(v12 + 16));
-	//        DUNGEON_GameTileToSubtileCoords(&v97, &v98);
-	//        DUNGEON_GameTileToSubtileCoords(&v99, &v100);
-	//        v13 = v1->pRoomCoordList;
-	//        v91 = 1;
-	//        v89 = *(D2DrlgTileDataStrc**)(v13 + 40);
-	//    }
-	//    else
-	//    {
-	//        DUNGEON_GetRoomCoordinates(v9, (D2DrlgCoordsStrc*)&a2);
-	//        v100 = v107 + v109;
-	//        v97 = a2;
-	//        v99 = a2 + v108;
-	//        v98 = v107;
-	//        v89 = 0;
-	//        v91 = 0;
-	//    }
-	//    if (!v9 || (v14 = (int32_t)&v9->pSeed, v9 == (D2ActiveRoomStrc*)-60))
-	//        return 0;
-	//    v15 = v1->field_20;
-	//    if (v15 >= 0)
-	//    {
-	//        v81 = 3;
-	//        v16 = 3 * v15;
-	//    }
-	//    else
-	//    {
-	//        v81 = 0;
-	//        v16 = 0;
-	//    }
-	//    v17 = v8->nSpawnCol;
-	//    pFloorCount = (D2ActiveRoomStrc**)v16;
-	//    nY = 0;
-	//    nX = 0;
-	//    if (v17 != 1
-	//        || (v18 = v1->nMonsterId, v18 >= MONSTER_TENTACLE1) && v18 <= MONSTER_TENTACLEHEAD3
-	//        || v18 == MONSTER_HELLMETEOR)
-	//    {
-	//        if ((int32_t)v81 > v16)
-	//            return 0;
-	//        while (1)
-	//        {
-	//            HIDWORD(v38) = v85->nX;
-	//            v33 = v85->nY;
-	//            v34 = *(_DWORD*)v14;
-	//            v101 = v85->nX;
-	//            v35 = 1791398085i64 * v34;
-	//            v37 = __PAIR__(HIDWORD(v35), v81);
-	//            LODWORD(v38) = v37 >> 32;
-	//            v36 = v37;
-	//            v39 = __PAIR__(v38, *(_DWORD*)(v14 + 4)) + (uint32_t)v35;
-	//            LODWORD(v38) = (__PAIR__(v38, *(_DWORD*)(v14 + 4)) + (uint32_t)v35) >> 32;
-	//            *(_DWORD*)v14 = v39;
-	//            *(_DWORD*)(v14 + 4) = v38;
-	//            v40 = 2 * v36 >> 1;
-	//            if (v39 & 1)
-	//            {
-	//                pNumRooms = v36;
-	//                if (v40 > 0)
-	//                {
-	//                    HIDWORD(v38) = 0;
-	//                    if ((v40 - 1) & v40)
-	//                    {
-	//                        v42 = v38 + 1791398085i64 * (uint32_t)v39;
-	//                        *(_QWORD*)v14 = v42;
-	//                        v41 = (uint32_t)v42 % v40;
-	//                    }
-	//                    else
-	//                    {
-	//                        v43 = v38 + 1791398085i64 * (uint32_t)v39;
-	//                        *(_QWORD*)v14 = v43;
-	//                        v41 = v43 & (v40 - 1);
-	//                    }
-	//                    HIDWORD(v38) = v101;
-	//                }
-	//                else
-	//                {
-	//                    v41 = 0;
-	//                }
-	//                LODWORD(v38) = v41;
-	//                v95 = 0;
-	//                v86 = 1;
-	//            }
-	//            else
-	//            {
-	//                if (v40 > 0)
-	//                {
-	//                    HIDWORD(v38) = 0;
-	//                    if ((v40 - 1) & v40)
-	//                    {
-	//                        v45 = v38 + 1791398085i64 * (uint32_t)v39;
-	//                        *(_QWORD*)v14 = v45;
-	//                        v44 = (uint32_t)v45 % v40;
-	//                    }
-	//                    else
-	//                    {
-	//                        v46 = v38 + 1791398085i64 * (uint32_t)v39;
-	//                        *(_QWORD*)v14 = v46;
-	//                        v44 = v46 & (v40 - 1);
-	//                    }
-	//                    HIDWORD(v38) = v101;
-	//                }
-	//                else
-	//                {
-	//                    v44 = 0;
-	//                }
-	//                LODWORD(v38) = v81;
-	//                pNumRooms = v44;
-	//                v95 = 1;
-	//                v86 = 0;
-	//            }
-	//            LODWORD(v47) = 1791398085 * *(_DWORD*)v14;
-	//            v105 = 1791398085 * (uint64_t)*(_DWORD*)v14 >> 32;
-	//            v48 = *(_DWORD*)(v14 + 4);
-	//            HIDWORD(v47) = v105;
-	//            *(_DWORD*)v14 = *(_DWORD*)(v14 + 4) + v47;
-	//            v49 = v47 + v48;
-	//            v104 = HIDWORD(v49);
-	//            *(_DWORD*)(v14 + 4) = HIDWORD(v49);
-	//            if (v49 & 1)
-	//                pNumRooms = -pNumRooms;
-	//            v50 = v104 + 1791398085i64 * (uint32_t)v49;
-	//            *(_QWORD*)v14 = v50;
-	//            if (v50 & 1)
-	//                LODWORD(v38) = -(int32_t)v38;
-	//            v51 = v81;
-	//            HIDWORD(v38) += pNumRooms;
-	//            v53 = v38 + v33;
-	//            v96 = v85->nX - v81;
-	//            v103 = 2 * v81 + v96;
-	//            v92 = v85->nY - v81;
-	//            v93 = 2 * v81 + v92;
-	//            pNumRooms = 8 * v81;
-	//            if (!(8 * v81))
-	//                break;
-	//            if ((int32_t)(8 * v81) > 0)
-	//                goto LABEL_83;
-	// LABEL_110:
-	//            v81 = v51 + 3;
-	//            if ((int32_t)(v51 + 3) > (int32_t)pFloorCount)
-	//                goto LABEL_111;
-	//        }
-	//        pNumRooms = 1;
-	// LABEL_83:
-	//        v54 = v95;
-	//        while (1)
-	//        {
-	//            if (v52 == v96 && v53 == v92)
-	//            {
-	//                v54 = 1;
-	//                v86 = 0;
-	//            }
-	//            if (v52 == v103)
-	//            {
-	//                if (v53 == v92)
-	//                {
-	//                    v54 = 0;
-	//                    v86 = 1;
-	//                }
-	//                v55 = v93;
-	//                if (v53 == v93)
-	//                {
-	//                    v54 = -1;
-	//                    v86 = 0;
-	//                }
-	//            }
-	//            else
-	//            {
-	//                v55 = v93;
-	//            }
-	//            if (v52 == v96)
-	//            {
-	//                if (v53 == v55)
-	//                {
-	//                    v54 = 0;
-	//                    v86 = -1;
-	//                }
-	//                if (v53 == v92 && v52 == v103 && v53 == v55)
-	//                {
-	//                    v54 = 0;
-	//                    v86 = 0;
-	//                }
-	//            }
-	//            v52 += v54;
-	//            v53 += v86;
-	//            if (PtInRect((const RECT*)&v97, (POINT)__PAIR__(v53, v52)))
-	//            {
-	//                if (!v91 || (D2DrlgTileDataStrc*)D2Common_10095(pRoom, v52, v53) == v89)
-	//                {
-	//                    if (sub_6FC68350(v85->nMonsterId, pRoom, v52, (D2ActiveRoomStrc**)v53, 1)
-	//                        && (!COLLISION_CheckMaskWithSize(pRoom, v52, v53, v102->nSizeX, nCollisionFlags)
-	//                            || SLOBYTE(v85->nFlags) < 0))
-	//                        break;
-	//                }
-	//            }
-	//            --pNumRooms;
-	//            if (pNumRooms <= 0)
-	//                goto LABEL_109;
-	//        }
-	//        nX = v52;
-	//        nY = v53;
-	//        v81 = (uint32_t)pFloorCount;
-	// LABEL_109:
-	//        v51 = v81;
-	//        goto LABEL_110;
-	//    }
-	//    v89 = DUNGEON_GetFloorTilesFromRoom(v9, (int32_t*)&pFloorCount);
-	//    if (v89)
-	//    {
-	//        v19 = pFloorCount;
-	//        if (pFloorCount)
-	//        {
-	//            if ((int32_t)pFloorCount > 0)
-	//            {
-	//                if ((uint32_t)((char*)pFloorCount - 1) & (uint32_t)pFloorCount)
-	//                {
-	//                    v21 = v9->pSeed.nHighSeed + 1791398085i64 * *(_DWORD*)v14;
-	//                    *(_QWORD*)v14 = v21;
-	//                    v20 = (uint32_t)v21 % (uint32_t)v19;
-	//                }
-	//                else
-	//                {
-	//                    v20 = (uint32_t)((char*)pFloorCount - 1) & ITEMS_RollRandomNumber(&v9->pSeed);
-	//                }
-	//            }
-	//            else
-	//            {
-	//                v20 = 0;
-	//            }
-	//            v22 = v20;
-	//            if (!v20)
-	//                v22 = 1;
-	//            DUNGEON_GetRoomCoordinates(v9, (D2DrlgCoordsStrc*)&a2);
-	//            pNumRooms = v22;
-	//            v91 = v22 - 1;
-	//            if (v22 != v22 - 1)
-	//            {
-	//                while (1)
-	//                {
-	//                    v23 = (int32_t)&v89[pNumRooms];
-	//                    if (*(_DWORD*)(v23 + 24))
-	//                    {
-	//                        if (D2CMP_10079(*(_DWORD*)(v23 + 24)) & 2)
-	//                        {
-	//                            v24 = 5 * (v111 + *(_DWORD*)(v23 + 12)) + 3;
-	//                            v25 = 5 * (v110 + *(_DWORD*)(v23 + 8)) + 3;
-	//                            if (!COLLISION_CheckMask(v9, v25, v24, COLLIDE_MONSTER))
-	//                                break;
-	//                        }
-	//                    }
-	// LABEL_42:
-	//                    pNumRooms = (pNumRooms + 1) % (uint32_t)pFloorCount;
-	//                    if (pNumRooms == v91)
-	//                        goto LABEL_45;
-	//                }
-	//                v26 = (int32_t)&unk_6FD28BC8;
-	//                while (COLLISION_CheckMaskWithSize(v9, v25 + *(_DWORD*)v26, v24 + *(_DWORD*)(v26 + 4), 2, 0x1C09u))
-	//                {
-	//                    v26 += 8;
-	//                    if (v26 >= (int32_t)&unk_6FD28BE8)
-	//                        goto LABEL_42;
-	//                }
-	//                nX = v25;
-	//                nY = v24;
-	//            }
-	//        }
-	//    }
-	// LABEL_45:
-	//    v27 = nX;
-	//    if (nX >= v9->nSubtileX && nX < v9->nSubtileX + v9->nSubtileWidth)
-	//    {
-	//        v28 = v9->nSubtileY;
-	//        v29 = nY;
-	//        if (nY < v28)
-	//            goto LABEL_51;
-	//        if (nY < v28 + v9->nSubtileHeight)
-	//            goto LABEL_111;
-	//        v9 = pRoom;
-	//    }
-	//    v29 = nY;
-	// LABEL_51:
-	//    pFloorCount = 0;
-	//    pNumRooms = 0;
-	//    DUNGEON_GetAdjacentRoomsListFromRoom(v9, &pFloorCount, &pNumRooms);
-	//    v30 = 0;
-	//    if ((uint32_t)pNumRooms <= 0)
-	//    {
-	// LABEL_58:
-	//        pRoom = 0;
-	//    }
-	//    else
-	//    {
-	//        while (1)
-	//        {
-	//            v31 = pFloorCount[v30];
-	//            if (v31)
-	//            {
-	//                if (v27 >= v31->nSubtileX)
-	//                {
-	//                    if (v27 < v31->nSubtileX + v31->nSubtileWidth)
-	//                    {
-	//                        v32 = v31->nSubtileY;
-	//                        if (v29 >= v32)
-	//                        {
-	//                            if (v29 < v32 + v31->nSubtileHeight)
-	//                                break;
-	//                        }
-	//                    }
-	//                }
-	//            }
-	//            ++v30;
-	//            if (v30 >= pNumRooms)
-	//                goto LABEL_58;
-	//        }
-	//        pRoom = pFloorCount[v30];
-	//    }
-	// LABEL_111:
-	//    if (nX)
-	//    {
-	//        v56 = nY;
-	//        if (nY)
-	//        {
-	//            result = (D2UnitStrc*)1;
-	//            if (v90 & 1)
-	//                return result;
-	//            if (v90 & 0x20)
-	//                LOBYTE(result) = 3;
-	//            v58 = v85;
-	//            v59 = pRoom;
-	//            v60 = SUNIT_AllocUnitData(1, v85->nMonsterId, nX, nY, v85->pGame, pRoom, (char)result, v85->nAnimMode, v85->nUnitGUID);
-	//            if (!v60)
-	//                return v60;
-	//            v61 = v90 & 8;
-	//            if (BYTE2(v94->dwMonStatsFlags) & gdwBitMasks[2])
-	//                v61 = 1;
-	//            sub_6FC68180(v58->pGame->pMonReg, v59, v60, v61);
-	//            v62 = (D2RoomCoordListStrc*)v58->pRoomCoordList;
-	//            if (!v62)
-	//                v62 = D2Common_10096(v59, nX, v56);
-	//            if (v60->dwUnitType == 1)
-	//            {
-	//                v63 = (D2MonsterDataStrc*)v60->pPlayerData;
-	//                if (v63)
-	//                    v63->pVision = (DWORD)v62;
-	//            }
-	//            if (v94->nAlign == 1)
-	//            {
-	//                sub_6FCBDD30(v60, 2u, 1);
-	//                v60->dwFlags |= UNITFLAG_NOTC;
-	//            }
-	//            else
-	//            {
-	//                if (v94->nAlign == 2)
-	//                    sub_6FCBDD30(v60, 1u, 1);
-	//                else
-	//                    sub_6FCBDD30(v60, 0, 1);
-	//            }
-	//            if (!(v90 & 2))
-	//            {
-	//                MONSTERSPAWN_SetupNormalMods(v58, v60)
-	//            }
-	//            MONSTERSPAWN_SetupBossMods(pMonCreate, v60);
-	//            if (!(v90 & 0x40))
-	//                sub_6FC69C00((int32_t)v85, v60);
-	//            return v60;
-	//        }
-	//    }
-	//    return 0;
+	// Job: validate the requested point (or search outward from it for a
+	// usable one), then create the unit and wire it into the monster
+	// region, the room coord list, the alignment state and the mod tables.
+	const int32_t nMonsterId = pMonCreate->nMonsterId;
+
+	if (nMonsterId < 0 || nMonsterId >= sgptDataTables->nMonStatsTxtRecordCount) {
+		return nullptr;
+	}
+
+	D2MonStatsTxt* pMonStatsTxtRecord = &sgptDataTables->pMonStatsTxt[nMonsterId];
+
+	// The MonStats2 row supplies the physical footprint (nSizeX, which the
+	// collision query is sized by) and the spawn column.
+	const int32_t nMonStats2Id = pMonStatsTxtRecord->wMonStatsEx;
+	if (nMonStats2Id < 0 || nMonStats2Id >= sgptDataTables->nMonStats2TxtRecordCount) {
+		return nullptr;
+	}
+
+	const D2MonStats2Txt* pMonStats2TxtRecord = &sgptDataTables->pMonStats2Txt[nMonStats2Id];
+
+	D2ActiveRoomStrc* pRoom = pMonCreate->pRoom;
+	if (!pRoom) {
+		return nullptr;
+	}
+
+	const int16_t nFlags = pMonCreate->nFlags;
+
+	// The MonStats2 spawn column selects which collision classes a placement
+	// has to respect.  Column 3 is "place anywhere", 1 is the loose one, and
+	// the default is the strict pathing set.
+	uint16_t nCollisionFlags;
+	switch (pMonStats2TxtRecord->nSpawnCol) {
+	case 1:
+		nCollisionFlags = 0x1C0;
+		break;
+	case 2:
+		nCollisionFlags = COLLIDE_MASK_PLACEMENT;
+		break;
+	case 3:
+		nCollisionFlags = 0;
+		break;
+	default:
+		nCollisionFlags = COLLIDE_MASK_MONSTER_PATH;
+		break;
+	}
+
+	// Placement rectangle: the spawner's coord list when it supplied one
+	// (stored there in tile space, hence the conversion), else the whole
+	// room.  When a coord list is in play the point also has to fall inside
+	// *that* list, not merely inside the room.
+	D2DrlgCoordsStrc tRect = {};
+	D2RoomCoordListStrc* pRoomCoordList = pMonCreate->pRoomCoordList;
+	int32_t nCoordListIndex = 0;
+	bool bHasCoordList = false;
+
+	if (pRoomCoordList) {
+		D2DrlgCoordStrc tCoord = {};
+		memcpy(&tCoord, &pRoomCoordList->pBox[1], sizeof(D2DrlgCoordStrc));
+		DUNGEON_GameTileToSubtileCoords(&tCoord.nPosX, &tCoord.nPosY);
+		DUNGEON_GameTileToSubtileCoords(&tCoord.nWidth, &tCoord.nHeight);
+
+		tRect.nSubtileX = tCoord.nPosX;
+		tRect.nSubtileY = tCoord.nPosY;
+		tRect.nSubtileWidth = tCoord.nWidth;
+		tRect.nSubtileHeight = tCoord.nHeight;
+
+		nCoordListIndex = pRoomCoordList->nIndex;
+		bHasCoordList = true;
+	} else {
+		DUNGEON_GetRoomCoordinates(pRoom, &tRect);
+	}
+
+	// field_20 is the search budget, in tiles, around the requested point.
+	// A negative value means "take the point exactly as given" (radius 0),
+	// which is what the room populator's point picker wants: it has already
+	// chosen a random in-room point and only needs it validated.
+	int32_t nRadius = (pMonCreate->field_20 >= 0) ? 3 : 0;
+	const int32_t nMaxRadius = (pMonCreate->field_20 >= 0) ? (3 * pMonCreate->field_20) : 0;
+
+	if (nRadius > nMaxRadius) {
+		return nullptr;
+	}
+
+	D2SeedStrc* pSeed = &pRoom->pSeed;
+
+	// A candidate point is usable when it is inside the placement rect, in
+	// the right coord list, accepted by the per-monster placement hook, and
+	// not colliding -- unless the caller passed a flag whose low byte is
+	// negative, which is how retail asks for "ignore overlap".
+	const auto bPointUsable = [&](int32_t nTestX, int32_t nTestY) -> bool {
+		if (nTestX < tRect.nSubtileX || nTestX >= tRect.nSubtileX + tRect.nSubtileWidth ||
+			nTestY < tRect.nSubtileY || nTestY >= tRect.nSubtileY + tRect.nSubtileHeight) {
+			return false;
+		}
+		if (bHasCoordList && D2Common_10095(pRoom, nTestX, nTestY) != nCoordListIndex) {
+			return false;
+		}
+		if (!sub_6FC68350(nMonsterId, pRoom, nTestX, nTestY, 1)) {
+			return false;
+		}
+		if (COLLISION_CheckMaskWithSize(pRoom, nTestX, nTestY, pMonStats2TxtRecord->nSizeX, nCollisionFlags)) {
+			return (int8_t)(uint8_t)nFlags < 0;
+		}
+		return true;
+	};
+
+	int32_t nX = pMonCreate->nX;
+	int32_t nY = pMonCreate->nY;
+	bool bPlaced = false;
+
+	for (;;) {
+		const int32_t nRingCells = 8 * nRadius;
+
+		if (nRingCells > 0) {
+			// Walk the square ring of half-size nRadius around the requested
+			// point, entering it at a seed-chosen cell and stepping by a
+			// stride the room RNG picks.  The decomp advances by unit
+			// direction vectors off the same two random draws; the ring walk
+			// below is that traversal written out directly.
+			const int32_t nStart = (int32_t)ITEMS_RollLimitedRandomNumber(pSeed, nRingCells);
+			const int32_t nStride = 1 + (int32_t)(ITEMS_RollRandomNumber(pSeed) & 1);
+
+			for (int32_t i = 0; i < nRingCells; i += nStride) {
+				int32_t nCandX = 0;
+				int32_t nCandY = 0;
+				MONSTERSPAWN_GetRingPoint(nX, nY, nRadius, nStart + i, &nCandX, &nCandY);
+
+				if (bPointUsable(nCandX, nCandY)) {
+					nX = nCandX;
+					nY = nCandY;
+					bPlaced = true;
+					break;
+				}
+			}
+		} else if (bPointUsable(nX, nY)) {
+			bPlaced = true;
+		}
+
+		if (bPlaced) {
+			break;
+		}
+		if (nRadius + 3 > nMaxRadius) {
+			break;
+		}
+		nRadius += 3;
+	}
+
+	if (!bPlaced) {
+		return nullptr;
+	}
+
+	// A coord list can straddle a room boundary, so the accepted point is
+	// not necessarily in pRoom any more.
+	D2ActiveRoomStrc* pTargetRoom = DUNGEON_GetRoomAtPosition(pRoom, nX, nY);
+	if (!pTargetRoom) {
+		return nullptr;
+	}
+
+	// The decomp rejects an all-zero point outright.  Room coordinates are
+	// never zero in a real level, so in practice this only rejects a point
+	// the caller never set.
+	if (!nX || !nY) {
+		return nullptr;
+	}
+
+	// nFlags bit 0 is a probe: report "this point works" without creating
+	// anything, which the point pickers use to test candidates.
+	if (nFlags & 1) {
+		return (D2UnitStrc*)1;
+	}
+
+	uint8_t nUnitMode = 1;
+	if (nFlags & 0x20) {
+		nUnitMode = 3;
+	}
+
+	D2UnitStrc* pUnit = SUNIT_AllocUnitData(UNIT_MONSTER, pMonCreate->nMonsterId, nX, nY,
+											pMonCreate->pGame, pTargetRoom,
+											(char)nUnitMode, pMonCreate->nAnimMode, pMonCreate->nUnitGUID);
+	if (!pUnit) {
+		return nullptr;
+	}
+
+	// Register with the level's monster region so the "are there any left"
+	// bookkeeping and the density counter stay honest.
+	int32_t bRegionToggle = (nFlags & 8) ? 1 : 0;
+	if (pMonStatsTxtRecord->dwMonStatsFlags & MONSTATSFLAG_PETIGNORE) {
+		bRegionToggle = 1;
+	}
+	sub_6FC68180(pMonCreate->pGame->pMonReg, pTargetRoom, pUnit, bRegionToggle);
+
+	// Remember which coord list this unit stands in, for room-visibility
+	// and pathing queries later on.
+	D2RoomCoordListStrc* pUnitCoordList = pMonCreate->pRoomCoordList;
+	if (!pUnitCoordList) {
+		pUnitCoordList = D2Common_10096(pTargetRoom, nX, nY);
+	}
+	if (pUnit->dwUnitType == UNIT_MONSTER) {
+		D2MonsterDataStrc* pMonData = (D2MonsterDataStrc*)pUnit->pPlayerData;
+		if (pMonData) {
+			pMonData->pVision = (uintptr_t)pUnitCoordList;
+		}
+	}
+
+	// Alignment.  Hostile-monster (1) additionally gets the "no town" flag
+	// so it never counts towards a town's allied-unit budget.
+	switch (pMonStatsTxtRecord->nAlign) {
+	case 1:
+		sub_6FCBDD30(pUnit, 2, 1);
+		pUnit->dwFlags |= UNITFLAG_NOTC;
+		break;
+	case 2:
+		sub_6FCBDD30(pUnit, 1, 1);
+		break;
+	default:
+		sub_6FCBDD30(pUnit, 0, 1);
+		break;
+	}
+
+	if (!(nFlags & 2)) {
+		MONSTERSPAWN_SetupNormalMods(pMonCreate, pUnit);
+	}
+	MONSTERSPAWN_SetupBossMods(pMonCreate, pUnit);
+	if (!(nFlags & 0x40)) {
+		sub_6FC69C00(pMonCreate, pUnit);
+	}
+
+	return pUnit;
 }
 
 // D2Game.0x6FC69B60
@@ -941,103 +694,89 @@ void __fastcall MONSTERSPAWN_SetupBossMods(D2UnkMonCreateStrc* pMonCreate, D2Uni
 
 // 1.10: Inlined
 // 1.14d: 0x005B21B0
-// void __fastcall MONSTERSPAWN_SetupNormalMods(D2UnkMonCreateStrc* pMonCreate, D2UnitStrc* pUnit)
-//{
-//     v64 = v58->nMonsterId;
-//     v65 = v58->pGame;
-//     if (v64 >= 0)
-//     {
-//         if (v64 < sgptDataTables->nMonStatsTxtRecordCount)
-//         {
-//             v66 = &sgptDataTables->pMonStatsTxt[v64];
-//             if (v66)
-//                 v64 = v66->nBaseId;
-//         }
-//         if (v64 >= 0 && v64 < sgptDataTables->nMonStatsTxtRecordCount)
-//         {
-//             if (v64 > MONSTER_BONEPRISON4)
-//             {
-//                 switch (v64)
-//                 {
-//                 case MONSTER_TRAP_MELEE:
-//                     goto LABEL_148;
-//                 case MONSTER_ANCIENTBARB1:
-//                 case MONSTER_ANCIENTBARB2:
-//                 case MONSTER_ANCIENTBARB3:
-//                     goto LABEL_150;
-//                 default:
-//                     goto LABEL_152;
-//                 case MONSTER_SUICIDEMINION1:
-//                     v77 = 0;
-//                     v75 = MONUMOD_FREEZINDEATH;
-//                     break;
-//                 case MONSTER_REANIMATEDHORDE1:
-//                     v77 = 0;
-//                     v75 = MONUMOD_SELFRESURRECT;
-//                     break;
-//                 case MONSTER_FROZENHORROR1:
-//                     v77 = 0;
-//                     v75 = MONUMOD_ICESHATTERDEATH;
-//                     break;
-//                 }
-//             }
-//             else
-//             {
-//                 if (v64 >= MONSTER_BONEPRISON1)
-//                 {
-//                     v77 = 0;
-//                     v75 = MONUMOD_KILLMINIONSDEATH;
-//                 }
-//                 else
-//                 {
-//                     if (v64 > MONSTER_MUMMY1)
-//                     {
-//                         if (v64 == MONSTER_DURIEL)
-//                         {
-//                             D2GAME_BOSSES_AssignUMod_6FC6FF10(v65, v60, 11, 0);
-// LABEL_150:
-//                             v77 = 1;
-//                             v75 = MONUMOD_QUESTMOD;
-//                         }
-//                         else
-//                         {
-//                             if (v64 <= MONSTER_EVILHOLE5 || v64 > MONSTER_TRAP_LIGHTNING)
-//                                 goto LABEL_152;
-// LABEL_148:
-//                             v77 = 0;
-//                             v75 = MONUMOD_SPCDAMAGE;
-//                         }
-//                     }
-//                     else
-//                     {
-//                         if (v64 == MONSTER_MUMMY1)
-//                         {
-//                             v77 = 0;
-//                             v75 = MONUMOD_POISDEATH;
-//                         }
-//                         else
-//                         {
-//                             if (v64 == MONSTER_BRUTE2)
-//                             {
-//                                 v77 = 0;
-//                                 v75 = MONUMOD_IGNOREAC;
-//                             }
-//                             else
-//                             {
-//                                 if (v64 != MONSTER_SCARAB1)
-//                                     goto LABEL_152;
-//                                 v77 = 0;
-//                                 v75 = MONUMOD_CHARGEDBOLTS;
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//             D2GAME_BOSSES_AssignUMod_6FC6FF10(v65, v60, v75, v77);
-//         }
-//     }
-// LABEL_152:
-// }
+//
+// Every "normal" (non-unique, non-boss) monster that needs a behavioural
+// tweak to stand in for a scripted death / effect gets its UMod assigned
+// here, keyed off the monster's BASE id rather than the spawned variant --
+// so all members of e.g. the Flesh Clan share the same one.  Most monsters
+// match nothing and fall straight through.
+void __fastcall MONSTERSPAWN_SetupNormalMods(D2UnkMonCreateStrc* pMonCreate, D2UnitStrc* pUnit) {
+	int32_t nBaseId = pMonCreate->nMonsterId;
+	D2GameStrc* pGame = pMonCreate->pGame;
+
+	if (nBaseId >= 0 && nBaseId < sgptDataTables->nMonStatsTxtRecordCount) {
+		const D2MonStatsTxt* pMonStatsTxtRecord = &sgptDataTables->pMonStatsTxt[nBaseId];
+		if (pMonStatsTxtRecord) {
+			nBaseId = pMonStatsTxtRecord->nBaseId;
+		}
+	}
+
+	if (nBaseId < 0 || nBaseId >= sgptDataTables->nMonStatsTxtRecordCount) {
+		return;
+	}
+
+	int32_t nUMod = 0;
+	int32_t bUnique = 0;
+
+	if (nBaseId > MONSTER_BONEPRISON4) {
+		switch (nBaseId) {
+		case MONSTER_SUICIDEMINION1:
+			nUMod = MONUMOD_FREEZINDEATH;
+			break;
+		case MONSTER_REANIMATEDHORDE1:
+			nUMod = MONUMOD_SELFRESURRECT;
+			break;
+		case MONSTER_FROZENHORROR1:
+			nUMod = MONUMOD_ICESHATTERDEATH;
+			break;
+		case MONSTER_TRAP_MELEE:
+			nUMod = MONUMOD_SPCDAMAGE;
+			break;
+		case MONSTER_ANCIENTBARB1:
+		case MONSTER_ANCIENTBARB2:
+		case MONSTER_ANCIENTBARB3:
+			// Duriel carries both its own UMod and the quest flag.
+			D2GAME_BOSSES_AssignUMod_6FC6FF10(pGame, pUnit, 11, 0);
+			bUnique = 1;
+			nUMod = MONUMOD_QUESTMOD;
+			break;
+		default:
+			// The traps in the EVILHOLE5 .. TRAP_LIGHTNING range share the
+			// special-projectile damage mod; everything above the range
+			// has already been caught by the switch above.
+			if (nBaseId > MONSTER_EVILHOLE5 && nBaseId <= MONSTER_TRAP_LIGHTNING) {
+				nUMod = MONUMOD_SPCDAMAGE;
+			}
+			break;
+		}
+	} else if (nBaseId >= MONSTER_BONEPRISON1) {
+		nUMod = MONUMOD_KILLMINIONSDEATH;
+	} else if (nBaseId > MONSTER_MUMMY1) {
+		if (nBaseId == MONSTER_DURIEL) {
+			D2GAME_BOSSES_AssignUMod_6FC6FF10(pGame, pUnit, 11, 0);
+			bUnique = 1;
+			nUMod = MONUMOD_QUESTMOD;
+		} else if (nBaseId > MONSTER_EVILHOLE5 && nBaseId <= MONSTER_TRAP_LIGHTNING) {
+			nUMod = MONUMOD_SPCDAMAGE;
+		}
+	} else {
+		switch (nBaseId) {
+		case MONSTER_MUMMY1:
+			nUMod = MONUMOD_POISDEATH;
+			break;
+		case MONSTER_BRUTE2:
+			nUMod = MONUMOD_IGNOREAC;
+			break;
+		case MONSTER_SCARAB1:
+			nUMod = MONUMOD_CHARGEDBOLTS;
+			break;
+		default:
+			return;
+		}
+	}
+
+	D2GAME_BOSSES_AssignUMod_6FC6FF10(pGame, pUnit, nUMod, bUnique);
+}
 
 // D2Game.0x6FC69C00
 void __fastcall sub_6FC69C00(D2UnkMonCreateStrc* pMonCreate, D2UnitStrc* pUnit) {

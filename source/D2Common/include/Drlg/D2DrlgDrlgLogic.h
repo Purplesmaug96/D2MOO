@@ -22,16 +22,40 @@ enum D2DrlgLogicalRoomInfoFlags {
 	DRLGLOGIC_ROOMINFO_HAS_GRID_CELLS = 0x2,
 };
 
+// LP64 fix.  Retail's pIndexY is an ordinary D2DrlgGridStrc -- int32_t cells
+// that hold a D2RoomCoordListStrc* written through FLAG_OPERATION_OVERWRITE.
+// That is only lossless because the retail binary is 32-bit.  On this 64-bit
+// build the store truncates the pointer to its low 32 bits and the read in
+// sub_6FD77110 sign-extends it back into an unmapped address (a real observed
+// crash: 0xFFFFFFFFCE389CA0).  The cells are therefore pointer-typed here.
+// The index arithmetic is identical to D2DrlgGridStrc.
+struct D2DrlgCoordPtrGridStrc
+{
+	D2RoomCoordListStrc** pCells; // 0x00
+	int32_t* pRowOffsets;         // 0x08
+	int32_t nWidth;			   // 0x10
+	int32_t nHeight;			   // 0x14
+};
+
 struct D2DrlgLogicalRoomInfoStrc // aka D2DrlgCoordListStrc
 {
 	int32_t dwFlags;				 // 0x00 D2DrlgLogicalRoomInfoFlags
 	int32_t nLists;					 // 0x04
 	D2DrlgGridStrc pIndexX;			 // 0x08
-	D2DrlgGridStrc pIndexY;			 // 0x1C
-	D2RoomCoordListStrc* pCoordList; // 0x30
+	D2DrlgCoordPtrGridStrc pIndexY;	 // 0x1C
+	D2RoomCoordListStrc* pCoordList; // 0x34
 };
 
 #pragma pack()
+
+// D2Common.0x6FD76230, D2DrlgGridStrc version of DRLGLOGIC_AllocCoordPtrGrid
+void __fastcall DRLGLOGIC_AllocCoordPtrGrid(void* pMemPool, D2DrlgCoordPtrGridStrc* pGrid, int nWidth, int nHeight);
+// D2Common.0x6FD763E0, D2DrlgGridStrc version of DRLGLOGIC_FreeCoordPtrGrid
+void __fastcall DRLGLOGIC_FreeCoordPtrGrid(void* pMemPool, D2DrlgCoordPtrGridStrc* pGrid);
+// D2Common.0x6FD75CA0, D2DrlgGridStrc version of DRLGLOGIC_GetCoordPtrGridEntry
+D2RoomCoordListStrc* __fastcall DRLGLOGIC_GetCoordPtrGridEntry(const D2DrlgCoordPtrGridStrc* pGrid, int nX, int nY);
+// D2Common.0x6FD75C50, DRLGGRID_AlterGridFlag with FLAG_OPERATION_OVERWRITE
+void __fastcall DRLGLOGIC_SetCoordPtrGridEntry(D2DrlgCoordPtrGridStrc* pGrid, int nX, int nY, D2RoomCoordListStrc* pCoordList);
 
 // D2Common.0x6FD76420
 void __fastcall DRLGLOGIC_FreeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom);

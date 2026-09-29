@@ -8,15 +8,56 @@
 #include "Drlg/D2DrlgDrlgRoom.h"
 #include "Drlg/D2DrlgRoomTile.h"
 
+// D2Common.0x6FD76230, D2DrlgGridStrc version of DRLGGRID_InitializeGridCells
+void __fastcall DRLGLOGIC_AllocCoordPtrGrid(void* pMemPool, D2DrlgCoordPtrGridStrc* pGrid, int nWidth, int nHeight) {
+	pGrid->nWidth = nWidth;
+	pGrid->nHeight = nHeight;
+
+	// nHeight for the row offsets, nWidth * nHeight for the cells.  The cell
+	// array is pointer-typed here instead of int32_t, so round the row offset
+	// block up to 8 bytes to keep pCells naturally aligned.
+	const size_t nRowOffsetBytes = ((sizeof(int32_t) * nHeight) + 7u) & ~(size_t)7u;
+
+	pGrid->pRowOffsets = (int32_t*)D2_CALLOC_POOL(pMemPool, nRowOffsetBytes + (sizeof(void*) * nHeight * nWidth));
+
+	pGrid->pCells = (D2RoomCoordListStrc**)(void*)((uint8_t*)pGrid->pRowOffsets + nRowOffsetBytes);
+
+	int nRowOffset = 0;
+	for (int i = 0; i < nHeight; ++i) {
+		pGrid->pRowOffsets[i] = nRowOffset;
+		nRowOffset += nWidth;
+	}
+}
+
+// D2Common.0x6FD763E0, D2DrlgGridStrc version of DRLGGRID_FreeGrid
+void __fastcall DRLGLOGIC_FreeCoordPtrGrid(void* pMemPool, D2DrlgCoordPtrGridStrc* pGrid) {
+	if (pGrid->pRowOffsets) {
+		D2_FREE_POOL(pMemPool, pGrid->pRowOffsets);
+	}
+
+	pGrid->pCells = NULL;
+	pGrid->pRowOffsets = NULL;
+}
+
+// D2Common.0x6FD75CA0, D2DrlgGridStrc version of DRLGGRID_GetGridEntry
+D2RoomCoordListStrc* __fastcall DRLGLOGIC_GetCoordPtrGridEntry(const D2DrlgCoordPtrGridStrc* pGrid, int nX, int nY) {
+	return pGrid->pCells[nX + pGrid->pRowOffsets[nY]];
+}
+
+// D2Common.0x6FD75C50, DRLGGRID_AlterGridFlag with FLAG_OPERATION_OVERWRITE
+void __fastcall DRLGLOGIC_SetCoordPtrGridEntry(D2DrlgCoordPtrGridStrc* pGrid, int nX, int nY, D2RoomCoordListStrc* pCoordList) {
+	pGrid->pCells[nX + pGrid->pRowOffsets[nY]] = pCoordList;
+}
+
 // D2Common.0x6FD76420
 void __fastcall DRLGLOGIC_FreeDrlgCoordList(D2DrlgRoomStrc* pDrlgRoom) {
 	if (pDrlgRoom->pLogicalRoomInfo) {
 		if (pDrlgRoom->pLogicalRoomInfo->dwFlags & DRLGLOGIC_ROOMINFO_HAS_GRID_CELLS) {
 			DRLGGRID_FreeGrid(pDrlgRoom->pLevel->pDrlg->pMempool, &pDrlgRoom->pLogicalRoomInfo->pIndexX);
-			DRLGGRID_FreeGrid(pDrlgRoom->pLevel->pDrlg->pMempool, &pDrlgRoom->pLogicalRoomInfo->pIndexY);
+			DRLGLOGIC_FreeCoordPtrGrid(pDrlgRoom->pLevel->pDrlg->pMempool, &pDrlgRoom->pLogicalRoomInfo->pIndexY);
 		}
 
-		D2RoomCoordListStrc* pRoomCoordList = pRoomCoordList = pDrlgRoom->pLogicalRoomInfo->pCoordList;
+		D2RoomCoordListStrc* pRoomCoordList = pDrlgRoom->pLogicalRoomInfo->pCoordList;
 		while (pRoomCoordList) {
 			D2RoomCoordListStrc* pNext = pRoomCoordList->pNext;
 			D2_FREE_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, pRoomCoordList);
@@ -276,7 +317,10 @@ void __fastcall DRLGLOGIC_SetCoordListForTiles(D2DrlgRoomStrc* pDrlgRoom) {
 	if (pDrlgRoom->pTileGrid->pTiles.nWalls) {
 		for (int i = 0; i < pDrlgRoom->pTileGrid->pTiles.nWalls; ++i) {
 			if (pDrlgRoom->pLogicalRoomInfo && !(pDrlgRoom->pLogicalRoomInfo->dwFlags & DRLGLOGIC_ROOMINFO_HAS_COORD_LIST)) {
-				pDrlgRoom->pTileGrid->pTiles.pWallTiles[i].unk0x10 = DRLGGRID_GetGridEntry(&pDrlgRoom->pLogicalRoomInfo->pIndexY, pDrlgRoom->pTileGrid->pTiles.pWallTiles[i].nPosX, pDrlgRoom->pTileGrid->pTiles.pWallTiles[i].nPosY);
+				// D2DrlgTileDataStrc::unk0x10 is a 32-bit field and is never read
+				// back, so retail's lossy truncation of the coord list pointer
+				// into it is reproduced here as-is.
+				pDrlgRoom->pTileGrid->pTiles.pWallTiles[i].unk0x10 = (int32_t)(intptr_t)DRLGLOGIC_GetCoordPtrGridEntry(&pDrlgRoom->pLogicalRoomInfo->pIndexY, pDrlgRoom->pTileGrid->pTiles.pWallTiles[i].nPosX, pDrlgRoom->pTileGrid->pTiles.pWallTiles[i].nPosY);
 			} else {
 				pDrlgRoom->pTileGrid->pTiles.pWallTiles[i].unk0x10 = 0;
 			}
@@ -286,7 +330,7 @@ void __fastcall DRLGLOGIC_SetCoordListForTiles(D2DrlgRoomStrc* pDrlgRoom) {
 
 // D2Common.0x6FD76CF0
 void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2DrlgLogicalRoomInfoStrc* pDrlgCoordList, int nLists) {
-	DRLGGRID_InitializeGridCells(pDrlgRoom->pLevel->pDrlg->pMempool, &pDrlgCoordList->pIndexY, pDrlgRoom->nTileWidth + 1, pDrlgRoom->nTileHeight + 1);
+	DRLGLOGIC_AllocCoordPtrGrid(pDrlgRoom->pLevel->pDrlg->pMempool, &pDrlgCoordList->pIndexY, pDrlgRoom->nTileWidth + 1, pDrlgRoom->nTileHeight + 1);
 	const int nWidth = pDrlgRoom->nTileWidth + 1;
 	const int nHeight = pDrlgRoom->nTileHeight + 1;
 
@@ -295,7 +339,7 @@ void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2
 			const int nFlags = DRLGGRID_GetGridEntry(&pDrlgCoordList->pIndexX, nX, nY);
 			const int nIndex = nFlags & 0xFFFFFFF;
 
-			if (!DRLGGRID_GetGridEntry(&pDrlgCoordList->pIndexY, nX, nY)) {
+			if (!DRLGLOGIC_GetCoordPtrGridEntry(&pDrlgCoordList->pIndexY, nX, nY)) {
 				D2RoomCoordListStrc* pRoomCoordList = D2_CALLOC_STRC_POOL(pDrlgRoom->pLevel->pDrlg->pMempool, D2RoomCoordListStrc);
 
 				pRoomCoordList->nIndex = nIndex;
@@ -312,7 +356,7 @@ void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2
 						break;
 					}
 
-					if (DRLGGRID_GetGridEntry(&pDrlgCoordList->pIndexY, nTmpWidth, nY)) {
+					if (DRLGLOGIC_GetCoordPtrGridEntry(&pDrlgCoordList->pIndexY, nTmpWidth, nY)) {
 						break;
 					}
 				}
@@ -322,7 +366,7 @@ void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2
 				int nTmpHeight;
 				for (nTmpHeight = nY; nTmpHeight < nHeight; ++nTmpHeight) {
 					for (int i = nX; i < pRoomCoordList->pBox[0].nWidth; ++i) {
-						if (nIndex != (DRLGGRID_GetGridEntry(&pDrlgCoordList->pIndexX, i, nTmpHeight) & 0xFFFFFFF) || DRLGGRID_GetGridEntry(&pDrlgCoordList->pIndexY, i, nTmpHeight)) {
+						if (nIndex != (DRLGGRID_GetGridEntry(&pDrlgCoordList->pIndexX, i, nTmpHeight) & 0xFFFFFFF) || DRLGLOGIC_GetCoordPtrGridEntry(&pDrlgCoordList->pIndexY, i, nTmpHeight)) {
 							bBreak = TRUE;
 							break;
 						}
@@ -336,7 +380,7 @@ void __fastcall DRLGLOGIC_AssignCoordListsForGrids(D2DrlgRoomStrc* pDrlgRoom, D2
 
 				for (int j = pRoomCoordList->pBox[0].nPosY; j < pRoomCoordList->pBox[0].nHeight; ++j) {
 					for (int i = pRoomCoordList->pBox[0].nPosX; i < pRoomCoordList->pBox[0].nWidth; ++i) {
-						DRLGGRID_AlterGridFlag(&pDrlgCoordList->pIndexY, i, j, (intptr_t)pRoomCoordList, FLAG_OPERATION_OVERWRITE);
+						DRLGLOGIC_SetCoordPtrGridEntry(&pDrlgCoordList->pIndexY, i, j, pRoomCoordList);
 					}
 				}
 
@@ -411,7 +455,7 @@ D2RoomCoordListStrc* __fastcall sub_6FD77110(D2DrlgRoomStrc* pDrlgRoom, int nX, 
 	if (pDrlgRoom->pLogicalRoomInfo->dwFlags & DRLGLOGIC_ROOMINFO_HAS_COORD_LIST) {
 		return pDrlgRoom->pLogicalRoomInfo->pCoordList;
 	} else {
-		return (D2RoomCoordListStrc*)DRLGGRID_GetGridEntry(&pDrlgRoom->pLogicalRoomInfo->pIndexY, nX / 5 - pDrlgRoom->nTileXPos, nY / 5 - pDrlgRoom->nTileYPos);
+		return DRLGLOGIC_GetCoordPtrGridEntry(&pDrlgRoom->pLogicalRoomInfo->pIndexY, nX / 5 - pDrlgRoom->nTileXPos, nY / 5 - pDrlgRoom->nTileYPos);
 	}
 }
 

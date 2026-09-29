@@ -5025,6 +5025,29 @@ size_t __stdcall ITEMS_SerializeItemToBitstream(D2UnitStrc* pItem, uint8_t* pBit
 	}
 }
 
+// Item codes on the 1.14d client wire are 4 bytes SPACE-padded ("hax "):
+// the retail client compiles its txt tables that way and its code->index
+// map (D2Client 0x96bcc4/0x6bd130, used while parsing the 0x9D/0x9C/0x94
+// item streams) is keyed on the space-padded value.  Our txt loader
+// memcpy's the raw cell into a calloc'd record, leaving NUL padding
+// ("hax\0") that no lookup can resolve: the client's binary search misses,
+// the item unit keeps a bogus classId and 0x628700/0x6335f0 asserts
+// (items.txt index out of range) while processing the 0x9D handler.
+// Client-bound streams therefore write the padded code; server-side
+// storage streams ('MJ' header, bServer=TRUE) are only re-read by our own
+// NUL-keyed linker and stay as-loaded.
+static uint32_t ITEMS_PadItemCodeForClient(uint32_t dwCode) {
+	char szCode[4];
+	memcpy(&szCode, &dwCode, 4);
+	for (int i = 0; i < 4; ++i) {
+		if (szCode[i] == '\0') {
+			szCode[i] = ' ';
+		}
+	}
+	memcpy(&dwCode, &szCode, 4);
+	return dwCode;
+}
+
 // Inlined in D2Common.0x6FDA2C00
 void __fastcall ITEMS_SerializeItemCompact(D2UnitStrc* pItem, D2BitBufferStrc* pBuffer, D2ItemsTxt* pItemsTxtRecord, BOOL bServer) {
 	D2ItemStatCostTxt* pItemStatCostTxtRecord = NULL;
@@ -5089,7 +5112,9 @@ void __fastcall ITEMS_SerializeItemCompact(D2UnitStrc* pItem, D2BitBufferStrc* p
 			ITEMS_WriteBitsToBitstream(pBuffer, *szName, 7);
 		} while (*szName++);
 	} else {
-		ITEMS_WriteBitsToBitstream(pBuffer, ITEMS_GetBaseCode(pItem), 32);
+		// Client wire must carry the space-padded code -- see the
+		// ITEMS_PadItemCodeForClient note above.
+		ITEMS_WriteBitsToBitstream(pBuffer, bServer ? ITEMS_GetBaseCode(pItem) : ITEMS_PadItemCodeForClient(ITEMS_GetBaseCode(pItem)), 32);
 
 		if (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_GOLD)) {
 			nGold = STATLIST_UnitGetStatValue(pItem, STAT_GOLD, 0);
@@ -5329,15 +5354,14 @@ void __fastcall ITEMS_SerializeItemComplete(D2UnitStrc* pItem, D2BitBufferStrc* 
 	D2_ASSERT(pItemsTxtRecord);
 
 	if (bGamble) {
-		if (pItemsTxtRecord->dwNormCode) {
-			BITMANIP_Write(pBuffer, pItemsTxtRecord->dwNormCode, 32);
-		} else {
-			BITMANIP_Write(pBuffer, pItemsTxtRecord->dwCode, 32);
-		}
+		// Client-facing stream: emit the code space-padded (see
+		// ITEMS_PadItemCodeForClient).  Server storage keeps NUL padding.
+		const uint32_t dwGambleCode = pItemsTxtRecord->dwNormCode ? pItemsTxtRecord->dwNormCode : pItemsTxtRecord->dwCode;
+		BITMANIP_Write(pBuffer, bServer ? dwGambleCode : ITEMS_PadItemCodeForClient(dwGambleCode), 32);
 		return;
 	}
 
-	BITMANIP_Write(pBuffer, pItemsTxtRecord->dwCode, 32);
+	BITMANIP_Write(pBuffer, bServer ? pItemsTxtRecord->dwCode : ITEMS_PadItemCodeForClient(pItemsTxtRecord->dwCode), 32);
 
 	nSocketedItems = 0;
 	if (ITEMS_CheckIfSocketable(pItem) && pItem->pInventory) {
@@ -5702,7 +5726,24 @@ void __fastcall ITEMS_SerializeItemComplete(D2UnitStrc* pItem, D2BitBufferStrc* 
 		}
 	}
 
-	if (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_ANY_ARMOR)) {
+	// Armour-class/durability block: gated by item TYPE only in the 1.14d
+	// client.  0x62D2FC calls ITEMS_CheckItemTypeId(pItem, ANY_ARMOR) and
+	// then reads armourclass (stat 31) savebits, max-durability (73) savebits
+	// and -- when max-durability != 0 -- durability (72) savebits, with no
+	// animMode test anywhere between the header and the stat-list terminator,
+	// so a STORED buckler (animMode 0) over-reads into the stat list unless
+	// the block is emitted.  The weapon branch's tail (0x62D450 -> 0x62D6F9)
+	// reads max-durability/durability under the ANY_WEAPON gate the same way.
+	// Gating the block on IMODE_EQUIP was an earlier misreading of the short
+	// 17-37 bit tails of stored cm1 charms (which never satisfy the ANY_ARMOR
+	// gate); the two sides read/write the block in every mode.
+	// Gold is deliberately left outside the gate: the amount is the whole
+	// payload of a gold item and gold is never a weapon or an armour piece.
+	if (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_GOLD)) {
+		nGold = STATLIST_UnitGetStatValue(pItem, STAT_GOLD, 0);
+		ITEMS_WriteBitsToBitstream(pBuffer, nGold >= 4096, 1);
+		ITEMS_WriteBitsToBitstream(pBuffer, nGold, nGold >= 4096 ? 32 : 12);
+	} else if (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_ANY_ARMOR)) {
 		pItemStatCostTxtRecord = ITEMS_GetItemStatCostTxtRecord(STAT_ARMORCLASS);
 		ITEMS_WriteBitsToBitstream(pBuffer, STATLIST_GetUnitBaseStat(pItem, STAT_ARMORCLASS, 0) + pItemStatCostTxtRecord->dwSaveAdd, pItemStatCostTxtRecord->nSaveBits);
 
@@ -5722,10 +5763,6 @@ void __fastcall ITEMS_SerializeItemComplete(D2UnitStrc* pItem, D2BitBufferStrc* 
 			pItemStatCostTxtRecord = ITEMS_GetItemStatCostTxtRecord(STAT_DURABILITY);
 			ITEMS_WriteBitsToBitstream(pBuffer, STATLIST_UnitGetStatValue(pItem, STAT_DURABILITY, 0) + pItemStatCostTxtRecord->dwSaveAdd, pItemStatCostTxtRecord->nSaveBits);
 		}
-	} else if (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_GOLD)) {
-		nGold = STATLIST_UnitGetStatValue(pItem, STAT_GOLD, 0);
-		ITEMS_WriteBitsToBitstream(pBuffer, nGold >= 4096, 1);
-		ITEMS_WriteBitsToBitstream(pBuffer, nGold, nGold >= 4096 ? 32 : 12);
 	}
 
 	if (ITEMS_CheckIfStackable(pItem)) {

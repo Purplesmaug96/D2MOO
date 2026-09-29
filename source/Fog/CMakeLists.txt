@@ -15,12 +15,16 @@ target_sources(${FogImplName}
 	src/D2QSSocket.cpp
 	src/DataArrays.cpp
 	src/ErrorManager.cpp
-	src/Excel/Excel.cpp
+	src/Excel/ExcelBin.cpp
+	src/Excel/TxtLink.cpp
 	src/Exceptions.cpp
+	src/File/FogFileIO.cpp
+	src/FogNetShim.cpp
 	src/Gamma.cpp
 	src/IFF.cpp
 	src/LogManager.cpp
 	src/Mem/Mem.cpp
+	src/Net/Huffman.cpp
 	src/QServer/QServer.cpp
 	src/QServer/QServer98.cpp
 	src/QServer/QServerNT.cpp
@@ -33,9 +37,13 @@ target_sources(${FogImplName}
 
 	# Headers
 	include/Fog.h
+	include/FogFileIO.h
 	include/D2BitManip.h
 	include/Safesock.h
 	include/System/System.h
+	src/FogNetShim.h
+	include/HuffmanCodec.h
+	include/HuffmanTables.h
 )
 
 if(D2MOO_WITH_STATIC_TESTS)

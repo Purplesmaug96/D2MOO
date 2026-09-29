@@ -1069,7 +1069,10 @@ void __fastcall DATATBLS_LoadGemsTxt(HD2ARCHIVE hArchive) {
 	for (int i = 0; i < sgptDataTables->pGemDataTables.nGemsTxtRecordCount; ++i) {
 		sgptDataTables->pItemDataTables.pItemsTxt[i].dwGemOffset = -1;
 		nItemCode = sgptDataTables->pGemDataTables.pGemsTxt[i].dwItemCode;
-		if (nItemCode >= 0) {
+		// Item indices resolved from the txt-based linker can reference rows
+		// absent from the (smaller) txt item set; the bin path's indices were
+		// always valid. Skip out-of-range references.
+		if (nItemCode >= 0 && nItemCode < sgptDataTables->pItemDataTables.nItemsTxtRecordCount) {
 			sgptDataTables->pItemDataTables.pItemsTxt[nItemCode].dwGemOffset = i;
 		}
 	}
@@ -1581,7 +1584,7 @@ BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nIt
 				return TRUE;
 			}
 
-			if (nItemType >= sgptDataTables->nItemTypesTxtRecordCount) {
+			if (nItemType < 0 || nItemType >= sgptDataTables->nItemTypesTxtRecordCount) {
 				FOG_Trace("Invalid item type at line %d of file %s", __LINE__, __FILE__);
 				return FALSE;
 			}
@@ -1593,11 +1596,33 @@ BOOL __fastcall DATATBLS_CheckItemTypesEquivalenceNested(int nItemType1, int nIt
 
 			D2ItemTypesTxt* pItemTypesTxtRecord = &sgptDataTables->pItemTypesTxt[nItemType];
 
+			// nEquiv1/nEquiv2 are int16 linker indices, and the shipped
+			// 1.14d itemtypes.bin stores 0xFFFF (-1) in an empty reference
+			// cell -- the linker is already populated by the time the
+			// "equiv2" column is read, so the empty cell is stored as -1
+			// and not as 0 (the same convention as monstats.bin's
+			// wNextInClass tail).  Both tests must therefore be signed
+			// "> 0" like the nEquiv1 one above.
+			//
+			// Testing nEquiv2 for mere non-zero-ness pushes -1 onto the
+			// stack, and the very next iteration trips the
+			// "nItemType < 0" bounds check and bails out.  The net effect
+			// was that only a type's own row (plus 0) ever landed in
+			// pItemTypesEquivalenceLUTs: the chain axe(28) -> mele(46) ->
+			// weap(45) stopped dead, so ITEMS_CheckItemTypeIdByItemId()
+			// reported every weapon and every piece of armour as
+			// "none of those".  ITEMS_SerializeItemComplete() then skipped
+			// the armor/weapon block of the item bitstream (armour class,
+			// max/current durability, weapon damage) while the retail
+			// client -- which walks the chain correctly -- read it, so the
+			// client's bit cursor desynced, it read a garbage 9-bit stat
+			// id, and DATATBLS_GetItemsTxtRecord() asserted at
+			// .\ITEMS\Items.cpp:1677 on the out-of-range index.
 			if (pItemTypesTxtRecord->nEquiv1 > 0) {
 				++nIndex;
 				nParentItemTypes[nIndex] = pItemTypesTxtRecord->nEquiv1;
 
-				if (pItemTypesTxtRecord->nEquiv2) {
+				if (pItemTypesTxtRecord->nEquiv2 > 0) {
 					++nIndex;
 					nParentItemTypes[nIndex] = pItemTypesTxtRecord->nEquiv2;
 				}

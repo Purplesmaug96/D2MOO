@@ -17,7 +17,12 @@
 // D2Game.0x6FCB9B00
 void __fastcall PARTY_AllocPartyControl(D2GameStrc* pGame) {
 	D2_ASSERT(pGame);
-	D2_ASSERT(pGame->pPartyControl);
+	// Both callers (GAME_CreateNewEmptyGame and the client-join create path in
+	// Game.cpp) pass a freshly pooled game whose pPartyControl is still NULL;
+	// the field is allocated and assigned below. The decompiled assert is
+	// therefore a "not yet allocated" precondition, not a "must already be
+	// set" one.
+	D2_ASSERT(!pGame->pPartyControl);
 
 	D2PartyControlStrc* pPartyControl = D2_ALLOC_STRC_POOL(pGame->pMemoryPool, D2PartyControlStrc);
 	D2_ASSERT(pPartyControl);

@@ -234,10 +234,20 @@ void __fastcall DATATBLS_LoadLevelsTxt(HD2ARCHIVE hArchive) {
 		memset(sgptDataTables->pLevelsTxt[i].wszLevelName, 0x00, sizeof(sgptDataTables->pLevelsTxt[i].wszLevelName));
 		memset(sgptDataTables->pLevelsTxt[i].wszLevelWarp, 0x00, sizeof(sgptDataTables->pLevelsTxt[i].wszLevelWarp));
 
-		Unicode::strncpy(sgptDataTables->pLevelsTxt[i].wszLevelName, D2LANG_GetStringByReferenceString(sgptDataTables->pLevelsTxt[i].szLevelName), sizeof(sgptDataTables->pLevelsTxt[i].szLevelName));
+		const Unicode* wszLevelName = D2LANG_GetStringByReferenceString(sgptDataTables->pLevelsTxt[i].szLevelName);
+		if (wszLevelName) {
+			Unicode::strncpy(sgptDataTables->pLevelsTxt[i].wszLevelName, wszLevelName, sizeof(sgptDataTables->pLevelsTxt[i].szLevelName));
+		} else {
+			Unicode::toUnicode(sgptDataTables->pLevelsTxt[i].wszLevelName, sgptDataTables->pLevelsTxt[i].szLevelName, sizeof(sgptDataTables->pLevelsTxt[i].szLevelName) - 1);
+		}
 		sgptDataTables->pLevelsTxt[i].wszLevelName[39] = 0;
 
-		Unicode::strncpy(sgptDataTables->pLevelsTxt[i].wszLevelWarp, D2LANG_GetStringByReferenceString(sgptDataTables->pLevelsTxt[i].szLevelWarp), sizeof(sgptDataTables->pLevelsTxt[i].szLevelWarp));
+		const Unicode* wszLevelWarp = D2LANG_GetStringByReferenceString(sgptDataTables->pLevelsTxt[i].szLevelWarp);
+		if (wszLevelWarp) {
+			Unicode::strncpy(sgptDataTables->pLevelsTxt[i].wszLevelWarp, wszLevelWarp, sizeof(sgptDataTables->pLevelsTxt[i].szLevelWarp));
+		} else {
+			Unicode::toUnicode(sgptDataTables->pLevelsTxt[i].wszLevelWarp, sgptDataTables->pLevelsTxt[i].szLevelWarp, sizeof(sgptDataTables->pLevelsTxt[i].szLevelWarp) - 1);
+		}
 		sgptDataTables->pLevelsTxt[i].wszLevelWarp[39] = 0;
 
 		nMonsterCounter = 0;
@@ -644,19 +654,22 @@ D2LvlPrestTxt* __fastcall DATATBLS_GetLvlPrestTxtRecordFromLevelId(int nLevelId)
 
 // D2Common.0x6FD61BC0
 void __fastcall DATATBLS_LoadLvlWarpTxt(HD2ARCHIVE hArchive) {
+	// Exactly retail 1.14d's nine compiled columns (verified in D2Common.dll:
+	// nine D2BinFieldStrc entries, offsets 0x00..0x20, record size 0x24).  The
+	// shipped lvlwarp.txt has no "Id", "Tiles" or "Direction" column, and the
+	// loader resolves columns by name and leaves unmatched ones zeroed -- so the
+	// 1.10f field list shifted every real value by four bytes and left the level
+	// id the DRLG keys off permanently zero.
 	D2BinFieldStrc pTbl[] = {
-		{ "Id", TXTFIELD_DWORD, 0, 0, NULL },
-		{ "SelectX", TXTFIELD_DWORD, 0, 4, NULL },
-		{ "SelectY", TXTFIELD_DWORD, 0, 8, NULL },
-		{ "SelectDX", TXTFIELD_DWORD, 0, 12, NULL },
-		{ "SelectDY", TXTFIELD_DWORD, 0, 16, NULL },
-		{ "ExitWalkX", TXTFIELD_DWORD, 0, 20, NULL },
-		{ "ExitWalkY", TXTFIELD_DWORD, 0, 24, NULL },
-		{ "OffsetX", TXTFIELD_DWORD, 0, 28, NULL },
-		{ "OffsetY", TXTFIELD_DWORD, 0, 32, NULL },
-		{ "LitVersion", TXTFIELD_DWORD, 0, 36, NULL },
-		{ "Tiles", TXTFIELD_DWORD, 0, 40, NULL },
-		{ "Direction", TXTFIELD_ASCII, 1, 44, NULL },
+		{ "SelectX", TXTFIELD_DWORD, 0, 0x00, NULL },
+		{ "SelectY", TXTFIELD_DWORD, 0, 0x04, NULL },
+		{ "SelectDX", TXTFIELD_DWORD, 0, 0x08, NULL },
+		{ "SelectDY", TXTFIELD_DWORD, 0, 0x0C, NULL },
+		{ "ExitWalkX", TXTFIELD_DWORD, 0, 0x10, NULL },
+		{ "ExitWalkY", TXTFIELD_DWORD, 0, 0x14, NULL },
+		{ "OffsetX", TXTFIELD_DWORD, 0, 0x18, NULL },
+		{ "OffsetY", TXTFIELD_DWORD, 0, 0x1C, NULL },
+		{ "LitVersion", TXTFIELD_DWORD, 0, 0x20, NULL },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
@@ -668,21 +681,20 @@ void __fastcall DATATBLS_UnloadLvlWarpTxt() {
 	DATATBLS_UnloadBin(sgptDataTables->pLvlWarpTxt);
 }
 
-// 1.10f:D2Common.0x6FD61DE0
-// 1.11: D2Common.0x6FD86840
-D2LvlWarpTxt* __fastcall DATATBLS_GetLvlWarpTxtRecordFromLevelIdAndDirection(int nLevelId, char szDirection) {
+// 1.11 replaces 1.10f's DATATBLS_GetLvlWarpTxtRecordFromLevelIdAndDirection with
+// this indexed fetch.  Retail 1.14d, verified in D2Common.dll:
+//   mov sgptWarpDefs,%eax ; D2_ASSERT(sgptWarpDefs)
+//   cmp $-1,%ecx         ; LEVEL_ID_NONE -> no warp
+//   je   -> xor %eax,%eax ; ret
+//   lea  (%ecx,%ecx,8),%ecx ; lea (%eax,%ecx,4),%eax   ; + index * 0x24
+D2LvlWarpTxt* __fastcall DATATBLS_GetLvlWarpTxtRecord(int nIndex) {
 	D2_ASSERT(sgptDataTables->pLvlWarpTxt);
 
-	for (int i = 0; i < sgptDataTables->nLvlWarpTxtRecordCount; ++i) {
-		if (sgptDataTables->pLvlWarpTxt[i].dwLevelId == nLevelId) {
-			if (szDirection == 'b' || sgptDataTables->pLvlWarpTxt[i].szDirection[0] == 'b' || sgptDataTables->pLvlWarpTxt[i].szDirection[0] == szDirection) {
-				return &sgptDataTables->pLvlWarpTxt[i];
-			}
-		}
+	if (nIndex == -1) {
+		return NULL;
 	}
 
-	FOG_DisplayAssert("Error in DRLG related to stairs that connect levels", __FILE__, __LINE__);
-	exit(-1);
+	return &sgptDataTables->pLvlWarpTxt[nIndex];
 }
 
 // D2Common.0x6FD61E60
@@ -765,11 +777,26 @@ void __fastcall DATATBLS_LoadLvlSubTxt(HD2ARCHIVE hArchive, int a2, int a3) {
 		if (dwType) {
 			sgptDataTables->pLvlSubTypeStartIds = (int*)D2_CALLOC_POOL(nullptr, sizeof(int) * (dwType + 1));
 
+			// First row of each type group owns the start slot.  Blizzard's
+			// txt compiler drops section-marker rows such as the trailing
+			// "Expansion" line in lvlsub.txt (its Type cell is empty, so it
+			// parses as type 0 with an empty file), which is why the shipped
+			// lvlsub.bin has 34 rows while the .txt has 35.  The txt compile
+			// keeps that marker, so a naive "last transition wins" scan would
+			// let it overwrite startIds[0] and the engine would load the
+			// marker's empty substitution file -> NULL deref.  Assigning only
+			// on strictly increasing type transitions restores the bin layout
+			// (types are grouped in the txt), so the marker's drop to type 0
+			// can never reclaim a slot.
 			dwType = 0;
 			for (int i = 0; i < sgptDataTables->nLvlSubTxtRecordCount; ++i) {
 				if (sgptDataTables->pLvlSubTxt[i].dwType != dwType) {
-					dwType = sgptDataTables->pLvlSubTxt[i].dwType;
-					sgptDataTables->pLvlSubTypeStartIds[dwType] = i;
+					if (sgptDataTables->pLvlSubTxt[i].dwType > dwType) {
+						dwType = sgptDataTables->pLvlSubTxt[i].dwType;
+						sgptDataTables->pLvlSubTypeStartIds[dwType] = i;
+					} else {
+						dwType = sgptDataTables->pLvlSubTxt[i].dwType;
+					}
 				}
 			}
 		}

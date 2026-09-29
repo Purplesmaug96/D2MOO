@@ -803,15 +803,42 @@ struct D2GSPacketSrv1C // size of 0x05
 //	int32_t nValue;				//0x06
 // };
 
-struct D2GSPacketSrvStat // size of 0x04 (originally 0x03)
+// NOTE(D2MOO): 0x1D/0x1E/0x1F are THREE DIFFERENT wire sizes, not one union.
+// The retail client sizes every S->C packet from a fixed per-header table
+// (Game.exe: `mov 0x730ae8(,%edx,4),%eax` in the size routine at 0x52b920), which
+// says 0x1D=3, 0x1E=4, 0x1F=6.  Sharing one struct here made the engine emit a
+// 3-byte 0x1E/0x1F, so the client consumed 1 (resp. 3) extra bytes per packet,
+// drifted out of alignment, and started reinterpreting the middle of the stat
+// stream as 0x09 "create unit" packets -- which is what made it assert
+// "Unable to find room for unit".  Keep these three separate and in sync with
+// the client table.
+struct D2GSPacketSrv1D // size of 0x03
 {
 	uint8_t nHeader;	// 0x00
 	PacketStatId nStat; // 0x01
-	uint8_t nValue;		// 0x03 (Originally 0x02)
+	uint8_t nValue;		// 0x02
 };
-using D2GSPacketSrv1D = D2GSPacketSrvStat;
-using D2GSPacketSrv1E = D2GSPacketSrvStat;
-using D2GSPacketSrv1F = D2GSPacketSrvStat;
+
+struct D2GSPacketSrv1E // size of 0x04
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint16_t nValue;	// 0x02
+};
+
+struct D2GSPacketSrv1F // size of 0x06
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint32_t nValue;	// 0x02
+};
+
+struct D2GSPacketSrvStat // size of 0x03 (the 8-bit-value form; == D2GSPacketSrv1D)
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint8_t nValue;		// 0x02
+};
 
 struct D2GSPacketSrv20 // size of 0x0B (originally 0x0A)
 {
@@ -1213,10 +1240,13 @@ struct D2GSPacketSrv53 // size of 0x0A
 	uint8_t unk0x09; // 0x09
 };
 
-struct D2GSPacketSrv54 // size of 0x0A
+// NOTE(D2MOO): client size table (Game.exe 0x730AE8) and handler-table
+// expected-size (0x7114D0 + 0x54*12 + 4) both say 3; the client's 0x54 handler
+// (0x45E3B0) is a bare `ret`, i.e. a no-op stub.
+struct D2GSPacketSrv54 // size of 0x03
 {
-	uint8_t nHeader;	 // 0x00
-	uint8_t unk0x001[9]; // 0x01
+	uint8_t nHeader;	// 0x00
+	uint8_t unk0x01[2]; // 0x01
 };
 
 struct D2GSPacketSrv55 // size of 0x03
@@ -1932,19 +1962,56 @@ struct D2GSPacketSrv9D // variable size
 //	uint16_t nValue;		//0x06
 // };
 
-struct D2GSPacketSrvStatAndGuid // size of 0x08 (originally 0x07)
+// NOTE(D2MOO): same story as D2GSPacketSrv1D/1E/1F above -- the retail client
+// uses FIXED per-header sizes (0x9E=7, 0x9F=8, 0xA0=10, 0xA1=7, 0xA2=8), so
+// these five must be distinct structs, not one shared union.
+struct D2GSPacketSrv9E // size of 0x07
 {
 	uint8_t nHeader;	// 0x00
 	PacketStatId nStat; // 0x01
-	uint32_t dwGUID;	// 0x03 (Originally 0x02)
-	uint8_t nValue;		// 0x07 (Originally 0x06)
+	uint32_t dwGUID;	// 0x02
+	uint8_t nValue;		// 0x06
 };
 
-using D2GSPacketSrv9E = D2GSPacketSrvStatAndGuid;
-using D2GSPacketSrv9F = D2GSPacketSrvStatAndGuid;
-using D2GSPacketSrvA0 = D2GSPacketSrvStatAndGuid;
-using D2GSPacketSrvA1 = D2GSPacketSrvStatAndGuid;
-using D2GSPacketSrvA2 = D2GSPacketSrvStatAndGuid;
+struct D2GSPacketSrv9F // size of 0x08
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint32_t dwGUID;	// 0x02
+	uint16_t nValue;	// 0x06
+};
+
+struct D2GSPacketSrvA0 // size of 0x0A
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint32_t dwGUID;	// 0x02
+	uint32_t nValue;	// 0x06
+};
+
+struct D2GSPacketSrvA1 // size of 0x07
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint32_t dwGUID;	// 0x02
+	uint8_t nValue;		// 0x06
+};
+
+struct D2GSPacketSrvA2 // size of 0x08
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint32_t dwGUID;	// 0x02
+	uint16_t nValue;	// 0x06
+};
+
+struct D2GSPacketSrvStatAndGuid // size of 0x07 (the 8-bit-value form; == D2GSPacketSrv9E)
+{
+	uint8_t nHeader;	// 0x00
+	PacketStatId nStat; // 0x01
+	uint32_t dwGUID;	// 0x02
+	uint8_t nValue;		// 0x06
+};
 
 struct D2GSPacketSrvA3 // size of 0x18
 {
@@ -1981,22 +2048,28 @@ struct D2GSPacketSrvA6 // variable size
 	// variable data
 };
 
-struct D2GSPacketSrvA7 // size of 0x08 (originally 0x07)
+// NOTE(D2MOO): the retail client reads 0xA7 as a FIXED 7 bytes and 0xA8 as
+// `nSize` bytes where nSize lives at offset 6.  With nState widened to 16 bits
+// the payload moved one byte forward, so every 0xA7/0xA9 drifted the client's
+// packet cursor and every 0xA8 carried its bitstream one byte off.  nState is a
+// single byte on the wire; the state ids that exceed 0xFF simply truncate,
+// exactly as retail D2GS does.
+struct D2GSPacketSrvA7 // size of 0x07
 {
 	uint8_t nHeader;   // 0x00
 	uint8_t nUnitType; // 0x01
 	int32_t nUnitId;   // 0x02
-	uint16_t nState;   // 0x06
+	uint8_t nState;	   // 0x06
 };
 
-struct D2GSPacketSrvA8 // Variable Size
+struct D2GSPacketSrvA8 // Variable Size: nSize == total packet size, at 0x06
 {
 	uint8_t nHeader;	  // 0x00
 	uint8_t nUnitType;	  // 0x01
 	int32_t nUnitId;	  // 0x02
-	uint8_t nSize;		  // 0x06
-	uint16_t nState;	  // 0x07 - originally a uint8_t
-	uint8_t pStream[512]; // 0x09
+	uint8_t nSize;		  // 0x06 - client sizes the whole packet from this byte
+	uint8_t nState;		  // 0x07
+	uint8_t pStream[512]; // 0x08
 };
 
 // struct D2GSPacketSrvA7	//size of 0x07
@@ -2025,12 +2098,12 @@ struct D2GSPacketSrvA8 // Variable Size
 //	uint8_t nState;		//0x06
 // };
 
-struct D2GSPacketSrvA9 // size of 0x08 (originally 0x07)
+struct D2GSPacketSrvA9 // size of 0x07
 {
 	uint8_t nHeader;   // 0x00
 	uint8_t nUnitType; // 0x01
 	int32_t nUnitId;   // 0x02
-	uint16_t nState;   // 0x06
+	uint8_t nState;	   // 0x06
 };
 
 struct D2GSPacketSrvAA // variable size
@@ -2087,7 +2160,15 @@ struct D2GSPacketSrvB0 // size of 0x01
 	uint8_t nHeader; // 0x00
 };
 
-struct D2GSPacketSrvB1 // size of 0x35
+// NOTE(D2MOO): 0xB1 is one of the headers the client CANNOT size (table entry
+// 0, Game.exe 0x730AE8), so it must never appear on the wire.  The block that
+// used to sit here was off by one against that table: the 53-byte game-list
+// entry belongs to 0xB2, and the 5-byte error code to 0xB4 (0xB3 is variable,
+// sized as BYTE@1 + 7).  Naming them by their real ids keeps the senders in
+// SCmd.cpp from re-introducing the shift.
+struct D2GSPacketSrvB1; // never sent: the client cannot size it
+
+struct D2GSPacketSrvB2 // size of 0x35 (0x35 == 53 in the client table)
 {
 	uint8_t nHeader;	   // 0x00
 	char szGameName[48];   // 0x01
@@ -2095,20 +2176,14 @@ struct D2GSPacketSrvB1 // size of 0x35
 	uint16_t nGameId;	   // 0x33
 };
 
-struct D2GSPacketSrvB2 // variable size
+struct D2GSPacketSrvB3 // variable size: BYTE@1 + 7
 {
 	uint8_t nHeader; // 0x00
 
 	// variable data
 };
 
-struct D2GSPacketSrvB3 // size of 0x05
-{
-	uint8_t nHeader;	 // 0x00
-	uint32_t nErrorCode; // 0x01
-};
-
-struct D2GSPacketSrvB4 // variable size
+struct D2GSPacketSrvB4 // size of 0x05
 {
 	uint8_t nHeader; // 0x00
 	uint32_t dwType; // 0x01
@@ -2177,3 +2252,57 @@ struct ClientPacketSaveHeaderPart // sizeof(0x107) 1.10f nHeaderID: 0xB2
 };
 
 #pragma pack()
+
+// ---------------------------------------------------------------------
+// Wire-size guards (see D2NetPacketSize.h for the full derivation)
+// ---------------------------------------------------------------------
+// Every S->C packet struct above is copied to the wire verbatim, and the retail
+// client splits the incoming payload using a fixed table of its own.  A struct
+// whose sizeof disagrees with that table shifts the client's cursor and the
+// remainder of the frame is re-interpreted as arbitrary packets -- which is how
+// 0x1D/0x1E/0x1F (three genuinely different sizes sharing one union) ended up
+// making the client read a stat update as a 0x09 "create unit" and assert
+// "Unable to find room for unit".  These assertions make that class of bug a
+// compile error rather than a runtime crash.
+//
+// Only the fixed-size headers the engine actually emits are listed.  A handful
+// of structs further down are still declared-but-undefined and are checked in
+// D2NetPacketSize.h's own table; the 0xB1..0xB4 block is variable-size in the
+// client and therefore has no fixed number to check against.
+#include <D2NetPacketSize.h>
+#include <cstddef>
+
+// Fixed-size S->C structs whose sizeof must equal the client table entry.
+#define D2GS_ASSERT_WIRE_SIZE(Struct, Header)                            \
+	static_assert(sizeof(Struct) == D2NET_ServerPacketSizeTable[Header], \
+				  #Struct " must be " #Header " bytes on the wire (retail client size table)")
+
+#if PACKETS_USE_16BITS_STATID
+// 0x1D/0x1E/0x1F only keep their retail sizes with an 8-bit stat id; the 16-bit
+// build is a deliberate opt-in and is not wire-compatible.
+#else
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrv1D, 0x1D);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrv1E, 0x1E);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrv1F, 0x1F);
+#endif
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrv54, 0x54);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrv9E, 0x9E);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrv9F, 0x9F);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA0, 0xA0);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA1, 0xA1);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA2, 0xA2);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA3, 0xA3);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA4, 0xA4);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA5, 0xA5);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA7, 0xA7);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA9, 0xA9);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvB0, 0xB0);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvB2, 0xB2);
+D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvB4, 0xB4);
+// 0xA8/0xAA carry their own length byte; assert the fixed prefix the client
+// uses to locate the bitstream.
+static_assert(offsetof(D2GSPacketSrvA8, nSize) == 6 && offsetof(D2GSPacketSrvA8, pStream) == 8,
+			  "0xA8: client reads the total size at 0x06 and the bitstream at 0x08");
+static_assert(offsetof(D2GSPacketSrvAA, pStream) == 7,
+			  "0xAA: client reads the bitstream at 0x07");
+#undef D2GS_ASSERT_WIRE_SIZE
