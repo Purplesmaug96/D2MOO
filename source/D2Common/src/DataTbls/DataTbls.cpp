@@ -800,7 +800,7 @@ void __fastcall DATATBLS_LoadSomeTxts(HD2ARCHIVE hArchive) {
 	int nRecordCount = 0;
 
 	D2BinFieldStrc pHireDescTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pHireDescLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pHireDescLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pMonModeTbl[] = {
@@ -808,15 +808,15 @@ void __fastcall DATATBLS_LoadSomeTxts(HD2ARCHIVE hArchive) {
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pPlayerClassTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pPlayerClassLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pPlayerClassLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pPlrModeTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pPlrModeLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pPlrModeLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pStorePageTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pStorePageLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pStorePageLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pMonAiTbl[] = {
@@ -824,7 +824,7 @@ void __fastcall DATATBLS_LoadSomeTxts(HD2ARCHIVE hArchive) {
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pHitClassTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pHitClassLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pHitClassLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pMonPlaceTbl[] = {
@@ -832,23 +832,23 @@ void __fastcall DATATBLS_LoadSomeTxts(HD2ARCHIVE hArchive) {
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pCompCodeTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pCompCodeLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pCompCodeLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pSkillCalcTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pSkillCalcLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pSkillCalcLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pElemTypesTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pElemTypesLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pElemTypesLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pMissCalcTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pMissileCalcLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pMissileCalcLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pBodyLocsTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pBodyLocsLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pBodyLocsLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pSkillCodeTbl[] = {
@@ -856,7 +856,7 @@ void __fastcall DATATBLS_LoadSomeTxts(HD2ARCHIVE hArchive) {
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pColorsTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pColorsLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pColorsLinker },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 	D2BinFieldStrc pEventsTbl[] = {

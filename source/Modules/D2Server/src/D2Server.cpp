@@ -89,7 +89,10 @@ constexpr uint8_t  D2GS_HDR_ENTERGAME_LEGACY= 0x6A; // C->S enter game env (1.10
 constexpr uint8_t  D2GS_HDR_PING            = 0x6D; // C->S ping (13 bytes: u32 tick, u32 delay, u32 warden)
 constexpr uint8_t  D2GS_HDR_PONG            = 0x8F; // S->C pong (33 bytes: 8F + 32 zero bytes)
 constexpr uint8_t  D2GS_HDR_CHAT           = 0x14; // C->S chat (also 0x15)
-constexpr uint8_t  D2GS_HDR_LEAVEGAME      = 0x69; // C->S leave game
+// 0x69 is NOT the leave: the engine's D2CLTSYS_JOINLIST handler
+// (sub_6FC39870) answers it with the game list.  Save-and-exit is 0x68 --
+// see the GAMELOGON/ENDGAME state-dependence in D2Server_EngineDispatchPacket.
+constexpr uint8_t  D2GS_HDR_LEAVEGAME      = 0x69; // C->S game list request (D2CLTSYS_JOINLIST)
 constexpr uint32_t D2GS_MAX_PACKET         = MAX_MSG_SIZE; // largest legal frame
 
 // ============================================================
@@ -129,8 +132,21 @@ struct PlayerConnection {
     uint32_t playerGUID;      // unit GUID assigned by the game server
     char playerName[32];
     char accountName[32];
+    uint32_t joinToken;        // nTokenId from the GAMELOGON (0x68).  Retained for
+                              // the post-leave re-entry: the client returns to the
+                              // lobby and re-selects the character with a bare
+                              // 0x6B, which re-adds it to the game with 0x67
+                              // JOINGAME, and that packet must carry the same token
+                              // the engine handed out (GAME_VerifyJoinGame matches it).
     bool authenticated;       // GAMELOGON (0x68) accepted
     bool inGame;              // entered game environment (0x6A)
+    bool everJoined;          // has completed a join at least once on this
+                              // connection.  Distinguishes the FIRST 0x6B (a
+                              // normal entry, where inGame is still false simply
+                              // because the handshake has not run yet) from a
+                              // post-leave 0x6B (inGame was cleared by the leave
+                              // but this client is already a member of nothing).
+                              // Cleared only by a new GAMELOGON.
     uint32_t engineEpoch;     // host-game incarnation the engine JOIN targeted.
                               // 0 until the JOIN is pushed; compared against
                               // g_engineGameEpoch by D2Server_EnginePush so a
@@ -146,7 +162,13 @@ struct PlayerConnection {
     // after GAMELOADING, then sends D2GS_JOINGAME (0x6B).  We accumulate the
     // save so the session trace shows it complete and can seed an in-game
     // state later.
-    uint8_t saveBuf[4096];    // received .d2s bytes (concatenated chunks)
+    //
+    // 8192, not 4096: a header-only test .d2s is 335 bytes, but a real
+    // character is ~2-4 KB and the format's own ceiling is 8192 (the same
+    // PLRSAVE2_CreateSaveFile buffer the engine serializes into).  Overflowing
+    // here drops chunks, so saveComplete never fires and re-entry finds no
+    // save to re-attach.
+    uint8_t saveBuf[8192];    // received .d2s bytes (concatenated chunks)
     uint32_t saveFull;        // full save size announced by the client
     uint32_t saveGot;         // bytes received so far
     bool     saveComplete;    // whole save arrived
@@ -432,8 +454,8 @@ static const char* D2Server_PacketName(uint8_t nHeader) {
     case 0x59: return "MoveToTarget";
     case 0x66: return "GameInfo";
     case 0x67: return "JoinWithToken";
-    case 0x68: return "GAMELOGON";
-    case 0x69: return "LEAVEGAME";
+    case 0x68: return "GAMELOGON/ENDGAME";
+    case 0x69: return "GAME_LIST_REQ";
     case 0x6A: return "ENTERGAMEENV(legacy)";
     case 0x6B: return "JOINGAME";
     case 0x6C: return "UPLOADSAVE";
@@ -1597,13 +1619,123 @@ static bool D2Server_EnsureEngineGame(void) {
     return true;
 }
 
+// Re-add `player` to the host game by pushing a 0x67 JOINGAME, the same packet
+// the GAMELOGON path builds.  Used twice:
+//
+//  * the initial join, straight out of GAMELOGON (0x68), and
+//  * a post-leave re-entry, when the client comes back from the lobby and
+//    re-selects the character with a bare 0x6B.
+//
+// The re-entry case genuinely needs it: GAME_VerifyJoinAct (Game.cpp) demands
+// CLIENTSTATE_GAME_INIT_SENT, which is only set by the join handshake.  A bare
+// 0x6B pushed into a game the client is not a member of is not "enter the act",
+// it is the engine's "invalid state to join act" path, which ends in
+// sub_6FC36B20 -> D2NET_10015 and kicks the client.
+//
+// Returns false only if there is no host game to join (caller should not push
+// JOINACT in that case -- there is nothing to enter).
+static bool D2Server_EngineJoinGame(PlayerConnection& player) {
+    if (!D2Server_EnsureEngineGame()) {
+        printf("[D2Server] Player %u no host game; cannot (re)join\n", player.playerId);
+        return false;
+    }
+
+    // D2GSPacketClt67 JOINGAME (packed): nTokenId(4) nGameId(2) nPlayerClass(1)
+    // unk0x08(4)=10 nLocale(1) szClientName(16).  Game id = the host game;
+    // unk0x08=10 is what CCMD_CanClientJoinGame demands.
+    uint8_t packet[0x1D] = {};
+    packet[0] = 0x67;
+    memcpy(packet + 0x01, &player.joinToken, 4);  // nTokenId
+    const uint16_t nGameId = g_engineGameId;
+    memcpy(packet + 0x05, &nGameId, 2);          // nGameId (our single game)
+    packet[0x07] = 0;                            // nPlayerClass (real class from save at spawn)
+    const int32_t nJoinUnk = 10;                 // demanded by CCMD_CanClientJoinGame
+    memcpy(packet + 0x08, &nJoinUnk, 4);
+    packet[0x0C] = 0;                            // nLocale
+    memcpy(packet + 0x0D, player.playerName, 16);// szClientName
+
+    // Bind this player to the host-game incarnation we are joining, BEFORE the
+    // push: D2Server_EnginePush rejects messages whose engineEpoch is stale.
+    D2Server_LockEngineGameState();
+    player.engineEpoch = g_engineGameEpoch;
+    D2Server_UnlockEngineGameState();
+
+    printf("[D2Server] Player %u engine JOINGAME (gameId=%u, class=0, locale=0)\n",
+           player.playerId, (unsigned)nGameId);
+    D2Server_EnginePush(player, 0, packet, sizeof(packet));
+    return true;
+}
+
+// Replay the client's already-received .d2s into the engine as OPENCHAR
+// (0x6B) chunks.  Called when the upload first completes, and again on a
+// post-leave re-entry.
+//
+// D2GSPacketClt6B OPENCHAR (packed): nSize(1) nTotalSize(4) saveData[nSize].
+// The engine's CLIENTS_AttachSaveFile appends nSize bytes per OPENCHAR and only
+// marks the save complete when the accumulated size reaches nTotalSize.  nSize
+// is a single byte (<=255), so the save must be replayed as <=255-byte chunks
+// -- exactly the framing the client's 0x6C upload used.  A one-shot OPENCHAR
+// would carry nSize = saveGot & 0xFF (335 -> 79), uploading only 79 of 335
+// bytes, and the act join would then fail in CLIENTS_AddPlayerToGame
+// (character incomplete) -> engine kicks with 0xB4.
+//
+// The re-entry replay is not optional.  CLIENTS_AddPlayerToGame builds the
+// player unit through D2GAME_SAVE_GetUnitDataFromFile, which reads the save
+// ATTACHED to the client -- not the server-side store.  The leave (SrvEndGame)
+// discards that attachment, and a bare 0x6B re-entry carries no save of its
+// own, so without this the unit cannot be built at all: the engine answers the
+// JOINACT with an error and kicks the client.  The module already holds the
+// bytes in player.saveBuf, so it can simply put them back.
+static void D2Server_EngineAttachSave(PlayerConnection& player) {
+    if (!player.saveComplete || player.saveGot == 0) {
+        printf("[D2Server] Player %u no cached save to (re)attach (%u/%u bytes)\n",
+               player.playerId, player.saveGot, player.saveFull);
+        return;
+    }
+    const int32_t nTotalSize = (int32_t)player.saveFull;
+    uint32_t nOffset = 0;
+    uint32_t nChunks = 0;
+    while (nOffset < player.saveGot) {
+        const uint32_t nChunk =
+            (player.saveGot - nOffset > 255) ? 255u : (player.saveGot - nOffset);
+        uint8_t packet[4 + 1 + 4 + 255];
+        packet[0] = 0x6B;
+        packet[1] = (uint8_t)nChunk;             // nSize
+        memcpy(packet + 2, &nTotalSize, 4);       // nTotalSize
+        memcpy(packet + 6, player.saveBuf + nOffset, nChunk);
+        D2Server_EnginePush(player, 0, packet, 6 + nChunk);
+        nOffset += nChunk;
+        ++nChunks;
+    }
+    printf("[D2Server] Player %u engine OPENCHAR: sent %u-byte save to engine in %u chunks\n",
+           player.playerId, player.saveGot, nChunks);
+}
+
 static void D2Server_EngineDispatchPacket(PlayerConnection& player,
                                           const uint8_t* pData, uint32_t nLen) {
     const uint8_t nHeader = pData[0];
 
-    // 0x68 GAMELOGON: authenticate, then synthesize engine JOINGAME (0x67).
+    // 0x68 is state-dependent, exactly as in the reference D2GS: before the
+    // client is in a game it is the 37-byte GAMELOGON below (ours alone, and
+    // never forwarded), and once it is in one the same byte is the bare
+    // D2CLTSYS_ENDGAME (D2GSPacketClt68 is 1 byte) that the engine owns.
+    // GAME_EndGame is the whole save-and-exit implementation: it writes every
+    // player's .d2s through D2GAME_SAVE_WriteFile, then emits the header-only
+    // S->C packets the client blocks on -- 0x05, then 0x06, then 0xAF from
+    // sub_6FC3C690 -- before CLIENTS_RemoveClientFromGame and D2NET_10016.
+    // So the second 0x68 has to be forwarded, not swallowed: the old
+    // `if (player.authenticated) return;` dropped it on the floor, the client
+    // never got its 0x05/0x06, and "Save and exit" only dismissed the menu.
+    // Whether the client may really end a game is left to the engine's own
+    // GAME_VerifyEndGame (CLIENTSTATE_INGAME) rather than second-guessed here;
+    // a stray 0x68 outside a game is a no-op plus a HACKLIST log line, which
+    // is what the reference D2GS does too.
     if (nHeader == D2GS_HDR_GAMELOGON) {
         if (player.authenticated) {
+            printf("[D2Server] Player %u 0x68 ENDGAME (save and exit) -> engine "
+                   "(inGame=%d, %u bytes)\n",
+                   player.playerId, player.inGame ? 1 : 0, nLen);
+            D2Server_EnginePush(player, 0, pData, nLen);
             return;
         }
         if (nLen < sizeof(D2ServerPacketGameLogon)) {
@@ -1622,36 +1754,16 @@ static void D2Server_EngineDispatchPacket(PlayerConnection& player,
         // The engine host game is created on demand (it may have been reaped
         // after a previous session emptied it).  The JOIN packet must use the
         // engine-assigned gameId, not a hardcoded one.
-        if (!D2Server_EnsureEngineGame()) {
-            printf("[D2Server] Player %u engine host game unavailable; dropping logon\n",
-                   player.playerId);
+        //
+        // Keep the token: the client may come back to this game after leaving
+        // it, and the re-entry has to present the same one.
+        player.joinToken = pLogon->wToken;
+        player.everJoined = false;
+
+        if (!D2Server_EngineJoinGame(player)) {
             player.authenticated = false;
             return;
         }
-
-        // D2GSPacketClt67 JOINGAME (packed): nTokenId(4) nGameId(2) nPlayerClass(1)
-        // unk0x08(4)=10 nLocale(1) szClientName(16).  Game id = the host game;
-        // unk0x08=10 is what CCMD_CanClientJoinGame demands.
-        uint8_t packet[0x1D] = {};
-        packet[0] = 0x67;
-        memcpy(packet + 0x01, &pLogon->wToken, 4);   // nTokenId
-        const uint16_t nGameId = g_engineGameId;
-        memcpy(packet + 0x05, &nGameId, 2);          // nGameId (our single game)
-        packet[0x07] = 0;                            // nPlayerClass (real class from save at spawn)
-        const int32_t nJoinUnk = 10;                 // demanded by CCMD_CanClientJoinGame
-        memcpy(packet + 0x08, &nJoinUnk, 4);
-        packet[0x0C] = 0;                            // nLocale
-        memcpy(packet + 0x0D, szCharName, 16);       // szClientName
-        printf("[D2Server] Player %u engine JOINGAME (gameId=%u, class=0, locale=0)\n",
-               player.playerId, (unsigned)nGameId);
-        // Bind this player to the created/current host-game incarnation so
-        // D2Server_EnginePush accepts their follow-up messages (and rejects
-        // them once THIS game is reaped).  Must happen BEFORE the JOIN push:
-        // the push guard drops messages whose engineEpoch mismatches.
-        D2Server_LockEngineGameState();
-        player.engineEpoch = g_engineGameEpoch;
-        D2Server_UnlockEngineGameState();
-        D2Server_EnginePush(player, 0, packet, sizeof(packet));
         return;
     }
 
@@ -1679,32 +1791,7 @@ static void D2Server_EngineDispatchPacket(PlayerConnection& player,
                player.playerId, player.saveGot, player.saveFull, nTerm);
         if (!player.saveComplete && player.saveFull > 0 && player.saveGot >= player.saveFull) {
             player.saveComplete = true;
-            // D2GSPacketClt6B OPENCHAR (packed): nSize(1) nTotalSize(4) saveData[nSize].
-            // The engine's CLIENTS_AttachSaveFile appends nSize bytes per OPENCHAR
-            // and only marks the save complete when the accumulated size reaches
-            // nTotalSize.  nSize is a single byte (<=255), so the save must be
-            // replayed as <=255-byte chunks — exactly the framing the client's
-            // 0x6C upload used.  A one-shot OPENCHAR would carry nSize =
-            // saveGot & 0xFF (335 -> 79), uploading only 79 of 335 bytes, and the
-            // act join would then fail in CLIENTS_AddPlayerToGame (character
-            // incomplete) -> engine kicks with 0xB3.
-            const int32_t nTotalSize = (int32_t)player.saveFull;
-            uint32_t nOffset = 0;
-            uint32_t nChunks = 0;
-            while (nOffset < player.saveGot) {
-                const uint32_t nChunk =
-                    (player.saveGot - nOffset > 255) ? 255u : (player.saveGot - nOffset);
-                uint8_t packet[4 + 1 + 4 + 255];
-                packet[0] = 0x6B;
-                packet[1] = (uint8_t)nChunk;             // nSize
-                memcpy(packet + 2, &nTotalSize, 4);       // nTotalSize
-                memcpy(packet + 6, player.saveBuf + nOffset, nChunk);
-                D2Server_EnginePush(player, 0, packet, 6 + nChunk);
-                nOffset += nChunk;
-                ++nChunks;
-            }
-            printf("[D2Server] Player %u engine OPENCHAR: sent %u-byte save to engine in %u chunks\n",
-                   player.playerId, player.saveGot, nChunks);
+            D2Server_EngineAttachSave(player);
             return;
         }
         return;
@@ -1714,7 +1801,41 @@ static void D2Server_EngineDispatchPacket(PlayerConnection& player,
     // JOINACT -> GAME_SendActInit (creates the player unit, loads the act,
     // streams the real world-data burst).
     if (nHeader == D2GS_HDR_ENTERGAME14) {
+        // A bare 0x6B from a client that is NOT currently in a game is a
+        // re-entry, not a continuation: "Save and exit" (0x69) runs the
+        // endgame sequence, SrvEndGame drops the client from the game, and the
+        // client then lands in the lobby.  Re-selecting the character there
+        // sends a bare 0x6B -- there is no second GAMELOGON, because from the
+        // client's point of view it never logged off.
+        //
+        // Observed on the wire: 0x69 -> (0xAF, 0x05, 0x06, game list) -> 0x6B.
+        // Handing that 0x6B straight to the engine only worked if a game
+        // happened to still exist; when it did not, it was dropped with "host
+        // game reaped" and the client gave up and closed the socket.  Even
+        // with a live game it would be wrong: GAME_VerifyJoinAct requires
+        // CLIENTSTATE_GAME_INIT_SENT, which is set by the join handshake, so a
+        // JOINACT for a client that is not a member is answered with
+        // sub_6FC36B20 -> D2NET_10015 (a kick).
+        //
+        // So replay the handshake first: re-add the client to the host game
+        // with the token from its original GAMELOGON, then JOINACT.  Both land
+        // in the same engine list, so the join is processed first and the
+        // client is a member (and GAME_INIT_SENT) by the time JOINACT runs.
+        if (player.everJoined && !player.inGame) {
+            printf("[D2Server] Player %u 0x6B re-entry (not in game) -> re-join "
+                   "host game, re-attach save, then JOINACT\n", player.playerId);
+            if (!D2Server_EngineJoinGame(player)) {
+                return;
+            }
+            // The leave threw away the save the engine had attached to this
+            // client, and a bare 0x6B carries none, so the unit could not be
+            // rebuilt.  Put the bytes back before the JOINACT; the engine
+            // drains list 0 in order, so the join, the save and the act all
+            // land in the right sequence.
+            D2Server_EngineAttachSave(player);
+        }
         player.inGame = true;
+        player.everJoined = true;
         printf("[D2Server] Player %u ENTERGAME -> engine JOINACT (save %u/%u)%s\n",
                player.playerId, player.saveGot, player.saveFull,
                player.saveComplete ? " [save complete]" :
@@ -1779,6 +1900,59 @@ static void D2Server_EngineDispatchPacket(PlayerConnection& player,
                player.playerId, nHeader, D2Server_PacketName(nHeader), nLen);
         D2Server_EnginePush(player, 1, pData, nLen);
         return;
+    }
+
+    // Save-and-exit arrives as D2CLTSYS_JOINLIST (0x69), NOT 0x68 ENDGAME.
+    // A live 1.14d client leaving a game (ESC -> "Save and exit") never sends
+    // 0x68 in the in-game context -- it goes straight to 0x69.  Observed on
+    // the wire: normal movement, then 0x69 three times, then a bare socket
+    // close, with no 0x68 anywhere in the session.  The engine's JOINLIST
+    // handler only sends the game list; it never ends the game, so
+    // GAME_EndGame never runs, nothing is saved, and the client blocks
+    // waiting for the end-of-game burst (0x05, 0x06, 0xAF) that would
+    // release it to the lobby -- hence "Save and exit does nothing".
+    //
+    // So treat an in-game 0x69 as the leave request it really is: run the
+    // endgame sequence first, then let the 0x69 through so the client still
+    // gets its game list.  The engine stays the sole authority on the save
+    // itself (GAME_VerifyEndGame / GAME_EndGame); all we decide here is that
+    // a JOINLIST arriving from inside a game implies an end first.  A 0x69
+    // from a client that is not in a game is untouched.
+    if (nHeader == D2GS_HDR_LEAVEGAME) {
+        if (player.inGame) {
+            printf("[D2Server] Player %u 0x69 JOINLIST while inGame -> ENDGAME "
+                   "to engine (save and exit)\n", player.playerId);
+            const uint8_t nEndGame[1] = { 0x68 }; // D2CLTSYS_ENDGAME
+            D2Server_EnginePush(player, 0, nEndGame, sizeof(nEndGame));
+            // Clear before the client retries: the queued ENDGAME detaches us
+            // from the game, and re-injecting on the 2nd/3rd 0x69 would end it
+            // twice.
+            player.inGame = false;
+        } else if (D2Server_EnsureEngineGame()) {
+            // The ENDGAME above empties the host game, and an empty game is
+            // reaped (CloseGame / SrvFreeGame / "host game cleared").  The
+            // client then asks for the game list again in order to land in the
+            // lobby, but with no game alive the engine drops that JOINLIST
+            // outright ("engine push dropped ... host game reaped"), leaving
+            // the client holding the release burst with nowhere to go -- it
+            // hangs in-game instead of quitting.  So recreate the host game
+            // first so the list is answerable.
+            //
+            // Creating it bumps g_engineGameEpoch, which would make this
+            // player's own follow-up push look stale and get dropped too
+            // ("host game re-created after this player joined").  Re-bind them
+            // to the new incarnation.  This is safe specifically because the
+            // player is on their way out: the reaper already released their
+            // name/state in the old game (that is what the guard defends
+            // against), and we are deliberately seating them in the lobby of
+            // the new one, which is exactly the game the list will describe.
+            D2Server_LockEngineGameState();
+            player.engineEpoch = g_engineGameEpoch;
+            D2Server_UnlockEngineGameState();
+        } else {
+            printf("[D2Server] Player %u 0x69 JOINLIST: host game unavailable, "
+                   "cannot answer game list\n", player.playerId);
+        }
     }
 
     // Lobby/system variants (0x66/0x67/0x69/0x6A/0x6D/0x6F) if a client ever
@@ -1956,8 +2130,8 @@ static void D2Server_DispatchPacket(PlayerConnection& player, const uint8_t* pDa
         }
         break;
     }
-    case D2GS_HDR_LEAVEGAME: { // 0x69 — client leaves the game
-        printf("[D2Server] Player %u LEFT GAME (state: auth=%d inGame=%d)\n",
+    case D2GS_HDR_LEAVEGAME: { // 0x69 — game list request (D2CLTSYS_JOINLIST), not a leave
+        printf("[D2Server] Player %u GAME_LIST_REQ (state: auth=%d inGame=%d)\n",
                player.playerId, player.authenticated ? 1 : 0, player.inGame ? 1 : 0);
         player.inGame = false;
         break;

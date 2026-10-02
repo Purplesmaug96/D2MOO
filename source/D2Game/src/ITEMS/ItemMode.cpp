@@ -155,10 +155,16 @@ void __fastcall D2GAME_ITEMMODE_ServerStatlistCallback_6FC41910(D2GameStrc* pGam
 
 			if (nNewValue <= 0) {
 				if (!SKILLS_GetSkillLevel(pOwner, pSkill, 0)) {
+					// The skill only exists because of this item, so dropping it here
+					// frees the D2SkillStrc.  Retail's pool allocator leaves the block
+					// intact, but on this platform the free scribbles over the first
+					// words of the struct, so the cached pointer has to be dropped and
+					// re-looked-up before it is used again below.
 					SKILLS_AssignSkill(pOwner, nSkillId, 0, 1, __FILE__, __LINE__);
+					pSkill = SKILLS_GetSkillById(pOwner, nSkillId, -1);
 				}
 
-				if (!SKILLS_GetSkillLevel(pOwner, pSkill, 1)) {
+				if (pSkill && !SKILLS_GetSkillLevel(pOwner, pSkill, 1)) {
 					if (UNITS_GetLeftSkill(pOwner) == pSkill) {
 						D2GAME_AssignSkill_6FD13800(pOwner, 1, 0, -1);
 					}

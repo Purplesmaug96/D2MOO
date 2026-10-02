@@ -1185,23 +1185,23 @@ void __stdcall D2Game_10024_RemoveClientFromGame(int32_t nClientId) {
 
 // D2Game.0x6FC37B10
 void __fastcall sub_6FC37B10(D2GameStrc* pGame) {
-	const int32_t nGameType = pGame->nGameType;
-	if (nGameType == 1 || nGameType == 2) {
-		D2ClientStrc* pClient = pGame->pClientList;
-		while (pClient) {
-			D2ClientStrc* pNextClient = pClient->pNext;
+	// No game-type gate: 1.14d clients never write their own .d2s, so every
+	// game type has to serialize and stream (see
+	// D2GAME_SAVE_WriteFile_6FC8A500).
+	D2ClientStrc* pClient = pGame->pClientList;
+	while (pClient) {
+		D2ClientStrc* pNextClient = pClient->pNext;
 
-			D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(pClient, 0);
-			if (pPlayer) {
-				D2GAME_SAVE_WriteFile_6FC8A500(pGame, pPlayer, CLIENTS_GetName(pClient), 0);
+		D2UnitStrc* pPlayer = CLIENTS_GetPlayerFromClient(pClient, 0);
+		if (pPlayer) {
+			D2GAME_SAVE_WriteFile_6FC8A500(pGame, pPlayer, CLIENTS_GetName(pClient), 0);
 
-				while (CLIENT_GetSaveHeader_6FC34350(pClient)) {
-					CLIENT_SendSaveHeaderPart_6FC37B90(pGame, pClient);
-				}
+			while (CLIENT_GetSaveHeader_6FC34350(pClient)) {
+				CLIENT_SendSaveHeaderPart_6FC37B90(pGame, pClient);
 			}
-
-			pClient = pNextClient;
 		}
+
+		pClient = pNextClient;
 	}
 }
 
@@ -1229,7 +1229,7 @@ void __fastcall CLIENT_SendSaveHeaderPart_6FC37B90(D2GameStrc* pGame, D2ClientSt
 	}
 
 	ClientPacketSaveHeaderPart* pPacket = D2_ALLOC_STRC_POOL(pClient->pGame->pMemoryPool, ClientPacketSaveHeaderPart);
-	pPacket->nHeaderId = 0xB2u;
+	pPacket->nHeaderId = D2GS_HDR_SAVEHEADERPART;
 	pPacket->nPartDataSize = nDataSize;
 	pPacket->bFirstPart = pClient->nSaveHeaderDataSentBytes == 0;
 	pPacket->nSaveHeaderSize = pClient->nSaveHeaderSize;
@@ -1278,15 +1278,23 @@ void __fastcall GAME_EndGame(int32_t nClientId, int32_t a2) {
 
 	D2ClientStrc* pClient = CLIENTS_GetClientFromClientId(pGame, nClientId);
 	const uint32_t v10 = CLIENT_IsSaveLoaded(pClient);
-	if (v10 || pGame->nGameType) {
+
+	// Unconditional in 1.14d: see D2GAME_SAVE_WriteFile_6FC8A500.  The
+	// client can only write its .d2s from the 0xB3 stream attached here, so
+	// gating the save on CLIENTFLAGEX_SAVE_LOADED or on the game type means
+	// "no save" on an ordinary game.
+	{
 		D2ClientStrc* i = pGame->pClientList;
 		while (i) {
 			D2ClientStrc* pNext = i->pNext;
 
 			D2UnitStrc* pUnit = CLIENTS_GetPlayerFromClient(i, 0);
 			if (pUnit) {
+				// Unconditional since 1.14d: the client can only write its
+				// .d2s from the 0xB3 stream this attaches, so a game type
+				// check here means "no save" on a normal game.
 				D2GAME_SAVE_WriteFile_6FC8A500(pGame, pUnit, CLIENTS_GetName(i), 0);
-				if (gpD2EventCallbackTable_6FD45830 && gpD2EventCallbackTable_6FD45830->pfUpdateCharacterLadder) {
+				if (pGame->nGameType && gpD2EventCallbackTable_6FD45830 && gpD2EventCallbackTable_6FD45830->pfUpdateCharacterLadder) {
 					gpD2EventCallbackTable_6FD45830->pfUpdateCharacterLadder(
 						CLIENTS_GetName(i),
 						pUnit->dwClassId,
@@ -1305,7 +1313,7 @@ void __fastcall GAME_EndGame(int32_t nClientId, int32_t a2) {
 		while (1) {
 			D2GAME_PACKETS_SendHeaderOnlyPacket(pClient, 5u);
 
-			if ((pGame->nGameType == 1 || pGame->nGameType == 2) && CLIENT_GetSaveHeader_6FC34350(pClient)) {
+			if (CLIENT_GetSaveHeader_6FC34350(pClient)) {
 				do {
 					CLIENT_SendSaveHeaderPart_6FC37B90(pGame, pClient);
 				} while (CLIENT_GetSaveHeader_6FC34350(pClient));
@@ -1931,9 +1939,10 @@ void __fastcall sub_6FC39030(D2GameStrc* pGame, D2ClientStrc* pClient, int32_t a
 		}
 	}
 
-	if (pGame->nGameType == 1 || pGame->nGameType == 2) {
-		CLIENT_SendSaveHeaderPart_6FC37B90(pGame, pClient);
-	}
+	// Unconditional in 1.14d: any game type can have an attached save
+	// waiting to be streamed (see D2GAME_SAVE_WriteFile_6FC8A500).  A no-op
+	// when the client has no save header.
+	CLIENT_SendSaveHeaderPart_6FC37B90(pGame, pClient);
 
 	int32_t nCounter = 0;
 	int32_t bError = 0;
@@ -2012,9 +2021,7 @@ void __stdcall GAME_UpdateClients(int32_t a1, int32_t a2) {
 					const uint32_t nTicksToWaitBeforePurgingEmptyGame = 5 * 60 * 1000; // 5 minutes
 					if (
 						// No clients for more than 5 minutes.
-						(nTickCount - pGame->nTickCountSinceNoClients) > nTicksToWaitBeforePurgingEmptyGame
-						// No clients during the first 1-5 minutes, close game immediately (creator failed to join)
-						|| pGame->dwGameFrame > (60 * DEFAULT_FRAMES_PER_SECOND) && pGame->dwGameFrame < (5 * 60 * DEFAULT_FRAMES_PER_SECOND)) {
+						(nTickCount - pGame->nTickCountSinceNoClients) > nTicksToWaitBeforePurgingEmptyGame) {
 						GAME_LogMessage(6, "[SERVER]  Deleting game from SrvSendAllMsgs()");
 
 						D2_UNLOCK(pGame->lpCriticalSection);
@@ -2141,7 +2148,7 @@ void __stdcall GAME_CloseAllGames() {
 				sub_6FC3C690(pClient->dwClientId);
 				D2GAME_SAVE_WriteFile_6FC8A500(pGame, CLIENTS_GetPlayerFromClient(pClient, 0), CLIENTS_GetName(pClient), 1u);
 
-				if ((pGame->nGameType == 1 || pGame->nGameType == 2) && CLIENT_GetSaveHeader_6FC34350(pClient)) {
+				if (CLIENT_GetSaveHeader_6FC34350(pClient)) {
 					do {
 						CLIENT_SendSaveHeaderPart_6FC37B90(pGame, pClient);
 					} while (CLIENT_GetSaveHeader_6FC34350(pClient));

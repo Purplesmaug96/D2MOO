@@ -445,12 +445,14 @@ int32_t __fastcall PLRSAVE2_CreateSaveFile(D2GameStrc* pGame, D2UnitStrc* pPlaye
 		return 2;
 	}
 
+	uint8_t* const pDataStart = pData;
+
 	int32_t nResult = PLRSAVE2_WriteSaveHeader(pGame, pPlayer, &pData, &pData[nMaxSize]);
 	if (nResult) {
 		return nResult;
 	}
 
-	const uint8_t* pEnd = &pData[nMaxSize];
+	const uint8_t* pEnd = &pDataStart[nMaxSize];
 
 	uint8_t* ppSection = pData;
 	if (ppSection + 298 > pEnd) {
@@ -537,10 +539,10 @@ int32_t __fastcall PLRSAVE2_CreateSaveFile(D2GameStrc* pGame, D2UnitStrc* pPlaye
 		}
 	}
 
-	*pSize = ppSection - pData;
+	*pSize = ppSection - pDataStart;
 
-	*((uint32_t*)pData + 2) = *pSize;
-	*((uint32_t*)pData + 3) = FOG_ComputeChecksum(pData, *pSize);
+	*((uint32_t*)pDataStart + 2) = *pSize;
+	*((uint32_t*)pDataStart + 3) = FOG_ComputeChecksum(pDataStart, *pSize);
 
 	return 0;
 }
@@ -1373,7 +1375,23 @@ int32_t __fastcall PLRSAVE2_ProcessSaveFile(D2GameStrc* pGame, D2ClientStrc* pCl
 
 		uint8_t* pSectionEnd = pSection + 298;
 		const uint32_t nVersion = pSaveHeader->dwVersion;
-		if (pSectionEnd > pSaveFileEnd || pSaveHeader->dwHeaderMagic != '!ooW' || nVersion != 6) {
+		// The quest section carries its own 10-byte header, stamped by
+		// PLRSAVE2_CreateSaveFile just above the 3x96-byte records: magic
+		// '!ooW' at +0, version 6 at +4, section size 298 at +8.  These two
+		// checks used to read pSaveHeader->dwHeaderMagic/dwVersion instead --
+		// the *file* header's fields -- but compared them against the *quest
+		// section's* constants, which can never match: the file magic is
+		// D2SMAGIC_HEADER (0xAA55AA55) and the file version is 96 (see
+		// PLRSAVE2_WriteSaveHeader).  Either comparison alone made the branch
+		// unconditional, so every valid 1.13/1.14 save was rejected as
+		// BAD_QUESTRECORD -> SYSERROR_UNK_2, which the client renders as
+		// "Unable to join game. Bad character quest data."  Read the section's
+		// own header instead.  The bounds test comes first and ||-short
+		// circuits, so the +0/+4 reads are only reached once the full 298-byte
+		// section is known to be in range.
+		if (pSectionEnd > pSaveFileEnd
+			|| *(const uint32_t*)pSection != '!ooW'
+			|| *(const uint32_t*)(pSection + 4) != 6) {
 			nErrorCode = PLRSAVE2ERROR_BAD_QUESTRECORD;
 		} else {
 			uint8_t* pQuestRecord = pSection + 10;

@@ -574,17 +574,29 @@ int32_t __fastcall D2GAME_SAVE_WriteFile_6FC8A500(D2GameStrc* pGame, D2UnitStrc*
 	uint8_t pSaveData[8192] = {};
 	uint32_t nFileSize = 0;
 
-	if (pGame->nGameType == 1 || pGame->nGameType == 2) {
-		if (CLIENTS_GetSaveHeader(pClient)) {
-			CLIENTS_FreeSaveHeader(pClient);
-		}
+	// The retail 1.14d client has no path of its own to write a .d2s: the
+	// server serializes the character, streams it back over 0xB3
+	// (ClientPacketSaveHeaderPart), and the client's 0xB3 handler writes the
+	// file.  So EVERY save must be attached to the client, whatever the game
+	// type.  The 1.10f `nGameType == 1 || == 2` gate below predates that and
+	// silently left the client with nothing to write on a normal game.
+	if (CLIENTS_GetSaveHeader(pClient)) {
+		CLIENTS_FreeSaveHeader(pClient);
+	}
 
-		PLRSAVE2_CreateSaveFile(pGame, pPlayer, pSaveData, &nFileSize, 0x2000u, bInteractsWithPlayer, 0);
+	PLRSAVE2_CreateSaveFile(pGame, pPlayer, pSaveData, &nFileSize, 0x2000u, bInteractsWithPlayer, 0);
 
-		D2_ASSERT(nFileSize > 0);
+	D2_ASSERT(nFileSize > 0);
 
+	if (nFileSize > 0) {
 		CLIENTS_AttachSaveFile(CLIENTS_GetClientId(pClient), pSaveData, nFileSize, nFileSize, 0, 0, 0);
 		D2GAME_SetSaveLoadComplete_6FC34300(pClient);
+	}
+
+	// Ladder and realm servers additionally keep the character in the
+	// character database / on the server's disk.  Neither applies to a plain
+	// game, where the client owns the file.
+	if (pGame->nGameType == 1 || pGame->nGameType == 2) {
 		return 1;
 	}
 
@@ -1186,6 +1198,8 @@ int32_t __fastcall PLRSAVE_ReadItems_6FC8B8A0(D2GameStrc* pGame, D2UnitStrc* pPl
 		return 14;
 	}
 
+	*pSize = 0;
+
 	const uint16_t nItemCount = *((uint16_t*)pSection + 1);
 
 	uint8_t* pItemBitstream = pSection + 4;
@@ -1223,7 +1237,8 @@ int32_t __fastcall PLRSAVE_ReadItems_6FC8B8A0(D2GameStrc* pGame, D2UnitStrc* pPl
 			pParentItem = nullptr;
 		}
 
-		for (int32_t j = 0; j < itemSave.nItemFileIndex; ++j) {
+		const int32_t nSocketedItemCount = itemSave.nItemFileIndex;
+		for (int32_t j = 0; j < nSocketedItemCount; ++j) {
 			const uint32_t nSocketableBitstreamSize = pSection - pItemBitstream + nSize;
 			ITEMS_GetCompactItemDataFromBitstream(pItemBitstream, nSocketableBitstreamSize, 1, &itemSave);
 

@@ -4299,6 +4299,9 @@ int __fastcall ITEMS_DecodeItemBitstreamComplete(D2UnitStrc* pItem, D2BitBufferS
 
 	pItemsTxtRecord = DATATBLS_GetItemsTxtRecord(pItem->dwClassId);
 	D2_ASSERT(pItemsTxtRecord);
+	if (!pItemsTxtRecord) {
+		return -1;
+	}
 
 	if (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_ANY_ARMOR)) {
 		pItemStatCostTxtRecord = ITEMS_GetItemStatCostTxtRecord(STAT_ARMORCLASS);
@@ -5025,28 +5028,7 @@ size_t __stdcall ITEMS_SerializeItemToBitstream(D2UnitStrc* pItem, uint8_t* pBit
 	}
 }
 
-// Item codes on the 1.14d client wire are 4 bytes SPACE-padded ("hax "):
-// the retail client compiles its txt tables that way and its code->index
-// map (D2Client 0x96bcc4/0x6bd130, used while parsing the 0x9D/0x9C/0x94
-// item streams) is keyed on the space-padded value.  Our txt loader
-// memcpy's the raw cell into a calloc'd record, leaving NUL padding
-// ("hax\0") that no lookup can resolve: the client's binary search misses,
-// the item unit keeps a bogus classId and 0x628700/0x6335f0 asserts
-// (items.txt index out of range) while processing the 0x9D handler.
-// Client-bound streams therefore write the padded code; server-side
-// storage streams ('MJ' header, bServer=TRUE) are only re-read by our own
-// NUL-keyed linker and stay as-loaded.
-static uint32_t ITEMS_PadItemCodeForClient(uint32_t dwCode) {
-	char szCode[4];
-	memcpy(&szCode, &dwCode, 4);
-	for (int i = 0; i < 4; ++i) {
-		if (szCode[i] == '\0') {
-			szCode[i] = ' ';
-		}
-	}
-	memcpy(&dwCode, &szCode, 4);
-	return dwCode;
-}
+
 
 // Inlined in D2Common.0x6FDA2C00
 void __fastcall ITEMS_SerializeItemCompact(D2UnitStrc* pItem, D2BitBufferStrc* pBuffer, D2ItemsTxt* pItemsTxtRecord, BOOL bServer) {
@@ -5112,9 +5094,10 @@ void __fastcall ITEMS_SerializeItemCompact(D2UnitStrc* pItem, D2BitBufferStrc* p
 			ITEMS_WriteBitsToBitstream(pBuffer, *szName, 7);
 		} while (*szName++);
 	} else {
-		// Client wire must carry the space-padded code -- see the
-		// ITEMS_PadItemCodeForClient note above.
-		ITEMS_WriteBitsToBitstream(pBuffer, bServer ? ITEMS_GetBaseCode(pItem) : ITEMS_PadItemCodeForClient(ITEMS_GetBaseCode(pItem)), 32);
+		// dwCode is already the canonical space-padded 4-byte code: the txt
+		// compiler (FOG_10207) writes the same padded form into the record and
+		// the linker key, and retail's wire/save form is that too.  No re-pad.
+		ITEMS_WriteBitsToBitstream(pBuffer, ITEMS_GetBaseCode(pItem), 32);
 
 		if (ITEMS_CheckItemTypeId(pItem, ITEMTYPE_GOLD)) {
 			nGold = STATLIST_UnitGetStatValue(pItem, STAT_GOLD, 0);
@@ -5156,6 +5139,13 @@ size_t __fastcall ITEMS_SerializeItem(D2UnitStrc* pItem, D2BitBufferStrc* pBuffe
 	}
 
 	D2ItemDataStrc* pItemData = pItem->pItemData;
+
+	// bServer is part of retail's signature and callers still pass it, but it
+	// no longer selects a different item code: dwCode is the canonical
+	// space-padded code in both directions (retail writes the same bytes into
+	// the client stream and into the server-side .d2s section).
+	(void)bServer;
+
 	if (pItemData) {
 		nItemFlags = pItemData->dwItemFlags;
 	} else {
@@ -5353,15 +5343,17 @@ void __fastcall ITEMS_SerializeItemComplete(D2UnitStrc* pItem, D2BitBufferStrc* 
 	pItemsTxtRecord = DATATBLS_GetItemsTxtRecord(pItem->dwClassId);
 	D2_ASSERT(pItemsTxtRecord);
 
+	// dwCode / dwNormCode are already the canonical space-padded 4-byte code,
+	// so both the client-facing stream and the server-side .d2s section emit
+	// the same bytes -- which is exactly what retail does (see the retail
+	// Sorc.d2s / Jorvus.d2s, whose codes are space-padded).  No bServer split.
 	if (bGamble) {
-		// Client-facing stream: emit the code space-padded (see
-		// ITEMS_PadItemCodeForClient).  Server storage keeps NUL padding.
 		const uint32_t dwGambleCode = pItemsTxtRecord->dwNormCode ? pItemsTxtRecord->dwNormCode : pItemsTxtRecord->dwCode;
-		BITMANIP_Write(pBuffer, bServer ? dwGambleCode : ITEMS_PadItemCodeForClient(dwGambleCode), 32);
+		BITMANIP_Write(pBuffer, dwGambleCode, 32);
 		return;
 	}
 
-	BITMANIP_Write(pBuffer, bServer ? pItemsTxtRecord->dwCode : ITEMS_PadItemCodeForClient(pItemsTxtRecord->dwCode), 32);
+	BITMANIP_Write(pBuffer, pItemsTxtRecord->dwCode, 32);
 
 	nSocketedItems = 0;
 	if (ITEMS_CheckIfSocketable(pItem) && pItem->pInventory) {

@@ -2431,7 +2431,8 @@ int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x39_PurchaseLife_6FC86E50(D2GameStr
 int32_t __fastcall D2GAME_PACKETCALLBACK_Rcv0x3A_AddStatPoint_6FC86E80(D2GameStrc* pGame, D2UnitStrc* pUnit, void* pPacket, int32_t nSize) {
 	D2GSPacketClt3A* pPacket3A = (D2GSPacketClt3A*)pPacket;
 
-	if (nSize != 3) {
+	// 7 bytes in 1.14d, not the 3 of 1.10f
+	if (nSize != 7) {
 		return 3;
 	}
 

@@ -2150,9 +2150,23 @@ struct D2GSPacketSrvAE // variable size
 	// variable data
 };
 
-struct D2GSPacketSrvAF // size of 0x01
+// The 1.10f decomp records 0x01, but a 1-byte 0xAF permanently wedges the
+// retail client's receive path.  0xAF is a *variable* entry in the client's
+// size table (Game.exe 0x730AE8) and the size routine's case 0xAF (0x52BADD)
+// needs >= 2 bytes, resolving to BYTE@1 ? BYTE@1 + 1 : 2.  Given a 1-byte 0xAF
+// it returns failure, and the frame walker (0x52A8D0) then exits its loop
+// before consuming anything and leaves the byte at the head of the receive
+// buffer -- so the client can never advance past it again, and every packet
+// appended behind it (the rest of the release burst, the game list, everything)
+// is silently dropped.
+//
+// BYTE@1 is a sub-type, not payload: 0x81 carries a 128-byte nibble-encoded
+// blob (0x52A8D0); 0 is the plain "server is tearing this client down" form
+// used by GAME_EndGame / GAME_DisconnectClient / SERVER_Release.
+struct D2GSPacketSrvAF // size of 0x02
 {
-	uint8_t nHeader; // 0x00
+	uint8_t nHeader;  // 0x00
+	uint8_t nSubType; // 0x01
 };
 
 struct D2GSPacketSrvB0 // size of 0x01
@@ -2242,7 +2256,18 @@ struct D2GSPacketSrvFF01 {
 	char nZeroed[74];
 };
 
-struct ClientPacketSaveHeaderPart // sizeof(0x107) 1.10f nHeaderID: 0xB2
+// Save-and-exit: the server streams the finished character save back to the
+// client in <=255-byte parts; the client reassembles them (Game.exe
+// FUN_0045c620, reached only from the `case 0xb3:` arm of the >0xAE S->C
+// dispatcher FUN_0045c850) and is the ONLY thing that ever writes the .d2s
+// (FUN_0045c520: fopen("<saveDir><charName>.d2s","wb") + fwrite).  Get this id
+// wrong and the client neither saves nor complains.
+//
+// The 1.10f decomp says 0xB2; 1.14d shifted the tail of the range by one
+// (0xB1 unused, 0xB2 = the fixed 53-byte game-list entry D2GSPacketSrvB2,
+// 0xB3 = variable).  D2NetPacketSize.h's client table agrees: 0xB3 is
+// "BYTE@1 + 7", i.e. exactly this 7-byte header plus nPartDataSize bytes.
+struct ClientPacketSaveHeaderPart // sizeof(0x107) nHeaderID: 0xB3 (1.10f: 0xB2)
 {
 	uint8_t nHeaderId;		  // 0x00
 	uint8_t nPartDataSize;	  // 0x01
@@ -2250,6 +2275,8 @@ struct ClientPacketSaveHeaderPart // sizeof(0x107) 1.10f nHeaderID: 0xB2
 	uint32_t nSaveHeaderSize; // 0x03
 	uint8_t aData[256];		  // 0x07
 };
+
+#define D2GS_HDR_SAVEHEADERPART 0xB3 // ClientPacketSaveHeaderPart::nHeaderId
 
 #pragma pack()
 
@@ -2293,12 +2320,31 @@ D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA1, 0xA1);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA2, 0xA2);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA3, 0xA3);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA4, 0xA4);
+
+// 0xAF is variable-size (table entry -1) so it cannot use
+// D2GS_ASSERT_WIRE_SIZE, but the client still refuses to size it below 2 bytes
+// and a short one wedges the receive buffer permanently -- see the struct.
+static_assert(sizeof(D2GSPacketSrvAF) >= 2,
+			  "D2GSPacketSrvAF must be at least 2 bytes (retail client sizes 0xAF as BYTE@1 ? BYTE@1 + 1 : 2)");
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA5, 0xA5);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA7, 0xA7);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvA9, 0xA9);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvB0, 0xB0);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvB2, 0xB2);
 D2GS_ASSERT_WIRE_SIZE(D2GSPacketSrvB4, 0xB4);
+// The save-header stream (ClientPacketSaveHeaderPart) is the one S->C packet
+// whose *id* matters as much as its size: the client's >0xAE dispatcher
+// FUN_0045c850 switches on 0xaf/0xb0/0xb3/0xb4 only, and its 0xB3 arm is the
+// handler that reassembles the save and writes the .d2s (FUN_0045c620 ->
+// FUN_0045c520).  Emit it under 0xB2 instead and the client's switch has no
+// arm for it at all: the save is silently dropped and the character never
+// persists.  Nothing below can see the dispatch table, so pin what we can --
+// 0xB3 must be the variable-size entry the client's "BYTE@1 + 7" rule
+// resolves, and 0xB2 must stay the fixed 53-byte game-list entry.
+static_assert(D2NET_ServerPacketSizeTable[D2GS_HDR_SAVEHEADERPART] < 0,
+			  "the save-header stream must live on a variable-size client id (0xB3)");
+static_assert(D2NET_ServerPacketSizeTable[0xB2] == 53,
+			  "0xB2 is the fixed-size game-list entry, not the save-header stream");
 // 0xA8/0xAA carry their own length byte; assert the fixed prefix the client
 // uses to locate the bitstream.
 static_assert(offsetof(D2GSPacketSrvA8, nSize) == 6 && offsetof(D2GSPacketSrvA8, pStream) == 8,

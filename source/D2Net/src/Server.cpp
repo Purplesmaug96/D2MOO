@@ -364,8 +364,10 @@ void __stdcall SERVER_SetHackListEnabled(BOOL bEnabled) {
 }
 
 // D2Net.0x6FC02220 (#10004)
+// 0xAF must carry a sub-type byte: the 1.14d client sizes it as BYTE@1 ? BYTE@1 + 1 : 2
+// and cannot size a 1-byte 0xAF at all.  Sub-type 0 is the plain form.
 void __stdcall SERVER_Release() {
-	const uint8_t data[1] = { 0xAF };
+	const uint8_t data[2] = { 0xAF, 0x00 };
 	FOG_10152(gpServer, data, sizeof(data));
 
 	gpServer = nullptr;

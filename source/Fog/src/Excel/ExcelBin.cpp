@@ -300,11 +300,50 @@ void FOG_10207(D2BinFileStrc* pBinFile, D2BinFieldStrc* pBinField, void* pTxt, i
 				// pItemsLinker, so all three passes have to land in the linker
 				// for later code lookups (gems "code", cube rune1..3) to
 				// resolve.
-				size_t nLen = std::strlen(pCell);
-				if (nFieldLength > 0 && nLen > (size_t)nFieldLength) {
-					nLen = (size_t)nFieldLength;
+				//
+				// Retail stores every "code" column in a fixed 4-byte field right-padded
+				// with SPACES: "hax" -> 'h','a','x',' ' (0x20786168).  That is
+				// the single canonical code form in retail -- D2Common's
+				// DATATBLS_StringToCode pads with ' ', and a save written by a
+				// retail client carries the same space-padded bytes.  This
+				// compiler used to pad with NUL instead ('hax\0'), so every
+				// linker it built was keyed 0x00786168 and no code reference
+				// resolved: a retail-written save lost its whole item section
+				// (PLRSAVE2ERROR_BAD_ITEMS -> "generic bad file").
+				//
+				// Cells longer than 4 bytes are truncated to the leading 4 (the
+				// linker only ever holds 4).  Only trailing padding is added --
+				// a leading space is part of the code itself (' rae', ears).
+				// The same 4-byte rule is applied by the handlers below
+				// (UNKNOWN3, RAW, CODETO*/NAMETO*).
+				//
+				// nCode is computed once and feeds BOTH the record field and the
+				// linker key, so the two can never disagree.  A field declared
+				// nFieldLength == 4 is a bare 4-byte code (D2ItemsTxt::dwCode,
+				// D2ItemTypesTxt::szCode, any "code" column whose struct member
+				// is uint32_t dwCode) and gets the padded 4 bytes written
+				// straight into the record.  Everything else keeps the plain
+				// string copy: monmode's "code" is szName[32] holding "death",
+				// and padding or truncating that would corrupt the name.
+				char szCode[4] = { ' ', ' ', ' ', ' ' };
+				size_t nCodeLen = std::strlen(pCell);
+				if (nCodeLen > 4) {
+					nCodeLen = 4;
 				}
-				std::memcpy(pTarget, pCell, nLen);
+				if (nCodeLen > 0) {
+					std::memcpy(szCode, pCell, nCodeLen);
+				}
+				uint32_t nCode = 0;
+				std::memcpy(&nCode, szCode, 4);
+				if (nFieldLength == 4) {
+					std::memcpy(pTarget, &nCode, 4);
+				} else {
+					size_t nLen = std::strlen(pCell);
+					if (nFieldLength > 0 && nLen > (size_t)nFieldLength) {
+						nLen = (size_t)nFieldLength;
+					}
+					std::memcpy(pTarget, pCell, nLen);
+				}
 				if (pBinField->pLinkField != nullptr) {
 					D2TxtLinkStrc* pLinker = *(D2TxtLinkStrc**)pBinField->pLinkField;
 					if (pLinker != nullptr) {
@@ -322,15 +361,7 @@ void FOG_10207(D2BinFileStrc* pBinFile, D2BinFieldStrc* pBinField, void* pTxt, i
 						if (pCell[0] == '\0') {
 							FOG_10215(pLinker, 0);
 						} else {
-							char szCode[4] = {};
-							size_t nCodeLen = std::strlen(pCell);
-							if (nCodeLen > 4) {
-								nCodeLen = 4;
-							}
-							std::memcpy(szCode, pCell, nCodeLen);
-							int32_t nCode4 = 0;
-							std::memcpy(&nCode4, szCode, 4);
-							FOG_AddCodeAndTextToLinkingTable(pLinker, nCode4, pCell);
+							FOG_AddCodeAndTextToLinkingTable(pLinker, (int32_t)nCode, pCell);
 						}
 					}
 				}
@@ -347,17 +378,18 @@ void FOG_10207(D2BinFileStrc* pBinFile, D2BinFieldStrc* pBinField, void* pTxt, i
 				// phantom item instead of the 0xFFFFFFFF sentinel.
 				uint32_t nIndex = 0xFFFFFFFF;
 				if (pBinField->pLinkField != nullptr && pCell[0] != '\0') {
-					char szCode[4] = {};
+					// Space-padded 4-byte code, as in ASCIITOCODE above.
+					char szCode[4] = { ' ', ' ', ' ', ' ' };
 					size_t nCodeLen = std::strlen(pCell);
 					if (nCodeLen > 4) {
 						nCodeLen = 4;
 					}
 					std::memcpy(szCode, pCell, nCodeLen);
-					int32_t nCode4 = 0;
+					uint32_t nCode4 = 0;
 					std::memcpy(&nCode4, szCode, 4);
 					D2TxtLinkStrc* pLinker = *(D2TxtLinkStrc**)pBinField->pLinkField;
 					if (pLinker != nullptr) {
-						nIndex = (uint32_t)FOG_GetLinkIndex(pLinker, (uint32_t)nCode4, 0);
+						nIndex = (uint32_t)FOG_GetLinkIndex(pLinker, nCode4, 0);
 					}
 				}
 				*(uint32_t*)pTarget = nIndex;
@@ -385,25 +417,38 @@ void FOG_10207(D2BinFileStrc* pBinFile, D2BinFieldStrc* pBinField, void* pTxt, i
 				*(uint8_t*)pTarget = (uint8_t)std::strtoul(pCell, nullptr, 10);
 				break;
 			case TXTFIELD_RAW: {
-				size_t nLen = std::strlen(pCell);
-				if (nFieldLength > 0 && nLen > (size_t)nFieldLength) {
-					nLen = (size_t)nFieldLength;
+				// Space-padded 4-byte code, as in ASCIITOCODE above.  A field
+				// declared nFieldLength == 4 holds a bare 4-byte item code
+				// (monequip "item1..3", gamble "item1..4", items
+				// "normcode"/"ubercode"/"ultracode"/"wclass").  Those record
+				// values are re-used as linker keys much later --
+				// DATATBLS_GetItemLinkIndexFromItemCode on a gamble row, a
+				// direct FOG_GetLinkIndex(pItemsLinker, ...) on a trade row --
+				// so the record must hold the canonical space-padded code,
+				// otherwise the key it produces stops matching the linker.
+				char szCode[4] = { ' ', ' ', ' ', ' ' };
+				size_t nCodeLen = std::strlen(pCell);
+				if (nCodeLen > 4) {
+					nCodeLen = 4;
 				}
-				std::memcpy(pTarget, pCell, nLen);
+				std::memcpy(szCode, pCell, nCodeLen);
+				uint32_t nCode = 0;
+				std::memcpy(&nCode, szCode, 4);
+				if (nFieldLength == 4) {
+					std::memcpy(pTarget, &nCode, 4);
+				} else {
+					size_t nLen = std::strlen(pCell);
+					if (nFieldLength > 0 && nLen > (size_t)nFieldLength) {
+						nLen = (size_t)nFieldLength;
+					}
+					std::memcpy(pTarget, pCell, nLen);
+				}
 				// With a linker slot (level preset item codes) the raw code is
 				// also recorded into the linker.
 				if (pBinField->pLinkField != nullptr) {
 					D2TxtLinkStrc* pLinker = *(D2TxtLinkStrc**)pBinField->pLinkField;
 					if (pLinker != nullptr && pLinker->nRecords == 0) {
-						char szCode[4] = {};
-						size_t nCodeLen = std::strlen(pCell);
-						if (nCodeLen > 4) {
-							nCodeLen = 4;
-						}
-						std::memcpy(szCode, pCell, nCodeLen);
-						int32_t nCode4 = 0;
-						std::memcpy(&nCode4, szCode, 4);
-						FOG_AddCodeAndTextToLinkingTable(pLinker, nCode4, pCell);
+						FOG_AddCodeAndTextToLinkingTable(pLinker, (int32_t)nCode, pCell);
 					}
 				}
 				break;
@@ -434,10 +479,14 @@ void FOG_10207(D2BinFileStrc* pBinFile, D2BinFieldStrc* pBinField, void* pTxt, i
 				if (pLinker != nullptr && pCell[0] == '\0' && pLinker->nRecords == 0) {
 					nIndex = 0;
 				} else if (pLinker != nullptr && pCell[0] != '\0') {
-					// Code entries are the first 4 bytes of the cell, zero
-					// padded when shorter (" h2h" -> ' h2h'; "fallen1" ->
-					// 'fale').
-					char szCode[4] = {};
+					// Code entries are the first 4 bytes of the cell, SPACE
+					// padded when shorter ("h2h" -> 'h2h ' in the 4-byte
+					// little-endian form 0x20683268; "fallen1" -> 'fall').
+					// This is the same form SkillsTbls.cpp seeds pRangeLinker
+					// with directly (' h2h', ' col', ...), and the form
+					// DATATBLS_StringToCode produces for lookups, so all three
+					// agree.  See ASCIITOCODE above for the full rule.
+					char szCode[4] = { ' ', ' ', ' ', ' ' };
 					size_t nCellLen = std::strlen(pCell);
 					if (nCellLen > 4) {
 						nCellLen = 4;

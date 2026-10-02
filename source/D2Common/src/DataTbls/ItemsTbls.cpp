@@ -1,6 +1,7 @@
 #include "D2DataTbls.h"
 
 #include "D2Items.h"
+#include <cstring>
 #include <Archive.h>
 #include <Calc.h>
 #include <D2BitManip.h>
@@ -88,7 +89,7 @@ void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive) {
 	int nOldCounter = 0;
 
 	D2BinFieldStrc pTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 128, &sgptDataTables->pItemsLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 128, &sgptDataTables->pItemsLinker },
 		{ "namestr", TXTFIELD_KEYTOWORD, 0, 244, (void*)DATATBLS_GetStringIdFromReferenceString },
 		{ "version", TXTFIELD_WORD, 0, 246, NULL },
 		{ "compactsave", TXTFIELD_UNKNOWN2, 0, 323, NULL },
@@ -135,11 +136,11 @@ void __fastcall DATATBLS_LoadItemsTxt(HD2ARCHIVE hArchive) {
 		{ "missile", TXTFIELD_UNKNOWN2, 0, 276, NULL },
 		{ "component", TXTFIELD_BYTE, 0, 277, NULL },
 		{ "cost", TXTFIELD_DWORD, 0, 224, NULL },
-		{ "normcode", TXTFIELD_RAW, 0, 132, NULL },
-		{ "ubercode", TXTFIELD_RAW, 0, 136, NULL },
-		{ "ultracode", TXTFIELD_RAW, 0, 140, NULL },
-		{ "wclass", TXTFIELD_RAW, 0, 192, NULL },
-		{ "2handedwclass", TXTFIELD_RAW, 0, 196, NULL },
+		{ "normcode", TXTFIELD_RAW, 4, 132, NULL },
+		{ "ubercode", TXTFIELD_RAW, 4, 136, NULL },
+		{ "ultracode", TXTFIELD_RAW, 4, 140, NULL },
+		{ "wclass", TXTFIELD_RAW, 4, 192, NULL },
+		{ "2handedwclass", TXTFIELD_RAW, 4, 196, NULL },
 		{ "1or2handed", TXTFIELD_UNKNOWN2, 0, 317, NULL },
 		{ "BetterGem", TXTFIELD_RAW, 0, 188, NULL },
 		{ "rArm", TXTFIELD_UNKNOWN2, 0, 278, NULL },
@@ -367,9 +368,18 @@ D2ItemsTxt* __stdcall DATATBLS_GetItemsTxtRecord(int nItemId) {
 	return NULL;
 }
 
+// Item codes are a single canonical 4-byte form, right-padded with spaces
+// ("hax " -> 0x20786168), produced by the txt compiler when it builds the
+// linker (FOG_10207) and by DATATBLS_StringToCode when a code is looked up.
+// The retail client writes that same form into saves, so one plain lookup
+// suffices -- there is no second padding convention to reconcile here.
+static int DATATBLS_GetItemLinkIndexFromItemCode(uint32_t dwCode) {
+	return FOG_GetLinkIndex(sgptDataTables->pItemsLinker, dwCode, 0);
+}
+
 // D2Common.0x6FD576D0 (#10601)
 D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* pItemId) {
-	*pItemId = FOG_GetLinkIndex(sgptDataTables->pItemsLinker, dwCode, 0);
+	*pItemId = DATATBLS_GetItemLinkIndexFromItemCode(dwCode);
 	if (*pItemId >= 0) {
 		return &sgptDataTables->pItemDataTables.pItemsTxt[*pItemId];
 	}
@@ -380,7 +390,7 @@ D2ItemsTxt* __stdcall DATATBLS_GetItemRecordFromItemCode(uint32_t dwCode, int* p
 
 // D2Common.0x6FD57720 (#10602)
 int __stdcall DATATBLS_GetItemIdFromItemCode(uint32_t dwCode) {
-	return FOG_GetLinkIndex(sgptDataTables->pItemsLinker, dwCode, 0);
+	return DATATBLS_GetItemLinkIndexFromItemCode(dwCode);
 }
 
 // D2Common.0x6FD57740
@@ -1493,7 +1503,9 @@ void __fastcall DATATBLS_LoadGambleTxt(HD2ARCHIVE hArchive) {
 	D2GambleTxt* pGambleTxt = NULL;
 
 	D2BinFieldStrc pTbl[] = {
-		{ "code", TXTFIELD_RAW, 0, 0, NULL },
+		// dwItemCode is resolved against pItemsLinker just below, so it is a
+		// 4-byte code field, not a raw string copy.
+		{ "code", TXTFIELD_RAW, 4, 0, NULL },
 		{ "end", TXTFIELD_NONE, 0, 0, NULL },
 	};
 
@@ -1643,7 +1655,7 @@ void __fastcall DATATBLS_LoadItemTypesTxt(HD2ARCHIVE hArchive) {
 	uint32_t* pItemTypesNest = NULL;
 
 	D2BinFieldStrc pTbl[] = {
-		{ "code", TXTFIELD_ASCIITOCODE, 0, 0, &sgptDataTables->pItemTypesLinker },
+		{ "code", TXTFIELD_ASCIITOCODE, 4, 0, &sgptDataTables->pItemTypesLinker },
 		{ "equiv1", TXTFIELD_CODETOWORD, 0, TXTFIELD_BYTE, &sgptDataTables->pItemTypesLinker },
 		{ "equiv2", TXTFIELD_CODETOWORD, 0, 6, &sgptDataTables->pItemTypesLinker },
 		{ "repair", TXTFIELD_BYTE, 0, 8, NULL },
