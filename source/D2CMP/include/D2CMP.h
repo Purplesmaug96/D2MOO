@@ -3,6 +3,8 @@
 #include <D2Dll.h>
 #include <D2BasicTypes.h>
 
+#include "TileLib.h"
+
 //1.10f Image base: 0x6FDF0000
 
 #ifdef D2_VERSION_110F
@@ -49,35 +51,6 @@ enum D2TileType
 	TILETYPE_FRONT_WALL_DOWN = 19,      // automap code: fi
 };
 
-struct D2TileRecordStrc;
-
-struct D2TileLibraryEntryStrc
-{
-	int32_t nLightDirection;					//0x00
-	uint16_t nRoofHeight;						//0x04
-	uint16_t nFlags;							//0x06 D2TileMaterialFlags
-	int32_t nTotalHeight;						//0x08
-	int32_t nWidth;								//0x0C
-	int32_t nHeightToBottom;					//0x10
-	int32_t nType;								//0x14 aka nOrientation
-	int32_t nStyle;								//0x18 aka nIndex
-	int32_t nSequence;							//0x1C aka nSubIndex
-	int32_t nRarity_Frame;						//0x20 By default this is the rarity of the tile, for animated tiles this is the frame index.
-	int32_t transparentColorRGB24;				//0x24
-	uint8_t dwTileFlags[4];						//0x28 Collision info
-	int32_t dwBlockOffset_pBlock;				//0x2C
-	int32_t nBlockSize;							//0x30
-	int32_t nBlocks;							//0x34
-	D2TileRecordStrc* pParent;					//0x38
-	uint16_t unk0x3C;							//0x3C
-	uint16_t nCacheIndex;						//0x3E
-	uint32_t unk0x40[4];						//0x40
-	//int32_t field_50;
-	//int32_t field_54;
-	//int32_t field_58;
-	//int32_t field_5C;
-};
-
 struct D2TileStrc
 {
 	D2TileStrc* pNext;						//0x00
@@ -92,48 +65,6 @@ struct D2TileStrc
 	uint32_t unk0x20[7];						//0x20
 	D2TileRecordStrc* pParent;				//0x3C
 	uint32_t unk0x40[33];						//0x40
-};
-
-struct D2TileLibraryBlockStrc
-{
-	int16_t nPosX;							//0x00
-	int16_t nPosY;							//0x02
-	int16_t unk0x04;							//0x04
-	uint8_t nGridX;							//0x06
-	uint8_t nGridY;							//0x07
-	uint16_t nFormat;							//0x08
-	int32_t nLength;							//0x0A
-	int16_t unk0x0E;							//0x0E
-	int32_t dwOffset_pData;						//0x10
-};
-
-struct D2TileLibraryHashRefStrc
-{
-	D2TileLibraryEntryStrc* pTile;			//0x00
-	D2TileLibraryHashRefStrc* pPrev;		//0x04
-};
-
-struct D2TileLibraryHashNodeStrc
-{
-	int32_t nStyle;							//0x00 aka nIndex;								
-	int32_t nSequence;						//0x04 aka nSequence;							
-	int32_t nType;							//0x08 aka nOrientation;						
-	D2TileLibraryHashRefStrc* pRef;			//0x0C
-	D2TileLibraryHashNodeStrc* pPrev;		//0x10
-};
-
-struct D2TileLibraryHashStrc
-{
-	D2TileLibraryHashNodeStrc* pNodes[128];	//0x00
-};
-
-struct D2TileLibraryHeaderStrc
-{
-	int32_t dwVersion;							//0x00
-	int32_t dwFlags;							//0x04
-	char szLibraryName[260];				//0x08
-	int32_t nTiles;								//0x10C
-	int32_t dwTileStart_pFirst;					//0x110
 };
 
 struct D2TileRecordStrc
@@ -171,13 +102,7 @@ D2FUNC_DLL(D2CMP, GetGfxFileExtension, const char*, __stdcall, (BOOL bAllowCompr
 D2FUNC_DLL(D2CMP, InitSpriteCache, void, __stdcall, (void* pMemPool, int dwSpriteCacheSize, int dwSize, unsigned int dwMemoryOverride), 0xB9F0)							//D2Cmp.#10052
 D2FUNC_DLL(D2CMP, FlushSpriteCache, void, __stdcall, (BOOL bRealloc), 0xBBF0)																							//D2Cmp.#10053
 D2FUNC_DLL(D2CMP, SetCompressedDataMode, void, __stdcall, (BOOL bAllowCompressedMode), 0xB9C0)																			//D2Cmp.#10054
-D2FUNC_DLL(D2CMP, TileGetType, int, __stdcall, (D2TileLibraryEntryStrc* hTile), 0xFFF0)																					//D2Cmp.#10077
-D2FUNC_DLL(D2CMP, TileGetStyle, int, __stdcall, (D2TileLibraryEntryStrc* hTile), 0xFF30)																				//D2Cmp.#10078
 // Material flags
-D2FUNC_DLL(D2CMP, TileGetFlags, int, __stdcall, (D2TileLibraryEntryStrc* hTile), 0xFF60)																//D2Cmp.#10079
-D2FUNC_DLL(D2CMP, TileGetRarity, int, __stdcall, (D2TileLibraryEntryStrc* hTile), 0xFFC0)																//D2Cmp.#10081
-D2FUNC_DLL(D2CMP, TileGetSequence, int, __stdcall, (D2TileLibraryEntryStrc* hTile), 0xFFF0)															//D2Cmp.#10082
-D2FUNC_DLL(D2CMP, TileGetCollisionInfo, uint8_t*, __stdcall, (D2TileLibraryEntryStrc* hTile), 0x10080)														//D2Cmp.#10085
 D2FUNC_DLL(D2CMP, 10087_LoadTileLibrarySlot, void, __stdcall, (D2TileLibraryHashStrc** ppTileLibraryHash, const char* szFileName), 0xFDE0)								//D2Cmp.#10087
 D2FUNC_DLL(D2CMP, 10088_GetTiles, int, __stdcall, (D2TileLibraryHashStrc** ppTileLibraryHash, int nType, int nStyle, int nSequence, D2TileLibraryEntryStrc** pTileList, int nTileListSize), 0xFE70)//D2Cmp.#10088
 D2FUNC_DLL(D2CMP, MixPalette, uint8_t*, __stdcall, (uint8_t nTrans, int nColor), 0xB760)																				//D2Cmp.#10098
