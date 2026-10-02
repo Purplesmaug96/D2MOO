@@ -1709,7 +1709,7 @@ void __fastcall DRLGPRESET_TogglePopsVisibility(D2DrlgRoomStrc* pDrlgRoom, int n
 		}
 		else
 		{
-			if (!(pDrlgTileData->dwFlags & 0x100) && D2CMP_10078_GetTileStyle(pDrlgTileData->pTile) == nPopSubIndex && DRLGROOM_AreXYInsideCoordinates(&pDrlgCoords, pDrlgRoom->nTileXPos + pDrlgTileData->nPosX, pDrlgRoom->nTileYPos + pDrlgTileData->nPosY))
+			if (!(pDrlgTileData->dwFlags & 0x100) && D2CMP_TileGetStyle(pDrlgTileData->pTile) == nPopSubIndex && DRLGROOM_AreXYInsideCoordinates(&pDrlgCoords, pDrlgRoom->nTileXPos + pDrlgTileData->nPosX, pDrlgRoom->nTileYPos + pDrlgTileData->nPosY))
 			{
 				pDrlgTileData->unk0x24 |= 2;
 				if (nCellFlags)

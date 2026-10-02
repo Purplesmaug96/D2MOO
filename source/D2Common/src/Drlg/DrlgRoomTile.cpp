@@ -60,7 +60,7 @@ D2TileLibraryEntryStrc* __fastcall DRLGROOMTILE_GetTileCache(D2DrlgRoomStrc* pDr
 				FOG_DisplayWarning("phTileArray[ii]", __FILE__, __LINE__);
 			}
 
-			nMax += D2CMP_10081_GetTileRarity(ppTileLibraryEntries[i]);
+			nMax += D2CMP_TileGetRarity(ppTileLibraryEntries[i]);
 		}
 
 		int nId = 0;
@@ -69,7 +69,7 @@ D2TileLibraryEntryStrc* __fastcall DRLGROOMTILE_GetTileCache(D2DrlgRoomStrc* pDr
 		{
 			while (nEntries > 1 && nRand > 0)
 			{
-				nRand -= D2CMP_10081_GetTileRarity(ppTileLibraryEntries[nId]);
+				nRand -= D2CMP_TileGetRarity(ppTileLibraryEntries[nId]);
 				++nId;
 			}
 
@@ -220,7 +220,7 @@ void __fastcall DRLGROOMTILE_InitializeTileDataFlags(D2DrlgRoomStrc* pDrlgRoom, 
 		pTileData->dwFlags |= MAPTILE_LOS;
 	}
 
-	uint16_t nFlags = D2CMP_10079_GetTileFlags(pTileData->pTile);
+	uint16_t nFlags = D2CMP_TileGetFlags(pTileData->pTile);
 	if (nFlags & TILE_FLAGS_OTHER)
 	{
 		pTileData->dwFlags |= MAPTILE_TREES;
@@ -740,8 +740,8 @@ void __fastcall DRLGROOMTILE_LoadFloorWarpTiles(D2DrlgRoomStrc* pDrlgRoom, int n
 			for (int i = 0; i < pDrlgRoom->pTileGrid->nFloors; ++i)
 			{
 				D2DrlgTileDataStrc* pFloorTileData = &pDrlgRoom->pTileGrid->pTiles.pFloorTiles[i];
-				if (D2CMP_10078_GetTileStyle(pFloorTileData->pTile) == nTileInformation.nTileSequence
-					&& (unsigned int)D2CMP_10082_GetTileSequence(pFloorTileData->pTile) < 4)
+				if (D2CMP_TileGetStyle(pFloorTileData->pTile) == nTileInformation.nTileSequence
+					&& (unsigned int)D2CMP_TileGetSequence(pFloorTileData->pTile) < 4)
 				{
 					pFloorTileData->unk0x20 = pWarpTile->unk0x10;
 					pWarpTile->unk0x10 = pFloorTileData;
@@ -932,7 +932,7 @@ void __fastcall DRLGROOMTILE_LinkedTileDataManager(void* pMemPool, D2DrlgRoomStr
 	}
 
 	if (nTileType != pTileData->nTileType || 
-		pTileData->nTileType == TILETYPE_FLOOR && D2CMP_10078_GetTileStyle(pTileData->pTile) == 30 && D2CMP_10082_GetTileSequence(pTileData->pTile) == 0)
+		pTileData->nTileType == TILETYPE_FLOOR && D2CMP_TileGetStyle(pTileData->pTile) == 30 && D2CMP_TileGetSequence(pTileData->pTile) == 0)
 	{
 		D2TileLibraryEntryStrc* pTileCache = DRLGROOMTILE_GetTileCache(pDrlgRoom2, nTileType, nPackedTileInformation);
 		pTileData->nTileType = nTileType;

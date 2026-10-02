@@ -39,7 +39,7 @@ void __fastcall D2Common_COLLISION_FirstFn_6FD41000(D2ActiveRoomStrc* pRoom, D2D
 
 					if (pCollisionGrid->pCollisionMask)
 					{
-						v17 = D2CMP_10085_GetTileFlagArray(pTileData->pTile);
+						v17 = D2CMP_TileGetCollisionInfo(pTileData->pTile);
 
 						if (nX > 0)
 						{
@@ -98,7 +98,7 @@ void __fastcall sub_6FD411F0(D2RoomCollisionGridStrc* pCollisionGrid, D2TileLibr
 
 	if (pCollisionGrid && pCollisionGrid->pCollisionMask)
 	{
-		v5 = D2CMP_10085_GetTileFlagArray(pTileLibraryEntry);
+		v5 = D2CMP_TileGetCollisionInfo(pTileLibraryEntry);
 
 		if (nX > 0)
 		{
@@ -208,7 +208,7 @@ void __fastcall sub_6FD413E0(D2RoomCollisionGridStrc* pCollisionGrid, D2RoomColl
 			{
 				if (pCollisionGrid->pCollisionMask)
 				{
-					v11 = D2CMP_10085_GetTileFlagArray(pTiles[i].pTile);
+					v11 = D2CMP_TileGetCollisionInfo(pTiles[i].pTile);
 
 					if (nX > 0)
 					{
